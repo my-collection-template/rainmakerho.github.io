@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>SQL Server License 說明 | 亂馬客</title>
+  <title>取得 Execute SQL 裡面資料的值 | 亂馬客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SQL Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準 目前版本為SQL 2016 (SQL 2017 on linux 2017 年底可能會出)，共分為Standard / Enterprise兩個版本 Standard版 : 有Server + CAL(適合小企業) /  by Core (適合大部分的單位) 兩種採購模式 Enterpris">
-<meta name="keywords" content="SQL License,SQL援權">
+  <meta name="description" content="有同事詢問他要如何取得 Exec(t-sql) 裡面的值，因為 Exec 與外面是不同的 Scope 所以要取得裡面值有2種情況。 Store Procedue ，透過 sp_executesql + 它的 output 參數來取得資料，例如， 1234567DECLARE @sql NVARCHAR(max), @outputcode NVARCHAR(4000);SET @sql = &apos;EXE">
+<meta name="keywords" content="exec in t-sql,sql,execute,exec,How to get value to variable using &#39;execute&#39; in t-sql?">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL Server License 說明">
-<meta property="og:url" content="https://rainmakerho.github.io/2017/09/27/sql2016license/index.html">
+<meta property="og:title" content="取得 Execute SQL 裡面資料的值">
+<meta property="og:url" content="https://rainmakerho.github.io/2017/10/03/20171003-2/index.html">
 <meta property="og:site_name" content="亂馬客">
-<meta property="og:description" content="SQL Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準 目前版本為SQL 2016 (SQL 2017 on linux 2017 年底可能會出)，共分為Standard / Enterprise兩個版本 Standard版 : 有Server + CAL(適合小企業) /  by Core (適合大部分的單位) 兩種採購模式 Enterpris">
-<meta property="og:updated_time" content="2017-09-30T01:50:05.378Z">
+<meta property="og:description" content="有同事詢問他要如何取得 Exec(t-sql) 裡面的值，因為 Exec 與外面是不同的 Scope 所以要取得裡面值有2種情況。 Store Procedue ，透過 sp_executesql + 它的 output 參數來取得資料，例如， 1234567DECLARE @sql NVARCHAR(max), @outputcode NVARCHAR(4000);SET @sql = &apos;EXE">
+<meta property="og:updated_time" content="2017-10-03T09:49:50.173Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SQL Server License 說明">
-<meta name="twitter:description" content="SQL Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準 目前版本為SQL 2016 (SQL 2017 on linux 2017 年底可能會出)，共分為Standard / Enterprise兩個版本 Standard版 : 有Server + CAL(適合小企業) /  by Core (適合大部分的單位) 兩種採購模式 Enterpris">
+<meta name="twitter:title" content="取得 Execute SQL 裡面資料的值">
+<meta name="twitter:description" content="有同事詢問他要如何取得 Exec(t-sql) 裡面的值，因為 Exec 與外面是不同的 Scope 所以要取得裡面值有2種情況。 Store Procedue ，透過 sp_executesql + 它的 output 參數來取得資料，例如， 1234567DECLARE @sql NVARCHAR(max), @outputcode NVARCHAR(4000);SET @sql = &apos;EXE">
   
     <link rel="alternate" href="/atom.xml" title="亂馬客" type="application/atom+xml">
   
@@ -68,10 +68,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-sql2016license" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-20171003-2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/09/27/sql2016license/" class="article-date">
-  <time datetime="2017-09-27T05:22:47.000Z" itemprop="datePublished">2017-09-27</time>
+    <a href="/2017/10/03/20171003-2/" class="article-date">
+  <time datetime="2017-10-03T09:32:23.000Z" itemprop="datePublished">2017-10-03</time>
 </a>
     
   </div>
@@ -82,7 +82,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      SQL Server License 說明
+      取得 Execute SQL 裡面資料的值
     </h1>
   
 
@@ -90,35 +90,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li><h3 id="SQL-Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準"><a href="#SQL-Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準" class="headerlink" title="SQL Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準"></a>SQL Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準</h3></li>
-<li><h3 id="目前版本為SQL-2016-SQL-2017-on-linux-2017-年底可能會出-，共分為Standard-Enterprise兩個版本"><a href="#目前版本為SQL-2016-SQL-2017-on-linux-2017-年底可能會出-，共分為Standard-Enterprise兩個版本" class="headerlink" title="目前版本為SQL 2016 (SQL 2017 on linux 2017 年底可能會出)，共分為Standard / Enterprise兩個版本"></a>目前版本為SQL 2016 (SQL 2017 on linux 2017 年底可能會出)，共分為Standard / Enterprise兩個版本</h3><ul>
-<li>Standard版 : 有Server + CAL(適合小企業) /  by Core (適合大部分的單位) 兩種採購模式</li>
-<li>Enterprise版 : 只有by Core的計價模式</li>
-</ul>
+        <h3 id="有同事詢問他要如何取得-Exec-t-sql-裡面的值，因為-Exec-與外面是不同的-Scope-所以要取得裡面值有2種情況。"><a href="#有同事詢問他要如何取得-Exec-t-sql-裡面的值，因為-Exec-與外面是不同的-Scope-所以要取得裡面值有2種情況。" class="headerlink" title="有同事詢問他要如何取得 Exec(t-sql) 裡面的值，因為 Exec 與外面是不同的 Scope 所以要取得裡面值有2種情況。"></a>有同事詢問他要如何取得 Exec(t-sql) 裡面的值，因為 Exec 與外面是不同的 Scope 所以要取得裡面值有2種情況。</h3><ul>
+<li><p>Store Procedue ，透過 sp_executesql + 它的 output 參數來取得資料，例如，</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DECLARE</span> @<span class="keyword">sql</span> <span class="keyword">NVARCHAR</span>(<span class="keyword">max</span>), @outputcode <span class="keyword">NVARCHAR</span>(<span class="number">4000</span>);</div><div class="line"><span class="keyword">SET</span> @<span class="keyword">sql</span> = </div><div class="line"><span class="string">'</span></div><div class="line"><span class="string">EXEC SP_GETSERNO @RETURNS=@outputcode output</span></div><div class="line"><span class="string">'</span>;</div><div class="line">exec sp_executesql @sql, N'@outputcode NVARCHAR(4000) out', @outputcode out</div><div class="line"><span class="keyword">SELECT</span> @outputcode;</div></pre></td></tr></table></figure>
 </li>
-<li><h3 id="by-Core的計價模式-基本消費額-4-Core，後續-2-core-2-core加購"><a href="#by-Core的計價模式-基本消費額-4-Core，後續-2-core-2-core加購" class="headerlink" title="by Core的計價模式 : 基本消費額 4 Core，後續 2 core / 2 core加購"></a>by Core的計價模式 : 基本消費額 4 Core，後續 2 core / 2 core加購</h3></li>
-<li><h3 id="若使用實體主機安裝SQL-Server，SQL-License採購-core-數必須等於實體的Server-Core數-不含Hyper-threading模擬出來的-，Microsoft不接受安裝上去只enable-N個core這種說法"><a href="#若使用實體主機安裝SQL-Server，SQL-License採購-core-數必須等於實體的Server-Core數-不含Hyper-threading模擬出來的-，Microsoft不接受安裝上去只enable-N個core這種說法" class="headerlink" title="若使用實體主機安裝SQL Server，SQL License採購 core 數必須等於實體的Server Core數(不含Hyper-threading模擬出來的)，Microsoft不接受安裝上去只enable N個core這種說法"></a>若使用實體主機安裝SQL Server，SQL License採購 core 數必須等於實體的Server Core數(不含Hyper-threading模擬出來的)，Microsoft不接受安裝上去只enable N個core這種說法</h3></li>
-<li><h3 id="Cluster-HA架構"><a href="#Cluster-HA架構" class="headerlink" title="Cluster HA架構"></a>Cluster HA架構</h3><ul>
-<li>在Active / Passive (Standby)架構下，Passive那台SQL一定不可以拿來做做任何事情(ex. 跑Report)，不然就是要收錢</li>
-<li>從SQL 2014版起 (ie, from 2014年底開始) <ul>
-<li>如果客戶單位有和Microsoft簽Software Assurance的約(就是固定繳年費)，Passive (Standby)那台Server是Free的</li>
-<li>如果客戶單位沒有Software Assurance的保護傘，Passive (Standby)那台Server請買與機器相同core數的SQL License</li>
-</ul>
+<li><p>取得 t-sql 裡面的內容，需要先建立 temp table ，或是 TABLE 變數，然後在 Exec 的 t-sql 裡面使用，例如，</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DECLARE</span> @ATT_IDENT <span class="keyword">TABLE</span> (ATT_IDENT <span class="built_in">int</span>);</div><div class="line"><span class="keyword">INSERT</span> @ATT_IDENT</div><div class="line">exec (<span class="string">'SELECT top 1 ATT_IDENT FROM [dbo].[myTable]'</span>);</div><div class="line"><span class="keyword">select</span> * <span class="keyword">FROM</span> @ATT_IDENT;</div></pre></td></tr></table></figure>
 </li>
-<li>工業局共同供應契約的SQL Server License，並不具備Software Assurance的使用權利</li>
-</ul>
+<li><p>透過 OPENQUERY 的方式，詳細可以參考「<a href="https://dotblogs.com.tw/rainmaker/2015/02/02/148355" target="_blank" rel="external">讓 Execute 可以搭配 Select Into，而不再只有 Insert into</a>」</p>
 </li>
 </ul>
-<p>以上感謝 Bobby 大大分享 ^_^   </p>
-
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><h3 id="How-to-set-value-to-variable-using-‘execute’-in-t-sql"><a href="#How-to-set-value-to-variable-using-‘execute’-in-t-sql" class="headerlink" title="How to set value to variable using ‘execute’ in t-sql?"></a><a href="https://stackoverflow.com/questions/7229070/how-to-set-value-to-variable-using-execute-in-t-sql" target="_blank" rel="external">How to set value to variable using ‘execute’ in t-sql?</a></h3><h3 id="讓-Execute-可以搭配-Select-Into，而不再只有-Insert-into"><a href="#讓-Execute-可以搭配-Select-Into，而不再只有-Insert-into" class="headerlink" title="讓 Execute 可以搭配 Select Into，而不再只有 Insert into"></a><a href="https://dotblogs.com.tw/rainmaker/2015/02/02/148355" target="_blank" rel="external">讓 Execute 可以搭配 Select Into，而不再只有 Insert into</a></h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rainmakerho.github.io/2017/09/27/sql2016license/" data-id="cj8bf7ycv0004109jcg6mtuj1" class="article-share-link">Partager</a>
+      <a data-url="https://rainmakerho.github.io/2017/10/03/20171003-2/" data-id="cj8bf7yco0001109jy2uolqn5" class="article-share-link">Partager</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-License/">SQL License</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL援權/">SQL援權</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/How-to-get-value-to-variable-using-execute-in-t-sql/">How to get value to variable using 'execute' in t-sql?</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exec/">exec</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exec-in-t-sql/">exec in t-sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/execute/">execute</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
 
     </footer>
   </div>
@@ -126,15 +115,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/09/29/20170929/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
-      <div class="article-nav-title">
-        
-          升級到 ios 11 後， app 出現無法在 ios 11 執行及無法下載的錯誤
-        
-      </div>
-    </a>
   
+    <a href="/2017/10/03/20171003/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">ASPOSE.Words 產生 中文編號 一、 二、 在 doc 及 odt 的問題</div>
+    </a>
   
 </nav>
 
