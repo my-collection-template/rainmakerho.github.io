@@ -3,21 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>升級到 ios 11 後， app 出現無法在 ios 11 執行及無法下載的錯誤 | 亂馬客</title>
+  <title>Tag: Unexpected error from external database driver (1) | 亂馬客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近同事反應原本運作好好的 app ，在他將 ios 升級到 ios 11 後，就出現無法在 ios 11 上執行。將 Mac 升級到 ios 11 後，透過 VS.NET for Mac 來建置專案時，會出現「ibtoolerror : Compiling IB documents for earlier than iOS 7 is no longer supported.」的錯誤!因為我們原本">
-<meta name="keywords" content="xamarin,ios11,MinimumOSVersion,MtouchArch,Deployment Target,ibtoolerror">
-<meta property="og:type" content="article">
-<meta property="og:title" content="升級到 ios 11 後， app 出現無法在 ios 11 執行及無法下載的錯誤">
-<meta property="og:url" content="https://rainmakerho.github.io/2017/09/29/20170929/index.html">
+  <meta name="description" content="技術、架構只有最適合的方案">
+<meta property="og:type" content="website">
+<meta property="og:title" content="亂馬客">
+<meta property="og:url" content="https://rainmakerho.github.io/tags/Unexpected-error-from-external-database-driver-1/index.html">
 <meta property="og:site_name" content="亂馬客">
-<meta property="og:description" content="最近同事反應原本運作好好的 app ，在他將 ios 升級到 ios 11 後，就出現無法在 ios 11 上執行。將 Mac 升級到 ios 11 後，透過 VS.NET for Mac 來建置專案時，會出現「ibtoolerror : Compiling IB documents for earlier than iOS 7 is no longer supported.」的錯誤!因為我們原本">
-<meta property="og:image" content="https://rainmakerho.github.io/2017/09/29/20170929/xCodeMinimumOSVersion.png">
-<meta property="og:updated_time" content="2017-09-30T01:49:55.280Z">
+<meta property="og:description" content="技術、架構只有最適合的方案">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="升級到 ios 11 後， app 出現無法在 ios 11 執行及無法下載的錯誤">
-<meta name="twitter:description" content="最近同事反應原本運作好好的 app ，在他將 ios 升級到 ios 11 後，就出現無法在 ios 11 上執行。將 Mac 升級到 ios 11 後，透過 VS.NET for Mac 來建置專案時，會出現「ibtoolerror : Compiling IB documents for earlier than iOS 7 is no longer supported.」的錯誤!因為我們原本">
-<meta name="twitter:image" content="https://rainmakerho.github.io/2017/09/29/20170929/xCodeMinimumOSVersion.png">
+<meta name="twitter:title" content="亂馬客">
+<meta name="twitter:description" content="技術、架構只有最適合的方案">
   
     <link rel="alternate" href="/atom.xml" title="亂馬客" type="application/atom+xml">
   
@@ -70,66 +66,39 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-20170929" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/29/20170929/" class="article-date">
-  <time datetime="2017-09-29T09:28:51.000Z" itemprop="datePublished">2017-09-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      升級到 ios 11 後， app 出現無法在 ios 11 執行及無法下載的錯誤
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/10/13/20171013/" class="archive-article-date">
+  <time datetime="2017-10-13T14:02:06.000Z" itemprop="datePublished">Oct 13</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/10/13/20171013/">從外部資料庫驅動程式產生的非預期的錯誤 (1) @ OleDbConnection.Open</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="最近同事反應原本運作好好的-app-，在他將-ios-升級到-ios-11-後，就出現無法在-ios-11-上執行。"><a href="#最近同事反應原本運作好好的-app-，在他將-ios-升級到-ios-11-後，就出現無法在-ios-11-上執行。" class="headerlink" title="最近同事反應原本運作好好的 app ，在他將 ios 升級到 ios 11 後，就出現無法在 ios 11 上執行。"></a>最近同事反應原本運作好好的 app ，在他將 ios 升級到 ios 11 後，就出現無法在 ios 11 上執行。</h4><h4 id="將-Mac-升級到-ios-11-後，透過-VS-NET-for-Mac-來建置專案時，會出現「ibtoolerror-Compiling-IB-documents-for-earlier-than-iOS-7-is-no-longer-supported-」的錯誤"><a href="#將-Mac-升級到-ios-11-後，透過-VS-NET-for-Mac-來建置專案時，會出現「ibtoolerror-Compiling-IB-documents-for-earlier-than-iOS-7-is-no-longer-supported-」的錯誤" class="headerlink" title="將 Mac 升級到 ios 11 後，透過 VS.NET for Mac 來建置專案時，會出現「ibtoolerror : Compiling IB documents for earlier than iOS 7 is no longer supported.」的錯誤!"></a>將 Mac 升級到 ios 11 後，透過 VS.NET for Mac 來建置專案時，會出現「ibtoolerror : Compiling IB documents for earlier than iOS 7 is no longer supported.」的錯誤!</h4><h4 id="因為我們原本的「MinimumOSVersion」是設定成-6-0，在-VS-NET-中的-「Deployment-Target」，還是可以選到-6-0-，但是在-Xcode-9-中，最低的版本只能選到-8-0-，如下圖。"><a href="#因為我們原本的「MinimumOSVersion」是設定成-6-0，在-VS-NET-中的-「Deployment-Target」，還是可以選到-6-0-，但是在-Xcode-9-中，最低的版本只能選到-8-0-，如下圖。" class="headerlink" title="因為我們原本的「MinimumOSVersion」是設定成 6.0，在 VS.NET 中的 「Deployment Target」，還是可以選到 6.0 ，但是在 Xcode 9 中，最低的版本只能選到 8.0 ，如下圖。"></a>因為我們原本的「MinimumOSVersion」是設定成 6.0，在 VS.NET 中的 「Deployment Target」，還是可以選到 6.0 ，但是在 Xcode 9 中，最低的版本只能選到 8.0 ，如下圖。</h4><img src="/2017/09/29/20170929/xCodeMinimumOSVersion.png" alt="xCode Deployment Target" title="xCode Deployment Target">
-<h3 id="設定好-Deployment-Target-後-設定會在-info-plist-中的-MinimumOSVersion-，重新建出-ipa-檔後，請-ios-11-的同事安裝，卻出現-「無法下載-App」的錯誤，但是-ios-10-3-3-版本的卻可以順利安裝。"><a href="#設定好-Deployment-Target-後-設定會在-info-plist-中的-MinimumOSVersion-，重新建出-ipa-檔後，請-ios-11-的同事安裝，卻出現-「無法下載-App」的錯誤，但是-ios-10-3-3-版本的卻可以順利安裝。" class="headerlink" title="設定好 Deployment Target 後( 設定會在 info.plist 中的 MinimumOSVersion )，重新建出 ipa 檔後，請 ios 11 的同事安裝，卻出現 「無法下載 App」的錯誤，但是 ios 10.3.3 版本的卻可以順利安裝。"></a>設定好 Deployment Target 後( 設定會在 info.plist 中的 MinimumOSVersion )，重新建出 ipa 檔後，請 ios 11 的同事安裝，卻出現 「無法下載 App」的錯誤，但是 ios 10.3.3 版本的卻可以順利安裝。</h3><h3 id="在-Updating-Your-App-to-iOS-11-中的-Architecture-Changes-有說明，如下，"><a href="#在-Updating-Your-App-to-iOS-11-中的-Architecture-Changes-有說明，如下，" class="headerlink" title="在  Updating Your App to iOS 11 中的 Architecture Changes 有說明，如下，"></a>在  <a href="https://developer.xamarin.com/guides/ios/platform_features/introduction-to-ios11/updating-your-app/" target="_blank" rel="external">Updating Your App to iOS 11</a> 中的 Architecture Changes 有說明，如下，</h3><blockquote>
-<p>iOS 11 is the deprecation of 32-bit support for apps</p>
-</blockquote>
-<h3 id="再檢查一下-VS-NET-for-Mac-專案屬性-gt-iOS-Build-中-Supported-architectures-居然只設定了-ARMv7-所以將它調整成-ARMv7-ARM64-設定會在-專案-csproj-中的-MtouchArch-，重新建置出-ipa-，就可以在-iOS-8-x-11-安裝了。"><a href="#再檢查一下-VS-NET-for-Mac-專案屬性-gt-iOS-Build-中-Supported-architectures-居然只設定了-ARMv7-所以將它調整成-ARMv7-ARM64-設定會在-專案-csproj-中的-MtouchArch-，重新建置出-ipa-，就可以在-iOS-8-x-11-安裝了。" class="headerlink" title="再檢查一下 VS.NET for Mac 專案屬性 -&gt; iOS Build 中 Supported architectures 居然只設定了 ARMv7 , 所以將它調整成 ARMv7 + ARM64 ( 設定會在 專案.csproj 中的 MtouchArch )，重新建置出 ipa ，就可以在 iOS 8.x ~ 11 安裝了。"></a>再檢查一下 VS.NET for Mac 專案屬性 -&gt; iOS Build 中 Supported architectures 居然只設定了 ARMv7 , 所以將它調整成 ARMv7 + ARM64 ( 設定會在 專案.csproj 中的 MtouchArch )，重新建置出 ipa ，就可以在 iOS 8.x ~ 11 安裝了。</h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://rainmakerho.github.io/2017/09/29/20170929/" data-id="cj8q0a8q90000e89jibf5lg62" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deployment-Target/">Deployment Target</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MinimumOSVersion/">MinimumOSVersion</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MtouchArch/">MtouchArch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ibtoolerror/">ibtoolerror</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios11/">ios11</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xamarin/">xamarin</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/10/03/20171003/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          ASPOSE.Words 產生 中文編號 一、 二、 在 doc 及 odt 的問題
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/09/27/sql2016license/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">SQL Server License 說明</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
 </section>
         
