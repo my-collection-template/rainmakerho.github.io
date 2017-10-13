@@ -92,7 +92,7 @@
       
         <h3 id="今天同事詢問有沒有看過以下的錯誤訊息，"><a href="#今天同事詢問有沒有看過以下的錯誤訊息，" class="headerlink" title="今天同事詢問有沒有看過以下的錯誤訊息，"></a>今天同事詢問有沒有看過以下的錯誤訊息，</h3><p><em><system.data.oledb.oledbexception> 從外部資料庫驅動程式產生的非預期的錯誤 (1)。 [ OleDbException.ErrorCode : -2147467259 ]</system.data.oledb.oledbexception></em></p>
 <p><em>Unexpected error from external database driver (1). (Microsoft JET Database Engine)</em></p>
-<h3 id="程式只是透過-Provider-Microsoft-Jet-OLEDB-4-0-去開啟一個-excel-檔而已，而且同事詢問這個問題後，另一位同事也在詢問相同的問題。"><a href="#程式只是透過-Provider-Microsoft-Jet-OLEDB-4-0-去開啟一個-excel-檔而已，而且同事詢問這個問題後，另一位同事也在詢問相同的問題。" class="headerlink" title="程式只是透過 Provider=Microsoft.Jet.OLEDB.4.0; 去開啟一個 excel 檔而已，而且同事詢問這個問題後，另一位同事也在詢問相同的問題。"></a>程式只是透過 <em>Provider=Microsoft.Jet.OLEDB.4.0;</em> 去開啟一個 excel 檔而已，而且同事詢問這個問題後，另一位同事也在詢問相同的問題。</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> conn = <span class="keyword">new</span> System.Data.OleDb.OleDbConnection(<span class="string">"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\kt\\Documents\\VS Code\\TEST_EXCEL\\aa.xls;Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1;\""</span>);</div><div class="line">conn.Open();</div></pre></td></tr></table></figure>
+<h3 id="程式只是透過-Provider-Microsoft-Jet-OLEDB-4-0-去開啟一個-excel-檔而已，而且同事詢問這個問題後，另一位同事也在詢問相同的問題。"><a href="#程式只是透過-Provider-Microsoft-Jet-OLEDB-4-0-去開啟一個-excel-檔而已，而且同事詢問這個問題後，另一位同事也在詢問相同的問題。" class="headerlink" title="程式只是透過 Provider=Microsoft.Jet.OLEDB.4.0; 去開啟一個 excel 檔而已，而且同事詢問這個問題後，另一位同事也在詢問相同的問題。"></a>程式只是透過 <em>Provider=Microsoft.Jet.OLEDB.4.0;</em> 去開啟一個 excel 檔而已，而且同事詢問這個問題後，另一位同事也在詢問相同的問題。</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> conn = <span class="keyword">new</span> System.Data.OleDb.OleDbConnection(<span class="string">"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\kt\\Documents\\VS Code\\TEST_EXCEL\\aa.xls;Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1;\""</span>);</div><div class="line">conn.Open();</div></pre></td></tr></table></figure>
 <h3 id="但這支程式前陣子用的好好的呀-為什麼今天卻發生了這樣子的錯誤呢"><a href="#但這支程式前陣子用的好好的呀-為什麼今天卻發生了這樣子的錯誤呢" class="headerlink" title="但這支程式前陣子用的好好的呀! 為什麼今天卻發生了這樣子的錯誤呢?"></a>但這支程式前陣子用的好好的呀! 為什麼今天卻發生了這樣子的錯誤呢?</h3><h3 id="於是往-Windows-更新來看，發現有2個更新，如下，"><a href="#於是往-Windows-更新來看，發現有2個更新，如下，" class="headerlink" title="於是往 Windows 更新來看，發現有2個更新，如下，"></a>於是往 Windows 更新來看，發現有2個更新，如下，</h3><img src="/2017/10/13/20171013/windowsUpdate.png" alt="windowsUpdate.png" title="">
 <h3 id="查看一下-kb4041681-裡面有更動到-Microsoft-JET-Database-Engine-而我們就是用它呀-於是將它反安裝後重新開機後，再執行程式就沒問題了。"><a href="#查看一下-kb4041681-裡面有更動到-Microsoft-JET-Database-Engine-而我們就是用它呀-於是將它反安裝後重新開機後，再執行程式就沒問題了。" class="headerlink" title="查看一下 kb4041681 , 裡面有更動到 Microsoft JET Database Engine 而我們就是用它呀~~~ 於是將它反安裝後重新開機後，再執行程式就沒問題了。"></a>查看一下 <a href="https://support.microsoft.com/en-us/help/4041681/windows-7-update-kb4041681" target="_blank" rel="external">kb4041681</a> , 裡面有更動到 <em>Microsoft JET Database Engine</em> 而我們就是用它呀~~~ 於是將它反安裝後重新開機後，再執行程式就沒問題了。</h3><h3 id="Windows-Update-其中的內容如下，"><a href="#Windows-Update-其中的內容如下，" class="headerlink" title="Windows Update 其中的內容如下，"></a>Windows Update 其中的內容如下，</h3><p><em>Security updates to Microsoft Windows Search Component, Windows kernel-mode drivers, Microsoft Graphics Component, Internet Explorer, Windows kernel, Windows Wireless Networking, Microsoft JET Database Engine, and the Windows SMB Server.</em></p>
 <h3 id="目前發現有以下幾個-kb-會影響到，目前就先將它移除，有進一步再跟大伙-Update-哦"><a href="#目前發現有以下幾個-kb-會影響到，目前就先將它移除，有進一步再跟大伙-Update-哦" class="headerlink" title="目前發現有以下幾個 kb 會影響到，目前就先將它移除，有進一步再跟大伙 Update 哦!"></a>目前發現有以下幾個 kb 會影響到，目前就先將它移除，有進一步再跟大伙 Update 哦!</h3><ul>
@@ -110,7 +110,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rainmakerho.github.io/2017/10/13/20171013/" data-id="cj8q0a8qt0005e89jp963bhx7" class="article-share-link">Share</a>
+      <a data-url="https://rainmakerho.github.io/2017/10/13/20171013/" data-id="cj8q0j6sr0005kk9jafnwrfw8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Microsoft-Jet-OLEDB-4-0/">Microsoft.Jet.OLEDB.4.0</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unexpected-error-from-external-database-driver-1/">Unexpected error from external database driver (1)</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kb4041676/">kb4041676</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kb4041678/">kb4041678</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kb4041681/">kb4041681</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kb4041691/">kb4041691</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/外部数据库驱动程序中-1-的意外错误/">外部数据库驱动程序中(1)的意外错误</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/從外部資料庫驅動程式產生的非預期的錯誤-1/">從外部資料庫驅動程式產生的非預期的錯誤 (1)</a></li></ul>
@@ -155,7 +155,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rainmakerho.github.io/2017/10/05/20171005/" data-id="cj8q0a8qt0004e89jpclntzmp" class="article-share-link">Share</a>
+      <a data-url="https://rainmakerho.github.io/2017/10/05/20171005/" data-id="cj8q0j6sc0004kk9j7lrixt3x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/com-apple-CoreSimulator-SimDeviceType-undefined/">com.apple.CoreSimulator.SimDeviceType.undefined</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cordova/">cordova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios-11/">ios 11</a></li></ul>
@@ -206,7 +206,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rainmakerho.github.io/2017/10/03/20171003-2/" data-id="cj8q0a8qh0001e89j6qwl52il" class="article-share-link">Share</a>
+      <a data-url="https://rainmakerho.github.io/2017/10/03/20171003-2/" data-id="cj8q0j6sc0001kk9j9n82jgaw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/How-to-get-value-to-variable-using-execute-in-t-sql/">How to get value to variable using 'execute' in t-sql?</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exec/">exec</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exec-in-t-sql/">exec in t-sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/execute/">execute</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
@@ -248,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rainmakerho.github.io/2017/10/03/20171003/" data-id="cj8q0a8ql0003e89jtnuye0d5" class="article-share-link">Share</a>
+      <a data-url="https://rainmakerho.github.io/2017/10/03/20171003/" data-id="cj8q0j6sc0003kk9jkify1lxp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NumberStyle/">NumberStyle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TradChinNum3/">TradChinNum3</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aspose-words/">aspose.words</a></li></ul>
@@ -290,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rainmakerho.github.io/2017/09/29/20170929/" data-id="cj8q0a8q90000e89jibf5lg62" class="article-share-link">Share</a>
+      <a data-url="https://rainmakerho.github.io/2017/09/29/20170929/" data-id="cj8q0j6sc0000kk9j4698q0wn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deployment-Target/">Deployment Target</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MinimumOSVersion/">MinimumOSVersion</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MtouchArch/">MtouchArch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ibtoolerror/">ibtoolerror</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios11/">ios11</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xamarin/">xamarin</a></li></ul>
@@ -349,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rainmakerho.github.io/2017/09/27/sql2016license/" data-id="cj8q0a8qx0007e89jlwiwwkgn" class="article-share-link">Share</a>
+      <a data-url="https://rainmakerho.github.io/2017/09/27/sql2016license/" data-id="cj8q0j6sr0007kk9jiwjipeq1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-License/">SQL License</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL援權/">SQL援權</a></li></ul>
