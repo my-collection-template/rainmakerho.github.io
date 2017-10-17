@@ -3,17 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: MinimumOSVersion | 亂馬客</title>
+  <title>Add a profile to the provisioningProfiles dictionary in your Export Options property list. | 亂馬客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="技術、架構只有最適合的方案">
-<meta property="og:type" content="website">
-<meta property="og:title" content="亂馬客">
-<meta property="og:url" content="https://rainmakerho.github.io/tags/MinimumOSVersion/index.html">
+  <meta name="description" content="最近透過 xcodebuild 來產生 ipa 檔時，以下的錯誤，error: exportArchive: …app requires a provisioning profile.Error Domain=IDEProvisioningErrorDomain Code=9 …requires a provisioning profile. …NSLocalizedRecoverySuggest">
+<meta name="keywords" content="xcodebuild,exportArchive,exportOptionsPlist,Export Options property list,provisioningProfiles,Xcode 9,ios">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Add a profile to the provisioningProfiles dictionary in your Export Options property list.">
+<meta property="og:url" content="https://rainmakerho.github.io/2017/10/17/20171017/index.html">
 <meta property="og:site_name" content="亂馬客">
-<meta property="og:description" content="技術、架構只有最適合的方案">
+<meta property="og:description" content="最近透過 xcodebuild 來產生 ipa 檔時，以下的錯誤，error: exportArchive: …app requires a provisioning profile.Error Domain=IDEProvisioningErrorDomain Code=9 …requires a provisioning profile. …NSLocalizedRecoverySuggest">
+<meta property="og:image" content="https://rainmakerho.github.io/2017/10/17/20171017/exportArchiveFail.png">
+<meta property="og:image" content="https://rainmakerho.github.io/2017/10/17/20171017/exportOptionsPlist.png">
+<meta property="og:updated_time" content="2017-10-17T05:34:31.137Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="亂馬客">
-<meta name="twitter:description" content="技術、架構只有最適合的方案">
+<meta name="twitter:title" content="Add a profile to the provisioningProfiles dictionary in your Export Options property list.">
+<meta name="twitter:description" content="最近透過 xcodebuild 來產生 ipa 檔時，以下的錯誤，error: exportArchive: …app requires a provisioning profile.Error Domain=IDEProvisioningErrorDomain Code=9 …requires a provisioning profile. …NSLocalizedRecoverySuggest">
+<meta name="twitter:image" content="https://rainmakerho.github.io/2017/10/17/20171017/exportArchiveFail.png">
   
     <link rel="alternate" href="/atom.xml" title="亂馬客" type="application/atom+xml">
   
@@ -66,39 +71,77 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/29/20170929/" class="archive-article-date">
-  <time datetime="2017-09-29T09:28:51.000Z" itemprop="datePublished">Sep 29</time>
+        <section id="main"><article id="post-20171017" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/17/20171017/" class="article-date">
+  <time datetime="2017-10-17T05:10:42.000Z" itemprop="datePublished">2017-10-17</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/29/20170929/">升級到 ios 11 後， app 出現無法在 ios 11 執行及無法下載的錯誤</a>
+    <h1 class="article-title" itemprop="name">
+      Add a profile to the provisioningProfiles dictionary in your Export Options property list.
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="最近透過-xcodebuild-來產生-ipa-檔時，以下的錯誤，"><a href="#最近透過-xcodebuild-來產生-ipa-檔時，以下的錯誤，" class="headerlink" title="最近透過 xcodebuild 來產生 ipa 檔時，以下的錯誤，"></a>最近透過 xcodebuild 來產生 ipa 檔時，以下的錯誤，</h3><p><em>error: exportArchive: …app requires a provisioning profile.</em><br><em>Error Domain=IDEProvisioningErrorDomain Code=9 …requires a provisioning profile. …NSLocalizedRecoverySuggestion=Add a profile to the “provisioningProfiles” dictionary in your Export Options property list.}</em></p>
+<img src="/2017/10/17/20171017/exportArchiveFail.png" alt="exportArchiveFail.png" title="">
+<h3 id="原來是因為-xCode-9-的-export-Options-plist-檔中需要再指定-provisioningProfiles-相關資料，內容如下圖，"><a href="#原來是因為-xCode-9-的-export-Options-plist-檔中需要再指定-provisioningProfiles-相關資料，內容如下圖，" class="headerlink" title="原來是因為 xCode 9 的 export Options plist 檔中需要再指定 provisioningProfiles 相關資料，內容如下圖，"></a>原來是因為 xCode 9 的 export Options plist 檔中需要再指定 <em>provisioningProfiles</em> 相關資料，內容如下圖，</h3><img src="/2017/10/17/20171017/exportOptionsPlist.png" alt="exportOptionsPlist.png" title="">
+<h3 id="最簡單的方式可以參考-New-export-options-Plist-in-Xcode-9-的方式，先透過-Xcode-產生-ipa-後，在-ipa-的目錄中會有-ExportOptions-plist-檔案，直接將它拿來用就可以了哦"><a href="#最簡單的方式可以參考-New-export-options-Plist-in-Xcode-9-的方式，先透過-Xcode-產生-ipa-後，在-ipa-的目錄中會有-ExportOptions-plist-檔案，直接將它拿來用就可以了哦" class="headerlink" title="最簡單的方式可以參考 New export options Plist in Xcode 9 的方式，先透過 Xcode 產生 ipa 後，在 ipa 的目錄中會有 ExportOptions.plist 檔案，直接將它拿來用就可以了哦!"></a>最簡單的方式可以參考 <a href="https://blog.bitrise.io/new-export-options-plist-in-xcode-9" target="_blank" rel="external">New export options Plist in Xcode 9</a> 的方式，先透過 Xcode 產生 ipa 後，在 ipa 的目錄中會有 <em>ExportOptions.plist</em> 檔案，直接將它拿來用就可以了哦!</h3><h2 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h2><ul>
+<li><p><a href="http://www.matrixprojects.net/p/xcodebuild-export-options-plist/" target="_blank" rel="external">xcodebuild’s new exportOptionsPlist flag</a></p>
+</li>
+<li><p><a href="https://blog.bitrise.io/new-export-options-plist-in-xcode-9" target="_blank" rel="external">New export options Plist in Xcode 9</a></p>
+</li>
+<li><p><a href="https://stackoverflow.com/questions/39674237/xcrun-command-to-export-ipa-file-xcode8-for-iphoneos10-0" target="_blank" rel="external">xcrun command to export ipa file xcode8 for iphoneos10.0</a></p>
+</li>
+<li><p><a href="https://medium.com/xcblog/xcodebuild-deploy-ios-app-from-command-line-c6defff0d8b8" target="_blank" rel="external">xcodebuild: Deploy iOS app from Command Line</a></p>
+</li>
+<li><p><a href="http://www.jianshu.com/p/88d9f2e57004" target="_blank" rel="external">xcodebuild命令简单使用</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://rainmakerho.github.io/2017/10/17/20171017/" data-id="cj8v64fv10004ss9jv1nxosc1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Export-Options-property-list/">Export Options property list</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xcode-9/">Xcode 9</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exportArchive/">exportArchive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exportOptionsPlist/">exportOptionsPlist</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/provisioningProfiles/">provisioningProfiles</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xcodebuild/">xcodebuild</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/10/17/20171017-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Compiling IB documents for earlier than iOS 7 is no longer supported.
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/13/20171013/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">從外部資料庫驅動程式產生的非預期的錯誤 (1) @ OleDbConnection.Open</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         
