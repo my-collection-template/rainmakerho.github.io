@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://rainmakerho.github.io/2017/12/18/2017017/devtool_s.png">
 <meta property="og:image" content="https://rainmakerho.github.io/2017/12/18/2017017/sw-cache.png">
 <meta property="og:image" content="https://rainmakerho.github.io/2017/12/18/2017017/sw-offline.png">
-<meta property="og:updated_time" content="2017-12-18T09:46:06.757Z">
+<meta property="og:updated_time" content="2017-12-18T10:04:25.880Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Service Worker @ Angular">
 <meta name="twitter:description" content="一般的 Web 應用程式，如果 Server 端連不上了，就會直接 GG (在 Chrome 上 恐龍就出現了)。是否有什麼方式在 Client 端程式與 Server 端之間有一個 Buffer 呢?讓應用系統會整個 GG 呢? 答案就是 Service Worker 。 Service Worker 就像是一個 Middleware 一樣，在 Client 端程式與 Server 端之間，如下">
@@ -184,7 +184,7 @@
 <p>2.在 .angular-cli.json 中 Apps -&gt; assets 中加入 sw.js。<br><img src="/2017/12/18/2017017/cliJSON.png" alt=".angular-cli.json" title=".angular-cli.json"></p>
 <p>3.main.ts 註冊 service worker (sw.js)。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">platformBrowserDynamic()</div><div class="line">    .bootstrapModule(AppModule)</div><div class="line">    .then(<span class="function"><span class="params">_</span> =&gt;</span> &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="string">'serviceWorker'</span> <span class="keyword">in</span> navigator) &#123;</div><div class="line">            navigator.serviceWorker</div><div class="line">                .register(<span class="string">'/sw.js'</span>, &#123;  <span class="attr">scope</span>: <span class="string">'/’ &#125;)</span></div><div class="line"><span class="string">                .then(reg =&gt; &#123;console.log('</span>Service worker Registered!’); &#125;)</div><div class="line">                .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123; <span class="built_in">console</span>.log(<span class="string">'Service Worker Registration Failed:'</span>, err);&#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(err));</div></pre></td></tr></table></figure>
-<h4 id="那-Service-Worker-要寫些什麼呢"><a href="#那-Service-Worker-要寫些什麼呢" class="headerlink" title="那 Service Worker 要寫些什麼呢?"></a>那 Service Worker 要寫些什麼呢?</h4><p>它是 event base 的，而它的各 event 可以參考以下的圖，<br><img src="/2017/12/18/2017017/sw-lifecycle.png" alt="Service Worker Events" title="Service Worker Events"><br>舉個簡單的例子，在 Angular 首頁中讀取 /api/lessons 的課程資料下來呈現，如下圖，<br><img src="/2017/12/18/2017017/webap.png" alt="SampleWebAp" title="SampleWebAp"></p>
+<h4 id="那-Service-Worker-要寫些什麼呢"><a href="#那-Service-Worker-要寫些什麼呢" class="headerlink" title="那 Service Worker 要寫些什麼呢?"></a>那 Service Worker 要寫些什麼呢?</h4><p>它是 event base 的，而它的 event Life Cycle 可以參考以下的圖，<br><img src="/2017/12/18/2017017/sw-lifecycle.png" alt="Service Worker Life Cyclevents" title="Service Worker Life Cyclevents"><br>舉個簡單的例子，在 Angular 首頁中讀取 /api/lessons 的課程資料下來呈現，如下圖，<br><img src="/2017/12/18/2017017/webap.png" alt="SampleWebAp" title="SampleWebAp"></p>
 <p>所以在 Service Worker (sw.js) 中就可以在 install event 中將這些 Resource 存到 Cache 之中。在 fetch event 中，就從 Cache 中取得這些 Resource，如下，</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> VERSION = <span class="string">'v1'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">...messages</span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(VERSION, ...messages);</div><div class="line">&#125;</div><div class="line"></div><div class="line">log(<span class="string">'Installing Service Worker'</span>);</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'install'</span>, event =&gt; &#123;</div><div class="line">	log(<span class="string">'version is installed'</span>);</div><div class="line">	event.waitUntil(installServiceWorker());</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">installServiceWorker</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	log(<span class="string">'Service Worker installation started!'</span>);</div><div class="line">	<span class="keyword">const</span> cache = <span class="keyword">await</span> caches.open(getCacheName());</div><div class="line">	<span class="keyword">return</span> cache.addAll([</div><div class="line">		<span class="string">'/'</span>,</div><div class="line">		<span class="string">'/polyfills.bundle.js'</span>,</div><div class="line">		<span class="string">'/inline.bundle.js'</span>,</div><div class="line">		<span class="string">'/styles.bundle.js'</span>,</div><div class="line">		<span class="string">'/vendor.bundle.js'</span>,</div><div class="line">		<span class="string">'/main.bundle.js'</span>,</div><div class="line">		<span class="string">'/api/lessons'</span></div><div class="line">	]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCacheName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="string">`app-cache-<span class="subst">$&#123;VERSION&#125;</span>`</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'activate'</span>, () =&gt; activateSW());</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">activateSW</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	log(<span class="string">'service worker activating ...*** '</span>);</div><div class="line">	<span class="keyword">const</span> cacheKeys = <span class="keyword">await</span> caches.keys();</div><div class="line">	cacheKeys.forEach(<span class="function"><span class="params">cacheKey</span> =&gt;</span> &#123;</div><div class="line">		<span class="keyword">if</span> (cacheKey !== getCacheName()) &#123;</div><div class="line">			caches.delete(cacheKey);</div><div class="line">		&#125;</div><div class="line">	&#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'fetch'</span>, event =&gt; &#123;</div><div class="line">	log(<span class="string">'version is ftech'</span>);</div><div class="line">	event.respondWith(cacheThenNetwork(event));</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">cacheThenNetwork</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">	<span class="keyword">const</span> cache = <span class="keyword">await</span> caches.open(getCacheName());</div><div class="line"></div><div class="line">	<span class="keyword">const</span> cacheResponse = <span class="keyword">await</span> cache.match(event.request);</div><div class="line">	<span class="keyword">if</span> (cacheResponse) &#123;</div><div class="line">		log(<span class="string">'From Cache:'</span>, event.request.url);</div><div class="line">		<span class="keyword">return</span> cacheResponse;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">const</span> networkResponse = fetch(event.request);</div><div class="line">	log(<span class="string">'Calling network:'</span>, event.request.url);</div><div class="line">	<span class="keyword">return</span> networkResponse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>所以從開發工具的 Application (左邊選 Service Workers)可以發現，sw.js 已經 activated 及 running ，在 Cache Storage 也儲存我們要 Cache 的資源 。如下圖，<br><img src="/2017/12/18/2017017/devtool_s.png" alt="DevTool Service Workers" title="DevTool Service Workers"><br><img src="/2017/12/18/2017017/sw-cache.png" alt="DevTool Service Workers Cache" title="DevTool Service Workers Cache"></p>
@@ -420,46 +420,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Aspose.Words</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PDF</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CompatibilityOptions</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GrowAutofit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">DocumentBuilder</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">InsertHtml</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">deadlock</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">交換事件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">exchangeEvent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">log4net</a>
               </li>
              
@@ -484,19 +444,51 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">deadlock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">交換事件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">exchangeEvent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Aspose.Words</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PDF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">CompatibilityOptions</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GrowAutofit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">DocumentBuilder</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">InsertHtml</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">mac</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">scrollbar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,30 +524,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xamarin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ios11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">MinimumOSVersion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MtouchArch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Deployment Target</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ibtoolerror</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Windows 10 IoT Core</a>
               </li>
              
@@ -580,27 +548,35 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+                <a href="javascript:void(0)" class="js-tag color3">xamarin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
+                <a href="javascript:void(0)" class="js-tag color1">ios11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NumberStyle</a>
+                <a href="javascript:void(0)" class="js-tag color2">MinimumOSVersion</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">TradChinNum3</a>
+                <a href="javascript:void(0)" class="js-tag color1">MtouchArch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Deployment Target</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ibtoolerror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -621,6 +597,30 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">How to get value to variable using 'execute' in t-sql?</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NumberStyle</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">TradChinNum3</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -661,6 +661,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -721,10 +725,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
             
             <div class="clearfix"></div>

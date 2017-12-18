@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/12/18/2017017/</loc>
-    <lastmod>2017-12-18T09:46:06.757Z</lastmod>
+    <lastmod>2017-12-18T10:04:25.880Z</lastmod>
     <data>
         <display>
         <title>Service Worker @ Angular</title>
