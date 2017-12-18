@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://rainmakerho.github.io">
-  <title>亂馬客</title>
+  <title>亂馬客 - 技術得來速</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="技術、架構只有最適合的方案">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验,chatbot,botframework,angular,.net">
 <meta property="og:type" content="website">
-<meta property="og:title" content="亂馬客">
+<meta property="og:title" content="亂馬客 - 技術得來速">
 <meta property="og:url" content="https://rainmakerho.github.io/page/2/index.html">
-<meta property="og:site_name" content="亂馬客">
+<meta property="og:site_name" content="亂馬客 - 技術得來速">
 <meta property="og:description" content="技術、架構只有最適合的方案">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="亂馬客">
+<meta name="twitter:title" content="亂馬客 - 技術得來速">
 <meta name="twitter:description" content="技術、架構只有最適合的方案">
   
-    <link rel="alternative" href="/atom.xml" title="亂馬客" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亂馬客 - 技術得來速" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -148,6 +148,114 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-20171027" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/27/20171027/">透過 SmtpClient 寄送 Mail 時，主旨在 Zimbra 會有 ? 的狀況</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/27/20171027/" class="archive-article-date">
+  	<time datetime="2017-10-27T03:21:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="最近同事詢問透過-SmtpClient-去寄送-Mail-時，在-Zimbra-的-Web-界面看會有-的狀況，如下圖，"><a href="#最近同事詢問透過-SmtpClient-去寄送-Mail-時，在-Zimbra-的-Web-界面看會有-的狀況，如下圖，" class="headerlink" title="最近同事詢問透過 SmtpClient 去寄送 Mail 時，在 Zimbra 的 Web 界面看會有 ? 的狀況，如下圖，"></a>最近同事詢問透過 <a href="https://msdn.microsoft.com/zh-tw/library/system.net.mail.smtpclient" target="_blank" rel="external">SmtpClient</a> 去寄送 Mail 時，在 Zimbra 的 Web 界面看會有 ? 的狀況，如下圖，</h3><img src="/2017/10/27/20171027/001.png" alt="slug" title="slug">
+<h3 id="觀察發現，當主旨太長時才會有這個問題。在-Zimbra-中檢查-Mail-的內容，發現主旨被切分成多段，如下圖，"><a href="#觀察發現，當主旨太長時才會有這個問題。在-Zimbra-中檢查-Mail-的內容，發現主旨被切分成多段，如下圖，" class="headerlink" title="觀察發現，當主旨太長時才會有這個問題。在 Zimbra 中檢查 Mail 的內容，發現主旨被切分成多段，如下圖，"></a>觀察發現，當主旨太長時才會有這個問題。在 Zimbra 中檢查 Mail 的內容，發現主旨被切分成多段，如下圖，</h3><img src="/2017/10/27/20171027/002.png" alt="slug" title="slug">
+<h3 id="而那些再透過-Base64-轉回來，的確會有-的狀況，看起來應該是-MailMessage-在切分時剛好切到一半所造成的，如下圖，"><a href="#而那些再透過-Base64-轉回來，的確會有-的狀況，看起來應該是-MailMessage-在切分時剛好切到一半所造成的，如下圖，" class="headerlink" title="而那些再透過 Base64 轉回來，的確會有 ? 的狀況，看起來應該是 MailMessage 在切分時剛好切到一半所造成的，如下圖，"></a>而那些再透過 Base64 轉回來，的確會有 ? 的狀況，看起來應該是 MailMessage 在切分時剛好切到一半所造成的，如下圖，</h3><img src="/2017/10/27/20171027/004.png" alt="slug" title="slug">
+<h3 id="但是這樣子的狀況，在-outlook-來看卻是沒問的哦-如下圖，"><a href="#但是這樣子的狀況，在-outlook-來看卻是沒問的哦-如下圖，" class="headerlink" title="但是這樣子的狀況，在 outlook 來看卻是沒問的哦~~~ 如下圖，"></a>但是這樣子的狀況，在 outlook 來看卻是沒問的哦~~~ 如下圖，</h3><img src="/2017/10/27/20171027/003.png" alt="slug" title="slug">
+<h3 id="在網路上查到-4-0-SMTPClient-Send-Attachments-mit-Umlauten-im-Dateinamen-，它指出-Base64-會每-30-個字切成一段去串，QuotedPrintable-則是每-76-個字去切。-而我們的狀況似乎是因為它是將字串轉成-Base64-去切，所以會有切到一半的狀況。"><a href="#在網路上查到-4-0-SMTPClient-Send-Attachments-mit-Umlauten-im-Dateinamen-，它指出-Base64-會每-30-個字切成一段去串，QuotedPrintable-則是每-76-個字去切。-而我們的狀況似乎是因為它是將字串轉成-Base64-去切，所以會有切到一半的狀況。" class="headerlink" title="在網路上查到 4.0 SMTPClient.Send Attachments mit Umlauten im Dateinamen ，它指出 Base64 會每 30 個字切成一段去串，QuotedPrintable 則是每 76 個字去切。 而我們的狀況似乎是因為它是將字串轉成 Base64 去切，所以會有切到一半的狀況。"></a>在網路上查到 <a href="https://social.msdn.microsoft.com/Forums/en-US/b6c764f7-4697-4394-b45f-128a24306d55/40-smtpclientsend-attachments-mit-umlauten-im-dateinamen?forum=dotnetframeworkde" target="_blank" rel="external">4.0 SMTPClient.Send Attachments mit Umlauten im Dateinamen</a> ，它指出 Base64 會每 30 個字切成一段去串，QuotedPrintable 則是每 76 個字去切。 而我們的狀況似乎是因為它是將字串轉成 Base64 去切，所以會有切到一半的狀況。</h3><h3 id="所以我們可以調整他的做法，將原始的字串依-7-個字串先切開再串接即可，如下，"><a href="#所以我們可以調整他的做法，將原始的字串依-7-個字串先切開再串接即可，如下，" class="headerlink" title="所以我們可以調整他的做法，將原始的字串依 7 個字串先切開再串接即可，如下，"></a>所以我們可以調整他的做法，將原始的字串依 7 個字串先切開再串接即可，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EmailHeaderHelper</span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">ToBase64</span>(<span class="params"><span class="keyword">string</span> displayName</span>)</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">string</span> tranferEncodingMarker = String.Empty;</div><div class="line">		<span class="keyword">string</span> encodingMarker = String.Empty;</div><div class="line">		<span class="keyword">int</span> maxChunkLength = <span class="number">0</span>;</div><div class="line"></div><div class="line">		tranferEncodingMarker = <span class="string">"B"</span>;</div><div class="line">		encodingMarker = <span class="string">"UTF-8"</span>;</div><div class="line">		maxChunkLength = <span class="number">30</span> / <span class="number">4</span>;</div><div class="line"></div><div class="line">		<span class="keyword">string</span> encodingtoken = String.Format(<span class="string">"=?&#123;0&#125;?&#123;1&#125;?"</span>, encodingMarker, tranferEncodingMarker);</div><div class="line">		<span class="keyword">string</span> softbreak = <span class="string">"?="</span>;</div><div class="line">		<span class="keyword">var</span> encodeDisplayName = <span class="keyword">new</span> StringBuilder();</div><div class="line"></div><div class="line">		<span class="keyword">foreach</span> (<span class="function"><span class="keyword">var</span> splitItem <span class="keyword">in</span> <span class="title">SplitByLength</span>(<span class="params">displayName, maxChunkLength</span>))</span></div><div class="line"><span class="function">		</span>&#123;</div><div class="line">			encodeDisplayName.Append(encodingtoken);</div><div class="line">			encodeDisplayName.Append(Convert.ToBase64String(Encoding.UTF8.GetBytes(splitItem)));</div><div class="line">			encodeDisplayName.Append(softbreak);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> encodeDisplayName.ToString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> IEnumerable&lt;<span class="keyword">string</span>&gt; <span class="title">SplitByLength</span>(<span class="params"><span class="keyword">string</span> stringToSplit, <span class="keyword">int</span> length</span>)</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">while</span> (stringToSplit.Length &gt; length)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">yield</span> <span class="keyword">return</span> stringToSplit.Substring(<span class="number">0</span>, length);</div><div class="line">			stringToSplit = stringToSplit.Substring(length);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (stringToSplit.Length &gt; <span class="number">0</span>) <span class="keyword">yield</span> <span class="keyword">return</span> stringToSplit;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="所以使用如下，"><a href="#所以使用如下，" class="headerlink" title="所以使用如下，"></a>所以使用如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">string</span> subject = <span class="string">"華華華(華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華"</span>;</div><div class="line">message.Subject = EmailHeaderHelper.ToBase64(subject);</div></pre></td></tr></table></figure>
+<h3 id="不過筆者發現，如果您有-2-個-utf-8-B-的話，-NET-的-Mail-元件似乎也不會自動去幫你切斷，所以另個寫法是自已串-Base64-的字串後，再串一個空的-utf-8-B-，如下，"><a href="#不過筆者發現，如果您有-2-個-utf-8-B-的話，-NET-的-Mail-元件似乎也不會自動去幫你切斷，所以另個寫法是自已串-Base64-的字串後，再串一個空的-utf-8-B-，如下，" class="headerlink" title="不過筆者發現，如果您有 2 個 =?utf-8?B? 的話， .NET 的 Mail 元件似乎也不會自動去幫你切斷，所以另個寫法是自已串 Base64 的字串後，再串一個空的 =?utf-8?B? ，如下，"></a>不過筆者發現，如果您有 2 個 <em>=?utf-8?B?</em> 的話， .NET 的 Mail 元件似乎也不會自動去幫你切斷，所以另個寫法是自已串 Base64 的字串後，再串一個空的 <em>=?utf-8?B?</em> ，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">string</span> subject = <span class="string">"華華華(華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華"</span>;</div><div class="line"><span class="keyword">byte</span>[] subjectBytes = Encoding.GetEncoding(<span class="string">"utf-8"</span>).GetBytes(subject);</div><div class="line"><span class="keyword">string</span> subjectBase64 = <span class="string">"=?utf-8?B?"</span> + Convert.ToBase64String(subjectBytes) + <span class="string">"?="</span>;</div><div class="line"><span class="comment">//多加一個空的 =?utf-8?B??= ，就不會再被切開了</span></div><div class="line">subjectBase64 += <span class="string">"=?utf-8?B??="</span>;</div><div class="line">message.Subject = subjectBase64;</div></pre></td></tr></table></figure>
+<img src="/2017/10/27/20171027/005.png" alt="slug" title="slug">
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://social.msdn.microsoft.com/Forums/en-US/b6c764f7-4697-4394-b45f-128a24306d55/40-smtpclientsend-attachments-mit-umlauten-im-dateinamen?forum=dotnetframeworkde" target="_blank" rel="external">4.0 SMTPClient.Send Attachments mit Umlauten im Dateinamen</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SMTPClient</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MailMessage</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Subject</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">?號</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Multiple</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">=?utf-8?B?</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Attachments</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/27/20171027/">展開全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-20171017-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -862,107 +970,9 @@
 
 
   
-    <article id="post-sql2016license" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/27/sql2016license/">SQL Server License 說明</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/27/sql2016license/" class="archive-article-date">
-  	<time datetime="2017-09-27T05:22:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><h3 id="SQL-Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準"><a href="#SQL-Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準" class="headerlink" title="SQL Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準"></a>SQL Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準</h3></li>
-<li><h3 id="目前版本為SQL-2016-SQL-2017-on-linux-2017-年底可能會出-，共分為Standard-Enterprise兩個版本"><a href="#目前版本為SQL-2016-SQL-2017-on-linux-2017-年底可能會出-，共分為Standard-Enterprise兩個版本" class="headerlink" title="目前版本為SQL 2016 (SQL 2017 on linux 2017 年底可能會出)，共分為Standard / Enterprise兩個版本"></a>目前版本為SQL 2016 (SQL 2017 on linux 2017 年底可能會出)，共分為Standard / Enterprise兩個版本</h3><ul>
-<li>Standard版 : 有Server + CAL(適合小企業) /  by Core (適合大部分的單位) 兩種採購模式</li>
-<li>Enterprise版 : 只有by Core的計價模式</li>
-</ul>
-</li>
-<li><h3 id="by-Core的計價模式-基本消費額-4-Core，後續-2-core-2-core加購"><a href="#by-Core的計價模式-基本消費額-4-Core，後續-2-core-2-core加購" class="headerlink" title="by Core的計價模式 : 基本消費額 4 Core，後續 2 core / 2 core加購"></a>by Core的計價模式 : 基本消費額 4 Core，後續 2 core / 2 core加購</h3></li>
-<li><h3 id="若使用實體主機安裝SQL-Server，SQL-License採購-core-數必須等於實體的Server-Core數-不含Hyper-threading模擬出來的-，Microsoft不接受安裝上去只enable-N個core這種說法"><a href="#若使用實體主機安裝SQL-Server，SQL-License採購-core-數必須等於實體的Server-Core數-不含Hyper-threading模擬出來的-，Microsoft不接受安裝上去只enable-N個core這種說法" class="headerlink" title="若使用實體主機安裝SQL Server，SQL License採購 core 數必須等於實體的Server Core數(不含Hyper-threading模擬出來的)，Microsoft不接受安裝上去只enable N個core這種說法"></a>若使用實體主機安裝SQL Server，SQL License採購 core 數必須等於實體的Server Core數(不含Hyper-threading模擬出來的)，Microsoft不接受安裝上去只enable N個core這種說法</h3></li>
-<li><h3 id="Cluster-HA架構"><a href="#Cluster-HA架構" class="headerlink" title="Cluster HA架構"></a>Cluster HA架構</h3><ul>
-<li>在Active / Passive (Standby)架構下，Passive那台SQL一定不可以拿來做做任何事情(ex. 跑Report)，不然就是要收錢</li>
-<li>從SQL 2014版起 (ie, from 2014年底開始) <ul>
-<li>如果客戶單位有和Microsoft簽Software Assurance的約(就是固定繳年費)，Passive (Standby)那台Server是Free的</li>
-<li>如果客戶單位沒有Software Assurance的保護傘，Passive (Standby)那台Server請買與機器相同core數的SQL License</li>
-</ul>
-</li>
-<li>工業局共同供應契約的SQL Server License，並不具備Software Assurance的使用權利</li>
-</ul>
-</li>
-</ul>
-<p>以上感謝 Bobby 大大分享 ^_^   </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SQL License</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SQL援權</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/27/sql2016license/">展開全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1081,6 +1091,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">deadlock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">交換事件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">exchangeEvent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">log4net</a>
               </li>
              
@@ -1105,22 +1131,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">deadlock</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">交換事件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">exchangeEvent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">mac</a>
               </li>
              
@@ -1129,43 +1139,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Windows 10 IoT Core</a>
+                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Shutdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Restart</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">iot:Capability</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">systemManagement</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C00CE014</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">404</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
+                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1182,6 +1160,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Concurrent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">404</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1209,6 +1203,54 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Windows 10 IoT Core</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Shutdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Restart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">iot:Capability</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">systemManagement</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C00CE014</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NumberStyle</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">TradChinNum3</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">exec in t-sql</a>
               </li>
              
@@ -1226,38 +1268,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">How to get value to variable using 'execute' in t-sql?</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NumberStyle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">TradChinNum3</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1294,6 +1304,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1355,6 +1369,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -1406,6 +1424,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           
             <li class="search-li">
               <a href="https://dotblogs.com.tw/rainmaker" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>亂馬客-點部落</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="https://www.pluralsight.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>pluralsight</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="https://www.wintellectnow.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>wintellectnow</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://www.gss.com.tw/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>叡揚資訊</a>
             </li>
           
         </ul>

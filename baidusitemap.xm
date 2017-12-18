@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2017/12/18/2017017/</loc>
+    <lastmod>2017-12-18T09:46:06.757Z</lastmod>
+    <data>
+        <display>
+        <title>Service Worker @ Angular</title>
+        <pubTime>2017-12-18T08:26:51.000Z</pubTime>
+        
+        <tag>Angular</tag>
+         
+        <tag>Service Worker</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2017/09/29/20170929/</loc>
     <lastmod>2017-12-11T10:02:19.548Z</lastmod>
     <data>
