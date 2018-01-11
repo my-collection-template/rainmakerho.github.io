@@ -157,7 +157,8 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2017017" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2017017" class="article article-type-post "
+  itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -168,16 +169,18 @@
     </h1>
   
 
-        
-        <a href="/2017/12/18/2017017/" class="archive-article-date">
+          
+            <a href="/2017/12/18/2017017/" class="archive-article-date">
   	<time datetime="2017-12-18T08:26:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-18</time>
 </a>
-        
+              
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p>一般的 Web 應用程式，如果 Server 端連不上了，就會直接 GG (在 Chrome 上 恐龍就出現了)。是否有什麼方式在 Client 端程式與 Server 端之間有一個 Buffer 呢?<br>讓應用系統會整個 GG 呢? 答案就是 <a href="https://developers.google.com/web/fundamentals/primers/service-workers/" target="_blank" rel="external">Service Worker</a> 。</p>
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                        <p>一般的 Web 應用程式，如果 Server 端連不上了，就會直接 GG (在 Chrome 上 恐龍就出現了)。是否有什麼方式在 Client 端程式與 Server 端之間有一個 Buffer 呢?<br>讓應用系統會整個 GG 呢? 答案就是 <a href="https://developers.google.com/web/fundamentals/primers/service-workers/" target="_blank" rel="external">Service Worker</a> 。</p>
 <p>Service Worker 就像是一個 Middleware 一樣，在 Client 端程式與 Server 端之間，如下圖所示，<br><img src="/2017/12/18/2017017/serviceworker.png" alt="Service Worker" title="Service Worker"></p>
 <p>而各 Browser 的 Support 狀況可以參考 <a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/status/serviceworker/" target="_blank" rel="external">Service Worker - Platform status</a><br>那我們在 Angular (筆者使用的版本是 Angular CLI v 1.6.0) 中要如何使用 Service Worker 呢?</p>
 <p>1.寫 Service Worker 的 js 檔(sw.js 放在 src 目錄下)。<br><img src="/2017/12/18/2017017/swFile.png" alt="Service Worker JS" title="Service Worker JS"></p>
@@ -190,13 +193,14 @@
 <p>所以從開發工具的 Application (左邊選 Service Workers)可以發現，sw.js 已經 activated 及 running ，在 Cache Storage 也儲存我們要 Cache 的資源 。如下圖，<br><img src="/2017/12/18/2017017/devtool_s.png" alt="DevTool Service Workers" title="DevTool Service Workers"><br><img src="/2017/12/18/2017017/sw-cache.png" alt="DevTool Service Workers Cache" title="DevTool Service Workers Cache"></p>
 <p>然後我們在開發工具的 Application 中勾選 offline 後，再重新整理頁面，可以發現我們的頁面可以正常的顯示哦! 如下圖，<br><img src="/2017/12/18/2017017/sw-offline.png" alt="DevTool Service Workers Offline" title="DevTool Service Workers Offline"></p>
 
-      
+                          
+                                    
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -212,12 +216,12 @@
 		</ul>
 	</div>
 
-      
+                
 
-      
+                  
 
-      
-        
+                      
+                        
 <div class="share-btn share-icons tooltip-left">
   <div class="tooltip tooltip-east">
     <span class="tooltip-item">
@@ -267,14 +271,23 @@
 </div>
 
 <div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+                          
+                            <div class="clearfix"></div>
+        </div>
   </div>
 </article>
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/01/09/2018001/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Windows 10 IoT Core UWP Beacon 程式 Crash 事件
+        
+      </div>
+    </a>
   
   
     <a href="/2017/12/11/2017016/" id="article-nav-older" class="article-nav-link-wrap">
@@ -284,8 +297,8 @@
   
 </nav>
 
-
-<aside class="wrap-side-operation">
+    
+      <aside class="wrap-side-operation">
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
@@ -302,33 +315,35 @@
 </aside>
 
 
+        
+          
 
-  
-  
-  
+                
 
-  
+                      
 
-  
-    <section id="comments">
-      <div id="disqus_thread"></div>
-        <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'rainmakergit'; // required: replace example with your forum shortname
+                            
+                              <section id="comments">
+                                <div id="disqus_thread"></div>
+                                <script type="text/javascript">
+                                  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                                  var disqus_shortname = 'rainmakergit'; // required: replace example with your forum shortname
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </section>
-  
+                                  /* * * DON'T EDIT BELOW THIS LINE * * */
+                                  (function () {
+                                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                                  })();
+                                </script>
+                                <noscript>Please enable JavaScript to view the
+                                  <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+                                </noscript>
+                              </section>
+                              
 
-  
-
+                                
+                                      
 
           </div>
         </div>
@@ -337,7 +352,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 亂馬客
+    		&copy; 2018 亂馬客
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -508,22 +523,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">404</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Windows 10 IoT Core</a>
               </li>
              
@@ -548,14 +547,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">xamarin</a>
               </li>
              
@@ -577,6 +568,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ibtoolerror</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">404</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -612,15 +619,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -660,14 +663,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">xcodebuild</a>
               </li>
              
@@ -689,6 +684,42 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Xcode 9</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UWP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">restart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disable update</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">beacon</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -725,6 +756,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Excel</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SaveAs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">2148140012</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">2146827284</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Workbook</a>
               </li>
             
             <div class="clearfix"></div>
@@ -799,7 +850,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">我是亂馬客，目前任職於叡揚資訊 技術開發部</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">我是亂馬客(rainmaker_ho@gss.com.tw)</div>
   	  	
     	</section>
     

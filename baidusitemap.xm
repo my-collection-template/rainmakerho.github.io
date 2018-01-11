@@ -4,6 +4,56 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/01/11/2018002/</loc>
+    <lastmod>2018-01-11T08:13:59.964Z</lastmod>
+    <data>
+        <display>
+        <title>Excel.WorkbookClass.SaveAs 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]</title>
+        <pubTime>2018-01-11T07:30:42.000Z</pubTime>
+        
+        <tag>Excel</tag>
+         
+        <tag>SaveAs</tag>
+         
+        <tag>2148140012</tag>
+         
+        <tag>2146827284</tag>
+         
+        <tag>Workbook</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2018/01/09/2018001/</loc>
+    <lastmod>2018-01-11T07:30:28.006Z</lastmod>
+    <data>
+        <display>
+        <title>Windows 10 IoT Core UWP Beacon 程式 Crash 事件</title>
+        <pubTime>2018-01-09T07:03:42.000Z</pubTime>
+        
+        <tag>Windows 10 IoT Core</tag>
+         
+        <tag>UWP</tag>
+         
+        <tag>restart</tag>
+         
+        <tag>disable update</tag>
+         
+        <tag>beacon</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2017/12/18/2017017/</loc>
     <lastmod>2017-12-18T10:04:25.880Z</lastmod>
     <data>

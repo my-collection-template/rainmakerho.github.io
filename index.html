@@ -149,76 +149,83 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-2017017" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2018002" class="article article-type-post  article-index"
+  itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/18/2017017/">Service Worker @ Angular</a>
+      <a class="article-title" href="/2018/01/11/2018002/">Excel.WorkbookClass.SaveAs 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]</a>
     </h1>
   
 
-        
-        <a href="/2017/12/18/2017017/" class="archive-article-date">
-  	<time datetime="2017-12-18T08:26:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-18</time>
+          
+            <a href="/2018/01/11/2018002/" class="archive-article-date">
+  	<time datetime="2018-01-11T07:30:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-11</time>
 </a>
-        
+              
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p>一般的 Web 應用程式，如果 Server 端連不上了，就會直接 GG (在 Chrome 上 恐龍就出現了)。是否有什麼方式在 Client 端程式與 Server 端之間有一個 Buffer 呢?<br>讓應用系統會整個 GG 呢? 答案就是 <a href="https://developers.google.com/web/fundamentals/primers/service-workers/" target="_blank" rel="external">Service Worker</a> 。</p>
-<p>Service Worker 就像是一個 Middleware 一樣，在 Client 端程式與 Server 端之間，如下圖所示，<br><img src="/2017/12/18/2017017/serviceworker.png" alt="Service Worker" title="Service Worker"></p>
-<p>而各 Browser 的 Support 狀況可以參考 <a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/status/serviceworker/" target="_blank" rel="external">Service Worker - Platform status</a><br>那我們在 Angular (筆者使用的版本是 Angular CLI v 1.6.0) 中要如何使用 Service Worker 呢?</p>
-<p>1.寫 Service Worker 的 js 檔(sw.js 放在 src 目錄下)。<br><img src="/2017/12/18/2017017/swFile.png" alt="Service Worker JS" title="Service Worker JS"></p>
-<p>2.在 .angular-cli.json 中 Apps -&gt; assets 中加入 sw.js。<br><img src="/2017/12/18/2017017/cliJSON.png" alt=".angular-cli.json" title=".angular-cli.json"></p>
-<p>3.main.ts 註冊 service worker (sw.js)。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">platformBrowserDynamic()</div><div class="line">    .bootstrapModule(AppModule)</div><div class="line">    .then(<span class="function"><span class="params">_</span> =&gt;</span> &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="string">'serviceWorker'</span> <span class="keyword">in</span> navigator) &#123;</div><div class="line">            navigator.serviceWorker</div><div class="line">                .register(<span class="string">'/sw.js'</span>, &#123;  <span class="attr">scope</span>: <span class="string">'/’ &#125;)</span></div><div class="line"><span class="string">                .then(reg =&gt; &#123;console.log('</span>Service worker Registered!’); &#125;)</div><div class="line">                .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123; <span class="built_in">console</span>.log(<span class="string">'Service Worker Registration Failed:'</span>, err);&#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(err));</div></pre></td></tr></table></figure>
-<h4 id="那-Service-Worker-要寫些什麼呢"><a href="#那-Service-Worker-要寫些什麼呢" class="headerlink" title="那 Service Worker 要寫些什麼呢?"></a>那 Service Worker 要寫些什麼呢?</h4><p>它是 event base 的，而它的 event Life Cycle 可以參考以下的圖，<br><img src="/2017/12/18/2017017/sw-lifecycle.png" alt="Service Worker Life Cyclevents" title="Service Worker Life Cyclevents"><br>舉個簡單的例子，在 Angular 首頁中讀取 /api/lessons 的課程資料下來呈現，如下圖，<br><img src="/2017/12/18/2017017/webap.png" alt="SampleWebAp" title="SampleWebAp"></p>
-<p>所以在 Service Worker (sw.js) 中就可以在 install event 中將這些 Resource 存到 Cache 之中。在 fetch event 中，就從 Cache 中取得這些 Resource，如下，</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> VERSION = <span class="string">'v1'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">...messages</span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(VERSION, ...messages);</div><div class="line">&#125;</div><div class="line"></div><div class="line">log(<span class="string">'Installing Service Worker'</span>);</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'install'</span>, event =&gt; &#123;</div><div class="line">	log(<span class="string">'version is installed'</span>);</div><div class="line">	event.waitUntil(installServiceWorker());</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">installServiceWorker</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	log(<span class="string">'Service Worker installation started!'</span>);</div><div class="line">	<span class="keyword">const</span> cache = <span class="keyword">await</span> caches.open(getCacheName());</div><div class="line">	<span class="keyword">return</span> cache.addAll([</div><div class="line">		<span class="string">'/'</span>,</div><div class="line">		<span class="string">'/polyfills.bundle.js'</span>,</div><div class="line">		<span class="string">'/inline.bundle.js'</span>,</div><div class="line">		<span class="string">'/styles.bundle.js'</span>,</div><div class="line">		<span class="string">'/vendor.bundle.js'</span>,</div><div class="line">		<span class="string">'/main.bundle.js'</span>,</div><div class="line">		<span class="string">'/api/lessons'</span></div><div class="line">	]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCacheName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="string">`app-cache-<span class="subst">$&#123;VERSION&#125;</span>`</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'activate'</span>, () =&gt; activateSW());</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">activateSW</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	log(<span class="string">'service worker activating ...*** '</span>);</div><div class="line">	<span class="keyword">const</span> cacheKeys = <span class="keyword">await</span> caches.keys();</div><div class="line">	cacheKeys.forEach(<span class="function"><span class="params">cacheKey</span> =&gt;</span> &#123;</div><div class="line">		<span class="keyword">if</span> (cacheKey !== getCacheName()) &#123;</div><div class="line">			caches.delete(cacheKey);</div><div class="line">		&#125;</div><div class="line">	&#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'fetch'</span>, event =&gt; &#123;</div><div class="line">	log(<span class="string">'version is ftech'</span>);</div><div class="line">	event.respondWith(cacheThenNetwork(event));</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">cacheThenNetwork</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">	<span class="keyword">const</span> cache = <span class="keyword">await</span> caches.open(getCacheName());</div><div class="line"></div><div class="line">	<span class="keyword">const</span> cacheResponse = <span class="keyword">await</span> cache.match(event.request);</div><div class="line">	<span class="keyword">if</span> (cacheResponse) &#123;</div><div class="line">		log(<span class="string">'From Cache:'</span>, event.request.url);</div><div class="line">		<span class="keyword">return</span> cacheResponse;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">const</span> networkResponse = fetch(event.request);</div><div class="line">	log(<span class="string">'Calling network:'</span>, event.request.url);</div><div class="line">	<span class="keyword">return</span> networkResponse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>所以從開發工具的 Application (左邊選 Service Workers)可以發現，sw.js 已經 activated 及 running ，在 Cache Storage 也儲存我們要 Cache 的資源 。如下圖，<br><img src="/2017/12/18/2017017/devtool_s.png" alt="DevTool Service Workers" title="DevTool Service Workers"><br><img src="/2017/12/18/2017017/sw-cache.png" alt="DevTool Service Workers Cache" title="DevTool Service Workers Cache"></p>
-<p>然後我們在開發工具的 Application 中勾選 offline 後，再重新整理頁面，可以發現我們的頁面可以正常的顯示哦! 如下圖，<br><img src="/2017/12/18/2017017/sw-offline.png" alt="DevTool Service Workers Offline" title="DevTool Service Workers Offline"></p>
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                            <p>今天同事詢問一個錯誤訊息如下，<br>Excel.WorkbookClass.SaveAs  <system.runtime.interopservices.comexception> 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]<br>於 Excel.WorkbookClass.SaveAs(Object Filename, Object FileFormat, Object Password, Object WriteResPassword, Object ReadOnlyRecommended, Object CreateBackup, XlSaveAsAccessMode AccessMode, Object ConflictResolution, Object AddToMru, Object TextCodepage, Object TextVisualLayout)</system.runtime.interopservices.comexception></p>
+                              
+                                <p class="article-more-link">
+                                  <a href="/2018/01/11/2018002/#more">
+                                    more &gt;&gt;
+                                  </a>
+                                </p>
+                                
+                                  
+                                    
 
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Angular</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Excel</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Service Worker</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SaveAs</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">2148140012</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">2146827284</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Workbook</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+                
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/18/2017017/">展開全文 >></a>
-        </p>
-      
+                  
 
-      
-      <div class="clearfix"></div>
-    </div>
+                      
+                            <div class="clearfix"></div>
+        </div>
   </div>
 </article>
 
-<aside class="wrap-side-operation">
+      <aside class="wrap-side-operation">
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
@@ -235,10 +242,191 @@
 </aside>
 
 
-
+        
 
   
-    <article id="post-2017016" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2018001" class="article article-type-post  article-index"
+  itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/09/2018001/">Windows 10 IoT Core UWP Beacon 程式 Crash 事件</a>
+    </h1>
+  
+
+          
+            <a href="/2018/01/09/2018001/" class="archive-article-date">
+  	<time datetime="2018-01-09T07:03:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-09</time>
+</a>
+              
+      </header>
+      
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                            <p>我們在2016年有透過 Windows 10 IoT Core 來開發 UWP beacon 的程式，並透過 Azure IoT Hub 來處理訊息。<br>但是這支 UWP 程式執行一段時間後，那台 Raspberry 就無法由外部到它。<br>後來更新到 Build 15063 後，過一段時間後，整個作業系統直接就 Crash 掉了。<br>同事 Kent 查看 event 發現，因為 IoT Core 如果自動更新後，自動重新開機後， OS 就 Crash 掉了。<br>所以將自動更新透過 Power Shell 將它關掉(要更新的話，就手動更新測試沒問題再上)，可參考<a href="https://brosteins.com/2016/09/06/disable-windows-update-windows-10-iot-core-powershell/" target="_blank" rel="external">Disable Windows Update in Windows 10 IoT Core with PowerShell</a>。</p>
+                              
+                                <p class="article-more-link">
+                                  <a href="/2018/01/09/2018001/#more">
+                                    more &gt;&gt;
+                                  </a>
+                                </p>
+                                
+                                  
+                                    
+
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Windows 10 IoT Core</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">UWP</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">restart</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">disable update</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">beacon</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+                
+
+                  
+
+                      
+                            <div class="clearfix"></div>
+        </div>
+  </div>
+</article>
+
+      <aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+        
+
+  
+    <article id="post-2017017" class="article article-type-post  article-index"
+  itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/18/2017017/">Service Worker @ Angular</a>
+    </h1>
+  
+
+          
+            <a href="/2017/12/18/2017017/" class="archive-article-date">
+  	<time datetime="2017-12-18T08:26:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-18</time>
+</a>
+              
+      </header>
+      
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                            <p>一般的 Web 應用程式，如果 Server 端連不上了，就會直接 GG (在 Chrome 上 恐龍就出現了)。是否有什麼方式在 Client 端程式與 Server 端之間有一個 Buffer 呢?<br>讓應用系統會整個 GG 呢? 答案就是 <a href="https://developers.google.com/web/fundamentals/primers/service-workers/" target="_blank" rel="external">Service Worker</a> 。</p>
+                              
+                                <p class="article-more-link">
+                                  <a href="/2017/12/18/2017017/#more">
+                                    more &gt;&gt;
+                                  </a>
+                                </p>
+                                
+                                  
+                                    
+
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Angular</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Service Worker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+                
+
+                  
+
+                      
+                            <div class="clearfix"></div>
+        </div>
+  </div>
+</article>
+
+      <aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+        
+
+  
+    <article id="post-2017016" class="article article-type-post  article-index"
+  itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -249,29 +437,33 @@
     </h1>
   
 
-        
-        <a href="/2017/12/11/2017016/" class="archive-article-date">
+          
+            <a href="/2017/12/11/2017016/" class="archive-article-date">
   	<time datetime="2017-12-11T06:35:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-11</time>
 </a>
-        
+              
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <p>最近在 RPi2 上面的 Windows IoT Core UWP 程式，網路跑一跑就 GG 了，它就完全沒辦法對外連網，外面也連不到它。一定要重新開機後，網路才會好。<br>於是參考 <a href="https://marcominerva.wordpress.com/2016/12/13/how-to-shutdown-a-windows-10-iot-core-device-from-a-uwp-app/" target="_blank" rel="external">How to shutdown a Windows 10 IoT Core device from a UWP app</a>這篇文章的方式，使用 <em>ShutdownManager.BeginShutdown(ShutdownKind.Restart, TimeSpan.FromSeconds(5));</em>，並在 <em>Package.appxmanifest</em> 檔案中加入 xmlns:iot namespace, IgnorableNamespaces 以及在 Capabilities 節點中加入 <em>iot:Capability Name=”systemManagement”</em> (請檢視原始碼編輯哦! UI 無法設定!)。<br>結果程式一建置下去就 GG 了，出現「驗證錯誤。error C00CE014: App manifest validation error: The app manifest must be valid as per schema:」的錯誤。</p>
-<p>我的 Package.appxmanifest 檔案如下，</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">Package</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/foundation/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:mp</span>=<span class="string">"http://schemas.microsoft.com/appx/2014/phone/manifest"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:uap</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/uap/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:iot</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/iot/windows10"</span> <span class="attr">IgnorableNamespaces</span>=<span class="string">"uap mp iot"</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">"internetClient"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">DeviceCapability</span> <span class="attr">Name</span>=<span class="string">"bluetooth"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iot:Capability</span> <span class="attr">Name</span>=<span class="string">"systemManagement"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Package</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>會有 <em>error C00CE014</em> 的錯誤，因為在 Capabilities 中的順序不對，Capability 要在第一順位，而且要在一起，再來才是 DeviceCapability ，如下面的順序就可以順利建置成功，</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">Package</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/foundation/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:mp</span>=<span class="string">"http://schemas.microsoft.com/appx/2014/phone/manifest"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:uap</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/uap/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:iot</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/iot/windows10"</span> <span class="attr">IgnorableNamespaces</span>=<span class="string">"uap mp iot"</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">"internetClient"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iot:Capability</span> <span class="attr">Name</span>=<span class="string">"systemManagement"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">DeviceCapability</span> <span class="attr">Name</span>=<span class="string">"bluetooth"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Package</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>Capability -&gt; iot:Capability -&gt; DeviceCapability …</p>
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                            <p>最近在 RPi2 上面的 Windows IoT Core UWP 程式，網路跑一跑就 GG 了，它就完全沒辦法對外連網，外面也連不到它。一定要重新開機後，網路才會好。<br>於是參考 <a href="https://marcominerva.wordpress.com/2016/12/13/how-to-shutdown-a-windows-10-iot-core-device-from-a-uwp-app/" target="_blank" rel="external">How to shutdown a Windows 10 IoT Core device from a UWP app</a>這篇文章的方式，使用 <em>ShutdownManager.BeginShutdown(ShutdownKind.Restart, TimeSpan.FromSeconds(5));</em>，並在 <em>Package.appxmanifest</em> 檔案中加入 xmlns:iot namespace, IgnorableNamespaces 以及在 Capabilities 節點中加入 <em>iot:Capability Name=”systemManagement”</em> (請檢視原始碼編輯哦! UI 無法設定!)。<br>結果程式一建置下去就 GG 了，出現「驗證錯誤。error C00CE014: App manifest validation error: The app manifest must be valid as per schema:」的錯誤。</p>
+                              
+                                <p class="article-more-link">
+                                  <a href="/2017/12/11/2017016/#more">
+                                    more &gt;&gt;
+                                  </a>
+                                </p>
+                                
+                                  
+                                    
 
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -303,21 +495,17 @@
 		</ul>
 	</div>
 
-      
+                
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/11/2017016/">展開全文 >></a>
-        </p>
-      
+                  
 
-      
-      <div class="clearfix"></div>
-    </div>
+                      
+                            <div class="clearfix"></div>
+        </div>
   </div>
 </article>
 
-<aside class="wrap-side-operation">
+      <aside class="wrap-side-operation">
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
@@ -334,10 +522,11 @@
 </aside>
 
 
-
+        
 
   
-    <article id="post-2017015" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2017015" class="article article-type-post  article-index"
+  itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -348,24 +537,33 @@
     </h1>
   
 
-        
-        <a href="/2017/12/07/2017015/" class="archive-article-date">
+          
+            <a href="/2017/12/07/2017015/" class="archive-article-date">
   	<time datetime="2017-12-07T09:30:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-07</time>
 </a>
-        
+              
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="同事在-CALL-IIS-上的網頁時，因為-CORS-所以會先做-Preflight-request，跑-OPTIONS-時，居然回-404-。"><a href="#同事在-CALL-IIS-上的網頁時，因為-CORS-所以會先做-Preflight-request，跑-OPTIONS-時，居然回-404-。" class="headerlink" title="同事在 CALL IIS 上的網頁時，因為 CORS 所以會先做 Preflight request，跑 OPTIONS 時，居然回 404 。"></a>同事在 CALL IIS 上的網頁時，因為 CORS 所以會先做 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request" target="_blank" rel="external">Preflight request</a>，跑 OPTIONS 時，居然回 404 。</h4><h4 id="在-web-config-中有允許-OPTIONS-呀-而且在-web-config-中設定的-header-也有-response-出來。-但-status-code-卻是-404-。"><a href="#在-web-config-中有允許-OPTIONS-呀-而且在-web-config-中設定的-header-也有-response-出來。-但-status-code-卻是-404-。" class="headerlink" title="在 web.config 中有允許 OPTIONS 呀 ~ 而且在 web.config 中設定的 header 也有 response 出來。 但 status code 卻是 404 。"></a>在 web.config 中有允許 OPTIONS 呀 ~ 而且在 web.config 中設定的 header 也有 response 出來。 但 status code 卻是 404 。</h4><h4 id="後來到-IIS-一看才知道，在-IIS-的「要求篩選」那裡，-OPTIONS-被設定成了-不允許，如下圖，"><a href="#後來到-IIS-一看才知道，在-IIS-的「要求篩選」那裡，-OPTIONS-被設定成了-不允許，如下圖，" class="headerlink" title="後來到 IIS 一看才知道，在 IIS 的「要求篩選」那裡， OPTIONS 被設定成了 不允許，如下圖，"></a>後來到 IIS 一看才知道，在 IIS 的「要求篩選」那裡， OPTIONS 被設定成了 不允許，如下圖，</h4><p><br><br><img src="/2017/12/07/2017015/REQFILTER.png" alt="slug 要求篩選" title="slug 要求篩選"><br><br></p>
-<h4 id="後來將它移除後，就可以了哦"><a href="#後來將它移除後，就可以了哦" class="headerlink" title="後來將它移除後，就可以了哦 ~"></a>後來將它移除後，就可以了哦 ~</h4><h4 id="大家如果有類似的問題，可以檢查一下-IIS-的「要求篩選」設定哦"><a href="#大家如果有類似的問題，可以檢查一下-IIS-的「要求篩選」設定哦" class="headerlink" title="大家如果有類似的問題，可以檢查一下 IIS 的「要求篩選」設定哦 !"></a>大家如果有類似的問題，可以檢查一下 IIS 的「要求篩選」設定哦 !</h4>
-      
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                            <h4 id="同事在-CALL-IIS-上的網頁時，因為-CORS-所以會先做-Preflight-request，跑-OPTIONS-時，居然回-404-。"><a href="#同事在-CALL-IIS-上的網頁時，因為-CORS-所以會先做-Preflight-request，跑-OPTIONS-時，居然回-404-。" class="headerlink" title="同事在 CALL IIS 上的網頁時，因為 CORS 所以會先做 Preflight request，跑 OPTIONS 時，居然回 404 。"></a>同事在 CALL IIS 上的網頁時，因為 CORS 所以會先做 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request" target="_blank" rel="external">Preflight request</a>，跑 OPTIONS 時，居然回 404 。</h4><h4 id="在-web-config-中有允許-OPTIONS-呀-而且在-web-config-中設定的-header-也有-response-出來。-但-status-code-卻是-404-。"><a href="#在-web-config-中有允許-OPTIONS-呀-而且在-web-config-中設定的-header-也有-response-出來。-但-status-code-卻是-404-。" class="headerlink" title="在 web.config 中有允許 OPTIONS 呀 ~ 而且在 web.config 中設定的 header 也有 response 出來。 但 status code 卻是 404 。"></a>在 web.config 中有允許 OPTIONS 呀 ~ 而且在 web.config 中設定的 header 也有 response 出來。 但 status code 卻是 404 。</h4><h4 id="後來到-IIS-一看才知道，在-IIS-的「要求篩選」那裡，-OPTIONS-被設定成了-不允許，如下圖，"><a href="#後來到-IIS-一看才知道，在-IIS-的「要求篩選」那裡，-OPTIONS-被設定成了-不允許，如下圖，" class="headerlink" title="後來到 IIS 一看才知道，在 IIS 的「要求篩選」那裡， OPTIONS 被設定成了 不允許，如下圖，"></a>後來到 IIS 一看才知道，在 IIS 的「要求篩選」那裡， OPTIONS 被設定成了 不允許，如下圖，</h4><p><br><br><img src="/2017/12/07/2017015/REQFILTER.png" alt="slug 要求篩選" title="slug 要求篩選"><br><br></p>
+                              
+                                <p class="article-more-link">
+                                  <a href="/2017/12/07/2017015/#more">
+                                    more &gt;&gt;
+                                  </a>
+                                </p>
+                                
+                                  
+                                    
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -389,21 +587,17 @@
 		</ul>
 	</div>
 
-      
+                
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/07/2017015/">展開全文 >></a>
-        </p>
-      
+                  
 
-      
-      <div class="clearfix"></div>
-    </div>
+                      
+                            <div class="clearfix"></div>
+        </div>
   </div>
 </article>
 
-<aside class="wrap-side-operation">
+      <aside class="wrap-side-operation">
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
@@ -420,10 +614,11 @@
 </aside>
 
 
-
+        
 
   
-    <article id="post-2017014" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2017014" class="article article-type-post  article-index"
+  itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -434,36 +629,33 @@
     </h1>
   
 
-        
-        <a href="/2017/11/30/2017014/" class="archive-article-date">
+          
+            <a href="/2017/11/30/2017014/" class="archive-article-date">
   	<time datetime="2017-11-30T09:49:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-30</time>
 </a>
-        
+              
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="在之前有討論到不同網頁使用到-Writeable-Session-時會卡來卡去的狀況-Lock-or-Blocking-使用-Session-要小心網頁會被-卡住哦-，或是-Web-Service-如果開啟-Session-存取的話，預設是-Writeable-Session-模式-設定-WebService-使用-ReadOnly-Session-。"><a href="#在之前有討論到不同網頁使用到-Writeable-Session-時會卡來卡去的狀況-Lock-or-Blocking-使用-Session-要小心網頁會被-卡住哦-，或是-Web-Service-如果開啟-Session-存取的話，預設是-Writeable-Session-模式-設定-WebService-使用-ReadOnly-Session-。" class="headerlink" title="在之前有討論到不同網頁使用到 Writeable Session 時會卡來卡去的狀況 Lock or Blocking( 使用 Session 要小心網頁會被 卡住哦! )，或是 Web Service 如果開啟 Session 存取的話，預設是 Writeable Session 模式(設定 WebService 使用 ReadOnly Session)。"></a>在之前有討論到不同網頁使用到 Writeable Session 時會卡來卡去的狀況 Lock or Blocking( <a href="https://dotblogs.com.tw/rainmaker/2016/06/30/103719" target="_blank" rel="external">使用 Session 要小心網頁會被 卡住哦!</a> )，或是 Web Service 如果開啟 Session 存取的話，預設是 Writeable Session 模式(<a href="https://dotblogs.com.tw/rainmaker/2015/02/10/149456" target="_blank" rel="external">設定 WebService 使用 ReadOnly Session</a>)。</h4><h4 id="解法除了設定-SessionStateBehavior-ReadOnly-外，如果一定要用-Writeable-Session-時-怕改成-ReadOnly-會影響現有系統的話-，可以參考When-a-Single-ASP-NET-Client-makes-Concurrent-Requests-for-Writeable-Session-Variables提供的方式，因為在寫入-Session-時會造成-500ms-的-Delay-時間-請參考-Storing-Anything-in-ASP-NET-Session-Causes-500ms-Delays-，"><a href="#解法除了設定-SessionStateBehavior-ReadOnly-外，如果一定要用-Writeable-Session-時-怕改成-ReadOnly-會影響現有系統的話-，可以參考When-a-Single-ASP-NET-Client-makes-Concurrent-Requests-for-Writeable-Session-Variables提供的方式，因為在寫入-Session-時會造成-500ms-的-Delay-時間-請參考-Storing-Anything-in-ASP-NET-Session-Causes-500ms-Delays-，" class="headerlink" title="解法除了設定 SessionStateBehavior.ReadOnly 外，如果一定要用 Writeable Session 時(怕改成 ReadOnly 會影響現有系統的話)，可以參考When a Single ASP.NET Client makes Concurrent Requests for Writeable Session Variables提供的方式，因為在寫入 Session 時會造成 500ms 的 Delay 時間(請參考:Storing Anything in ASP.NET Session Causes 500ms Delays)，"></a>解法除了設定 SessionStateBehavior.ReadOnly 外，如果一定要用 Writeable Session 時(怕改成 ReadOnly 會影響現有系統的話)，可以參考<a href="https://www.red-gate.com/simple-talk/dotnet/asp-net/single-asp-net-client-makes-concurrent-requests-writeable-session-variables/" target="_blank" rel="external">When a Single ASP.NET Client makes Concurrent Requests for Writeable Session Variables</a>提供的方式，因為在寫入 Session 時會造成 500ms 的 Delay 時間(請參考:<a href="https://stackoverflow.com/questions/8349033/storing-anything-in-asp-net-session-causes-500ms-delays" target="_blank" rel="external">Storing Anything in ASP.NET Session Causes 500ms Delays</a>)，</h4><ul>
-<li><h4 id="降低-Session-Lock-Check-的時間"><a href="#降低-Session-Lock-Check-的時間" class="headerlink" title="降低 Session Lock Check 的時間"></a>降低 Session Lock Check 的時間</h4><h4 id="可以在-Global-asax-cs-的-Application-Start-Method-去設定預設值，-Polling-Interval-從-500ms-改成-30ms-Polling-Delta-從-250ms-改成-15ms-，如下，"><a href="#可以在-Global-asax-cs-的-Application-Start-Method-去設定預設值，-Polling-Interval-從-500ms-改成-30ms-Polling-Delta-從-250ms-改成-15ms-，如下，" class="headerlink" title="可以在 Global.asax.cs 的 Application_Start Method 去設定預設值， Polling Interval 從 500ms 改成 30ms, Polling Delta 從 250ms 改成 15ms ，如下，"></a>可以在 Global.asax.cs 的 Application_Start Method 去設定預設值， Polling Interval 從 500ms 改成 30ms, Polling Delta 從 250ms 改成 15ms ，如下，</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_Start</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">var</span> sessionStateModuleType = <span class="keyword">typeof</span>(SessionStateModule);</div><div class="line">    <span class="keyword">var</span> pollingIntervalFieldInfo = sessionStateModuleType.GetField(<span class="string">"LOCKED_ITEM_POLLING_INTERVAL"</span>, BindingFlags.NonPublic | BindingFlags.Static);</div><div class="line">    <span class="keyword">var</span> orgpollingInterval = pollingIntervalFieldInfo.GetValue(<span class="literal">null</span>);</div><div class="line">    pollingIntervalFieldInfo.SetValue(<span class="literal">null</span>, <span class="number">30</span>); <span class="comment">// default 500ms</span></div><div class="line">    <span class="keyword">var</span> pollingDeltaFieldInfo = sessionStateModuleType.GetField(<span class="string">"LOCKED_ITEM_POLLING_DELTA"</span>, BindingFlags.NonPublic | BindingFlags.Static);</div><div class="line">    <span class="keyword">var</span> orgPollingDelta = pollingDeltaFieldInfo.GetValue(<span class="literal">null</span>);</div><div class="line">    pollingDeltaFieldInfo.SetValue(<span class="literal">null</span>, TimeSpan.FromMilliseconds(<span class="number">15.0</span>)); <span class="comment">// default 250ms</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<img src="/2017/11/30/2017014/application_start.png" alt="slug 在 Application Start 事件中更改預設值" title="slug 在 Application Start 事件中更改預設值">  
-<p><br><br><img src="/2017/11/30/2017014/beginRequest.png" alt="slug 可以在 Request 時發現，預設值已經被更改了" title="slug 可以在 Request 時發現，預設值已經被更改了"><br><br></p>
-<ul>
-<li><h4 id="實作-Lockless-SessionStateStoreProvider"><a href="#實作-Lockless-SessionStateStoreProvider" class="headerlink" title="實作 Lockless SessionStateStoreProvider"></a>實作 Lockless SessionStateStoreProvider</h4></li>
-</ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LocklessInProcSessionStateStore</span> : <span class="title">SessionStateStoreProviderBase</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> SessionStateStoreProviderBase _store;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Initialize</span>(<span class="params"><span class="keyword">string</span> name, NameValueCollection config</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">base</span>.Initialize(name, config);</div><div class="line"></div><div class="line">        <span class="keyword">var</span> storeType = <span class="keyword">typeof</span>(SessionStateStoreProviderBase).Assembly.GetType(<span class="string">"System.Web.SessionState.InProcSessionStateStore"</span>);</div><div class="line">        _store = (SessionStateStoreProviderBase)Activator.CreateInstance(storeType);</div><div class="line">        _store.Initialize(name, config);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Dispose</span>(<span class="params"></span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        _store.Dispose();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">bool</span> <span class="title">SetItemExpireCallback</span>(<span class="params">SessionStateItemExpireCallback expireCallback</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">return</span> _store.SetItemExpireCallback(expireCallback);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">InitializeRequest</span>(<span class="params">HttpContext context</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        _store.InitializeRequest(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> SessionStateStoreData <span class="title">GetItem</span>(<span class="params">HttpContext context, <span class="keyword">string</span> id, <span class="keyword">out</span> <span class="keyword">bool</span> locked, <span class="keyword">out</span> TimeSpan lockAge, <span class="keyword">out</span> <span class="keyword">object</span> lockId,</span></span></div><div class="line"><span class="function"><span class="params">        <span class="keyword">out</span> SessionStateActions actions</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">var</span> returnValue = _store.GetItem(context, id, <span class="keyword">out</span> locked, <span class="keyword">out</span> lockAge, <span class="keyword">out</span> lockId, <span class="keyword">out</span> actions);</div><div class="line">        <span class="keyword">if</span> (returnValue == <span class="literal">null</span> &amp;&amp; lockId != <span class="literal">null</span>)</div><div class="line">        &#123;</div><div class="line">            _store.ReleaseItemExclusive(context, id, lockId);</div><div class="line">            returnValue = _store.GetItem(context, id, <span class="keyword">out</span> locked, <span class="keyword">out</span> lockAge, <span class="keyword">out</span> lockId, <span class="keyword">out</span> actions);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> returnValue;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> SessionStateStoreData <span class="title">GetItemExclusive</span>(<span class="params">HttpContext context, <span class="keyword">string</span> id, <span class="keyword">out</span> <span class="keyword">bool</span> locked, <span class="keyword">out</span> TimeSpan lockAge,</span></span></div><div class="line"><span class="function"><span class="params">        <span class="keyword">out</span> <span class="keyword">object</span> lockId, <span class="keyword">out</span> SessionStateActions actions</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">var</span> returnValue = _store.GetItemExclusive(context, id, <span class="keyword">out</span> locked, <span class="keyword">out</span> lockAge, <span class="keyword">out</span> lockId, <span class="keyword">out</span> actions);</div><div class="line">        <span class="keyword">if</span> (returnValue == <span class="literal">null</span> &amp;&amp; lockId != <span class="literal">null</span>)</div><div class="line">        &#123;</div><div class="line">            _store.ReleaseItemExclusive(context, id, lockId);</div><div class="line">            returnValue = _store.GetItemExclusive(context, id, <span class="keyword">out</span> locked, <span class="keyword">out</span> lockAge, <span class="keyword">out</span> lockId, <span class="keyword">out</span> actions);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> returnValue;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">ReleaseItemExclusive</span>(<span class="params">HttpContext context, <span class="keyword">string</span> id, <span class="keyword">object</span> lockId</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        _store.ReleaseItemExclusive(context, id, lockId);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">SetAndReleaseItemExclusive</span>(<span class="params">HttpContext context, <span class="keyword">string</span> id, SessionStateStoreData item, <span class="keyword">object</span> lockId, <span class="keyword">bool</span> newItem</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        _store.SetAndReleaseItemExclusive(context, id, item, lockId, newItem);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">RemoveItem</span>(<span class="params">HttpContext context, <span class="keyword">string</span> id, <span class="keyword">object</span> lockId, SessionStateStoreData item</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        _store.RemoveItem(context, id, lockId, item);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">ResetItemTimeout</span>(<span class="params">HttpContext context, <span class="keyword">string</span> id</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        _store.ResetItemTimeout(context, id);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> SessionStateStoreData <span class="title">CreateNewStoreData</span>(<span class="params">HttpContext context, <span class="keyword">int</span> timeout</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">return</span> _store.CreateNewStoreData(context, timeout);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">CreateUninitializedItem</span>(<span class="params">HttpContext context, <span class="keyword">string</span> id, <span class="keyword">int</span> timeout</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        _store.CreateUninitializedItem(context, id, timeout);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">EndRequest</span>(<span class="params">HttpContext context</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        _store.EndRequest(context);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<pre><code>#### 在 web.config 中加入設定自定的 SessionState，如下，
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                            <h4 id="在之前有討論到不同網頁使用到-Writeable-Session-時會卡來卡去的狀況-Lock-or-Blocking-使用-Session-要小心網頁會被-卡住哦-，或是-Web-Service-如果開啟-Session-存取的話，預設是-Writeable-Session-模式-設定-WebService-使用-ReadOnly-Session-。"><a href="#在之前有討論到不同網頁使用到-Writeable-Session-時會卡來卡去的狀況-Lock-or-Blocking-使用-Session-要小心網頁會被-卡住哦-，或是-Web-Service-如果開啟-Session-存取的話，預設是-Writeable-Session-模式-設定-WebService-使用-ReadOnly-Session-。" class="headerlink" title="在之前有討論到不同網頁使用到 Writeable Session 時會卡來卡去的狀況 Lock or Blocking( 使用 Session 要小心網頁會被 卡住哦! )，或是 Web Service 如果開啟 Session 存取的話，預設是 Writeable Session 模式(設定 WebService 使用 ReadOnly Session)。"></a>在之前有討論到不同網頁使用到 Writeable Session 時會卡來卡去的狀況 Lock or Blocking( <a href="https://dotblogs.com.tw/rainmaker/2016/06/30/103719" target="_blank" rel="external">使用 Session 要小心網頁會被 卡住哦!</a> )，或是 Web Service 如果開啟 Session 存取的話，預設是 Writeable Session 模式(<a href="https://dotblogs.com.tw/rainmaker/2015/02/10/149456" target="_blank" rel="external">設定 WebService 使用 ReadOnly Session</a>)。</h4><h4 id="解法除了設定-SessionStateBehavior-ReadOnly-外，如果一定要用-Writeable-Session-時-怕改成-ReadOnly-會影響現有系統的話-，可以參考When-a-Single-ASP-NET-Client-makes-Concurrent-Requests-for-Writeable-Session-Variables提供的方式，因為在寫入-Session-時會造成-500ms-的-Delay-時間-請參考-Storing-Anything-in-ASP-NET-Session-Causes-500ms-Delays-，"><a href="#解法除了設定-SessionStateBehavior-ReadOnly-外，如果一定要用-Writeable-Session-時-怕改成-ReadOnly-會影響現有系統的話-，可以參考When-a-Single-ASP-NET-Client-makes-Concurrent-Requests-for-Writeable-Session-Variables提供的方式，因為在寫入-Session-時會造成-500ms-的-Delay-時間-請參考-Storing-Anything-in-ASP-NET-Session-Causes-500ms-Delays-，" class="headerlink" title="解法除了設定 SessionStateBehavior.ReadOnly 外，如果一定要用 Writeable Session 時(怕改成 ReadOnly 會影響現有系統的話)，可以參考When a Single ASP.NET Client makes Concurrent Requests for Writeable Session Variables提供的方式，因為在寫入 Session 時會造成 500ms 的 Delay 時間(請參考:Storing Anything in ASP.NET Session Causes 500ms Delays)，"></a>解法除了設定 SessionStateBehavior.ReadOnly 外，如果一定要用 Writeable Session 時(怕改成 ReadOnly 會影響現有系統的話)，可以參考<a href="https://www.red-gate.com/simple-talk/dotnet/asp-net/single-asp-net-client-makes-concurrent-requests-writeable-session-variables/" target="_blank" rel="external">When a Single ASP.NET Client makes Concurrent Requests for Writeable Session Variables</a>提供的方式，因為在寫入 Session 時會造成 500ms 的 Delay 時間(請參考:<a href="https://stackoverflow.com/questions/8349033/storing-anything-in-asp-net-session-causes-500ms-delays" target="_blank" rel="external">Storing Anything in ASP.NET Session Causes 500ms Delays</a>)，</h4><ul>
+                              
+                                <p class="article-more-link">
+                                  <a href="/2017/11/30/2017014/#more">
+                                    more &gt;&gt;
+                                  </a>
+                                </p>
+                                
+                                  
+                                    
 
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">sessionState</span> <span class="attr">mode</span>=<span class="string">"Custom"</span> <span class="attr">customProvider</span>=<span class="string">"LocklessInProcSessionStateStore"</span> <span class="attr">cookieless</span>=<span class="string">"false"</span> <span class="attr">timeout</span>=<span class="string">"1"</span> &gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">providers</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"LocklessInProcSessionStateStore"</span> </span></div><div class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">"你專案的namespace.LocklessInProcSessionStateStore"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">providers</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">sessionState</span>&gt;</span></div></pre></td></tr></table></figure>
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -487,21 +679,17 @@
 		</ul>
 	</div>
 
-      
+                
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/30/2017014/">展開全文 >></a>
-        </p>
-      
+                  
 
-      
-      <div class="clearfix"></div>
-    </div>
+                      
+                            <div class="clearfix"></div>
+        </div>
   </div>
 </article>
 
-<aside class="wrap-side-operation">
+      <aside class="wrap-side-operation">
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
@@ -518,10 +706,11 @@
 </aside>
 
 
-
+        
 
   
-    <article id="post-2017013" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2017013" class="article article-type-post  article-index"
+  itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -532,25 +721,33 @@
     </h1>
   
 
-        
-        <a href="/2017/11/29/2017013/" class="archive-article-date">
+          
+            <a href="/2017/11/29/2017013/" class="archive-article-date">
   	<time datetime="2017-11-29T01:33:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-29</time>
 </a>
-        
+              
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="最近在-div-上加入-overflow-y-scroll-height-250px-讓-div-高度超過-250px-時就呈現-scrollbar-。-在-Windows-的機器上測試顯示都正常。"><a href="#最近在-div-上加入-overflow-y-scroll-height-250px-讓-div-高度超過-250px-時就呈現-scrollbar-。-在-Windows-的機器上測試顯示都正常。" class="headerlink" title="最近在 div 上加入 overflow-y: scroll; height:250px; 讓 div 高度超過 250px 時就呈現 scrollbar 。 在 Windows 的機器上測試顯示都正常。"></a>最近在 div 上加入 <em>overflow-y: scroll; height:250px;</em> 讓 div 高度超過 250px 時就呈現 scrollbar 。 在 Windows 的機器上測試顯示都正常。</h4><h4 id="但是在-mac-上測試，-scrollbar-卻沒有呈現出來。"><a href="#但是在-mac-上測試，-scrollbar-卻沒有呈現出來。" class="headerlink" title="但是在 mac 上測試， scrollbar 卻沒有呈現出來。"></a>但是在 mac 上測試， scrollbar 卻沒有呈現出來。</h4><h4 id="後來有查到-Force-the-scrollbar-back-這些的說明，我們需要針對-webkit-scrollbar-來設定它，所以在-css-中需要再加入以下的設定，來讓-scrollbar-在-mac-的瀏覽器可以正常呈現-scrollbar-哦"><a href="#後來有查到-Force-the-scrollbar-back-這些的說明，我們需要針對-webkit-scrollbar-來設定它，所以在-css-中需要再加入以下的設定，來讓-scrollbar-在-mac-的瀏覽器可以正常呈現-scrollbar-哦" class="headerlink" title="後來有查到 Force the scrollbar back 這些的說明，我們需要針對 -webkit-scrollbar 來設定它，所以在 css 中需要再加入以下的設定，來讓 scrollbar 在 mac 的瀏覽器可以正常呈現 scrollbar 哦!"></a>後來有查到 <a href="http://simurai.com/blog/2011/07/26/webkit-scrollbar" target="_blank" rel="external">Force the scrollbar back</a> 這些的說明，我們需要針對 -webkit-scrollbar 來設定它，所以在 css 中需要再加入以下的設定，來讓 scrollbar 在 mac 的瀏覽器可以正常呈現 scrollbar 哦!</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-pseudo">::-webkit-scrollbar</span> &#123;</div><div class="line">    <span class="attribute">-webkit-appearance</span>: none;</div><div class="line">    <span class="attribute">width</span>: <span class="number">7px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-pseudo">::-webkit-scrollbar-thumb</span> &#123;</div><div class="line">    <span class="attribute">border-radius</span>: <span class="number">4px</span>;</div><div class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(0,0,0,.5);</div><div class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">1px</span> <span class="built_in">rgba</span>(255,255,255,.5);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><a href="http://jsfiddle.net/simurai/UsvLN/" target="_blank" rel="external">測試網頁</a> </p>
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                            <h4 id="最近在-div-上加入-overflow-y-scroll-height-250px-讓-div-高度超過-250px-時就呈現-scrollbar-。-在-Windows-的機器上測試顯示都正常。"><a href="#最近在-div-上加入-overflow-y-scroll-height-250px-讓-div-高度超過-250px-時就呈現-scrollbar-。-在-Windows-的機器上測試顯示都正常。" class="headerlink" title="最近在 div 上加入 overflow-y: scroll; height:250px; 讓 div 高度超過 250px 時就呈現 scrollbar 。 在 Windows 的機器上測試顯示都正常。"></a>最近在 div 上加入 <em>overflow-y: scroll; height:250px;</em> 讓 div 高度超過 250px 時就呈現 scrollbar 。 在 Windows 的機器上測試顯示都正常。</h4><h4 id="但是在-mac-上測試，-scrollbar-卻沒有呈現出來。"><a href="#但是在-mac-上測試，-scrollbar-卻沒有呈現出來。" class="headerlink" title="但是在 mac 上測試， scrollbar 卻沒有呈現出來。"></a>但是在 mac 上測試， scrollbar 卻沒有呈現出來。</h4><h4 id="後來有查到-Force-the-scrollbar-back-這些的說明，我們需要針對-webkit-scrollbar-來設定它，所以在-css-中需要再加入以下的設定，來讓-scrollbar-在-mac-的瀏覽器可以正常呈現-scrollbar-哦"><a href="#後來有查到-Force-the-scrollbar-back-這些的說明，我們需要針對-webkit-scrollbar-來設定它，所以在-css-中需要再加入以下的設定，來讓-scrollbar-在-mac-的瀏覽器可以正常呈現-scrollbar-哦" class="headerlink" title="後來有查到 Force the scrollbar back 這些的說明，我們需要針對 -webkit-scrollbar 來設定它，所以在 css 中需要再加入以下的設定，來讓 scrollbar 在 mac 的瀏覽器可以正常呈現 scrollbar 哦!"></a>後來有查到 <a href="http://simurai.com/blog/2011/07/26/webkit-scrollbar" target="_blank" rel="external">Force the scrollbar back</a> 這些的說明，我們需要針對 -webkit-scrollbar 來設定它，所以在 css 中需要再加入以下的設定，來讓 scrollbar 在 mac 的瀏覽器可以正常呈現 scrollbar 哦!</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-pseudo">::-webkit-scrollbar</span> &#123;</div><div class="line">    <span class="attribute">-webkit-appearance</span>: none;</div><div class="line">    <span class="attribute">width</span>: <span class="number">7px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-pseudo">::-webkit-scrollbar-thumb</span> &#123;</div><div class="line">    <span class="attribute">border-radius</span>: <span class="number">4px</span>;</div><div class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(0,0,0,.5);</div><div class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">1px</span> <span class="built_in">rgba</span>(255,255,255,.5);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+                              
+                                <p class="article-more-link">
+                                  <a href="/2017/11/29/2017013/#more">
+                                    more &gt;&gt;
+                                  </a>
+                                </p>
+                                
+                                  
+                                    
 
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -566,21 +763,17 @@
 		</ul>
 	</div>
 
-      
+                
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/29/2017013/">展開全文 >></a>
-        </p>
-      
+                  
 
-      
-      <div class="clearfix"></div>
-    </div>
+                      
+                            <div class="clearfix"></div>
+        </div>
   </div>
 </article>
 
-<aside class="wrap-side-operation">
+      <aside class="wrap-side-operation">
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
@@ -597,10 +790,11 @@
 </aside>
 
 
-
+        
 
   
-    <article id="post-2017012" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2017012" class="article article-type-post  article-index"
+  itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -611,52 +805,33 @@
     </h1>
   
 
-        
-        <a href="/2017/11/16/2017012/" class="archive-article-date">
+          
+            <a href="/2017/11/16/2017012/" class="archive-article-date">
   	<time datetime="2017-11-16T01:57:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-16</time>
 </a>
-        
+              
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="最近收到了-Deadlock-的-trace-file，如下圖，"><a href="#最近收到了-Deadlock-的-trace-file，如下圖，" class="headerlink" title="最近收到了 Deadlock 的 trace file，如下圖，"></a>最近收到了 Deadlock 的 trace file，如下圖，</h4><img src="/2017/11/16/2017012/001.png" alt="slug Deadlock graph" title="slug Deadlock graph">
-<h4 id="如果直接看圖示資訊不夠清楚的話，可以將那個-trc-檔用-Notepad-來開，用-xml-方式檢視，就可以看到更多詳細的資料，如下圖，"><a href="#如果直接看圖示資訊不夠清楚的話，可以將那個-trc-檔用-Notepad-來開，用-xml-方式檢視，就可以看到更多詳細的資料，如下圖，" class="headerlink" title="如果直接看圖示資訊不夠清楚的話，可以將那個 trc 檔用 Notepad++ 來開，用 xml 方式檢視，就可以看到更多詳細的資料，如下圖，"></a>如果直接看圖示資訊不夠清楚的話，可以將那個 trc 檔用 Notepad++ 來開，用 xml 方式檢視，就可以看到更多詳細的資料，如下圖，</h4><img src="/2017/11/16/2017012/002.png" alt="slug View in Notepad++" title="slug View in Notepad++">
-<h4 id="當然如果這樣資訊又太雜的話，那還有一個方式，就是在那個-Deadlock-graph-那列上面按右鍵，選取「擷取事件資料-X-」將它另存成-xdl-檔，然後用-「SQL-Sentry-Plan-Explorer」-來檢視，如下圖，"><a href="#當然如果這樣資訊又太雜的話，那還有一個方式，就是在那個-Deadlock-graph-那列上面按右鍵，選取「擷取事件資料-X-」將它另存成-xdl-檔，然後用-「SQL-Sentry-Plan-Explorer」-來檢視，如下圖，" class="headerlink" title="當然如果這樣資訊又太雜的話，那還有一個方式，就是在那個 Deadlock graph 那列上面按右鍵，選取「擷取事件資料(X)」將它另存成 .xdl 檔，然後用 「SQL Sentry Plan Explorer」 來檢視，如下圖，"></a>當然如果這樣資訊又太雜的話，那還有一個方式，就是在那個 Deadlock graph 那列上面按右鍵，選取「擷取事件資料(X)」將它另存成 .xdl 檔，然後用 「<a href="http://www.sentryone.com/plan-explorer" target="_blank" rel="external">SQL Sentry Plan Explorer</a>」 來檢視，如下圖，</h4><img src="/2017/11/16/2017012/003.png" alt="slug saveAs XDL file" title="slug saveAs XDL file">
-<img src="/2017/11/16/2017012/004.png" alt="slug View in [SQL Sentry Plan Explorer]" title="slug View in [SQL Sentry Plan Explorer]">
-<h3 id="案例分享"><a href="#案例分享" class="headerlink" title="案例分享"></a>案例分享</h3><ul>
-<li><h4 id="Reader-Writer-Deadlocks"><a href="#Reader-Writer-Deadlocks" class="headerlink" title="Reader-Writer Deadlocks"></a>Reader-Writer Deadlocks</h4><h4 id="當可以看到詳細資料後，就要來開始解析看看是什麼原因造成的，以上面那個例子來說，一個是-update-，另一個是-select-，而-Isolation-Level-是-repeatable-read-。是典型的-Reader-Writer-Deadlocks-，解法如下，"><a href="#當可以看到詳細資料後，就要來開始解析看看是什麼原因造成的，以上面那個例子來說，一個是-update-，另一個是-select-，而-Isolation-Level-是-repeatable-read-。是典型的-Reader-Writer-Deadlocks-，解法如下，" class="headerlink" title="當可以看到詳細資料後，就要來開始解析看看是什麼原因造成的，以上面那個例子來說，一個是 update ，另一個是 select ，而 Isolation Level 是 repeatable read 。是典型的 Reader-Writer Deadlocks ，解法如下，"></a>當可以看到詳細資料後，就要來開始解析看看是什麼原因造成的，以上面那個例子來說，一個是 update ，另一個是 select ，而 Isolation Level 是 repeatable read 。是典型的 Reader-Writer Deadlocks ，解法如下，</h4></li>
-</ul>
-<ul>
-<li>SELECT 語句不要包在交易之中。</li>
-<li>檢查 SELECT 語句是否有用到合適的 INDEX (使用 SEEK, 而非 SCAN)，如果已用 SEEK 了，就嘗試下面的解法。</li>
-<li>使用 row-version based isolation level，例如 READ COMMITTED SNAPSHOT 或是 SNAPSHOT。</li>
-<li>SELECT 語句使用 NOLOCK。</li>
-</ul>
-<ul>
-<li><h4 id="Writer-Writer-Deadlocks"><a href="#Writer-Writer-Deadlocks" class="headerlink" title="Writer-Writer Deadlocks"></a>Writer-Writer Deadlocks</h4><img src="/2017/11/16/2017012/005.png" alt="slug Writer-Writer Deadlock" title="slug Writer-Writer Deadlock">
-<h4 id="從上圖來看都是針對同一個-Page-想要做-Update-而造成的-Deadlock，另外會有一個比較奇怪的就是「交換事件-exchangeEvent-」，是因為平行處理的原因，可能是沒用到適合的-index，所以才會讓-SQL-使用平行處理。"><a href="#從上圖來看都是針對同一個-Page-想要做-Update-而造成的-Deadlock，另外會有一個比較奇怪的就是「交換事件-exchangeEvent-」，是因為平行處理的原因，可能是沒用到適合的-index，所以才會讓-SQL-使用平行處理。" class="headerlink" title="從上圖來看都是針對同一個 Page 想要做 Update 而造成的 Deadlock，另外會有一個比較奇怪的就是「交換事件(exchangeEvent)」，是因為平行處理的原因，可能是沒用到適合的 index，所以才會讓 SQL 使用平行處理。"></a>從上圖來看都是針對同一個 Page 想要做 Update 而造成的 Deadlock，另外會有一個比較奇怪的就是「交換事件(exchangeEvent)」，是因為平行處理的原因，可能是沒用到適合的 index，所以才會讓 SQL 使用平行處理。</h4></li>
-</ul>
-<img src="/2017/11/16/2017012/006.png" alt="slug View in [SQL Sentry Plan Explorer]" title="slug View in [SQL Sentry Plan Explorer]">
-<h4 id="從上圖可以發現，使用相同的-Store-Procedure-，而-Lock-在-Delete-，可以判斷那個-Delete-應該是沒有使用到適合的-index-，所以在-Delete-時，會使用-Scan-的方式去找到要刪除的那一些資料，如下的執行計畫，"><a href="#從上圖可以發現，使用相同的-Store-Procedure-，而-Lock-在-Delete-，可以判斷那個-Delete-應該是沒有使用到適合的-index-，所以在-Delete-時，會使用-Scan-的方式去找到要刪除的那一些資料，如下的執行計畫，" class="headerlink" title="從上圖可以發現，使用相同的 Store Procedure ，而 Lock 在 Delete ，可以判斷那個 Delete 應該是沒有使用到適合的 index ，所以在 Delete 時，會使用 Scan 的方式去找到要刪除的那一些資料，如下的執行計畫，"></a>從上圖可以發現，使用相同的 Store Procedure ，而 Lock 在 Delete ，可以判斷那個 Delete 應該是沒有使用到適合的 index ，所以在 Delete 時，會使用 Scan 的方式去找到要刪除的那一些資料，如下的執行計畫，</h4><img src="/2017/11/16/2017012/007.png" alt="slug Delete 的執行計畫" title="slug Delete 的執行計畫">
-<h4 id="可以發現，它是真的是使用-SCAN-的方式。解法如下，"><a href="#可以發現，它是真的是使用-SCAN-的方式。解法如下，" class="headerlink" title="可以發現，它是真的是使用 SCAN 的方式。解法如下，"></a>可以發現，它是真的是使用 SCAN 的方式。解法如下，</h4><ul>
-<li>建立適合的 index ，例如，</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> NONCLUSTERED <span class="keyword">INDEX</span> NIDX_SRB_QNTSCORE_DATA_CASEID <span class="keyword">ON</span> dbo.SRB_QNTSCORE_DATA(CASEID);</div></pre></td></tr></table></figure>
-<img src="/2017/11/16/2017012/008.png" alt="slug 建立過 index 的執行計畫" title="slug 建立過 index 的執行計畫">
-<h3 id="其他解決方式"><a href="#其他解決方式" class="headerlink" title="其他解決方式"></a>其他解決方式</h3><h4 id="除了上述的-Case-的解法外，有其他的解法，"><a href="#除了上述的-Case-的解法外，有其他的解法，" class="headerlink" title="除了上述的 Case 的解法外，有其他的解法，"></a>除了上述的 Case 的解法外，有其他的解法，</h4><ul>
-<li>更新資料表的順序<br>針對 Tables 修改的順序也是要注意，例如 sp1 是更新 tblA 及 tblB ，另一個 sp2 則是先更新 tblB 再更新 tblA ，這樣子的順序交叉，就很容易造成 Deadlock。 所以在 更新的順序上也是要考量到哦!</li>
-<li>Create Indexes with Included Columns<br>有一些 Key Lookup deadlock 就是因為在 Update 某 Table 時，除了更新了 Clustered Index 後，還需要再更新 Non Clustered Index，而另一個 Select 除了透過 Non Clustered Index 找到資料後，還需要到 Lookup 到 Clustered Index 取得資料。這樣子就有可能會互相 Lock 到而造成 Deadlock，這種狀況可以加入 Included Columns 來解決。</li>
-<li>MAXDOP<br>有些光 SELECT 時，就會發生 Deadlock ，是因為平行處理造成的，解法就是調整 SQL 。如果還會有 Deadlock 的話，就設定 MAXDOP 看看能不能解決。</li>
-</ul>
-<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><h4 id="SQL-Server-Deadlocks-by-Example"><a href="#SQL-Server-Deadlocks-by-Example" class="headerlink" title="SQL Server Deadlocks by Example"></a><a href="https://www.red-gate.com/simple-talk/sql/performance/sql-server-deadlocks-by-example/" target="_blank" rel="external">SQL Server Deadlocks by Example</a></h4>
-      
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                            <h4 id="最近收到了-Deadlock-的-trace-file，如下圖，"><a href="#最近收到了-Deadlock-的-trace-file，如下圖，" class="headerlink" title="最近收到了 Deadlock 的 trace file，如下圖，"></a>最近收到了 Deadlock 的 trace file，如下圖，</h4><img src="/2017/11/16/2017012/001.png" alt="slug Deadlock graph" title="slug Deadlock graph">
+                              
+                                <p class="article-more-link">
+                                  <a href="/2017/11/16/2017012/#more">
+                                    more &gt;&gt;
+                                  </a>
+                                </p>
+                                
+                                  
+                                    
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -680,21 +855,17 @@
 		</ul>
 	</div>
 
-      
+                
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/16/2017012/">展開全文 >></a>
-        </p>
-      
+                  
 
-      
-      <div class="clearfix"></div>
-    </div>
+                      
+                            <div class="clearfix"></div>
+        </div>
   </div>
 </article>
 
-<aside class="wrap-side-operation">
+      <aside class="wrap-side-operation">
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
@@ -711,216 +882,7 @@
 </aside>
 
 
-
-
-  
-    <article id="post-2017011" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/09/2017011/">Aspose.Words DocumentBuilder 加入 htmlTable 轉成 PDF 檔問題</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/09/2017011/" class="archive-article-date">
-  	<time datetime="2017-11-09T05:31:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="最近同事透過-Aspose-Words-DocumentBuilder-的-InsertHtml-Method-加入-Html-的-Table-含-css-，另存成-PDF-檔後，居然發現本來在-Word-檔中看起來好好的，PDF-檔中的-Table-卻會超過頁面，如下，"><a href="#最近同事透過-Aspose-Words-DocumentBuilder-的-InsertHtml-Method-加入-Html-的-Table-含-css-，另存成-PDF-檔後，居然發現本來在-Word-檔中看起來好好的，PDF-檔中的-Table-卻會超過頁面，如下，" class="headerlink" title="最近同事透過 Aspose.Words DocumentBuilder 的 InsertHtml Method 加入 Html 的 Table (含 css )，另存成 PDF 檔後，居然發現本來在 Word 檔中看起來好好的，PDF 檔中的 Table 卻會超過頁面，如下，"></a>最近同事透過 Aspose.Words DocumentBuilder 的 InsertHtml Method 加入 Html 的 Table (含 css )，另存成 PDF 檔後，居然發現本來在 Word 檔中看起來好好的，PDF 檔中的 Table 卻會超過頁面，如下，</h3><img src="/2017/11/09/2017011/exceedPage.png" alt="slug" title="slug">
-<h3 id="測試程式如下，"><a href="#測試程式如下，" class="headerlink" title="測試程式如下，"></a>測試程式如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> htmlTable = <span class="string">@"&lt;style&gt;</span></div><div class="line"><span class="string">.table &#123;</span></div><div class="line"><span class="string">	width: auto;</span></div><div class="line"><span class="string">	table-layout:fixed;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">.table, .table tr &#123;</span></div><div class="line"><span class="string">	height: 40px;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">.table, .table td &#123;</span></div><div class="line"><span class="string">	border-collapse: collapse;</span></div><div class="line"><span class="string">	border: 1px solid #000000;</span></div><div class="line"><span class="string">	padding:2px 5px 2px 5px;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string">&lt;/style&gt;</span></div><div class="line"><span class="string">&lt;table class='table' style='width: 100%;'&gt;</span></div><div class="line"><span class="string">&lt;colgroup&gt;</span></div><div class="line"><span class="string">	&lt;col style='width: 15%;'&gt;</span></div><div class="line"><span class="string">	&lt;col style='width: 35%;'&gt;</span></div><div class="line"><span class="string">	&lt;col style='width: 15%;'&gt;</span></div><div class="line"><span class="string">	&lt;col style='width: 35%;'&gt;</span></div><div class="line"><span class="string">&lt;/colgroup&gt;</span></div><div class="line"><span class="string">&lt;tbody&gt;</span></div><div class="line"><span class="string">	&lt;tr&gt;</span></div><div class="line"><span class="string">		&lt;td&gt;TITLE1：&lt;/td&gt;</span></div><div class="line"><span class="string">		&lt;td&gt;&lt;/td&gt;</span></div><div class="line"><span class="string">		&lt;td&gt;TITLE2：&lt;/td&gt;</span></div><div class="line"><span class="string">		&lt;td&gt;106/10/14 22:26&lt;/td&gt;</span></div><div class="line"><span class="string">	&lt;/tr&gt;</span></div><div class="line"><span class="string">	&lt;tr&gt;</span></div><div class="line"><span class="string">		&lt;td&gt;TITLE3：&lt;/td&gt;</span></div><div class="line"><span class="string">		&lt;td colspan='3'&gt;測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試&lt;/td&gt;</span></div><div class="line"><span class="string">	&lt;/tr&gt;</span></div><div class="line"><span class="string">&lt;/tbody&gt;</span></div><div class="line"><span class="string">&lt;/table&gt;"</span>;</div><div class="line"><span class="keyword">var</span> doc = <span class="keyword">new</span> Document();</div><div class="line">doc.Styles.DefaultParagraphFormat.Style.Font.NameFarEast = <span class="string">"標楷體"</span>;</div><div class="line">doc.Styles.DefaultParagraphFormat.Style.Font.NameAscii = <span class="string">"Times New Roman"</span>;</div><div class="line">doc.Styles.DefaultParagraphFormat.Style.Font.Size = <span class="number">16</span>D;</div><div class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> DocumentBuilder(doc);</div><div class="line">builder.InsertHtml(htmlTable, <span class="literal">true</span>);</div><div class="line">doc.Save(<span class="string">"TEST.doc"</span>, SaveFormat.Doc);</div><div class="line">doc.Save(<span class="string">"TEST.pdf"</span>, SaveFormat.Pdf);</div></pre></td></tr></table></figure>
-<h3 id="原廠的回覆設定-CompatibilityOptions-GrowAutofit-選項為-false-就可以了，如下，"><a href="#原廠的回覆設定-CompatibilityOptions-GrowAutofit-選項為-false-就可以了，如下，" class="headerlink" title="原廠的回覆設定 CompatibilityOptions.GrowAutofit 選項為 false 就可以了，如下，"></a>原廠的回覆設定 CompatibilityOptions.GrowAutofit 選項為 false 就可以了，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> doc = <span class="keyword">new</span> Document();</div><div class="line">doc.Styles.DefaultParagraphFormat.Style.Font.NameFarEast = <span class="string">"標楷體"</span>;</div><div class="line">doc.Styles.DefaultParagraphFormat.Style.Font.NameAscii = <span class="string">"Times New Roman"</span>;</div><div class="line">doc.Styles.DefaultParagraphFormat.Style.Font.Size = <span class="number">16</span>D;</div><div class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> DocumentBuilder(doc);</div><div class="line">builder.InsertHtml(htmlTable, <span class="literal">true</span>);</div><div class="line">doc.Save(<span class="string">"TEST.doc"</span>, SaveFormat.Doc);</div><div class="line">doc.CompatibilityOptions.GrowAutofit = <span class="literal">false</span>;</div><div class="line">doc.Save(<span class="string">"TEST.pdf"</span>, SaveFormat.Pdf);</div></pre></td></tr></table></figure>
-<h3 id="果然設定-Document-的-CompatibilityOptions-GrowAutofit-為-false-，-PDF-中的-table-就不會超過頁面了，詳細可以參考DocumentBuilder-InsertHtml-Save-as-pdf-will-exceed-page。"><a href="#果然設定-Document-的-CompatibilityOptions-GrowAutofit-為-false-，-PDF-中的-table-就不會超過頁面了，詳細可以參考DocumentBuilder-InsertHtml-Save-as-pdf-will-exceed-page。" class="headerlink" title="果然設定 Document 的 CompatibilityOptions.GrowAutofit 為 false ， PDF 中的 table 就不會超過頁面了，詳細可以參考DocumentBuilder InsertHtml Save as pdf will exceed page。"></a>果然設定 Document 的 CompatibilityOptions.GrowAutofit 為 false ， PDF 中的 table 就不會超過頁面了，詳細可以參考<a href="https://forum.aspose.com/t/documentbuilder-inserthtml-save-as-pdf-will-exceed-page/165825" target="_blank" rel="external">DocumentBuilder InsertHtml Save as pdf will exceed page</a>。</h3><h3 id="後來同事用巢狀的-html-table-去試，這次變成不同-TD-的內容會疉在一起，如下，"><a href="#後來同事用巢狀的-html-table-去試，這次變成不同-TD-的內容會疉在一起，如下，" class="headerlink" title="後來同事用巢狀的 html table 去試，這次變成不同 TD 的內容會疉在一起，如下，"></a>後來同事用巢狀的 html table 去試，這次變成不同 TD 的內容會疉在一起，如下，</h3><img src="/2017/11/09/2017011/002.png" alt="slug" title="slug">
-<h3 id="測試的-html-table-如下，"><a href="#測試的-html-table-如下，" class="headerlink" title="測試的 html table 如下，"></a>測試的 html table 如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> htmlTable2 = <span class="string">@"&lt;style&gt;</span></div><div class="line"><span class="string">div[data-speed-id=seal-box] &#123;</span></div><div class="line"><span class="string">	margin-top: 20px;</span></div><div class="line"><span class="string">	margin-left: 0px;</span></div><div class="line"><span class="string">	margin-right: 0px;</span></div><div class="line"><span class="string">	margin-bottom: 0px;</span></div><div class="line"><span class="string">	height: 20px;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">td[data-speed-sealouid] &#123;</span></div><div class="line"><span class="string">	width: 60px;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">table[data-speed-id='seal-table'] &#123;</span></div><div class="line"><span class="string">	border: 1px solid red !important;</span></div><div class="line"><span class="string">	color: red !important;</span></div><div class="line"><span class="string">	border-collapse: initial;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">table[data-speed-id=seal-table] td &#123;</span></div><div class="line"><span class="string">	padding: 0px !important;</span></div><div class="line"><span class="string">	margin: 0px !important;</span></div><div class="line"><span class="string">	border: 0px;</span></div><div class="line"><span class="string">	border-collapse: collapse;</span></div><div class="line"><span class="string">	border-spacing: 0px !important;</span></div><div class="line"><span class="string">	vertical-align: middle !important;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string">&lt;/style&gt;</span></div><div class="line"><span class="string">&lt;div style='color: blue;'&gt;下面是原本職章結構直接輸出，&lt;/div&gt;</span></div><div class="line"><span class="string">&lt;table&gt;</span></div><div class="line"><span class="string">&lt;colgroup&gt;</span></div><div class="line"><span class="string">	&lt;col style='width:35%;'&gt;</span></div><div class="line"><span class="string">	&lt;col style='width:65%;'&gt;</span></div><div class="line"><span class="string">&lt;/colgroup&gt;</span></div><div class="line"><span class="string">&lt;tbody&gt;</span></div><div class="line"><span class="string">&lt;tr&gt;</span></div><div class="line"><span class="string">	&lt;td&gt;</span></div><div class="line"><span class="string">		&lt;div style='margin-top: 10px;' data-speed-id='seal-box'&gt;</span></div><div class="line"><span class="string">			&lt;table&gt;</span></div><div class="line"><span class="string">				&lt;tbody&gt;</span></div><div class="line"><span class="string">				&lt;tr&gt;</span></div><div class="line"><span class="string">					&lt;td&gt;</span></div><div class="line"><span class="string">						&lt;table data-speed-id='seal-table'&gt;</span></div><div class="line"><span class="string">							&lt;tbody&gt;</span></div><div class="line"><span class="string">							&lt;tr&gt;</span></div><div class="line"><span class="string">								&lt;td style='font-size: 10px;' data-speed-sealouid='10110'&gt;文化資源司&lt;/td&gt;</span></div><div class="line"><span class="string">								&lt;td style='font-size: 16px;' rowspan='2'&gt;亂馬客&lt;/td&gt;</span></div><div class="line"><span class="string">							&lt;/tr&gt;</span></div><div class="line"><span class="string">							&lt;tr&gt;</span></div><div class="line"><span class="string">								&lt;td style='font-size: 10px;'&gt;科員&lt;/td&gt;</span></div><div class="line"><span class="string">							&lt;/tr&gt;</span></div><div class="line"><span class="string">							&lt;/tbody&gt;</span></div><div class="line"><span class="string">						&lt;/table&gt;</span></div><div class="line"><span class="string">					&lt;/td&gt;</span></div><div class="line"><span class="string">				&lt;/tr&gt;</span></div><div class="line"><span class="string">				&lt;tr&gt;</span></div><div class="line"><span class="string">					&lt;td style='text-align: center; font-size: 12px;'&gt;106/10/18 10:36&lt;/td&gt;</span></div><div class="line"><span class="string">				&lt;/tr&gt;</span></div><div class="line"><span class="string">				&lt;/tbody&gt;</span></div><div class="line"><span class="string">			&lt;/table&gt;</span></div><div class="line"><span class="string">		&lt;/div&gt;</span></div><div class="line"><span class="string">	&lt;/td&gt;</span></div><div class="line"><span class="string">	&lt;td style='padding-left: 70px;'&gt;</span></div><div class="line"><span class="string">		案係亂馬客測試文化局將於本(105)年10月29日召開「106亂馬客測試社區營造平台工作小組第九十次會議」，本部為列席單位，擬視業務狀況再行派員，當否?請核示。文陳閱後存查。</span></div><div class="line"><span class="string">	&lt;/td&gt;</span></div><div class="line"><span class="string">&lt;/tr&gt;</span></div><div class="line"><span class="string">&lt;/tbody&gt;</span></div><div class="line"><span class="string">&lt;/table&gt;"</span>;</div></pre></td></tr></table></figure>
-<h3 id="原廠建議可以改-TD-的-LeftPadding-來解這問題，詳細可以參考DocumentBuilder-InsertHtml-nested-table-Save-as-pdf-some-TD-will-disapper，不要使用-UpdateTableLayout-哦"><a href="#原廠建議可以改-TD-的-LeftPadding-來解這問題，詳細可以參考DocumentBuilder-InsertHtml-nested-table-Save-as-pdf-some-TD-will-disapper，不要使用-UpdateTableLayout-哦" class="headerlink" title="原廠建議可以改 TD 的 LeftPadding 來解這問題，詳細可以參考DocumentBuilder InsertHtml (nested table) Save as pdf , some TD will disapper，不要使用 UpdateTableLayout 哦!"></a>原廠建議可以改 TD 的 LeftPadding 來解這問題，詳細可以參考<a href="https://forum.aspose.com/t/documentbuilder-inserthtml-nested-table-save-as-pdf-some-td-will-disapper/166107" target="_blank" rel="external">DocumentBuilder InsertHtml (nested table) Save as pdf , some TD will disapper</a>，不要使用 UpdateTableLayout 哦!</h3><h3 id="所以我在-TD-中加入-style-’padding-left-70px-’-來看，右邊的-TD-內容果然往右移了，但左邊的那個職章-Table-卻還是小小的，如下，"><a href="#所以我在-TD-中加入-style-’padding-left-70px-’-來看，右邊的-TD-內容果然往右移了，但左邊的那個職章-Table-卻還是小小的，如下，" class="headerlink" title="所以我在 TD 中加入 style=’padding-left: 70px;’ 來看，右邊的 TD 內容果然往右移了，但左邊的那個職章 Table 卻還是小小的，如下，"></a>所以我在 TD 中加入 style=’padding-left: 70px;’ 來看，右邊的 TD 內容果然往右移了，但左邊的那個職章 Table 卻還是小小的，如下，</h3><img src="/2017/11/09/2017011/003.png" alt="slug" title="slug">
-<h3 id="測試的-Html-如下，"><a href="#測試的-Html-如下，" class="headerlink" title="測試的 Html 如下，"></a>測試的 Html 如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> htmlTable3 = <span class="string">@"&lt;style&gt;</span></div><div class="line"><span class="string">div[data-speed-id=seal-box] &#123;</span></div><div class="line"><span class="string">	margin-top: 20px;</span></div><div class="line"><span class="string">	margin-left: 0px;</span></div><div class="line"><span class="string">	margin-right: 0px;</span></div><div class="line"><span class="string">	margin-bottom: 0px;</span></div><div class="line"><span class="string">	height: 20px;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">td[data-speed-sealouid] &#123;</span></div><div class="line"><span class="string">	width: 60px;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">table[data-speed-id='seal-table'] &#123;</span></div><div class="line"><span class="string">	border: 1px solid red !important;</span></div><div class="line"><span class="string">	color: red !important;</span></div><div class="line"><span class="string">	border-collapse: initial;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">table[data-speed-id=seal-table] td &#123;</span></div><div class="line"><span class="string">	padding: 0px !important;</span></div><div class="line"><span class="string">	margin: 0px !important;</span></div><div class="line"><span class="string">	border: 0px;</span></div><div class="line"><span class="string">	border-collapse: collapse;</span></div><div class="line"><span class="string">	border-spacing: 0px !important;</span></div><div class="line"><span class="string">	vertical-align: middle !important;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string">&lt;/style&gt;</span></div><div class="line"><span class="string">&lt;div style='color: blue;'&gt;下面是原本職章結構直接輸出，&lt;/div&gt;</span></div><div class="line"><span class="string">&lt;table&gt;</span></div><div class="line"><span class="string">&lt;colgroup&gt;</span></div><div class="line"><span class="string">	&lt;col style='width:35%;'&gt;</span></div><div class="line"><span class="string">	&lt;col style='width:65%;'&gt;</span></div><div class="line"><span class="string">&lt;/colgroup&gt;</span></div><div class="line"><span class="string">&lt;tbody&gt;</span></div><div class="line"><span class="string">&lt;tr&gt;</span></div><div class="line"><span class="string">	&lt;td&gt;</span></div><div class="line"><span class="string">		&lt;div style='margin-top: 10px;' data-speed-id='seal-box'&gt;</span></div><div class="line"><span class="string">			&lt;table&gt;</span></div><div class="line"><span class="string">				&lt;tbody&gt;</span></div><div class="line"><span class="string">				&lt;tr&gt;</span></div><div class="line"><span class="string">					&lt;td&gt;</span></div><div class="line"><span class="string">						&lt;table data-speed-id='seal-table'&gt;</span></div><div class="line"><span class="string">							&lt;tbody&gt;</span></div><div class="line"><span class="string">							&lt;tr&gt;</span></div><div class="line"><span class="string">								&lt;td style='font-size: 10px;' data-speed-sealouid='10110'&gt;文化資源司&lt;/td&gt;</span></div><div class="line"><span class="string">								&lt;td style='font-size: 16px;' rowspan='2'&gt;亂馬客&lt;/td&gt;</span></div><div class="line"><span class="string">							&lt;/tr&gt;</span></div><div class="line"><span class="string">							&lt;tr&gt;</span></div><div class="line"><span class="string">								&lt;td style='font-size: 10px;'&gt;科員&lt;/td&gt;</span></div><div class="line"><span class="string">							&lt;/tr&gt;</span></div><div class="line"><span class="string">							&lt;/tbody&gt;</span></div><div class="line"><span class="string">						&lt;/table&gt;</span></div><div class="line"><span class="string">					&lt;/td&gt;</span></div><div class="line"><span class="string">				&lt;/tr&gt;</span></div><div class="line"><span class="string">				&lt;tr&gt;</span></div><div class="line"><span class="string">					&lt;td style='text-align: center; font-size: 12px;'&gt;106/10/18 10:36&lt;/td&gt;</span></div><div class="line"><span class="string">				&lt;/tr&gt;</span></div><div class="line"><span class="string">				&lt;/tbody&gt;</span></div><div class="line"><span class="string">			&lt;/table&gt;</span></div><div class="line"><span class="string">		&lt;/div&gt;</span></div><div class="line"><span class="string">	&lt;/td&gt;</span></div><div class="line"><span class="string">	&lt;td style='padding-left: 70px;'&gt;</span></div><div class="line"><span class="string">		案係亂馬客測試文化局將於本(105)年10月29日召開「106亂馬客測試社區營造平台工作小組第九十次會議」，本部為列席單位，擬視業務狀況再行派員，當否?請核示。文陳閱後存查。</span></div><div class="line"><span class="string">	&lt;/td&gt;</span></div><div class="line"><span class="string">&lt;/tr&gt;</span></div><div class="line"><span class="string">&lt;/tbody&gt;</span></div><div class="line"><span class="string">&lt;/table&gt;"</span>;</div></pre></td></tr></table></figure>
-<h3 id="那只好在職章的那個-Table-中設定固定的寬度，最後-PDF-的結果如下，"><a href="#那只好在職章的那個-Table-中設定固定的寬度，最後-PDF-的結果如下，" class="headerlink" title="那只好在職章的那個 Table 中設定固定的寬度，最後 PDF 的結果如下，"></a>那只好在職章的那個 Table 中設定固定的寬度，最後 PDF 的結果如下，</h3><img src="/2017/11/09/2017011/004.png" alt="slug" title="slug">
-<h3 id="最後的測試程式如下，"><a href="#最後的測試程式如下，" class="headerlink" title="最後的測試程式如下，"></a>最後的測試程式如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> htmlTable4 = <span class="string">@"&lt;style&gt;</span></div><div class="line"><span class="string">div[data-speed-id=seal-box] &#123;</span></div><div class="line"><span class="string">	margin-top: 20px;</span></div><div class="line"><span class="string">	margin-left: 0px;</span></div><div class="line"><span class="string">	margin-right: 0px;</span></div><div class="line"><span class="string">	margin-bottom: 0px;</span></div><div class="line"><span class="string">	height: 20px;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">td[data-speed-sealouid] &#123;</span></div><div class="line"><span class="string">	width: 60px;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">table[data-speed-id='seal-table'] &#123;</span></div><div class="line"><span class="string">	border: 1px solid red !important;</span></div><div class="line"><span class="string">	color: red !important;</span></div><div class="line"><span class="string">	border-collapse: initial;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">table[data-speed-id=seal-table] td &#123;</span></div><div class="line"><span class="string">	padding: 0px !important;</span></div><div class="line"><span class="string">	margin: 0px !important;</span></div><div class="line"><span class="string">	border: 0px;</span></div><div class="line"><span class="string">	border-collapse: collapse;</span></div><div class="line"><span class="string">	border-spacing: 0px !important;</span></div><div class="line"><span class="string">	vertical-align: middle !important;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string">&lt;/style&gt;</span></div><div class="line"><span class="string">&lt;div style='color: blue;'&gt;下面是原本職章結構直接輸出，&lt;/div&gt;</span></div><div class="line"><span class="string">&lt;table&gt;</span></div><div class="line"><span class="string">&lt;colgroup&gt;</span></div><div class="line"><span class="string">	&lt;col style='width:35%;'&gt;</span></div><div class="line"><span class="string">	&lt;col style='width:65%;'&gt;</span></div><div class="line"><span class="string">&lt;/colgroup&gt;</span></div><div class="line"><span class="string">&lt;tbody&gt;</span></div><div class="line"><span class="string">&lt;tr&gt;</span></div><div class="line"><span class="string">	&lt;td&gt;</span></div><div class="line"><span class="string">		&lt;div style='margin-top: 10px;' data-speed-id='seal-box'&gt;</span></div><div class="line"><span class="string">			&lt;table width='120px'&gt;</span></div><div class="line"><span class="string">				&lt;tbody&gt;</span></div><div class="line"><span class="string">				&lt;tr&gt;</span></div><div class="line"><span class="string">					&lt;td&gt;</span></div><div class="line"><span class="string">						&lt;table data-speed-id='seal-table' &gt;</span></div><div class="line"><span class="string">							&lt;tbody&gt;</span></div><div class="line"><span class="string">							&lt;tr&gt;</span></div><div class="line"><span class="string">								&lt;td style='font-size: 10px;' data-speed-sealouid='10110'&gt;文化資源司&lt;/td&gt;</span></div><div class="line"><span class="string">								&lt;td style='font-size: 16px;' rowspan='2'&gt;亂馬客&lt;/td&gt;</span></div><div class="line"><span class="string">							&lt;/tr&gt;</span></div><div class="line"><span class="string">							&lt;tr&gt;</span></div><div class="line"><span class="string">								&lt;td style='font-size: 10px;'&gt;科員&lt;/td&gt;</span></div><div class="line"><span class="string">							&lt;/tr&gt;</span></div><div class="line"><span class="string">							&lt;/tbody&gt;</span></div><div class="line"><span class="string">						&lt;/table&gt;</span></div><div class="line"><span class="string">					&lt;/td&gt;</span></div><div class="line"><span class="string">				&lt;/tr&gt;</span></div><div class="line"><span class="string">				&lt;tr&gt;</span></div><div class="line"><span class="string">					&lt;td style='text-align: center; font-size: 12px;'&gt;106/10/18 10:36&lt;/td&gt;</span></div><div class="line"><span class="string">				&lt;/tr&gt;</span></div><div class="line"><span class="string">				&lt;/tbody&gt;</span></div><div class="line"><span class="string">			&lt;/table&gt;</span></div><div class="line"><span class="string">		&lt;/div&gt;</span></div><div class="line"><span class="string">	&lt;/td&gt;</span></div><div class="line"><span class="string">	&lt;td style='padding-left: 90px;'&gt;</span></div><div class="line"><span class="string">		案係亂馬客測試文化局將於本(105)年10月29日召開「106亂馬客測試社區營造平台工作小組第九十次會議」，本部為列席單位，擬視業務狀況再行派員，當否?請核示。文陳閱後存查。</span></div><div class="line"><span class="string">	&lt;/td&gt;</span></div><div class="line"><span class="string">&lt;/tr&gt;</span></div><div class="line"><span class="string">&lt;/tbody&gt;</span></div><div class="line"><span class="string">&lt;/table&gt;"</span>;</div><div class="line"><span class="keyword">var</span> doc = <span class="keyword">new</span> Document();</div><div class="line">doc.Styles.DefaultParagraphFormat.Style.Font.NameFarEast = <span class="string">"標楷體"</span>;</div><div class="line">doc.Styles.DefaultParagraphFormat.Style.Font.NameAscii = <span class="string">"Times New Roman"</span>;</div><div class="line">doc.Styles.DefaultParagraphFormat.Style.Font.Size = <span class="number">16</span>D;</div><div class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> DocumentBuilder(doc);</div><div class="line">builder.InsertHtml(htmlTable4, <span class="literal">true</span>);</div><div class="line">doc.CompatibilityOptions.GrowAutofit = <span class="literal">false</span>;</div><div class="line">doc.Save(<span class="string">"TEST.pdf"</span>, SaveFormat.Pdf);</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Aspose.Words</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PDF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">CompatibilityOptions</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">GrowAutofit</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">DocumentBuilder</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">InsertHtml</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/09/2017011/">展開全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2017010" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/27/2017010/">log4net 檔名使用「大寫」字母造成檔案被覆寫問題</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/27/2017010/" class="archive-article-date">
-  	<time datetime="2017-10-27T05:28:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="事情是這樣子的…我們有個專案裡面有使用-log4net-v-1-2-11-0-，在案子裡面是使用-RollingFileAppender-，-rollingStyle-是-Composite-，依日期時間及檔案大小來切檔，設定檔如下，"><a href="#事情是這樣子的…我們有個專案裡面有使用-log4net-v-1-2-11-0-，在案子裡面是使用-RollingFileAppender-，-rollingStyle-是-Composite-，依日期時間及檔案大小來切檔，設定檔如下，" class="headerlink" title="事情是這樣子的…我們有個專案裡面有使用 log4net v 1.2.11.0 ，在案子裡面是使用 RollingFileAppender ， rollingStyle 是 Composite ，依日期時間及檔案大小來切檔，設定檔如下，"></a>事情是這樣子的…我們有個專案裡面有使用 log4net v 1.2.11.0 ，在案子裡面是使用 RollingFileAppender ， rollingStyle 是 Composite ，依日期時間及檔案大小來切檔，設定檔如下，</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">&lt;log4net debug=&quot;true&quot;&gt;</div><div class="line">	&lt;appender name=&quot;DBRollingFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;</div><div class="line">	  &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;[你的路徑]\temp\%date&#123;yyyy&#125;\%date&#123;MM&#125;\%date&#123;dd&#125;\&quot; /&gt;</div><div class="line">	  &lt;staticLogFileName value=&quot;false&quot;/&gt;</div><div class="line">	  &lt;appendToFile value=&quot;true&quot;/&gt;</div><div class="line">	  &lt;!--設定檔案分割依據Date和Size--&gt;</div><div class="line">	  &lt;rollingStyle value=&quot;Composite&quot;/&gt;</div><div class="line">	  &lt;!--設定每個檔案的大小--&gt;</div><div class="line">	  &lt;MaximumFileSize value=&quot;250KB&quot; /&gt;</div><div class="line">	  &lt;!--設定分割檔案的最大數量--&gt;</div><div class="line">	  &lt;maxSizeRollBackups value=&quot;2000&quot; /&gt;</div><div class="line">	  &lt;CountDirection value=&quot;1&quot; /&gt;</div><div class="line">	  &lt;!--log檔案的命名--&gt;</div><div class="line">	  &lt;datePattern value=&quot;yyyy-MM-dd-HH-DB2.lo\g&quot;/&gt;</div><div class="line">	  &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;</div><div class="line">		&lt;conversionPattern value=&quot;[%date] [%-5level] From %logger%newline  %file:%line [%property&#123;NDC&#125;]%newline  %message%newline%newline&quot; /&gt;</div><div class="line">	  &lt;/layout&gt;</div><div class="line">	  &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;</div><div class="line">		&lt;param name=&quot;LevelMin&quot; value=&quot;INFO&quot;/&gt;</div><div class="line">		&lt;param name=&quot;LevelMax&quot; value=&quot;INFO&quot;/&gt;</div><div class="line">	  &lt;/filter&gt;</div><div class="line">	&lt;/appender&gt;</div><div class="line">	&lt;appender name=&quot;SystemRollingFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;</div><div class="line">	  &lt;!--存放log檔案的路徑(%property&#123;LogPath&#125;屬性請勿任意修改)--&gt;</div><div class="line">	  &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;[你的路徑]\temp\%date&#123;yyyy&#125;\%date&#123;MM&#125;\%date&#123;dd&#125;\&quot; /&gt;</div><div class="line">	  &lt;staticLogFileName value=&quot;false&quot;/&gt;</div><div class="line">	  &lt;appendToFile value=&quot;true&quot;/&gt;</div><div class="line">	  &lt;!--設定檔案分割依據Date和Size--&gt;</div><div class="line">	  &lt;rollingStyle value=&quot;Composite&quot;/&gt;</div><div class="line">	  &lt;!--設定每個檔案的大小--&gt;</div><div class="line">	  &lt;MaximumFileSize value=&quot;20KB&quot; /&gt;</div><div class="line">	  &lt;!--設定分割檔案的最大數量--&gt;</div><div class="line">	  &lt;maxSizeRollBackups value=&quot;2000&quot; /&gt;</div><div class="line">	  &lt;lockingModel type=&quot;log4net.Appender.FileAppender+MinimalLock&quot; /&gt;</div><div class="line">	  &lt;CountDirection value=&quot;1&quot; /&gt;</div><div class="line">	  &lt;!--log檔案的命名--&gt;</div><div class="line">	  &lt;datePattern value=&quot;yyyy-MM-dd-HH-DB.lo\g&quot;/&gt;</div><div class="line">	  &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;</div><div class="line">		&lt;conversionPattern value=&quot;%d&#123;yyyy-MM-dd HH:mm&#125; %level %logger %ndc - %message%newline&quot; /&gt;</div><div class="line">	  &lt;/layout&gt;</div><div class="line">	  &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;</div><div class="line">		&lt;param name=&quot;LevelMin&quot; value=&quot;DEBUG&quot;/&gt;</div><div class="line">		&lt;param name=&quot;LevelMax&quot; value=&quot;DEBUG&quot;/&gt;</div><div class="line">	  &lt;/filter&gt;</div><div class="line">	&lt;/appender&gt;</div><div class="line">	&lt;!--紀錄錯誤訊息--&gt;</div><div class="line">	&lt;appender name=&quot;ErrorRollingFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;</div><div class="line">	  &lt;!--存放log檔案的路徑--&gt;</div><div class="line">	  &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;[你的路徑]\temp\%date&#123;yyyy&#125;\%date&#123;MM&#125;\%date&#123;dd&#125;\&quot; /&gt;</div><div class="line">	  &lt;staticLogFileName value=&quot;false&quot;/&gt;</div><div class="line">	  &lt;appendToFile value=&quot;true&quot;/&gt;</div><div class="line">	  &lt;!--設定檔案分割依據Date和Size--&gt;</div><div class="line">	  &lt;rollingStyle value=&quot;Composite&quot;/&gt;</div><div class="line">	  &lt;!--設定每個檔案的大小--&gt;</div><div class="line">	  &lt;MaximumFileSize value=&quot;250KB&quot; /&gt;</div><div class="line">	  &lt;!--設定分割檔案的最大數量--&gt;</div><div class="line">	  &lt;maxSizeRollBackups value=&quot;2000&quot; /&gt;</div><div class="line">	  &lt;!--log檔案的命名--&gt;</div><div class="line">	  &lt;datePattern value=&quot;yyyy-MM-dd-HH-DB3.lo\g&quot;/&gt;</div><div class="line">	  &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;</div><div class="line">		&lt;conversionPattern value=&quot;[%date] [%-5level] From %logger%newline  %file:%line [%property&#123;NDC&#125;]%newline  %message%newline%newline&quot; /&gt;</div><div class="line">	  &lt;/layout&gt;</div><div class="line">	  &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;</div><div class="line">		&lt;param name=&quot;LevelMin&quot; value=&quot;WARN&quot;/&gt;</div><div class="line">	  &lt;/filter&gt;</div><div class="line">	&lt;/appender&gt;</div><div class="line">	&lt;root&gt;</div><div class="line">	  &lt;level value=&quot;ALL&quot;/&gt;</div><div class="line">	  &lt;appender-ref ref=&quot;DBRollingFileAppender&quot;/&gt;</div><div class="line">	  &lt;appender-ref ref=&quot;SystemRollingFileAppender&quot;/&gt;</div><div class="line">	  &lt;appender-ref ref=&quot;ErrorRollingFileAppender&quot;/&gt;</div><div class="line">	&lt;/root&gt;</div><div class="line">&lt;/log4net&gt;</div></pre></td></tr></table></figure>
-<h3 id="這樣子的設定-log4net-會在-temp-目錄再依-年、月、日-建立目錄，然後產生-0-1-…的檔案如下圖，"><a href="#這樣子的設定-log4net-會在-temp-目錄再依-年、月、日-建立目錄，然後產生-0-1-…的檔案如下圖，" class="headerlink" title="這樣子的設定 log4net 會在 temp 目錄再依 年、月、日 建立目錄，然後產生 .0, .1 …的檔案如下圖，"></a>這樣子的設定 log4net 會在 temp 目錄再依 年、月、日 建立目錄，然後產生 .0, .1 …的檔案如下圖，</h3><img src="/2017/10/27/2017010/001.png" alt="slug" title="slug">
-<h3 id="這樣子的-log-在測試機都正常運作，唯獨在正式機卻會發生第-1-個檔案-0-的-log-檔有正常產生，但-1-的檔案卻一直被重覆的寫，導致要看-log-都常常看不到-SystemRollingFileAppender-。雖然-maxSizeRollBackups-設定了-2000-，但使終都只有-2-個檔案。-在我的-Local-測試也都沒什麼問題，用測試程式看它的-m-curSizeRollBackups-屬性也都正常，如下，"><a href="#這樣子的-log-在測試機都正常運作，唯獨在正式機卻會發生第-1-個檔案-0-的-log-檔有正常產生，但-1-的檔案卻一直被重覆的寫，導致要看-log-都常常看不到-SystemRollingFileAppender-。雖然-maxSizeRollBackups-設定了-2000-，但使終都只有-2-個檔案。-在我的-Local-測試也都沒什麼問題，用測試程式看它的-m-curSizeRollBackups-屬性也都正常，如下，" class="headerlink" title="這樣子的 log 在測試機都正常運作，唯獨在正式機卻會發生第 1 個檔案 .0 的 log 檔有正常產生，但 .1 的檔案卻一直被重覆的寫，導致要看 log 都常常看不到 (SystemRollingFileAppender)。雖然 maxSizeRollBackups 設定了 2000 ，但使終都只有 2 個檔案。 在我的 Local 測試也都沒什麼問題，用測試程式看它的 m_curSizeRollBackups 屬性也都正常，如下，"></a>這樣子的 log 在測試機都正常運作，唯獨在正式機卻會發生第 1 個檔案 .0 的 log 檔有正常產生，但 .1 的檔案卻一直被重覆的寫，導致要看 log 都常常看不到 (SystemRollingFileAppender)。雖然 maxSizeRollBackups 設定了 2000 ，但使終都只有 2 個檔案。 在我的 Local 測試也都沒什麼問題，用測試程式看它的 m_curSizeRollBackups 屬性也都正常，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 如果不是透過 class access ，記得要在 Application_Start 呼叫 log4net.Config.XmlConfigurator.Configure(); 哦!</span></div><div class="line"><span class="keyword">var</span> logType = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType;</div><div class="line"><span class="comment">//Assembly assem = logType.Assembly;</span></div><div class="line"><span class="keyword">var</span> logger = LogManager.GetLogger(logType);</div><div class="line"><span class="keyword">var</span> appenders = logger.Logger.Repository.GetAppenders();</div><div class="line"><span class="keyword">var</span> rollingAppenders = appenders.OfType&lt;RollingFileAppender&gt;();</div><div class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> appender <span class="keyword">in</span> rollingAppenders)</div><div class="line">&#123;</div><div class="line">	Response.Write(<span class="string">$"&lt;h3&gt;*** Name:<span class="subst">&#123;appender.Name&#125;</span> *** &lt;/h3&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"File : <span class="subst">&#123;appender.File&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"CountDirection : <span class="subst">&#123;appender.CountDirection&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"MaxSizeRollBackups : <span class="subst">&#123;appender.MaxSizeRollBackups&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"MaxFileSize : <span class="subst">&#123;appender.MaxFileSize&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"StaticLogFileName : <span class="subst">&#123;appender.StaticLogFileName&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	<span class="keyword">var</span> propInfo = appender.GetType().BaseType.BaseType</div><div class="line">		.GetProperty(<span class="string">"QuietWriter"</span>, BindingFlags.NonPublic | BindingFlags.Instance);</div><div class="line"></div><div class="line">	<span class="keyword">var</span> quiteWriter = propInfo?.GetValue(appender) <span class="keyword">as</span> CountingQuietTextWriter;</div><div class="line">	Response.Write(<span class="string">$"FileSize : <span class="subst">&#123;quiteWriter?.Count&#125;</span>&lt;br/&gt;"</span>);</div><div class="line"></div><div class="line">	<span class="keyword">var</span> scheduleFieldInfo = appender.GetType().GetField(<span class="string">"m_scheduledFilename"</span>, BindingFlags.NonPublic | BindingFlags.Instance);</div><div class="line">	<span class="keyword">var</span> scheduleField = scheduleFieldInfo.GetValue(appender) ;</div><div class="line">	Response.Write(<span class="string">$"m_scheduledFilename : <span class="subst">&#123;scheduleField&#125;</span>&lt;br/&gt;"</span>);</div><div class="line"></div><div class="line">	<span class="keyword">var</span> m_curSizeRollBackupsFieldInfo = appender.GetType().GetField(<span class="string">"m_curSizeRollBackups"</span>, BindingFlags.NonPublic | BindingFlags.Instance);</div><div class="line">	<span class="keyword">var</span> m_curSizeRollBackupsField = m_curSizeRollBackupsFieldInfo.GetValue(appender);</div><div class="line">	Response.Write(<span class="string">$"m_curSizeRollBackups : <span class="subst">&#123;m_curSizeRollBackupsField&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="如下，-log4net-寫到了-2017-10-27-14-DB-log-6-這個檔案，"><a href="#如下，-log4net-寫到了-2017-10-27-14-DB-log-6-這個檔案，" class="headerlink" title="如下， log4net 寫到了 2017-10-27-14-DB.log.6 這個檔案，"></a>如下， log4net 寫到了 2017-10-27-14-DB.log.6 這個檔案，</h3><img src="/2017/10/27/2017010/002.png" alt="slug" title="slug">
-<h3 id="後來我將-IIS-Express-的站台關掉再重新執行，結果-m-curSizeRollBackups-的值居然變成了-0-。如下，"><a href="#後來我將-IIS-Express-的站台關掉再重新執行，結果-m-curSizeRollBackups-的值居然變成了-0-。如下，" class="headerlink" title="後來我將 IIS Express 的站台關掉再重新執行，結果 m_curSizeRollBackups 的值居然變成了 0 。如下，"></a>後來我將 IIS Express 的站台關掉再重新執行，結果 m_curSizeRollBackups 的值居然變成了 0 。如下，</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">*** Name:SystemRollingFileAppender ***</div><div class="line"></div><div class="line">File : C:\Users\rainm\Documents\Visual Studio 2017\Projects\log4netTest\log4netTest\temp\2017\10\27\2017-10-27-14-DB.log.0</div><div class="line">CountDirection : 1</div><div class="line">MaxSizeRollBackups : 2000</div><div class="line">MaxFileSize : 20480</div><div class="line">StaticLogFileName : False</div><div class="line">FileSize : 20540</div><div class="line">m_scheduledFilename : C:\Users\rainm\Documents\Visual Studio 2017\Projects\log4netTest\log4netTest\temp\2017\10\27\2017-10-27-14-DB.log.0</div><div class="line">m_curSizeRollBackups : 0</div></pre></td></tr></table></figure>
-<h3 id="天呀-我重現了問題了，當-系統重啟後，-log4net-的-m-curSizeRollBackups-就會被重置成-0-。maybe-是-log4net-的-bug-，從-github-下載最新的-log4net-v-2-0-9-來試，居然也是一樣的狀況-。"><a href="#天呀-我重現了問題了，當-系統重啟後，-log4net-的-m-curSizeRollBackups-就會被重置成-0-。maybe-是-log4net-的-bug-，從-github-下載最新的-log4net-v-2-0-9-來試，居然也是一樣的狀況-。" class="headerlink" title="天呀! 我重現了問題了，當 系統重啟後， log4net 的 m_curSizeRollBackups 就會被重置成 0 。maybe 是 log4net 的 bug ，從 github 下載最新的 log4net v 2.0.9 來試，居然也是一樣的狀況 。"></a>天呀! 我重現了問題了，當 系統重啟後， log4net 的 m_curSizeRollBackups 就會被重置成 0 。maybe 是 log4net 的 bug ，從 github 下載最新的 log4net v 2.0.9 來試，居然也是一樣的狀況 。</h3><h3 id="查看github-logging-log4net的-source-，開啟-RollingFileAppender-cs-來看，從-DetermineCurSizeRollBackups-這個-Method"><a href="#查看github-logging-log4net的-source-，開啟-RollingFileAppender-cs-來看，從-DetermineCurSizeRollBackups-這個-Method" class="headerlink" title="查看github logging-log4net的 source ，開啟 RollingFileAppender.cs 來看，從 DetermineCurSizeRollBackups 這個 Method"></a>查看<a href="https://github.com/apache/logging-log4net" target="_blank" rel="external">github logging-log4net</a>的 source ，開啟 RollingFileAppender.cs 來看，從 DetermineCurSizeRollBackups 這個 Method</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">DetermineCurSizeRollBackups</span>(<span class="params"></span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	m_curSizeRollBackups = <span class="number">0</span>;</div><div class="line"></div><div class="line">	<span class="keyword">string</span> fullPath = <span class="literal">null</span>;</div><div class="line">	<span class="keyword">string</span> fileName = <span class="literal">null</span>;</div><div class="line"></div><div class="line">	<span class="keyword">using</span>(SecurityContext.Impersonate(<span class="keyword">this</span>))</div><div class="line">	&#123;</div><div class="line">		fullPath = System.IO.Path.GetFullPath(m_baseFileName);</div><div class="line">		fileName = System.IO.Path.GetFileName(fullPath);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	ArrayList arrayFiles = GetExistingFiles(fullPath);</div><div class="line">	InitializeRollBackups(fileName, arrayFiles);</div><div class="line"></div><div class="line">	LogLog.Debug(declaringType, <span class="string">"curSizeRollBackups starts at ["</span>+m_curSizeRollBackups+<span class="string">"]"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="它會把-Log-目錄中的檔案傳給-InitializeRollBackups-這個-Method，如下，"><a href="#它會把-Log-目錄中的檔案傳給-InitializeRollBackups-這個-Method，如下，" class="headerlink" title="它會把 Log 目錄中的檔案傳給 InitializeRollBackups 這個 Method，如下，"></a>它會把 Log 目錄中的檔案傳給 InitializeRollBackups 這個 Method，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InitializeRollBackups</span>(<span class="params"><span class="keyword">string</span> baseFile, ArrayList arrayFiles</span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="literal">null</span> != arrayFiles)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">string</span> baseFileLower = baseFile.ToLower(System.Globalization.CultureInfo.InvariantCulture);</div><div class="line"></div><div class="line">		<span class="keyword">foreach</span>(<span class="keyword">string</span> curFileName <span class="keyword">in</span> arrayFiles)</div><div class="line">		&#123;</div><div class="line">			InitializeFromOneFile(baseFileLower, curFileName.ToLower(System.Globalization.CultureInfo.InvariantCulture));</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="而-InitializeRollBackups-中會將-baseFile-轉成小寫-再傳入-InitializeFromOneFile-這個-Method-去比較，而在-InitializeFromOneFile-有一行是比較-baseFile-與-prefix-及-suffix-比較-if-curFileName-StartsWith-prefix-curFileName-EndsWith-suffix-。"><a href="#而-InitializeRollBackups-中會將-baseFile-轉成小寫-再傳入-InitializeFromOneFile-這個-Method-去比較，而在-InitializeFromOneFile-有一行是比較-baseFile-與-prefix-及-suffix-比較-if-curFileName-StartsWith-prefix-curFileName-EndsWith-suffix-。" class="headerlink" title="而 InitializeRollBackups 中會將 baseFile 轉成小寫 再傳入 InitializeFromOneFile 這個 Method 去比較，而在 InitializeFromOneFile 有一行是比較 baseFile 與 prefix 及 suffix 比較(if (!curFileName.StartsWith(prefix) || !curFileName.EndsWith(suffix)))。"></a>而 InitializeRollBackups 中會將 baseFile <em>轉成小寫</em> 再傳入 InitializeFromOneFile 這個 Method 去比較，而在 InitializeFromOneFile 有一行是比較 baseFile 與 prefix 及 suffix 比較(<em>if (!curFileName.StartsWith(prefix) || !curFileName.EndsWith(suffix))</em>)。</h3><h3 id="prefix-就是-config-中-datePattern-的設定值-yyyy-MM-dd-HH-DB3-lo-g-，眼尖的朋友有發現了嗎-我們的檔名裡面的-DB-是大寫，但程式中-log4net-已將目前的-log-檔轉成了小寫，當然比不到。所以在系統重啟時，-m-curSizeRollBackups-的值就會是-0-。"><a href="#prefix-就是-config-中-datePattern-的設定值-yyyy-MM-dd-HH-DB3-lo-g-，眼尖的朋友有發現了嗎-我們的檔名裡面的-DB-是大寫，但程式中-log4net-已將目前的-log-檔轉成了小寫，當然比不到。所以在系統重啟時，-m-curSizeRollBackups-的值就會是-0-。" class="headerlink" title="prefix 就是 config 中 datePattern 的設定值 (yyyy-MM-dd-HH-DB3.lo\g)，眼尖的朋友有發現了嗎? 我們的檔名裡面的 DB 是大寫，但程式中 log4net 已將目前的 log 檔轉成了小寫，當然比不到。所以在系統重啟時， m_curSizeRollBackups 的值就會是 0 。"></a>prefix 就是 config 中 datePattern 的設定值 (<em>yyyy-MM-dd-HH-DB3.lo\g</em>)，眼尖的朋友有發現了嗎? 我們的檔名裡面的 DB 是大寫，但程式中 log4net 已將目前的 log 檔轉成了小寫，當然比不到。所以在系統重啟時， m_curSizeRollBackups 的值就會是 0 。</h3><h3 id="應該要將-if-curFileName-StartsWith-prefix-curFileName-EndsWith-suffix-改成不分大小寫的比較才對，if-curFileName-StartsWith-prefix-StringComparison-CurrentCultureIgnoreCase-curFileName-EndsWith-suffix-StringComparison-CurrentCultureIgnoreCase-。"><a href="#應該要將-if-curFileName-StartsWith-prefix-curFileName-EndsWith-suffix-改成不分大小寫的比較才對，if-curFileName-StartsWith-prefix-StringComparison-CurrentCultureIgnoreCase-curFileName-EndsWith-suffix-StringComparison-CurrentCultureIgnoreCase-。" class="headerlink" title="應該要將 if (!curFileName.StartsWith(prefix) || !curFileName.EndsWith(suffix)) 改成不分大小寫的比較才對，if (!curFileName.StartsWith(prefix, StringComparison.CurrentCultureIgnoreCase) || !curFileName.EndsWith(suffix, StringComparison.CurrentCultureIgnoreCase))。"></a>應該要將 <em>if (!curFileName.StartsWith(prefix) || !curFileName.EndsWith(suffix))</em> 改成不分大小寫的比較才對，<em>if (!curFileName.StartsWith(prefix, StringComparison.CurrentCultureIgnoreCase) || !curFileName.EndsWith(suffix, StringComparison.CurrentCultureIgnoreCase))</em>。</h3><ul>
-<li><h2 id="請注意哦-目前-github-上的版本還沒有修正哦"><a href="#請注意哦-目前-github-上的版本還沒有修正哦" class="headerlink" title="請注意哦~~ 目前 github 上的版本還沒有修正哦 !!!"></a>請注意哦~~ 目前 github 上的版本還沒有修正哦 !!!</h2></li>
-</ul>
-<h3 id="所以目前有以下-2-項解法，"><a href="#所以目前有以下-2-項解法，" class="headerlink" title="所以目前有以下 2 項解法，"></a>所以目前有以下 2 項解法，</h3><ul>
-<li><h3 id="改程式然後更新-log4net"><a href="#改程式然後更新-log4net" class="headerlink" title="改程式然後更新 log4net"></a>改程式然後更新 log4net</h3></li>
-<li><h3 id="將檔名-datePattern-從大寫改成小寫，例如-yyyy-MM-dd-HH-db-lo-g-d-前面要有-哦"><a href="#將檔名-datePattern-從大寫改成小寫，例如-yyyy-MM-dd-HH-db-lo-g-d-前面要有-哦" class="headerlink" title="將檔名 datePattern 從大寫改成小寫，例如 yyyy-MM-dd-HH-\db.lo\g (d 前面要有 \ 哦!)"></a>將檔名 datePattern 從大寫改成小寫，例如 yyyy-MM-dd-HH-\db.lo\g (d 前面要有 \ 哦!)</h3></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">log4net</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Composite</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RollingFileAppender</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DetermineCurSizeRollBackups</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">InitializeRollBackups</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">InitializeFromOneFile</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/27/2017010/">展開全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
 
   
   
@@ -937,7 +899,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 亂馬客
+    		&copy; 2018 亂馬客
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1108,22 +1070,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">404</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Windows 10 IoT Core</a>
               </li>
              
@@ -1148,14 +1094,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">xamarin</a>
               </li>
              
@@ -1177,6 +1115,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ibtoolerror</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">404</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1212,15 +1166,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1260,14 +1210,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">xcodebuild</a>
               </li>
              
@@ -1289,6 +1231,42 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Xcode 9</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UWP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">restart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disable update</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">beacon</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1325,6 +1303,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Excel</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SaveAs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">2148140012</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">2146827284</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Workbook</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1399,7 +1397,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">我是亂馬客，目前任職於叡揚資訊 技術開發部</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">我是亂馬客(rainmaker_ho@gss.com.tw)</div>
   	  	
     	</section>
     

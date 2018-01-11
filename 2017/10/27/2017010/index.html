@@ -151,7 +151,8 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2017010" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2017010" class="article article-type-post "
+  itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -162,16 +163,18 @@
     </h1>
   
 
-        
-        <a href="/2017/10/27/2017010/" class="archive-article-date">
+          
+            <a href="/2017/10/27/2017010/" class="archive-article-date">
   	<time datetime="2017-10-27T05:28:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-27</time>
 </a>
-        
+              
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="事情是這樣子的…我們有個專案裡面有使用-log4net-v-1-2-11-0-，在案子裡面是使用-RollingFileAppender-，-rollingStyle-是-Composite-，依日期時間及檔案大小來切檔，設定檔如下，"><a href="#事情是這樣子的…我們有個專案裡面有使用-log4net-v-1-2-11-0-，在案子裡面是使用-RollingFileAppender-，-rollingStyle-是-Composite-，依日期時間及檔案大小來切檔，設定檔如下，" class="headerlink" title="事情是這樣子的…我們有個專案裡面有使用 log4net v 1.2.11.0 ，在案子裡面是使用 RollingFileAppender ， rollingStyle 是 Composite ，依日期時間及檔案大小來切檔，設定檔如下，"></a>事情是這樣子的…我們有個專案裡面有使用 log4net v 1.2.11.0 ，在案子裡面是使用 RollingFileAppender ， rollingStyle 是 Composite ，依日期時間及檔案大小來切檔，設定檔如下，</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">&lt;log4net debug=&quot;true&quot;&gt;</div><div class="line">	&lt;appender name=&quot;DBRollingFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;</div><div class="line">	  &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;[你的路徑]\temp\%date&#123;yyyy&#125;\%date&#123;MM&#125;\%date&#123;dd&#125;\&quot; /&gt;</div><div class="line">	  &lt;staticLogFileName value=&quot;false&quot;/&gt;</div><div class="line">	  &lt;appendToFile value=&quot;true&quot;/&gt;</div><div class="line">	  &lt;!--設定檔案分割依據Date和Size--&gt;</div><div class="line">	  &lt;rollingStyle value=&quot;Composite&quot;/&gt;</div><div class="line">	  &lt;!--設定每個檔案的大小--&gt;</div><div class="line">	  &lt;MaximumFileSize value=&quot;250KB&quot; /&gt;</div><div class="line">	  &lt;!--設定分割檔案的最大數量--&gt;</div><div class="line">	  &lt;maxSizeRollBackups value=&quot;2000&quot; /&gt;</div><div class="line">	  &lt;CountDirection value=&quot;1&quot; /&gt;</div><div class="line">	  &lt;!--log檔案的命名--&gt;</div><div class="line">	  &lt;datePattern value=&quot;yyyy-MM-dd-HH-DB2.lo\g&quot;/&gt;</div><div class="line">	  &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;</div><div class="line">		&lt;conversionPattern value=&quot;[%date] [%-5level] From %logger%newline  %file:%line [%property&#123;NDC&#125;]%newline  %message%newline%newline&quot; /&gt;</div><div class="line">	  &lt;/layout&gt;</div><div class="line">	  &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;</div><div class="line">		&lt;param name=&quot;LevelMin&quot; value=&quot;INFO&quot;/&gt;</div><div class="line">		&lt;param name=&quot;LevelMax&quot; value=&quot;INFO&quot;/&gt;</div><div class="line">	  &lt;/filter&gt;</div><div class="line">	&lt;/appender&gt;</div><div class="line">	&lt;appender name=&quot;SystemRollingFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;</div><div class="line">	  &lt;!--存放log檔案的路徑(%property&#123;LogPath&#125;屬性請勿任意修改)--&gt;</div><div class="line">	  &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;[你的路徑]\temp\%date&#123;yyyy&#125;\%date&#123;MM&#125;\%date&#123;dd&#125;\&quot; /&gt;</div><div class="line">	  &lt;staticLogFileName value=&quot;false&quot;/&gt;</div><div class="line">	  &lt;appendToFile value=&quot;true&quot;/&gt;</div><div class="line">	  &lt;!--設定檔案分割依據Date和Size--&gt;</div><div class="line">	  &lt;rollingStyle value=&quot;Composite&quot;/&gt;</div><div class="line">	  &lt;!--設定每個檔案的大小--&gt;</div><div class="line">	  &lt;MaximumFileSize value=&quot;20KB&quot; /&gt;</div><div class="line">	  &lt;!--設定分割檔案的最大數量--&gt;</div><div class="line">	  &lt;maxSizeRollBackups value=&quot;2000&quot; /&gt;</div><div class="line">	  &lt;lockingModel type=&quot;log4net.Appender.FileAppender+MinimalLock&quot; /&gt;</div><div class="line">	  &lt;CountDirection value=&quot;1&quot; /&gt;</div><div class="line">	  &lt;!--log檔案的命名--&gt;</div><div class="line">	  &lt;datePattern value=&quot;yyyy-MM-dd-HH-DB.lo\g&quot;/&gt;</div><div class="line">	  &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;</div><div class="line">		&lt;conversionPattern value=&quot;%d&#123;yyyy-MM-dd HH:mm&#125; %level %logger %ndc - %message%newline&quot; /&gt;</div><div class="line">	  &lt;/layout&gt;</div><div class="line">	  &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;</div><div class="line">		&lt;param name=&quot;LevelMin&quot; value=&quot;DEBUG&quot;/&gt;</div><div class="line">		&lt;param name=&quot;LevelMax&quot; value=&quot;DEBUG&quot;/&gt;</div><div class="line">	  &lt;/filter&gt;</div><div class="line">	&lt;/appender&gt;</div><div class="line">	&lt;!--紀錄錯誤訊息--&gt;</div><div class="line">	&lt;appender name=&quot;ErrorRollingFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;</div><div class="line">	  &lt;!--存放log檔案的路徑--&gt;</div><div class="line">	  &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;[你的路徑]\temp\%date&#123;yyyy&#125;\%date&#123;MM&#125;\%date&#123;dd&#125;\&quot; /&gt;</div><div class="line">	  &lt;staticLogFileName value=&quot;false&quot;/&gt;</div><div class="line">	  &lt;appendToFile value=&quot;true&quot;/&gt;</div><div class="line">	  &lt;!--設定檔案分割依據Date和Size--&gt;</div><div class="line">	  &lt;rollingStyle value=&quot;Composite&quot;/&gt;</div><div class="line">	  &lt;!--設定每個檔案的大小--&gt;</div><div class="line">	  &lt;MaximumFileSize value=&quot;250KB&quot; /&gt;</div><div class="line">	  &lt;!--設定分割檔案的最大數量--&gt;</div><div class="line">	  &lt;maxSizeRollBackups value=&quot;2000&quot; /&gt;</div><div class="line">	  &lt;!--log檔案的命名--&gt;</div><div class="line">	  &lt;datePattern value=&quot;yyyy-MM-dd-HH-DB3.lo\g&quot;/&gt;</div><div class="line">	  &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;</div><div class="line">		&lt;conversionPattern value=&quot;[%date] [%-5level] From %logger%newline  %file:%line [%property&#123;NDC&#125;]%newline  %message%newline%newline&quot; /&gt;</div><div class="line">	  &lt;/layout&gt;</div><div class="line">	  &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;</div><div class="line">		&lt;param name=&quot;LevelMin&quot; value=&quot;WARN&quot;/&gt;</div><div class="line">	  &lt;/filter&gt;</div><div class="line">	&lt;/appender&gt;</div><div class="line">	&lt;root&gt;</div><div class="line">	  &lt;level value=&quot;ALL&quot;/&gt;</div><div class="line">	  &lt;appender-ref ref=&quot;DBRollingFileAppender&quot;/&gt;</div><div class="line">	  &lt;appender-ref ref=&quot;SystemRollingFileAppender&quot;/&gt;</div><div class="line">	  &lt;appender-ref ref=&quot;ErrorRollingFileAppender&quot;/&gt;</div><div class="line">	&lt;/root&gt;</div><div class="line">&lt;/log4net&gt;</div></pre></td></tr></table></figure>
+        <div class="article-entry" itemprop="articleBody">
+          
+                    
+                      
+                        <h3 id="事情是這樣子的…我們有個專案裡面有使用-log4net-v-1-2-11-0-，在案子裡面是使用-RollingFileAppender-，-rollingStyle-是-Composite-，依日期時間及檔案大小來切檔，設定檔如下，"><a href="#事情是這樣子的…我們有個專案裡面有使用-log4net-v-1-2-11-0-，在案子裡面是使用-RollingFileAppender-，-rollingStyle-是-Composite-，依日期時間及檔案大小來切檔，設定檔如下，" class="headerlink" title="事情是這樣子的…我們有個專案裡面有使用 log4net v 1.2.11.0 ，在案子裡面是使用 RollingFileAppender ， rollingStyle 是 Composite ，依日期時間及檔案大小來切檔，設定檔如下，"></a>事情是這樣子的…我們有個專案裡面有使用 log4net v 1.2.11.0 ，在案子裡面是使用 RollingFileAppender ， rollingStyle 是 Composite ，依日期時間及檔案大小來切檔，設定檔如下，</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">&lt;log4net debug=&quot;true&quot;&gt;</div><div class="line">	&lt;appender name=&quot;DBRollingFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;</div><div class="line">	  &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;[你的路徑]\temp\%date&#123;yyyy&#125;\%date&#123;MM&#125;\%date&#123;dd&#125;\&quot; /&gt;</div><div class="line">	  &lt;staticLogFileName value=&quot;false&quot;/&gt;</div><div class="line">	  &lt;appendToFile value=&quot;true&quot;/&gt;</div><div class="line">	  &lt;!--設定檔案分割依據Date和Size--&gt;</div><div class="line">	  &lt;rollingStyle value=&quot;Composite&quot;/&gt;</div><div class="line">	  &lt;!--設定每個檔案的大小--&gt;</div><div class="line">	  &lt;MaximumFileSize value=&quot;250KB&quot; /&gt;</div><div class="line">	  &lt;!--設定分割檔案的最大數量--&gt;</div><div class="line">	  &lt;maxSizeRollBackups value=&quot;2000&quot; /&gt;</div><div class="line">	  &lt;CountDirection value=&quot;1&quot; /&gt;</div><div class="line">	  &lt;!--log檔案的命名--&gt;</div><div class="line">	  &lt;datePattern value=&quot;yyyy-MM-dd-HH-DB2.lo\g&quot;/&gt;</div><div class="line">	  &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;</div><div class="line">		&lt;conversionPattern value=&quot;[%date] [%-5level] From %logger%newline  %file:%line [%property&#123;NDC&#125;]%newline  %message%newline%newline&quot; /&gt;</div><div class="line">	  &lt;/layout&gt;</div><div class="line">	  &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;</div><div class="line">		&lt;param name=&quot;LevelMin&quot; value=&quot;INFO&quot;/&gt;</div><div class="line">		&lt;param name=&quot;LevelMax&quot; value=&quot;INFO&quot;/&gt;</div><div class="line">	  &lt;/filter&gt;</div><div class="line">	&lt;/appender&gt;</div><div class="line">	&lt;appender name=&quot;SystemRollingFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;</div><div class="line">	  &lt;!--存放log檔案的路徑(%property&#123;LogPath&#125;屬性請勿任意修改)--&gt;</div><div class="line">	  &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;[你的路徑]\temp\%date&#123;yyyy&#125;\%date&#123;MM&#125;\%date&#123;dd&#125;\&quot; /&gt;</div><div class="line">	  &lt;staticLogFileName value=&quot;false&quot;/&gt;</div><div class="line">	  &lt;appendToFile value=&quot;true&quot;/&gt;</div><div class="line">	  &lt;!--設定檔案分割依據Date和Size--&gt;</div><div class="line">	  &lt;rollingStyle value=&quot;Composite&quot;/&gt;</div><div class="line">	  &lt;!--設定每個檔案的大小--&gt;</div><div class="line">	  &lt;MaximumFileSize value=&quot;20KB&quot; /&gt;</div><div class="line">	  &lt;!--設定分割檔案的最大數量--&gt;</div><div class="line">	  &lt;maxSizeRollBackups value=&quot;2000&quot; /&gt;</div><div class="line">	  &lt;lockingModel type=&quot;log4net.Appender.FileAppender+MinimalLock&quot; /&gt;</div><div class="line">	  &lt;CountDirection value=&quot;1&quot; /&gt;</div><div class="line">	  &lt;!--log檔案的命名--&gt;</div><div class="line">	  &lt;datePattern value=&quot;yyyy-MM-dd-HH-DB.lo\g&quot;/&gt;</div><div class="line">	  &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;</div><div class="line">		&lt;conversionPattern value=&quot;%d&#123;yyyy-MM-dd HH:mm&#125; %level %logger %ndc - %message%newline&quot; /&gt;</div><div class="line">	  &lt;/layout&gt;</div><div class="line">	  &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;</div><div class="line">		&lt;param name=&quot;LevelMin&quot; value=&quot;DEBUG&quot;/&gt;</div><div class="line">		&lt;param name=&quot;LevelMax&quot; value=&quot;DEBUG&quot;/&gt;</div><div class="line">	  &lt;/filter&gt;</div><div class="line">	&lt;/appender&gt;</div><div class="line">	&lt;!--紀錄錯誤訊息--&gt;</div><div class="line">	&lt;appender name=&quot;ErrorRollingFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;</div><div class="line">	  &lt;!--存放log檔案的路徑--&gt;</div><div class="line">	  &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;[你的路徑]\temp\%date&#123;yyyy&#125;\%date&#123;MM&#125;\%date&#123;dd&#125;\&quot; /&gt;</div><div class="line">	  &lt;staticLogFileName value=&quot;false&quot;/&gt;</div><div class="line">	  &lt;appendToFile value=&quot;true&quot;/&gt;</div><div class="line">	  &lt;!--設定檔案分割依據Date和Size--&gt;</div><div class="line">	  &lt;rollingStyle value=&quot;Composite&quot;/&gt;</div><div class="line">	  &lt;!--設定每個檔案的大小--&gt;</div><div class="line">	  &lt;MaximumFileSize value=&quot;250KB&quot; /&gt;</div><div class="line">	  &lt;!--設定分割檔案的最大數量--&gt;</div><div class="line">	  &lt;maxSizeRollBackups value=&quot;2000&quot; /&gt;</div><div class="line">	  &lt;!--log檔案的命名--&gt;</div><div class="line">	  &lt;datePattern value=&quot;yyyy-MM-dd-HH-DB3.lo\g&quot;/&gt;</div><div class="line">	  &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;</div><div class="line">		&lt;conversionPattern value=&quot;[%date] [%-5level] From %logger%newline  %file:%line [%property&#123;NDC&#125;]%newline  %message%newline%newline&quot; /&gt;</div><div class="line">	  &lt;/layout&gt;</div><div class="line">	  &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;</div><div class="line">		&lt;param name=&quot;LevelMin&quot; value=&quot;WARN&quot;/&gt;</div><div class="line">	  &lt;/filter&gt;</div><div class="line">	&lt;/appender&gt;</div><div class="line">	&lt;root&gt;</div><div class="line">	  &lt;level value=&quot;ALL&quot;/&gt;</div><div class="line">	  &lt;appender-ref ref=&quot;DBRollingFileAppender&quot;/&gt;</div><div class="line">	  &lt;appender-ref ref=&quot;SystemRollingFileAppender&quot;/&gt;</div><div class="line">	  &lt;appender-ref ref=&quot;ErrorRollingFileAppender&quot;/&gt;</div><div class="line">	&lt;/root&gt;</div><div class="line">&lt;/log4net&gt;</div></pre></td></tr></table></figure>
 <h3 id="這樣子的設定-log4net-會在-temp-目錄再依-年、月、日-建立目錄，然後產生-0-1-…的檔案如下圖，"><a href="#這樣子的設定-log4net-會在-temp-目錄再依-年、月、日-建立目錄，然後產生-0-1-…的檔案如下圖，" class="headerlink" title="這樣子的設定 log4net 會在 temp 目錄再依 年、月、日 建立目錄，然後產生 .0, .1 …的檔案如下圖，"></a>這樣子的設定 log4net 會在 temp 目錄再依 年、月、日 建立目錄，然後產生 .0, .1 …的檔案如下圖，</h3><img src="/2017/10/27/2017010/001.png" alt="slug" title="slug">
 <h3 id="這樣子的-log-在測試機都正常運作，唯獨在正式機卻會發生第-1-個檔案-0-的-log-檔有正常產生，但-1-的檔案卻一直被重覆的寫，導致要看-log-都常常看不到-SystemRollingFileAppender-。雖然-maxSizeRollBackups-設定了-2000-，但使終都只有-2-個檔案。-在我的-Local-測試也都沒什麼問題，用測試程式看它的-m-curSizeRollBackups-屬性也都正常，如下，"><a href="#這樣子的-log-在測試機都正常運作，唯獨在正式機卻會發生第-1-個檔案-0-的-log-檔有正常產生，但-1-的檔案卻一直被重覆的寫，導致要看-log-都常常看不到-SystemRollingFileAppender-。雖然-maxSizeRollBackups-設定了-2000-，但使終都只有-2-個檔案。-在我的-Local-測試也都沒什麼問題，用測試程式看它的-m-curSizeRollBackups-屬性也都正常，如下，" class="headerlink" title="這樣子的 log 在測試機都正常運作，唯獨在正式機卻會發生第 1 個檔案 .0 的 log 檔有正常產生，但 .1 的檔案卻一直被重覆的寫，導致要看 log 都常常看不到 (SystemRollingFileAppender)。雖然 maxSizeRollBackups 設定了 2000 ，但使終都只有 2 個檔案。 在我的 Local 測試也都沒什麼問題，用測試程式看它的 m_curSizeRollBackups 屬性也都正常，如下，"></a>這樣子的 log 在測試機都正常運作，唯獨在正式機卻會發生第 1 個檔案 .0 的 log 檔有正常產生，但 .1 的檔案卻一直被重覆的寫，導致要看 log 都常常看不到 (SystemRollingFileAppender)。雖然 maxSizeRollBackups 設定了 2000 ，但使終都只有 2 個檔案。 在我的 Local 測試也都沒什麼問題，用測試程式看它的 m_curSizeRollBackups 屬性也都正常，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 如果不是透過 class access ，記得要在 Application_Start 呼叫 log4net.Config.XmlConfigurator.Configure(); 哦!</span></div><div class="line"><span class="keyword">var</span> logType = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType;</div><div class="line"><span class="comment">//Assembly assem = logType.Assembly;</span></div><div class="line"><span class="keyword">var</span> logger = LogManager.GetLogger(logType);</div><div class="line"><span class="keyword">var</span> appenders = logger.Logger.Repository.GetAppenders();</div><div class="line"><span class="keyword">var</span> rollingAppenders = appenders.OfType&lt;RollingFileAppender&gt;();</div><div class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> appender <span class="keyword">in</span> rollingAppenders)</div><div class="line">&#123;</div><div class="line">	Response.Write(<span class="string">$"&lt;h3&gt;*** Name:<span class="subst">&#123;appender.Name&#125;</span> *** &lt;/h3&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"File : <span class="subst">&#123;appender.File&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"CountDirection : <span class="subst">&#123;appender.CountDirection&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"MaxSizeRollBackups : <span class="subst">&#123;appender.MaxSizeRollBackups&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"MaxFileSize : <span class="subst">&#123;appender.MaxFileSize&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	Response.Write(<span class="string">$"StaticLogFileName : <span class="subst">&#123;appender.StaticLogFileName&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">	<span class="keyword">var</span> propInfo = appender.GetType().BaseType.BaseType</div><div class="line">		.GetProperty(<span class="string">"QuietWriter"</span>, BindingFlags.NonPublic | BindingFlags.Instance);</div><div class="line"></div><div class="line">	<span class="keyword">var</span> quiteWriter = propInfo?.GetValue(appender) <span class="keyword">as</span> CountingQuietTextWriter;</div><div class="line">	Response.Write(<span class="string">$"FileSize : <span class="subst">&#123;quiteWriter?.Count&#125;</span>&lt;br/&gt;"</span>);</div><div class="line"></div><div class="line">	<span class="keyword">var</span> scheduleFieldInfo = appender.GetType().GetField(<span class="string">"m_scheduledFilename"</span>, BindingFlags.NonPublic | BindingFlags.Instance);</div><div class="line">	<span class="keyword">var</span> scheduleField = scheduleFieldInfo.GetValue(appender) ;</div><div class="line">	Response.Write(<span class="string">$"m_scheduledFilename : <span class="subst">&#123;scheduleField&#125;</span>&lt;br/&gt;"</span>);</div><div class="line"></div><div class="line">	<span class="keyword">var</span> m_curSizeRollBackupsFieldInfo = appender.GetType().GetField(<span class="string">"m_curSizeRollBackups"</span>, BindingFlags.NonPublic | BindingFlags.Instance);</div><div class="line">	<span class="keyword">var</span> m_curSizeRollBackupsField = m_curSizeRollBackupsFieldInfo.GetValue(appender);</div><div class="line">	Response.Write(<span class="string">$"m_curSizeRollBackups : <span class="subst">&#123;m_curSizeRollBackupsField&#125;</span>&lt;br/&gt;"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="如下，-log4net-寫到了-2017-10-27-14-DB-log-6-這個檔案，"><a href="#如下，-log4net-寫到了-2017-10-27-14-DB-log-6-這個檔案，" class="headerlink" title="如下， log4net 寫到了 2017-10-27-14-DB.log.6 這個檔案，"></a>如下， log4net 寫到了 2017-10-27-14-DB.log.6 這個檔案，</h3><img src="/2017/10/27/2017010/002.png" alt="slug" title="slug">
@@ -186,13 +189,14 @@
 <li><h3 id="將檔名-datePattern-從大寫改成小寫，例如-yyyy-MM-dd-HH-db-lo-g-d-前面要有-哦"><a href="#將檔名-datePattern-從大寫改成小寫，例如-yyyy-MM-dd-HH-db-lo-g-d-前面要有-哦" class="headerlink" title="將檔名 datePattern 從大寫改成小寫，例如 yyyy-MM-dd-HH-\db.lo\g (d 前面要有 \ 哦!)"></a>將檔名 datePattern 從大寫改成小寫，例如 yyyy-MM-dd-HH-\db.lo\g (d 前面要有 \ 哦!)</h3></li>
 </ul>
 
-      
+                          
+                                    
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+                                      
+        </div>
+        <div class="article-info article-info-index">
+          
+              
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -224,12 +228,12 @@
 		</ul>
 	</div>
 
-      
+                
 
-      
+                  
 
-      
-        
+                      
+                        
 <div class="share-btn share-icons tooltip-left">
   <div class="tooltip tooltip-east">
     <span class="tooltip-item">
@@ -279,9 +283,9 @@
 </div>
 
 <div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+                          
+                            <div class="clearfix"></div>
+        </div>
   </div>
 </article>
 
@@ -305,8 +309,8 @@
   
 </nav>
 
-
-<aside class="wrap-side-operation">
+    
+      <aside class="wrap-side-operation">
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
@@ -323,33 +327,35 @@
 </aside>
 
 
+        
+          
 
-  
-  
-  
+                
 
-  
+                      
 
-  
-    <section id="comments">
-      <div id="disqus_thread"></div>
-        <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'rainmakergit'; // required: replace example with your forum shortname
+                            
+                              <section id="comments">
+                                <div id="disqus_thread"></div>
+                                <script type="text/javascript">
+                                  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                                  var disqus_shortname = 'rainmakergit'; // required: replace example with your forum shortname
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </section>
-  
+                                  /* * * DON'T EDIT BELOW THIS LINE * * */
+                                  (function () {
+                                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                                  })();
+                                </script>
+                                <noscript>Please enable JavaScript to view the
+                                  <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+                                </noscript>
+                              </section>
+                              
 
-  
-
+                                
+                                      
 
           </div>
         </div>
@@ -358,7 +364,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 亂馬客
+    		&copy; 2018 亂馬客
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -529,22 +535,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">404</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Windows 10 IoT Core</a>
               </li>
              
@@ -569,14 +559,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">xamarin</a>
               </li>
              
@@ -598,6 +580,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ibtoolerror</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">404</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -633,15 +631,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -681,14 +675,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">xcodebuild</a>
               </li>
              
@@ -710,6 +696,42 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Xcode 9</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UWP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">restart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disable update</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">beacon</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -746,6 +768,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Excel</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SaveAs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">2148140012</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">2146827284</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Workbook</a>
               </li>
             
             <div class="clearfix"></div>
@@ -820,7 +862,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">我是亂馬客，目前任職於叡揚資訊 技術開發部</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">我是亂馬客(rainmaker_ho@gss.com.tw)</div>
   	  	
     	</section>
     
