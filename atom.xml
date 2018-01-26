@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-01-11T08:13:59.964Z</updated>
+  <updated>2018-01-26T06:34:50.534Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>客製 BotDataStore ，將 Bot State 資料存到 SQL Server之中</title>
+    <link href="https://rainmakerho.github.io/2018/01/26/2018004/"/>
+    <id>https://rainmakerho.github.io/2018/01/26/2018004/</id>
+    <published>2018-01-26T05:11:04.000Z</published>
+    <updated>2018-01-26T06:34:50.534Z</updated>
+    
+    <content type="html"><![CDATA[<p>不知大家在使用 botframework-emulator 測試 chatbot 時，有沒有發現，對話一開始時，會先將 Bot State 取出來(BotConversationData, BotPrivateConversationData 及 BotUserData)，而在對話後，則將這些資料存回去，如下圖所示，<br><img src="/2018/01/26/2018004/2018004001.png" alt="對話中BotState的處理順序" title="對話中BotState的處理順序"><br>那大家會好奇那些 Bot State 都存到那裡去了呢?<br>預設的 BotDataStore 是使用 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Builder/ConnectorEx/BotData.cs#L197" target="_blank" rel="external">ConnectorStore</a> ，它依 StateClient.BotState 去儲存，而 url 就是 {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId} ， {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId}/users/{userId} 及 {serverUrl}/v3/botstate/{channelId}/users/{userId} ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/BotState.cs" target="_blank" rel="external">BotState.cs</a> ，serverUrl 是 activity.ServiceUrl ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/StateClient.cs" target="_blank" rel="external">StateClient.cs</a>。 </p><p>在 <a href="https://blog.botframework.com/2017/07/26/saving-state-sql-dotnet/" target="_blank" rel="external">Saving State data in SQL with .NET</a> 這篇之中，說明如何實作 IBotDataStore<botdata> 然後將 Bot State 存到 SQL Server 之中。<br>客製的 BotDataStore 寫好了之後，記得要在 global.asax 中去設定讓 autofac 使用我們的 SqlBotDataStore，如下， </botdata></p><pre><code class="csharp"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_Start</span>(<span class="params"></span>)</span><span class="function"></span>{    Conversation.UpdateContainer(builder =&gt;    {        <span class="keyword">var</span> store = <span class="keyword">new</span> SqlBotDataStore(<span class="string">"BotDataContextConnectionString"</span>);        builder.Register(c =&gt; <span class="keyword">new</span> CachingBotDataStore(store              , CachingBotDataStoreConsistencyPolicy.LastWriteWins))            .As&lt;IBotDataStore&lt;BotData&gt;&gt;()            .AsSelf()            .InstancePerLifetimeScope();    });    GlobalConfiguration.Configure(WebApiConfig.Register);}</code></pre><p>這樣在SQL中就可以看到 Bot State 存到了 SQL DB 之中，如下，<br><img src="/2018/01/26/2018004/2018004002.png" alt="StateInSQLDB" title="StateInSQLDB"> </p><p>另外，像我們之前寫的 Local Direct Line Server <a href="https://rainmakerhoblog.wordpress.com/2017/08/30/20170830/" target="_blank" rel="external">使用 Microsoft Bot Framework 地端的 WebChat 機器人(企業內)</a>，我們會將 Channel 的資料放在 ChannelData 之中，而在存 State 時， ChannelId 要取自 activity 的 channelData ，則可以改自 ConnectorStore ，加入讀取 activity ，如下，</p><pre><code class="csharp"><span class="comment">//modify from ConnectorStore</span>public class LDLDataStore : IBotDataStore&lt;BotData&gt;{    <span class="keyword">private</span> <span class="keyword">readonly</span> IStateClient stateClient;    <span class="keyword">private</span> <span class="keyword">readonly</span> IActivity activity;    <span class="function"><span class="keyword">public</span> <span class="title">LDLDataStore</span>(<span class="params">IStateClient stateClient, IActivity activity</span>)</span><span class="function">    </span>{        SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.stateClient, <span class="keyword">nameof</span>(stateClient), stateClient);        SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.activity, <span class="keyword">nameof</span>(activity), activity);    }    <span class="keyword">async</span> Task&lt;BotData&gt; IBotDataStore&lt;BotData&gt;.LoadAsync(IAddress key, BotStoreType botStoreType, CancellationToken cancellationToken)    {        <span class="keyword">var</span> channelId = GetChannelId(key);        BotData botData;        <span class="keyword">switch</span> (botStoreType)        {            <span class="keyword">case</span> BotStoreType.BotConversationData:                botData = <span class="keyword">await</span> stateClient.BotState.GetConversationDataAsync(channelId, key.ConversationId, cancellationToken);                <span class="keyword">break</span>;            <span class="keyword">case</span> BotStoreType.BotUserData:                botData = <span class="keyword">await</span> stateClient.BotState.GetUserDataAsync(channelId, key.UserId, cancellationToken);                <span class="keyword">break</span>;            <span class="keyword">case</span> BotStoreType.BotPrivateConversationData:                botData = <span class="keyword">await</span> stateClient.BotState.GetPrivateConversationDataAsync(channelId, key.ConversationId, key.UserId, cancellationToken);                <span class="keyword">break</span>;            <span class="keyword">default</span>:                <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentException(<span class="string">$"<span class="subst">{botStoreType}</span> is not a valid store type!"</span>);        }        <span class="keyword">return</span> botData;    }    <span class="keyword">async</span> Task IBotDataStore&lt;BotData&gt;.SaveAsync(IAddress key, BotStoreType botStoreType, BotData botData, CancellationToken cancellationToken)    {        <span class="keyword">var</span> channelId = GetChannelId(key);        <span class="keyword">switch</span> (botStoreType)        {            <span class="keyword">case</span> BotStoreType.BotConversationData:                <span class="keyword">await</span> stateClient.BotState.SetConversationDataAsync(channelId, key.ConversationId, botData, cancellationToken);                <span class="keyword">break</span>;            <span class="keyword">case</span> BotStoreType.BotUserData:                <span class="keyword">await</span> stateClient.BotState.SetUserDataAsync(channelId, key.UserId, botData, cancellationToken);                <span class="keyword">break</span>;            <span class="keyword">case</span> BotStoreType.BotPrivateConversationData:                <span class="keyword">await</span> stateClient.BotState.SetPrivateConversationDataAsync(channelId, key.ConversationId, key.UserId, botData, cancellationToken);                <span class="keyword">break</span>;            <span class="keyword">default</span>:                <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentException(<span class="string">$"<span class="subst">{botStoreType}</span> is not a valid store type!"</span>);        }    }    Task&lt;<span class="keyword">bool</span>&gt; IBotDataStore&lt;BotData&gt;.FlushAsync(IAddress key, CancellationToken cancellationToken)    {        <span class="comment">// Everything is saved. Flush is no-op</span>        <span class="keyword">return</span> Task.FromResult(<span class="literal">true</span>);    }    <span class="function"><span class="keyword">private</span> <span class="keyword">string</span> <span class="title">GetChannelId</span>(<span class="params">IAddress key</span>)</span><span class="function">    </span>{        <span class="keyword">var</span> channelData = JObject.FromObject(activity.ChannelData);        <span class="keyword">string</span> channelId = channelData.SelectToken(<span class="string">"channelId"</span>)?.ToString();        <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrWhiteSpace(channelId))        {            channelId = key.ChannelId;        }        <span class="keyword">return</span> channelId;    }}</code></pre><p>而在 global.asax 之中，我們的 LDLDataStore 需要多傳入 Activity ，如下， </p><pre><code class="csharp"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_Start</span>(<span class="params"></span>)</span><span class="function"></span>{    Conversation.UpdateContainer(builder =&gt;    {        builder.Register(c =&gt; <span class="keyword">new</span> CachingBotDataStore(<span class="keyword">new</span> LDLDataStore(c.Resolve&lt;IStateClient&gt;(), c.Resolve&lt;IActivity&gt;())            , CachingBotDataStoreConsistencyPolicy.LastWriteWins))            .As&lt;IBotDataStore&lt;BotData&gt;&gt;()            .AsSelf()            .InstancePerLifetimeScope();     });     GlobalConfiguration.Configure(WebApiConfig.Register);}</code></pre><p>知道如何在 global.asax 中置換 BotDataStore ，只要實作 IBotDataStore<botdata> 便可以輕易的更換 BotDataStore 哦! </botdata></p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://blog.botframework.com/2017/07/26/saving-state-sql-dotnet/" target="_blank" rel="external">Saving State data in SQL with .NET</a><br><a href="https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-state#Botstatemethods" target="_blank" rel="external">Manage state data</a> </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;不知大家在使用 botframework-emulator 測試 chatbot 時，有沒有發現，對話一開始時，會先將 Bot State 取出來(BotConversationData, BotPrivateConversationData 及 BotUserData)，
+      
+    
+    </summary>
+    
+    
+      <category term="chatbot" scheme="https://rainmakerho.github.io/tags/chatbot/"/>
+    
+      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="BotDataStore" scheme="https://rainmakerho.github.io/tags/BotDataStore/"/>
+    
+      <category term="ConnectorStore" scheme="https://rainmakerho.github.io/tags/ConnectorStore/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>線上客服 + BOT 之路</title>
+    <link href="https://rainmakerho.github.io/2018/01/25/2018003/"/>
+    <id>https://rainmakerho.github.io/2018/01/25/2018003/</id>
+    <published>2018-01-25T08:10:47.000Z</published>
+    <updated>2018-01-26T06:38:51.976Z</updated>
+    
+    <content type="html"><![CDATA[<p>相信很多產品都會有線上客服系統及線上 FAQ 系統，提供給使用者線上詢問或查詢來排除操作系統所發生的問題。<br>如果加上 FAQ Chatbot 可以服務更多的使用者(當線上客服人員下班時)，也可以讓線上客服人員可以服務復雜的問題。<br>我們要如何加上 FAQ Chatbot 呢? 讓我們繼續看下去 … </p><p>FAQ系統是使用 keyword 來 Search 的，如下，<br><img src="/2018/01/25/2018003/2018003001.png" alt="FAQ關鍵字Search" title="FAQ關鍵字Search">   </p><p>但是當使用者輸入「一句話」，FAQ可能就查不出資料了，如下，<br><img src="/2018/01/25/2018003/2018003002.png" alt="FAQ一句話Search" title="FAQ一句話Search"> </p><p>Microsoft 有一個 <a href="https://qnamaker.ai/" target="_blank" rel="external">QnAMaker</a>，剛好符合我們的需求，只要將 Q and A 匯進去，呼叫它的 api 就可以回傳合適的答案。<br>於是我們就將 FAQ 中的資料匯到了 <a href="https://qnamaker.ai/" target="_blank" rel="external">QnAMaker</a> 之中(大約有230個問題)，如下<br><img src="/2018/01/25/2018003/2018003003.png" alt="已匯入資料的QnAMaker" title="已匯入資料的QnAMaker"><br>用中文來測試，有些 OK，有些又不太 OK。 於是有看到「Alternative Phrasing」，目前用的狀況是「中文真的不OK~」。 所以我們就只好改成，依不同的問法分別建立一個 QnA pair 。<br>另外一個狀況就是，目前它是 Preview ，所以會限速 … <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/faqs" target="_blank" rel="external">Current transaction limits are 10 calls per minute and 10,000 calls per month…</a>，所以在 Call 它的 api 時，常常會出現 429 的錯誤。(Error code 429: Rate limit is exceeded. Try again or upgrade to a higher pricing tier with a higher rate limit (if available).)  </p><p>接下來我們就使用 1645 個問題來試看看 QnA Maker ，結果它有回答 336 筆，約 20% 。 </p><ul><li>註: 因為 QnA Maker 目前還是 Preview, 所以持續 Call 時，要停個 500 ms, 如果發生錯誤時，就再等個 10 秒再試一次哦! </li></ul><p>怎麼辦呢? 這樣子 FAQ Bot 不就沒人要用 !!!<br>詢問 MS Tom 哥後，他給我們的建議是用 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> + <a href="http://www.vitalsesp.com/" target="_blank" rel="external">Vital ESP</a>(FAQ系統)。<br>可以透過 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> 解析使用者的問題，解析出「意圖」及「關鍵字」，然後再把「關鍵字」送到 FAQ 去查詢，這樣正確率就會比較高。<br>一開始我的想法是一個問題建立一個 Intent (LUIS now allows you to create 500 intents and 100 entities)，但是這樣子蠻不準的。<br>Tom 哥說，<a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> 是依句型去解析的，類似的句型不同的 Intent 反而會造成混亂。<br>所以我們就建立一個 FAQ 的 Intent ，然後將 FAQ 系統中 230 個問題都匯進 FAQ Intent 之中，然後我們再進去設定關鍵字(Entity)。<br>不過這樣子設定的人要針對 230 個問題一個一個地去設定 Entity ，也還蠻累的。<br>後來同事 Alex 大大測試，即然 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> 是依句型去解析的，那我們只需要建立一些使用者會詢問的句型，然後 關鍵字(Entity)就設定2種(action, keyword)，再依 action 及 keyword 建立 Phrase lists ，例如 keyword Phrase lists 裡面就有 App, 行事曆, 客戶, 會員, 網址, 權限 等等的詞，這樣子解析出來的狀況還蠻不錯的。如下，<br><img src="/2018/01/25/2018003/2018003004.png" alt="少量 Utterance + 2 個 Entities" title="少量 Utterance + 2 個 Entities"><br><img src="/2018/01/25/2018003/2018003005.png" alt="相同 Phrase List 建立很多" title="相同 Phrase List 建立很多"><br>註:目前 Phrase List 可以建立 5,000 個<a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-resources-faq" target="_blank" rel="external">Language Understanding FAQ</a>。  </p><p>所以當使用者輸入「請問如何快速新增行事曆」，透過 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> 就可以找到關鍵字為 新增 及 行事曆 ，如下，<br><img src="/2018/01/25/2018003/2018003006.png" alt="LUIS Parse Entities" title="LUIS Parse Entities"> </p><p>所以我們再到 <a href="http://www.vitalsesp.com/" target="_blank" rel="external">Vital ESP</a>(FAQ系統)，輸入「新增 行事曆」，就可以正確查到資料了，如下，<br><img src="/2018/01/25/2018003/2018003007.png" alt="LUIS Parse Entities" title="LUIS Parse Entities">  </p><p>所以我們一樣使用 1645 個問題來試看看 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> + <a href="http://www.vitalsesp.com/" target="_blank" rel="external">Vital ESP</a>(FAQ系統) ，有找出結果的約有 968 個，約 50 %。<br>註:我們會產生一個 Excel 的結果檔如下，<br><img src="/2018/01/25/2018003/2018003008.png" alt="測試結果的Excel內容" title="測試結果的Excel內容"> </p><p>架構類似如下，<br><img src="/2018/01/25/2018003/2018003010.png" alt="架構圖" title="架構圖"></p><p>而透過 Chatbot 去封裝的話，畫面如下，<br><img src="/2018/01/25/2018003/2018003009.png" alt="FAQ chatbot" title="FAQ chatbot"> </p><p>之後在 Chatbot 中就可以再去記錄一些使用者的行為，讓 Chatbot 更智能。 </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;相信很多產品都會有線上客服系統及線上 FAQ 系統，提供給使用者線上詢問或查詢來排除操作系統所發生的問題。&lt;br&gt;如果加上 FAQ Chatbot 可以服務更多的使用者(當線上客服人員下班時)，也可以讓線上客服人員可以服務復雜的問題。&lt;br&gt;我們要如何加上 FAQ Chat
+      
+    
+    </summary>
+    
+    
+      <category term="chatbot" scheme="https://rainmakerho.github.io/tags/chatbot/"/>
+    
+      <category term="QnA Maker" scheme="https://rainmakerho.github.io/tags/QnA-Maker/"/>
+    
+      <category term="LUIS" scheme="https://rainmakerho.github.io/tags/LUIS/"/>
+    
+      <category term="Vital ESP" scheme="https://rainmakerho.github.io/tags/Vital-ESP/"/>
+    
+      <category term="FAQ" scheme="https://rainmakerho.github.io/tags/FAQ/"/>
+    
+  </entry>
   
   <entry>
     <title>Excel.WorkbookClass.SaveAs 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]</title>
@@ -563,32 +623,6 @@
       <category term="Deployment Target" scheme="https://rainmakerho.github.io/tags/Deployment-Target/"/>
     
       <category term="ibtoolerror" scheme="https://rainmakerho.github.io/tags/ibtoolerror/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SQL Server License 說明</title>
-    <link href="https://rainmakerho.github.io/2017/09/27/sql2016license/"/>
-    <id>https://rainmakerho.github.io/2017/09/27/sql2016license/</id>
-    <published>2017-09-27T05:22:47.000Z</published>
-    <updated>2017-09-30T01:50:05.378Z</updated>
-    
-    <content type="html"><![CDATA[<ul><li><h3 id="SQL-Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準"><a href="#SQL-Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準" class="headerlink" title="SQL Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準"></a>SQL Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準</h3></li><li><h3 id="目前版本為SQL-2016-SQL-2017-on-linux-2017-年底可能會出-，共分為Standard-Enterprise兩個版本"><a href="#目前版本為SQL-2016-SQL-2017-on-linux-2017-年底可能會出-，共分為Standard-Enterprise兩個版本" class="headerlink" title="目前版本為SQL 2016 (SQL 2017 on linux 2017 年底可能會出)，共分為Standard / Enterprise兩個版本"></a>目前版本為SQL 2016 (SQL 2017 on linux 2017 年底可能會出)，共分為Standard / Enterprise兩個版本</h3><ul><li>Standard版 : 有Server + CAL(適合小企業) /  by Core (適合大部分的單位) 兩種採購模式</li><li>Enterprise版 : 只有by Core的計價模式</li></ul></li><li><h3 id="by-Core的計價模式-基本消費額-4-Core，後續-2-core-2-core加購"><a href="#by-Core的計價模式-基本消費額-4-Core，後續-2-core-2-core加購" class="headerlink" title="by Core的計價模式 : 基本消費額 4 Core，後續 2 core / 2 core加購"></a>by Core的計價模式 : 基本消費額 4 Core，後續 2 core / 2 core加購</h3></li><li><h3 id="若使用實體主機安裝SQL-Server，SQL-License採購-core-數必須等於實體的Server-Core數-不含Hyper-threading模擬出來的-，Microsoft不接受安裝上去只enable-N個core這種說法"><a href="#若使用實體主機安裝SQL-Server，SQL-License採購-core-數必須等於實體的Server-Core數-不含Hyper-threading模擬出來的-，Microsoft不接受安裝上去只enable-N個core這種說法" class="headerlink" title="若使用實體主機安裝SQL Server，SQL License採購 core 數必須等於實體的Server Core數(不含Hyper-threading模擬出來的)，Microsoft不接受安裝上去只enable N個core這種說法"></a>若使用實體主機安裝SQL Server，SQL License採購 core 數必須等於實體的Server Core數(不含Hyper-threading模擬出來的)，Microsoft不接受安裝上去只enable N個core這種說法</h3></li><li><h3 id="Cluster-HA架構"><a href="#Cluster-HA架構" class="headerlink" title="Cluster HA架構"></a>Cluster HA架構</h3><ul><li>在Active / Passive (Standby)架構下，Passive那台SQL一定不可以拿來做做任何事情(ex. 跑Report)，不然就是要收錢</li><li>從SQL 2014版起 (ie, from 2014年底開始) <ul><li>如果客戶單位有和Microsoft簽Software Assurance的約(就是固定繳年費)，Passive (Standby)那台Server是Free的</li><li>如果客戶單位沒有Software Assurance的保護傘，Passive (Standby)那台Server請買與機器相同core數的SQL License</li></ul></li><li>工業局共同供應契約的SQL Server License，並不具備Software Assurance的使用權利</li></ul></li></ul><p>以上感謝 Bobby 大大分享 ^_^   </p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;ul&gt;
-&lt;li&gt;&lt;h3 id=&quot;SQL-Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準&quot;&gt;&lt;a href=&quot;#SQL-Server新版一出舊版就停售，User可以買新版後合法安裝舊版，所有授權計算方式計算以新版為準&quot; class
-      
-    
-    </summary>
-    
-    
-      <category term="SQL License" scheme="https://rainmakerho.github.io/tags/SQL-License/"/>
-    
-      <category term="SQL援權" scheme="https://rainmakerho.github.io/tags/SQL%E6%8F%B4%E6%AC%8A/"/>
     
   </entry>
   

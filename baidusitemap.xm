@@ -4,6 +4,54 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/01/25/2018003/</loc>
+    <lastmod>2018-01-26T06:38:51.976Z</lastmod>
+    <data>
+        <display>
+        <title>線上客服 + BOT 之路</title>
+        <pubTime>2018-01-25T08:10:47.000Z</pubTime>
+        
+        <tag>chatbot</tag>
+         
+        <tag>QnA Maker</tag>
+         
+        <tag>LUIS</tag>
+         
+        <tag>Vital ESP</tag>
+         
+        <tag>FAQ</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2018/01/26/2018004/</loc>
+    <lastmod>2018-01-26T06:34:50.534Z</lastmod>
+    <data>
+        <display>
+        <title>客製 BotDataStore ，將 Bot State 資料存到 SQL Server之中</title>
+        <pubTime>2018-01-26T05:11:04.000Z</pubTime>
+        
+        <tag>chatbot</tag>
+         
+        <tag>botframework</tag>
+         
+        <tag>BotDataStore</tag>
+         
+        <tag>ConnectorStore</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/01/11/2018002/</loc>
     <lastmod>2018-01-11T08:13:59.964Z</lastmod>
     <data>
