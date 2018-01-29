@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/01/29/2018005/</loc>
-    <lastmod>2018-01-29T07:51:45.803Z</lastmod>
+    <lastmod>2018-01-29T08:21:08.917Z</lastmod>
     <data>
         <display>
         <title>Call luis.ai predictions api 的 3 種方式</title>
@@ -30,13 +30,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
