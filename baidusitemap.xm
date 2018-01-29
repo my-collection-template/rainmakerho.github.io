@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/01/29/2018005/</loc>
+    <lastmod>2018-01-29T07:51:45.803Z</lastmod>
+    <data>
+        <display>
+        <title>Call luis.ai predictions api 的 3 種方式</title>
+        <pubTime>2018-01-29T06:19:50.000Z</pubTime>
+        
+        <tag>luis.ai</tag>
+         
+        <tag>predictions api</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/01/25/2018003/</loc>
     <lastmod>2018-01-26T06:38:51.976Z</lastmod>
     <data>
