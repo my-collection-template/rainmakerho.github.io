@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/02/01/2018007/</loc>
+    <lastmod>2018-02-01T05:48:31.390Z</lastmod>
+    <data>
+        <display>
+        <title>The bot's MSA appId or password is incorrect.</title>
+        <pubTime>2018-02-01T03:52:05.000Z</pubTime>
+        
+        <tag>botframework</tag>
+         
+        <tag>MSA appId or password is incorrect</tag>
+         
+        <tag>c#</tag>
+         
+        <tag>botframework-emulator</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/02/01/2018006/</loc>
     <lastmod>2018-02-01T02:27:58.697Z</lastmod>
     <data>
@@ -11,9 +34,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-02-01T02:27:58.697Z</updated>
+  <updated>2018-02-01T05:48:31.390Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>The bot&#39;s MSA appId or password is incorrect.</title>
+    <link href="https://rainmakerho.github.io/2018/02/01/2018007/"/>
+    <id>https://rainmakerho.github.io/2018/02/01/2018007/</id>
+    <published>2018-02-01T03:52:05.000Z</published>
+    <updated>2018-02-01T05:48:31.390Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天使用 botframework-emulator 在 local 測試 bot 時， botframework-emulator 居然出現 The bot’s MSA appId or password is incorrect. 的錯誤，如下圖，<br><img src="/2018/02/01/2018007/2018007001.png" alt="MSA_appId/password is incorrect" title="MSA_appId/password is incorrect"><br>我輸入的 App Id 跟 Password 明明就是從 web.config 中 Copy 出來的呀~ 之前都 Run 的好好的，現在居然噴錯。  </p><p>於是使用 Fiddler 來錄一下看看是什麼狀況，如下圖，<br><img src="/2018/02/01/2018007/2018007002.png" alt="Fiddler" title="Fiddler"> </p><p>從上圖可以發現， botframework-emulator 會依 bot 的 MSA appId 及 password 到 <a href="https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token" target="_blank" rel="external">https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token</a> 去取回 token ，然後再放在 Request 的 Header 之中，做為 Authorization token。但卻 bot 卻判斷它是無效的，所以就回 401 。 </p><p>查看 botframework-emulator 在 GitHub 上的異動記錄 <a href="https://github.com/Microsoft/BotFramework-Emulator/commit/714b6d4597653c13cb30941416e512e4ecf96972#diff-43482499e76e08e445f4ba0e0b580401" target="_blank" rel="external">Support Bot Framework authentication v3.1 (#256)</a> 有將取 token 的 endpoint 從 common/oauth2/v2.0/token 改到了 botframework.com/oauth2/v2.0/token 。<br><img src="/2018/02/01/2018007/2018007003.png" alt="src/server/settings.ts" title="src/server/settings.ts"> </p><p>似乎是 token 的問題，而目前我們 bot 使用的 BotBuilder 是 3.8 版，而它的 System.IdentityModel.Tokens.Jwt 使用的是 v4.0403061554 ，如下，<br><img src="/2018/02/01/2018007/2018007004.png" alt="System.IdentityModel.Tokens.Jwt" title="System.IdentityModel.Tokens.Jwt"> </p><p>所以筆者試著將 System.IdentityModel.Tokens.Jwt 更新到 v5.1.4 ，重建置專案，再測試一次就沒問題了哦! 或者是您連同 BotBuilder 升級到最新的版本也是可以的哦! </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天使用 botframework-emulator 在 local 測試 bot 時， botframework-emulator 居然出現 The bot’s MSA appId or password is incorrect. 的錯誤，如下圖，&lt;br&gt;&lt;img sr
+      
+    
+    </summary>
+    
+    
+      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="MSA appId or password is incorrect" scheme="https://rainmakerho.github.io/tags/MSA-appId-or-password-is-incorrect/"/>
+    
+      <category term="c#" scheme="https://rainmakerho.github.io/tags/c/"/>
+    
+      <category term="botframework-emulator" scheme="https://rainmakerho.github.io/tags/botframework-emulator/"/>
+    
+  </entry>
   
   <entry>
     <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
@@ -35,9 +64,9 @@
     </summary>
     
     
-      <category term="C#" scheme="https://rainmakerho.github.io/tags/C/"/>
-    
       <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="C#" scheme="https://rainmakerho.github.io/tags/C/"/>
     
       <category term="BotBuilder" scheme="https://rainmakerho.github.io/tags/BotBuilder/"/>
     
@@ -586,37 +615,6 @@
       <category term="ios 11" scheme="https://rainmakerho.github.io/tags/ios-11/"/>
     
       <category term="com.apple.CoreSimulator.SimDeviceType.undefined" scheme="https://rainmakerho.github.io/tags/com-apple-CoreSimulator-SimDeviceType-undefined/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>取得 Execute SQL 裡面資料的值</title>
-    <link href="https://rainmakerho.github.io/2017/10/03/20171003-2/"/>
-    <id>https://rainmakerho.github.io/2017/10/03/20171003-2/</id>
-    <published>2017-10-03T09:32:23.000Z</published>
-    <updated>2017-10-06T02:14:46.875Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="有同事詢問他要如何取得-Exec-t-sql-裡面的值，因為-Exec-與外面是不同的-Scope-所以要取得裡面值有以下幾種情況。"><a href="#有同事詢問他要如何取得-Exec-t-sql-裡面的值，因為-Exec-與外面是不同的-Scope-所以要取得裡面值有以下幾種情況。" class="headerlink" title="有同事詢問他要如何取得 Exec(t-sql) 裡面的值，因為 Exec 與外面是不同的 Scope 所以要取得裡面值有以下幾種情況。"></a>有同事詢問他要如何取得 Exec(t-sql) 裡面的值，因為 Exec 與外面是不同的 Scope 所以要取得裡面值有以下幾種情況。</h3><ul><li><p>Store Procedue ，透過 sp_executesql + 它的 output 參數來取得資料，例如，</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DECLARE</span> @<span class="keyword">sql</span> <span class="keyword">NVARCHAR</span>(<span class="keyword">max</span>), @outputcode <span class="keyword">NVARCHAR</span>(<span class="number">4000</span>);</div><div class="line"><span class="keyword">SET</span> @<span class="keyword">sql</span> = </div><div class="line"><span class="string">'</span></div><div class="line"><span class="string">EXEC SP_GETSERNO @RETURNS=@outputcode output</span></div><div class="line"><span class="string">'</span>;</div><div class="line">exec sp_executesql @sql, N'@outputcode NVARCHAR(4000) out', @outputcode out</div><div class="line"><span class="keyword">SELECT</span> @outputcode;</div></pre></td></tr></table></figure></li><li><p>取得 t-sql 裡面的內容，需要先建立 temp table ，或是 TABLE 變數，然後在 Exec 的 t-sql 裡面使用，例如，</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DECLARE</span> @ATT_IDENT <span class="keyword">TABLE</span> (ATT_IDENT <span class="built_in">int</span>);</div><div class="line"><span class="keyword">INSERT</span> @ATT_IDENT</div><div class="line">exec (<span class="string">'SELECT top 1 ATT_IDENT FROM [dbo].[myTable]'</span>);</div><div class="line"><span class="keyword">select</span> * <span class="keyword">FROM</span> @ATT_IDENT;</div></pre></td></tr></table></figure></li><li><p>t-sql，透過 sp_executesql + 它的 output 參數來取得資料，例如，</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DECLARE</span> @IDT <span class="built_in">NUMERIC</span></div><div class="line">exec sp_executesql N<span class="string">'SELECT TOP 1 @IDT = ATT_IDENT FROM [dbo].[myTable]'</span>, N<span class="string">'@IDT NUMERIC out'</span>, @IDT <span class="keyword">OUT</span></div><div class="line"><span class="keyword">SELECT</span> @IDT;</div></pre></td></tr></table></figure></li><li><p>透過 OPENQUERY 的方式，詳細可以參考「<a href="https://dotblogs.com.tw/rainmaker/2015/02/02/148355" target="_blank" rel="external">讓 Execute 可以搭配 Select Into，而不再只有 Insert into</a>」</p></li></ul><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><h3 id="How-to-set-value-to-variable-using-‘execute’-in-t-sql"><a href="#How-to-set-value-to-variable-using-‘execute’-in-t-sql" class="headerlink" title="How to set value to variable using ‘execute’ in t-sql?"></a><a href="https://stackoverflow.com/questions/7229070/how-to-set-value-to-variable-using-execute-in-t-sql" target="_blank" rel="external">How to set value to variable using ‘execute’ in t-sql?</a></h3><h3 id="讓-Execute-可以搭配-Select-Into，而不再只有-Insert-into"><a href="#讓-Execute-可以搭配-Select-Into，而不再只有-Insert-into" class="headerlink" title="讓 Execute 可以搭配 Select Into，而不再只有 Insert into"></a><a href="https://dotblogs.com.tw/rainmaker/2015/02/02/148355" target="_blank" rel="external">讓 Execute 可以搭配 Select Into，而不再只有 Insert into</a></h3>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;有同事詢問他要如何取得-Exec-t-sql-裡面的值，因為-Exec-與外面是不同的-Scope-所以要取得裡面值有以下幾種情況。&quot;&gt;&lt;a href=&quot;#有同事詢問他要如何取得-Exec-t-sql-裡面的值，因為-Exec-與外面是不同的-Scope-所以要取
-      
-    
-    </summary>
-    
-    
-      <category term="exec in t-sql" scheme="https://rainmakerho.github.io/tags/exec-in-t-sql/"/>
-    
-      <category term="sql" scheme="https://rainmakerho.github.io/tags/sql/"/>
-    
-      <category term="execute" scheme="https://rainmakerho.github.io/tags/execute/"/>
-    
-      <category term="exec" scheme="https://rainmakerho.github.io/tags/exec/"/>
-    
-      <category term="How to get value to variable using &#39;execute&#39; in t-sql?" scheme="https://rainmakerho.github.io/tags/How-to-get-value-to-variable-using-execute-in-t-sql/"/>
     
   </entry>
   
