@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/02/01/2018006/</loc>
+    <lastmod>2018-02-01T02:27:58.697Z</lastmod>
+    <data>
+        <display>
+        <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
+        <pubTime>2018-02-01T01:47:18.000Z</pubTime>
+        
+        <tag>C#</tag>
+         
+        <tag>botframework</tag>
+         
+        <tag>BotBuilder</tag>
+         
+        <tag>debug</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/01/29/2018005/</loc>
     <lastmod>2018-01-29T10:03:51.265Z</lastmod>
     <data>
