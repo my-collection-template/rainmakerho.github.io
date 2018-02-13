@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/02/01/2018006/</loc>
+    <lastmod>2018-02-13T04:00:06.377Z</lastmod>
+    <data>
+        <display>
+        <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
+        <pubTime>2018-02-01T01:47:18.000Z</pubTime>
+        
+        <tag>botframework</tag>
+         
+        <tag>C#</tag>
+         
+        <tag>BotBuilder</tag>
+         
+        <tag>debug</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/02/13/2018008/</loc>
     <lastmod>2018-02-13T03:50:53.010Z</lastmod>
     <data>
@@ -43,29 +66,6 @@
         <tag>predictions api</tag>
          
         <tag>luis.ai 價格</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://rainmakerho.github.io/2018/02/01/2018006/</loc>
-    <lastmod>2018-02-13T02:40:33.212Z</lastmod>
-    <data>
-        <display>
-        <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
-        <pubTime>2018-02-01T01:47:18.000Z</pubTime>
-        
-        <tag>botframework</tag>
-         
-        <tag>C#</tag>
-         
-        <tag>BotBuilder</tag>
-         
-        <tag>debug</tag>
          
          
            
