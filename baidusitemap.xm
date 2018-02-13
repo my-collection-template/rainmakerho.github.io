@@ -4,20 +4,45 @@
 
     
   <url>
-    <loc>https://rainmakerho.github.io/2018/02/01/2018007/</loc>
-    <lastmod>2018-02-01T05:48:31.390Z</lastmod>
+    <loc>https://rainmakerho.github.io/2018/02/13/2018008/</loc>
+    <lastmod>2018-02-13T03:50:53.010Z</lastmod>
     <data>
         <display>
-        <title>The bot's MSA appId or password is incorrect.</title>
-        <pubTime>2018-02-01T03:52:05.000Z</pubTime>
+        <title>Bot Framework Custom Error Messages and Exception Handling</title>
+        <pubTime>2018-02-13T03:06:26.000Z</pubTime>
         
         <tag>botframework</tag>
          
-        <tag>MSA appId or password is incorrect</tag>
+        <tag>custom error</tag>
          
-        <tag>c#</tag>
+        <tag>exception handling</tag>
          
-        <tag>botframework-emulator</tag>
+        <tag>PostUnhandledExceptionToUser</tag>
+         
+        <tag>IPostToBot</tag>
+         
+        <tag>DialogModule</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2018/01/29/2018005/</loc>
+    <lastmod>2018-02-13T03:50:10.154Z</lastmod>
+    <data>
+        <display>
+        <title>Call luis.ai predictions api 的 3 種方式</title>
+        <pubTime>2018-01-29T06:19:50.000Z</pubTime>
+        
+        <tag>luis.ai</tag>
+         
+        <tag>predictions api</tag>
+         
+        <tag>luis.ai 價格</tag>
          
          
            
@@ -28,7 +53,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/02/01/2018006/</loc>
-    <lastmod>2018-02-01T02:27:58.697Z</lastmod>
+    <lastmod>2018-02-13T02:40:33.212Z</lastmod>
     <data>
         <display>
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
@@ -50,16 +75,20 @@
 
     
   <url>
-    <loc>https://rainmakerho.github.io/2018/01/29/2018005/</loc>
-    <lastmod>2018-01-29T10:03:51.265Z</lastmod>
+    <loc>https://rainmakerho.github.io/2018/02/01/2018007/</loc>
+    <lastmod>2018-02-01T05:48:31.390Z</lastmod>
     <data>
         <display>
-        <title>Call luis.ai predictions api 的 3 種方式</title>
-        <pubTime>2018-01-29T06:19:50.000Z</pubTime>
+        <title>The bot's MSA appId or password is incorrect.</title>
+        <pubTime>2018-02-01T03:52:05.000Z</pubTime>
         
-        <tag>luis.ai</tag>
+        <tag>botframework</tag>
          
-        <tag>predictions api</tag>
+        <tag>MSA appId or password is incorrect</tag>
+         
+        <tag>c#</tag>
+         
+        <tag>botframework-emulator</tag>
          
          
            

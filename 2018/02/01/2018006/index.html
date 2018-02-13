@@ -16,8 +16,9 @@
 <meta property="og:site_name" content="亂馬客 - 技術得來速">
 <meta property="og:description" content="我們透過 VS.NET 建立出 Bot 後，預設 Nuget 中安裝 BotBuilder 相關的套件，如果我們從 GitHub 將 Microsoft/BotBuilder 到方案之中，我們要如何 Debug 進到 BotBuilder 的 Source Code 之中呢?   移除 Nuget 中的 Microsoft.Bot.Builder 套件  在方案中加入以下的專案(在 BotBuil">
 <meta property="og:image" content="https://rainmakerho.github.io/2018/02/01/2018006/2018006001.png">
+<meta property="og:image" content="https://rainmakerho.github.io/2018/02/01/2018006/2018006003.png">
 <meta property="og:image" content="https://rainmakerho.github.io/2018/02/01/2018006/2018006002.png">
-<meta property="og:updated_time" content="2018-02-01T02:27:58.697Z">
+<meta property="og:updated_time" content="2018-02-13T02:40:33.212Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?">
 <meta name="twitter:description" content="我們透過 VS.NET 建立出 Bot 後，預設 Nuget 中安裝 BotBuilder 相關的套件，如果我們從 GitHub 將 Microsoft/BotBuilder 到方案之中，我們要如何 Debug 進到 BotBuilder 的 Source Code 之中呢?   移除 Nuget 中的 Microsoft.Bot.Builder 套件  在方案中加入以下的專案(在 BotBuil">
@@ -177,16 +178,24 @@
                         <p>我們透過 VS.NET 建立出 Bot 後，預設 Nuget 中安裝 BotBuilder 相關的套件，如果我們從 GitHub 將 <a href="https://github.com/Microsoft/BotBuilder" target="_blank" rel="external">Microsoft/BotBuilder</a> 到方案之中，我們要如何 Debug 進到 BotBuilder 的 Source Code 之中呢? </p>
 <ol>
 <li>移除 Nuget 中的 Microsoft.Bot.Builder 套件 </li>
-<li>在方案中加入以下的專案(在 BotBuilder\CSharp\Library 目錄中)，並加入參考<ul>
+<li><p>在方案中加入以下的專案(在 BotBuilder\CSharp\Library 目錄中)</p>
+<ul>
 <li>Microsoft.Bot.Builder (Microsoft.Bot.Builder.csproj)</li>
 <li>Microsoft.Bot.Builder.Autofac (Microsoft.Bot.Builder.Autofac.csproj)</li>
 <li>Microsoft.Bot.Connector.NetFramework (Microsoft.Bot.Connector.NetFramework.csproj)</li>
-<li>Microsoft.Bot.Connector.Shared (Microsoft.Bot.Connector.Shared.shproj)</li>
+<li>Microsoft.Bot.Connector.Shared (Microsoft.Bot.Connector.Shared.shproj)<img src="/2018/02/01/2018006/2018006001.png" alt="加入Microsoft.Bot.Builder相關專案" title="加入Microsoft.Bot.Builder相關專案"> 
+</li>
 </ul>
 </li>
+<li><p>先建置 Microsoft.Bot.Connector.NetFramework 專案，沒問題後再建置 Microsoft.Bot.Builder 及 Microsoft.Bot.Builder.Autofac </p>
+</li>
+<li>我們的 Bot 專案加入 Microsoft.Bot.Builder、Microsoft.Bot.Builder 及 Microsoft.Bot.Builder.Autofac 參考，如下，<img src="/2018/02/01/2018006/2018006003.png" alt="加入參考" title="加入參考"> 
+</li>
 </ol>
-<img src="/2018/02/01/2018006/2018006001.png" alt="加入Microsoft.Bot.Builder相關專案" title="加入Microsoft.Bot.Builder相關專案">  
 <p>如果重建成功就可以順利的 Debug 進去了哦! 如下圖所示，<br><img src="/2018/02/01/2018006/2018006002.png" alt="Debug到DialogModule" title="Debug到DialogModule"> </p>
+<ul>
+<li>註: 因為新版 Microsoft.Bot.Builder 使用的 Newtonsoft.Json 版本為 9，所以 Bot 專案也要更新到 9 以上哦! </li>
+</ul>
 <h4 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h4><p><a href="https://stackoverflow.com/questions/43971422/how-to-debug-into-microsoft-bot-builder-c-sharp-project-source-code" target="_blank" rel="external">how to debug into Microsoft.Bot.Builder C# project source code?</a></p>
 
                           
@@ -463,6 +472,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">scrollbar</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Aspose.Words</a>
               </li>
              
@@ -487,27 +504,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+                <a href="javascript:void(0)" class="js-tag color5">Windows 10 IoT Core</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">deadlock</a>
+                <a href="javascript:void(0)" class="js-tag color4">Shutdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">交換事件</a>
+                <a href="javascript:void(0)" class="js-tag color3">Restart</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">exchangeEvent</a>
+                <a href="javascript:void(0)" class="js-tag color5">iot:Capability</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mac</a>
+                <a href="javascript:void(0)" class="js-tag color2">systemManagement</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">scrollbar</a>
+                <a href="javascript:void(0)" class="js-tag color4">C00CE014</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -543,35 +560,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Windows 10 IoT Core</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Shutdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Restart</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">iot:Capability</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">systemManagement</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C00CE014</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Angular</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NumberStyle</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">TradChinNum3</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -619,30 +624,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NumberStyle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">TradChinNum3</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">從外部資料庫驅動程式產生的非預期的錯誤 (1)</a>
               </li>
              
@@ -679,11 +660,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UWP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">restart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disable update</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">beacon</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -739,22 +748,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UWP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">restart</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disable update</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">beacon</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Excel</a>
               </li>
              
@@ -772,6 +765,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Workbook</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">luis.ai</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">predictions api</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">luis.ai 價格</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -807,14 +812,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">luis.ai</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">predictions api</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">C#</a>
               </li>
              
@@ -824,6 +821,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">debug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SQL License</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -839,11 +844,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SQL License</a>
+                <a href="javascript:void(0)" class="js-tag color3">custom error</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
+                <a href="javascript:void(0)" class="js-tag color4">exception handling</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PostUnhandledExceptionToUser</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">IPostToBot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DialogModule</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">deadlock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">交換事件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">exchangeEvent</a>
               </li>
             
             <div class="clearfix"></div>
