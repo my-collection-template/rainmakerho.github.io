@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/02/14/2018009/</loc>
-    <lastmod>2018-02-14T15:10:53.108Z</lastmod>
+    <lastmod>2018-02-14T15:15:28.724Z</lastmod>
     <data>
         <display>
         <title>無法載入檔案或組件 'log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304' 或其相依性的其中之一。</title>
@@ -34,9 +34,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          
