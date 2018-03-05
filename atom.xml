@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-02-14T15:15:28.724Z</updated>
+  <updated>2018-03-05T08:18:17.129Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>透過 WinDbg 來找出 ASP.NET CPU 100% ASP.NET 程式的問題</title>
+    <link href="https://rainmakerho.github.io/2018/03/05/2018010/"/>
+    <id>https://rainmakerho.github.io/2018/03/05/2018010/</id>
+    <published>2018-03-05T06:19:38.000Z</published>
+    <updated>2018-03-05T08:18:17.129Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>我們有一個 ASP.NET 的系統部署到 IIS 上(Windows 2012, .NET 4.x)，有時候會導致 w3wp.exe 吃掉所有的 CPU 資源，一直要等到應用程式回收後，程式再重新啟動後就正常了。這種狀況不定期會發生。 </p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>我們可以使用 WinDbg 來找出導致 IIS CPU 100% 的原因，方法如下， </p><ul><li><p>透過「工作管理員」來「建立傾印檔案」<br>當發生 IIS 導致 CPU 100% 時，開啟「工作管理員」，按右鍵選取「建立傾印檔案」。要依 Web 應用程式的平台(x86/x64)來開啟「工作管理員」(x86的工作管理員在 C:\Windows\SysWOW64\taskmgr.exe )。</p></li><li><p>安裝 WinDbg<br>請參考 <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/" target="_blank" rel="external">Debugging Tools for Windows (WinDbg, KD, CDB, NTSD)</a> 來安裝對應的版本。</p></li><li><p>設定 Symbol Path<br>先建立一個 C:\RTX64_SYMBOLS 目錄(依您自行定義)，然後開啟 Command 設定 _NT_SYMBOL_PATH 的環境變數，如下，</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set _NT_SYMBOL_PATH=srv*C:\RTX64_SYMBOLS*https://msdl.microsoft.com/download/symbols</div></pre></td></tr></table></figure><img src="/2018/03/05/2018010/201801001.png" alt="set _NT_SYMBOL_PATH" title="set _NT_SYMBOL_PATH"> <p>所以在 command 中，輸入 set 後，就可以看到 _NT_SYMBOL_PATH 的設定值哦，</p><img src="/2018/03/05/2018010/201801002.png" alt="_NT_SYMBOL_PATH" title="_NT_SYMBOL_PATH"> <p>當然，如果常常會用到的話，就直接設定到 環境變數之前，下次 debug 時，就不用再設定一次了哦! 詳細請參考<a href="https://www.hanselman.com/blog/SetUpYourSystemToUseMicrosoftsPublicSymbolServer.aspx" target="_blank" rel="external">Set up your system to use Microsoft’s public Symbol Server</a></p></li><li><p>在 WinDbg 中找問題</p><ul><li><p>載入 sos.dll<br>WinDbg 有 x86/x64 的版本，我是使用 x64 的版本，所以 sos.dll 的路徑是 C:\Windows\Microsoft.NET\Framework64\v4.0.30319\sos.dll，您輸入如果發生錯誤的話，請使用 C:\Windows\Microsoft.NET\Framework\v4.0.30319\sos.dll 。</p></li><li><p>設定 Symbol 檔目錄</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">!sym noisy</div><div class="line">.cordll -ve -u  -l</div></pre></td></tr></table></figure></li><li><p>透過 !runaway 顯示Threads所佔的時間<br>輸入 !runaway 後，會顯示各 Thread 所花費的時間，花最多的會在最上面，如下圖，</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">!runaway</div></pre></td></tr></table></figure><img src="/2018/03/05/2018010/201801003.png" alt="!runaway" title="!runaway"></li><li><p>透過 ~[thread]s 切換到該 thread 的位置<br>由上圖所示，Thread 40 佔最多時間，所以我們切到它的位罝去，</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~40s</div></pre></td></tr></table></figure><img src="/2018/03/05/2018010/201801004.png" alt="~40s" title="~40s"></li><li><p>透過 !clrstack 來查看呼叫堆疉</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">!clrstack</div></pre></td></tr></table></figure><img src="/2018/03/05/2018010/201801005.png" alt="!clrstack" title="!clrstack"><p>從上圖可以發現，應該是有關 Dictionary 操作的問題，而它是由我們系統中 TemplateCfg.initial() 這個 Method 所引起的。</p></li></ul></li><li><p>檢視並調整程式碼<br>開啟 TemplateCfg 程式碼，在 initial 這個 Method 之中會建立 Dictionary 物件，Clear 它，並 Insert 資料，但這些 Dictionary 的變數卻又設定成 static 。</p><img src="/2018/03/05/2018010/201801006.png" alt="TemplateCfg.initial()" title="TemplateCfg.initial()"><p>即然這些 Dictionary 是 static 的，而且它們值又都是相同的，就沒有必要每次 request 時，就重新建立並 insert 這些資料。<br>所以將 initial 裡面的 Code 搬到  static constructor 。<br>調整完程式碼後，從去年觀察到目前，已經沒有再發生 CPU 100% 的狀況。</p></li></ul><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="http://improve.dk/debugging-in-production-part-1-analyzing-100-cpu-usage-using-windbg/" target="_blank" rel="external">Debugging in Production Part 1 - Analyzing 100% CPU Usage Using Windbg</a><br><a href="http://blog.darkthread.net/post-2017-02-20-windbg-to-find-aspnet-cpu-high.aspx" target="_blank" rel="external">WinDBG 應用實例：找出 ASP.NET CPU 100% 原因</a><br><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/" target="_blank" rel="external">Debugging Tools for Windows (WinDbg, KD, CDB, NTSD)</a><br><a href="https://www.hanselman.com/blog/SetUpYourSystemToUseMicrosoftsPublicSymbolServer.aspx" target="_blank" rel="external">Set up your system to use Microsoft’s public Symbol Server</a><br><a href="https://channel9.msdn.com/Series/-NET-Debugging-Stater-Kit-for-the-Production-Environment/High-CPU-Hangs-05" target="_blank" rel="external">High CPU Hangs - 05</a><br><a href="http://www.infoq.com/cn/articles/architecture-practice-13-windbg" target="_blank" rel="external">中小型研发团队架构实践：生产环境诊断利器WinDbg帮你快速分析异常情况Dump文件</a><br><a href="https://blogs.msdn.microsoft.com/kaevans/2011/04/11/intro-to-windbg-for-net-developers/" target="_blank" rel="external">Intro to WinDBG for .NET Developers</a><br><a href="https://blogs.msdn.microsoft.com/tess/2008/02/27/net-debugging-demos-lab-4-high-cpu-hang-review/" target="_blank" rel="external">.NET Debugging Demos Lab 4: High CPU Hang – Review</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;問題&quot;&gt;&lt;a href=&quot;#問題&quot; class=&quot;headerlink&quot; title=&quot;問題&quot;&gt;&lt;/a&gt;問題&lt;/h3&gt;&lt;p&gt;我們有一個 ASP.NET 的系統部署到 IIS 上(Windows 2012, .NET 4.x)，有時候會導致 w3wp.exe 吃掉所
+      
+    
+    </summary>
+    
+    
+      <category term="IIS" scheme="https://rainmakerho.github.io/tags/IIS/"/>
+    
+      <category term="CPU" scheme="https://rainmakerho.github.io/tags/CPU/"/>
+    
+      <category term="100%" scheme="https://rainmakerho.github.io/tags/100/"/>
+    
+      <category term="WinDbg" scheme="https://rainmakerho.github.io/tags/WinDbg/"/>
+    
+      <category term="ASP.NE" scheme="https://rainmakerho.github.io/tags/ASP-NE/"/>
+    
+      <category term="w3wp.exe" scheme="https://rainmakerho.github.io/tags/w3wp-exe/"/>
+    
+  </entry>
   
   <entry>
     <title>無法載入檔案或組件 &#39;log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304&#39; 或其相依性的其中之一。</title>
@@ -126,9 +159,9 @@
     </summary>
     
     
-      <category term="C#" scheme="https://rainmakerho.github.io/tags/C/"/>
-    
       <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="C#" scheme="https://rainmakerho.github.io/tags/C/"/>
     
       <category term="BotBuilder" scheme="https://rainmakerho.github.io/tags/BotBuilder/"/>
     
@@ -578,41 +611,6 @@
       <category term="ios" scheme="https://rainmakerho.github.io/tags/ios/"/>
     
       <category term="xCode 9" scheme="https://rainmakerho.github.io/tags/xCode-9/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Add a profile to the provisioningProfiles dictionary in your Export Options property list.</title>
-    <link href="https://rainmakerho.github.io/2017/10/17/20171017/"/>
-    <id>https://rainmakerho.github.io/2017/10/17/20171017/</id>
-    <published>2017-10-17T05:10:42.000Z</published>
-    <updated>2017-12-11T10:00:49.186Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="最近透過-xcodebuild-來產生-ipa-檔時，以下的錯誤，"><a href="#最近透過-xcodebuild-來產生-ipa-檔時，以下的錯誤，" class="headerlink" title="最近透過 xcodebuild 來產生 ipa 檔時，以下的錯誤，"></a>最近透過 xcodebuild 來產生 ipa 檔時，以下的錯誤，</h3><p><em>error: exportArchive: …app requires a provisioning profile.</em><br><em>Error Domain=IDEProvisioningErrorDomain Code=9 …requires a provisioning profile. …NSLocalizedRecoverySuggestion=Add a profile to the “provisioningProfiles” dictionary in your Export Options property list.}</em></p><img src="/2017/10/17/20171017/exportArchiveFail.png" alt="slug" title="slug"><h3 id="原來是因為-xCode-9-的-export-Options-plist-檔中需要再指定-provisioningProfiles-相關資料，內容如下圖，"><a href="#原來是因為-xCode-9-的-export-Options-plist-檔中需要再指定-provisioningProfiles-相關資料，內容如下圖，" class="headerlink" title="原來是因為 xCode 9 的 export Options plist 檔中需要再指定 provisioningProfiles 相關資料，內容如下圖，"></a>原來是因為 xCode 9 的 export Options plist 檔中需要再指定 <em>provisioningProfiles</em> 相關資料，內容如下圖，</h3><img src="/2017/10/17/20171017/exportOptionsPlist.png" alt="slug" title="slug"><h3 id="最簡單的方式可以參考-New-export-options-Plist-in-Xcode-9-的方式，先透過-Xcode-產生-ipa-後，在-ipa-的目錄中會有-ExportOptions-plist-檔案，直接將它拿來用就可以了哦"><a href="#最簡單的方式可以參考-New-export-options-Plist-in-Xcode-9-的方式，先透過-Xcode-產生-ipa-後，在-ipa-的目錄中會有-ExportOptions-plist-檔案，直接將它拿來用就可以了哦" class="headerlink" title="最簡單的方式可以參考 New export options Plist in Xcode 9 的方式，先透過 Xcode 產生 ipa 後，在 ipa 的目錄中會有 ExportOptions.plist 檔案，直接將它拿來用就可以了哦!"></a>最簡單的方式可以參考 <a href="https://blog.bitrise.io/new-export-options-plist-in-xcode-9" target="_blank" rel="external">New export options Plist in Xcode 9</a> 的方式，先透過 Xcode 產生 ipa 後，在 ipa 的目錄中會有 <em>ExportOptions.plist</em> 檔案，直接將它拿來用就可以了哦!</h3><h2 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h2><ul><li><p><a href="http://www.matrixprojects.net/p/xcodebuild-export-options-plist/" target="_blank" rel="external">xcodebuild’s new exportOptionsPlist flag</a></p></li><li><p><a href="https://blog.bitrise.io/new-export-options-plist-in-xcode-9" target="_blank" rel="external">New export options Plist in Xcode 9</a></p></li><li><p><a href="https://stackoverflow.com/questions/39674237/xcrun-command-to-export-ipa-file-xcode8-for-iphoneos10-0" target="_blank" rel="external">xcrun command to export ipa file xcode8 for iphoneos10.0</a></p></li><li><p><a href="https://medium.com/xcblog/xcodebuild-deploy-ios-app-from-command-line-c6defff0d8b8" target="_blank" rel="external">xcodebuild: Deploy iOS app from Command Line</a></p></li><li><p><a href="http://www.jianshu.com/p/88d9f2e57004" target="_blank" rel="external">xcodebuild 命令简单使用</a></p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;最近透過-xcodebuild-來產生-ipa-檔時，以下的錯誤，&quot;&gt;&lt;a href=&quot;#最近透過-xcodebuild-來產生-ipa-檔時，以下的錯誤，&quot; class=&quot;headerlink&quot; title=&quot;最近透過 xcodebuild 來產生 ipa 檔時
-      
-    
-    </summary>
-    
-    
-      <category term="ios" scheme="https://rainmakerho.github.io/tags/ios/"/>
-    
-      <category term="xcodebuild" scheme="https://rainmakerho.github.io/tags/xcodebuild/"/>
-    
-      <category term="exportArchive" scheme="https://rainmakerho.github.io/tags/exportArchive/"/>
-    
-      <category term="exportOptionsPlist" scheme="https://rainmakerho.github.io/tags/exportOptionsPlist/"/>
-    
-      <category term="Export Options property list" scheme="https://rainmakerho.github.io/tags/Export-Options-property-list/"/>
-    
-      <category term="provisioningProfiles" scheme="https://rainmakerho.github.io/tags/provisioningProfiles/"/>
-    
-      <category term="Xcode 9" scheme="https://rainmakerho.github.io/tags/Xcode-9/"/>
     
   </entry>
   
