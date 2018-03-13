@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/03/13/2018011/</loc>
+    <lastmod>2018-03-13T07:13:24.339Z</lastmod>
+    <data>
+        <display>
+        <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
+        <pubTime>2018-03-13T06:54:05.000Z</pubTime>
+        
+        <tag>Aspose</tag>
+         
+        <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/03/05/2018010/</loc>
     <lastmod>2018-03-05T09:58:55.447Z</lastmod>
     <data>
@@ -82,9 +103,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          

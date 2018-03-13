@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-03-05T09:58:55.447Z</updated>
+  <updated>2018-03-13T07:13:24.339Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
+    <link href="https://rainmakerho.github.io/2018/03/13/2018011/"/>
+    <id>https://rainmakerho.github.io/2018/03/13/2018011/</id>
+    <published>2018-03-13T06:54:05.000Z</published>
+    <updated>2018-03-13T07:13:24.339Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近在 Web 使用 Aspose.Pdf 來產生文件時，有時候會忽然出現 <em>System.NullReferenceException</em> 的錯誤。<br>而錯誤的地方居然是在 License.SetLicense 的 Method，如下，<br>System.NullReferenceException: 並未將物件參考設定為物件的執行個體。<br>    於 .(Stream )<br>    於 .(String , Assembly )<br>    於 Aspose.Pdf.License.SetLicense(String licenseName)</p><h3 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h3><p>直覺來看應該是 License 檔案壞了，所以請同事更新 License 檔，再執行就好了。<br>可是過沒多久，又發生一樣的問題。<br>我們操作 Aspose 元件的方式是，一開始先設定 License ，再建立要使用的元件，如下，<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> lic = <span class="keyword">new</span> License();</div><div class="line">lic.SetLicense(<span class="string">"aspose.total.lic"</span>);</div><div class="line"><span class="keyword">var</span> pdfDoc = <span class="keyword">new</span> Document(<span class="string">@"c:\xx\node.pdf"</span>);</div></pre></td></tr></table></figure></p><p>在網路上似乎也有人談到這種問題。或許在 Web 環境中，又有多執行緒下所造成的。<br>所以在 Page_Load 中寫了以下的程式來測試，果然馬上出現 NullReferenceException 的錯誤，如下，<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Parallel.For(<span class="number">0</span>, <span class="number">10</span>, <span class="keyword">delegate</span> (<span class="keyword">int</span> i)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">try</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> lic = <span class="keyword">new</span> License();</div><div class="line">        lic.SetLicense(<span class="string">"aspose.total.lic"</span>);</div><div class="line">        <span class="keyword">var</span> pdfDoc = <span class="keyword">new</span> Document(<span class="string">@"c:\xx\node.pdf"</span>);</div><div class="line">        Debug.WriteLine(<span class="string">$"<span class="subst">&#123;i&#125;</span>:<span class="subst">&#123;pdfDoc.IsLinearized&#125;</span>"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (Exception ex)</div><div class="line">    &#123;</div><div class="line">        ebug.WriteLine(<span class="string">$"<span class="subst">&#123;i&#125;</span>:<span class="subst">&#123;ex&#125;</span>"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> pdfDocx = <span class="keyword">new</span> Document(<span class="string">@"c:\xx\node.pdf"</span>);</div><div class="line">Response.Write(pdfDocx.IsLinearized);</div></pre></td></tr></table></figure></p><p>這個問題原廠已記錄在未來應該會修正這個問題。<br>而目前的話，如果設定 License 的話，就在 global.asax 中的 Application_Start Event 設定即可。<br>在其他地方就不需要再設定 License ，以免出現 NullReferenceException 。<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_Start</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line"><span class="keyword">var</span> licPdf = <span class="keyword">new</span> License();</div><div class="line">licPdf.SetLicense(<span class="string">"aspose.total.lic"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;問題&quot;&gt;&lt;a href=&quot;#問題&quot; class=&quot;headerlink&quot; title=&quot;問題&quot;&gt;&lt;/a&gt;問題&lt;/h3&gt;&lt;p&gt;最近在 Web 使用 Aspose.Pdf 來產生文件時，有時候會忽然出現 &lt;em&gt;System.NullReferenceExceptio
+      
+    
+    </summary>
+    
+    
+      <category term="Aspose" scheme="https://rainmakerho.github.io/tags/Aspose/"/>
+    
+      <category term="SetLicense" scheme="https://rainmakerho.github.io/tags/SetLicense/"/>
+    
+      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
+    
+  </entry>
   
   <entry>
     <title>透過 WinDbg 來找出 ASP.NET CPU 100% ASP.NET 程式的問題</title>
@@ -159,9 +186,9 @@
     </summary>
     
     
-      <category term="C#" scheme="https://rainmakerho.github.io/tags/C/"/>
-    
       <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="C#" scheme="https://rainmakerho.github.io/tags/C/"/>
     
       <category term="BotBuilder" scheme="https://rainmakerho.github.io/tags/BotBuilder/"/>
     
@@ -586,31 +613,6 @@
       <category term="=?utf-8?B?" scheme="https://rainmakerho.github.io/tags/utf-8-B/"/>
     
       <category term="Attachments" scheme="https://rainmakerho.github.io/tags/Attachments/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Compiling IB documents for earlier than iOS 7 is no longer supported.</title>
-    <link href="https://rainmakerho.github.io/2017/10/17/20171017-2/"/>
-    <id>https://rainmakerho.github.io/2017/10/17/20171017-2/</id>
-    <published>2017-10-17T05:34:17.000Z</published>
-    <updated>2017-12-11T10:00:56.566Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="最近透過-Xcode-9-建置舊的-Cordova-專案，在建置時就發生-Compiling-IB-documents-for-earlier-than-iOS-7-is-no-longer-supported-的錯誤，依Illegal-Configuration-Compiling-IB-documents-for-earlier-than-iOS-7-is-no-longer-supported的說明，只要將-Interface-Builder-Document-的-Builds-for-改成-iOS-7-0-後版本就可以了，如下圖所示，"><a href="#最近透過-Xcode-9-建置舊的-Cordova-專案，在建置時就發生-Compiling-IB-documents-for-earlier-than-iOS-7-is-no-longer-supported-的錯誤，依Illegal-Configuration-Compiling-IB-documents-for-earlier-than-iOS-7-is-no-longer-supported的說明，只要將-Interface-Builder-Document-的-Builds-for-改成-iOS-7-0-後版本就可以了，如下圖所示，" class="headerlink" title="最近透過 Xcode 9 建置舊的 Cordova 專案，在建置時就發生 Compiling IB documents for earlier than iOS 7 is no longer supported. 的錯誤，依Illegal Configuration: Compiling IB documents for earlier than iOS 7 is no longer supported的說明，只要將 Interface Builder Document 的 Builds for 改成 iOS 7.0 後版本就可以了，如下圖所示，"></a>最近透過 Xcode 9 建置舊的 Cordova 專案，在建置時就發生 <em>Compiling IB documents for earlier than iOS 7 is no longer supported.</em> 的錯誤，依<a href="https://stackoverflow.com/questions/44429415/illegal-configuration-compiling-ib-documents-for-earlier-than-ios-7-is-no-longe" target="_blank" rel="external">Illegal Configuration: Compiling IB documents for earlier than iOS 7 is no longer supported</a>的說明，只要將 Interface Builder Document 的 <em>Builds for</em> 改成 iOS 7.0 後版本就可以了，如下圖所示，</h3><img src="/2017/10/17/20171017-2/IBVersion.png" alt="slug" title="slug">]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;最近透過-Xcode-9-建置舊的-Cordova-專案，在建置時就發生-Compiling-IB-documents-for-earlier-than-iOS-7-is-no-longer-supported-的錯誤，依Illegal-Configuration
-      
-    
-    </summary>
-    
-    
-      <category term="ios" scheme="https://rainmakerho.github.io/tags/ios/"/>
-    
-      <category term="xCode 9" scheme="https://rainmakerho.github.io/tags/xCode-9/"/>
     
   </entry>
   
