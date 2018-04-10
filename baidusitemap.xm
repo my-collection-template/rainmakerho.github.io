@@ -5,10 +5,10 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/04/10/2018014/</loc>
-    <lastmod>2018-04-10T02:57:42.888Z</lastmod>
+    <lastmod>2018-04-10T03:06:21.481Z</lastmod>
     <data>
         <display>
-        <title>ZAP 憑證安裝的方式(ZAP Certificate)</title>
+        <title>OWASP ZAP 憑證安裝的方式(OWASP ZAP Certificate)</title>
         <pubTime>2018-04-10T01:36:19.000Z</pubTime>
         
         <tag>ZAP</tag>
@@ -261,13 +261,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
