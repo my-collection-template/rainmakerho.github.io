@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/04/10/2018014/</loc>
-    <lastmod>2018-04-10T03:06:21.481Z</lastmod>
+    <lastmod>2018-04-10T03:10:22.368Z</lastmod>
     <data>
         <display>
         <title>OWASP ZAP 憑證安裝的方式(OWASP ZAP Certificate)</title>
@@ -188,9 +188,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>C#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotBuilder</tag>
          
