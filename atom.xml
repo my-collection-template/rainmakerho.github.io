@@ -290,9 +290,9 @@
     </summary>
     
     
-      <category term="C#" scheme="https://rainmakerho.github.io/tags/C/"/>
-    
       <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="C#" scheme="https://rainmakerho.github.io/tags/C/"/>
     
       <category term="BotBuilder" scheme="https://rainmakerho.github.io/tags/BotBuilder/"/>
     
@@ -375,13 +375,13 @@
     </summary>
     
     
+      <category term="chatbot" scheme="https://rainmakerho.github.io/tags/chatbot/"/>
+    
       <category term="QnA Maker" scheme="https://rainmakerho.github.io/tags/QnA-Maker/"/>
     
       <category term="LUIS" scheme="https://rainmakerho.github.io/tags/LUIS/"/>
     
       <category term="Vital ESP" scheme="https://rainmakerho.github.io/tags/Vital-ESP/"/>
-    
-      <category term="chatbot" scheme="https://rainmakerho.github.io/tags/chatbot/"/>
     
       <category term="FAQ" scheme="https://rainmakerho.github.io/tags/FAQ/"/>
     
