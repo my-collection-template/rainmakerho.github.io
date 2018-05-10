@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/05/10/2018016/</loc>
-    <lastmod>2018-05-10T07:58:45.490Z</lastmod>
+    <lastmod>2018-05-10T08:03:36.742Z</lastmod>
     <data>
         <display>
         <title>透過 Microsoft BotFramework-WebChat 的 botchat.js,Botframework 的 Chatbot 整合到 WebSite 之中</title>
@@ -165,11 +165,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -194,11 +194,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
@@ -236,9 +236,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          
