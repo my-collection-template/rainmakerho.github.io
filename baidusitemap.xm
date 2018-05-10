@@ -5,10 +5,10 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/05/10/2018016/</loc>
-    <lastmod>2018-05-10T08:03:36.742Z</lastmod>
+    <lastmod>2018-05-10T09:12:55.987Z</lastmod>
     <data>
         <display>
-        <title>透過 Microsoft BotFramework-WebChat 的 botchat.js,Botframework 的 Chatbot 整合到 WebSite 之中</title>
+        <title>透過 Microsoft BotFramework-WebChat 的 botchat.js 連接 Botframework 做的 Chatbot ，輕鬆整合到 Web Application 之中</title>
         <pubTime>2018-05-10T07:12:02.000Z</pubTime>
         
         <tag>BotFramework-WebChat</tag>
@@ -236,9 +236,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>C#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotBuilder</tag>
          
