@@ -1,21 +1,21 @@
-===== ¼ĞÃD =====
-¹q¸£²§°ÊºŞ²z­û¤w¸g°±¥Î¤F¹ï»·ºİ/ºô¸ô²§°Êªº¤ä´©¡C
+ï»¿===== æ¨™é¡Œ =====
+é›»è…¦ç•°å‹•ç®¡ç†å“¡å·²ç¶“åœç”¨äº†å°é ç«¯/ç¶²è·¯ç•°å‹•çš„æ”¯æ´ã€‚
 
-===== °İÃD¤ÀÃş(ASP, Component, SQL, IIS, Performance, System, etc...) =====
+===== å•é¡Œåˆ†é¡(ASP, Component, SQL, IIS, Performance, System, etc...) =====
 MSDTC
 
-===== °İÃD²{¶H(´y­z°İÃDµo¥Í®Éªº¯gª¬¡^ =====
-¡¯Àô¹Ò»¡©ú: 
-AP Serve»PDB Server¦b¬O¤À¶}ªº, ¦Ó¥B¦b¤£¦PªºDomain, AP Server»PDB ServerªºOS³£¬OWindows 2003
+===== å•é¡Œç¾è±¡(æè¿°å•é¡Œç™¼ç”Ÿæ™‚çš„ç—‡ç‹€ï¼‰ =====
+ï¼Šç’°å¢ƒèªªæ˜: 
+AP Serveèˆ‡DB Serveråœ¨æ˜¯åˆ†é–‹çš„, è€Œä¸”åœ¨ä¸åŒçš„Domain, AP Serverèˆ‡DB Serverçš„OSéƒ½æ˜¯Windows 2003
 
-¡¯°İÃD²{¶H:
-¦bµ{¦¡¸Ì¥[¤JTransactionªº¸Ü, ·|¥X²{¿ù»~°T®§:
-"¹q¸£²§°ÊºŞ²z­û¤w¸g°±¥Î¤F¹ï»·ºİ/ºô¸ô²§°Êªº¤ä´©¡C"
-­^¤åÂ½Ä¶: The transaction manager has disabled its support for remote/network transactions
+ï¼Šå•é¡Œç¾è±¡:
+åœ¨ç¨‹å¼è£¡åŠ å…¥Transactionçš„è©±, æœƒå‡ºç¾éŒ¯èª¤è¨Šæ¯:
+"é›»è…¦ç•°å‹•ç®¡ç†å“¡å·²ç¶“åœç”¨äº†å°é ç«¯/ç¶²è·¯ç•°å‹•çš„æ”¯æ´ã€‚"
+è‹±æ–‡ç¿»è­¯: The transaction manager has disabled its support for remote/network transactions
 
-¡¯¤§«eTonyªºSupport¦³¹J¨ì¹L, ­ì¦]¬O:
-Windows2003 ¹w³]¬OÃö³¬ºô¸ô DTC ªº¡A¥u¦³¥»¾÷¯à°÷³q
-¥i¥H³z¹L¤U¦C¨BÆJ­×¥¿:
+ï¼Šä¹‹å‰Tonyçš„Supportæœ‰é‡åˆ°é, åŸå› æ˜¯:
+Windows2003 é è¨­æ˜¯é—œé–‰ç¶²è·¯ DTC çš„ï¼Œåªæœ‰æœ¬æ©Ÿèƒ½å¤ é€š
+å¯ä»¥é€éä¸‹åˆ—æ­¥é©Ÿä¿®æ­£:
     Steps to Enable Network DTC Access
     Click Start, point to Control Panel, and then click Add or Remove Programs. 
     Click Add/Remove Windows Components. 
@@ -25,49 +25,49 @@ Windows2003 ¹w³]¬OÃö³¬ºô¸ô DTC ªº¡A¥u¦³¥»¾÷¯à°÷³q
     Click Finish. 
     Stop and then restart the Distributed Transaction Coordinator service. 
     Stop and then restart any resource manager services that participates in the distributed transaction (such as Microsoft SQL Server or Microsoft Message Queue Server).
-¡¯°Ñ¦Òºô§}: 
+ï¼Šåƒè€ƒç¶²å€: 
    http://support.microsoft.com/?id=817064
    
-¸É¥R: ¥i¦b "¤¸¥óªA°È/§Úªº¹q¸£/¤º®e" ¬d¬İMSDTC­¶ÅÒªº¦w¥ş©Ê³]©w¸Ì¬d¬İNetwrok DTCªº³]©w.
+è£œå……: å¯åœ¨ "å…ƒä»¶æœå‹™/æˆ‘çš„é›»è…¦/å…§å®¹" æŸ¥çœ‹MSDTCé ç±¤çš„å®‰å…¨æ€§è¨­å®šè£¡æŸ¥çœ‹Netwrok DTCçš„è¨­å®š.
 
-¡¯°µ§¹¤§«á, ¥X²{¥t¥~¤@­Ó°İÃD, ¿ù»~°T®§: 
-"²§°Ê¤w¸g¥H·t¥Ü©ÎªÌ©ú½Tªº¤è¦¡»{¥i©Î¤¤¤î¤F"
-­^¤åÂ½Ä¶: The transaction has already been implicitly or explicitly committed or aborted 
+ï¼Šåšå®Œä¹‹å¾Œ, å‡ºç¾å¦å¤–ä¸€å€‹å•é¡Œ, éŒ¯èª¤è¨Šæ¯: 
+"ç•°å‹•å·²ç¶“ä»¥æš—ç¤ºæˆ–è€…æ˜ç¢ºçš„æ–¹å¼èªå¯æˆ–ä¸­æ­¢äº†"
+è‹±æ–‡ç¿»è­¯: The transaction has already been implicitly or explicitly committed or aborted 
 
-¡¯¸g¹L´ú¸Õ, µo²{¸óºô°ì¤~·|¥X²{³o­Ó¿ù»~. ­ì¦]¬O:
+ï¼Šç¶“éæ¸¬è©¦, ç™¼ç¾è·¨ç¶²åŸŸæ‰æœƒå‡ºç¾é€™å€‹éŒ¯èª¤. åŸå› æ˜¯:
 The MSDTC proxy may not correctly authenticate MSDTC when the communicating computers are not in the same domain.
 
-¡¯­×¥¿¤è¦¡:
-¦bAP Server
+ï¼Šä¿®æ­£æ–¹å¼:
+åœ¨AP Server
 turn off the remote procedure call (RPC) security by setting the DWORD value for the TurnOffRpcSecurity registry value to 1. 
 Start Registry Editor (Regedt32.exe), and then set the value of the HKLM\software\microsoft\msdtc\TurnOffRpcSecurity registry key to 1. 
 
-¡¯°Ñ¦Òºô§}: 
+ï¼Šåƒè€ƒç¶²å€: 
    http://support.microsoft.com/default.aspx?scid=kb;en-us;827805
 
-¡¯ª`·N: ³]§¹¤§«á­n­«·s±Ò°ÊMSDTC¤~·|¦³®Ä
+ï¼Šæ³¨æ„: è¨­å®Œä¹‹å¾Œè¦é‡æ–°å•Ÿå‹•MSDTCæ‰æœƒæœ‰æ•ˆ
 
-¡¯¥i¥ÎÃöÁä¦r¥h Google ¬d¸ß
+ï¼Šå¯ç”¨é—œéµå­—å» Google æŸ¥è©¢
     HOW TO: Enable Network DTC Access in Windows Server 2003
     (0x8004d00e):The transaction has already been implicitly or explicitly committed or aborted
     MSDTC Fails to Mutually Authenticate When Computers Do Not Run in the Same Domain
 
-===== °İÃD­ì¦]¡]´y­z°İÃDµo¥Íªº­ì¦]¡^ =====
-* Network DTC Access¨S¦³Enable
-* ¦b¤£¦PDomain®É, MSDTCªºAuthenticate¤£¦¨¥\
+===== å•é¡ŒåŸå› ï¼ˆæè¿°å•é¡Œç™¼ç”Ÿçš„åŸå› ï¼‰ =====
+* Network DTC Accessæ²’æœ‰Enable
+* åœ¨ä¸åŒDomainæ™‚, MSDTCçš„Authenticateä¸æˆåŠŸ
 
-===== ­×¥¿´y­z¡]¦p¦ó­×¥¿¦¹°İÃD¡^ =====
+===== ä¿®æ­£æè¿°ï¼ˆå¦‚ä½•ä¿®æ­£æ­¤å•é¡Œï¼‰ =====
 
-===== ¬O§_­n§ó´«¦¹¤¸¥óªº¨Ì¾Ú =====
+===== æ˜¯å¦è¦æ›´æ›æ­¤å…ƒä»¶çš„ä¾æ“š =====
 
-===== Release ª©¥» =====
+===== Release ç‰ˆæœ¬ =====
 
-===== ÃöÁä¦r =====
+===== é—œéµå­— =====
 MSDTC, Windows 2003, Network DTC, transaction, Domain
 
-===== ³Æµù =====
-¦pªG¿ù»~°T®§¬O:
-"¨ó¤O¹q¸£²§°ÊºŞ²z­û¤w¸g°±¥Î¤F¹ï»·ºİ/ºô¸ô²§°Êªº¤ä´©¡C"
-­^¤åÂ½Ä¶: The partner transaction manager has disabled its support for remote/network transactions
-¥NªíDB Server¨S¦³Enable Network DTC Access
+===== å‚™è¨» =====
+å¦‚æœéŒ¯èª¤è¨Šæ¯æ˜¯:
+"å”åŠ›é›»è…¦ç•°å‹•ç®¡ç†å“¡å·²ç¶“åœç”¨äº†å°é ç«¯/ç¶²è·¯ç•°å‹•çš„æ”¯æ´ã€‚"
+è‹±æ–‡ç¿»è­¯: The partner transaction manager has disabled its support for remote/network transactions
+ä»£è¡¨DB Serveræ²’æœ‰Enable Network DTC Access
 
