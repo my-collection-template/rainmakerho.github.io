@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/05/16/2018017/</loc>
+    <lastmod>2018-05-16T03:27:03.392Z</lastmod>
+    <data>
+        <display>
+        <title>談談 MSDTC 的問題</title>
+        <pubTime>2018-05-16T03:01:04.000Z</pubTime>
+        
+        <tag>MSDTC</tag>
+         
+        <tag>firewall</tag>
+         
+        <tag>協力電腦異動管理員已經停用了對遠端/網路異動的支援</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/05/10/2018016/</loc>
     <lastmod>2018-05-10T09:12:55.987Z</lastmod>
     <data>
@@ -236,9 +257,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          
