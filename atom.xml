@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-05-16T03:27:03.392Z</updated>
+  <updated>2018-06-04T08:31:12.303Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Access BotState when use custom BotDataStore</title>
+    <link href="https://rainmakerho.github.io/2018/06/04/2018018/"/>
+    <id>https://rainmakerho.github.io/2018/06/04/2018018/</id>
+    <published>2018-06-04T08:06:11.000Z</published>
+    <updated>2018-06-04T08:31:12.303Z</updated>
+    
+    <content type="html"><![CDATA[<p>botframework 預設會將 State 存到 state.botframework.com 上去(使用 emulator 則會存在 emulator 上面)。<br><img src="/2018/06/04/2018018/defaultBotStore.png" alt="[defaultBotStore.png]" title="[defaultBotStore.png]"></p><p>目前的 .NET Samples 也都改成使用 InMemoryDataStore 的方式，使用方式如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_Start</span>(<span class="params"></span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line"><span class="comment">//加以下這一段Codes</span></div><div class="line">Conversation.UpdateContainer(</div><div class="line">   builder =&gt;</div><div class="line">   &#123;</div><div class="line">   <span class="comment">//in Memory store</span></div><div class="line">   <span class="keyword">var</span> store = <span class="keyword">new</span> InMemoryDataStore();</div><div class="line">   builder.Register(c =&gt; <span class="keyword">new</span> CachingBotDataStore(store,</div><div class="line">  CachingBotDataStoreConsistencyPolicy.LastWriteWins))</div><div class="line">  .As&lt;IBotDataStore&lt;BotData&gt;&gt;()</div><div class="line">  .AsSelf()</div><div class="line">  .SingleInstance();</div><div class="line">   &#125;);</div><div class="line"><span class="comment">//加以上這一段Codes</span></div><div class="line"></div><div class="line">GlobalConfiguration.Configure(WebApiConfig.Register);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure><p>您也可以將 State 存到 SQL 之中，可以參考 <a href="https://blog.botframework.com/2017/07/26/saving-state-sql-dotnet/" target="_blank" rel="external">Saving State data in SQL with .NET</a>.<br>所以從 Emulator 來看就會看不到 getUserData 及 setUserData 的 event，如下圖，<br><img src="/2018/06/04/2018018/inMemoryBotStore.png" alt="[BotDataStore 讀自 inMemoryBotStore]" title="[BotDataStore 讀自 inMemoryBotStore]"></p><p>當您使用客製的 DataStore 後，Access BotDataStore 就不能直接用 var stateClient = activity.GetStateClient() 。而是要透過 DialogModule.BeginLifetimeScope 來取得，如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, activity))</div><div class="line">&#123;</div><div class="line"><span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</div><div class="line"><span class="keyword">var</span> key = Address.FromActivity(activity);</div><div class="line"><span class="keyword">var</span> chatbotData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, CancellationToken.None);</div><div class="line"><span class="keyword">int</span> ties = chatbotData.GetProperty&lt;<span class="keyword">int</span>&gt;(<span class="string">"ties"</span>);</div><div class="line"><span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><p>刪除資料就透過 RemoveProperty 來刪除，如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, activity))</div><div class="line">&#123;</div><div class="line"><span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</div><div class="line"><span class="keyword">var</span> key = Address.FromActivity(activity);</div><div class="line"><span class="keyword">var</span> chatbotData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData , CancellationToken.None);</div><div class="line">chatbotData.RemoveProperty(<span class="string">"ties"</span>);</div><div class="line"><span class="keyword">await</span> botDataStore.SaveAsync(key, BotStoreType.BotUserData, chatbotData, CancellationToken.None);</div><div class="line"><span class="keyword">await</span> botDataStore.FlushAsync(key, CancellationToken.None);</div><div class="line"><span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;botframework 預設會將 State 存到 state.botframework.com 上去(使用 emulator 則會存在 emulator 上面)。&lt;br&gt;&lt;img src=&quot;/2018/06/04/2018018/defaultBotStore.png&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="BotDataStore" scheme="https://rainmakerho.github.io/tags/BotDataStore/"/>
+    
+      <category term="autofac" scheme="https://rainmakerho.github.io/tags/autofac/"/>
+    
+      <category term="DialogModule.BeginLifetimeScope" scheme="https://rainmakerho.github.io/tags/DialogModule-BeginLifetimeScope/"/>
+    
+  </entry>
   
   <entry>
     <title>談談 MSDTC 的問題</title>
@@ -190,11 +219,11 @@
     </summary>
     
     
-      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
-    
       <category term="SmtpClient" scheme="https://rainmakerho.github.io/tags/SmtpClient/"/>
     
       <category term="SmtpConnection.GetConnection" scheme="https://rainmakerho.github.io/tags/SmtpConnection-GetConnection/"/>
+    
+      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
     
       <category term=".net" scheme="https://rainmakerho.github.io/tags/net/"/>
     
@@ -225,11 +254,11 @@
     </summary>
     
     
+      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
+    
       <category term="Aspose" scheme="https://rainmakerho.github.io/tags/Aspose/"/>
     
       <category term="SetLicense" scheme="https://rainmakerho.github.io/tags/SetLicense/"/>
-    
-      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
     
   </entry>
   
@@ -348,11 +377,11 @@
     </summary>
     
     
-      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
-    
       <category term="MSA appId or password is incorrect" scheme="https://rainmakerho.github.io/tags/MSA-appId-or-password-is-incorrect/"/>
     
       <category term="c#" scheme="https://rainmakerho.github.io/tags/c/"/>
+    
+      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
     
       <category term="botframework-emulator" scheme="https://rainmakerho.github.io/tags/botframework-emulator/"/>
     
@@ -433,9 +462,9 @@
     </summary>
     
     
-      <category term="chatbot" scheme="https://rainmakerho.github.io/tags/chatbot/"/>
-    
       <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="chatbot" scheme="https://rainmakerho.github.io/tags/chatbot/"/>
     
       <category term="BotDataStore" scheme="https://rainmakerho.github.io/tags/BotDataStore/"/>
     
@@ -591,35 +620,6 @@
       <category term="systemManagement" scheme="https://rainmakerho.github.io/tags/systemManagement/"/>
     
       <category term="C00CE014" scheme="https://rainmakerho.github.io/tags/C00CE014/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>為什麼 OPTIONS 時會給 404 呢?</title>
-    <link href="https://rainmakerho.github.io/2017/12/07/2017015/"/>
-    <id>https://rainmakerho.github.io/2017/12/07/2017015/</id>
-    <published>2017-12-07T09:30:04.000Z</published>
-    <updated>2017-12-11T09:52:54.785Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="同事在-CALL-IIS-上的網頁時，因為-CORS-所以會先做-Preflight-request，跑-OPTIONS-時，居然回-404-。"><a href="#同事在-CALL-IIS-上的網頁時，因為-CORS-所以會先做-Preflight-request，跑-OPTIONS-時，居然回-404-。" class="headerlink" title="同事在 CALL IIS 上的網頁時，因為 CORS 所以會先做 Preflight request，跑 OPTIONS 時，居然回 404 。"></a>同事在 CALL IIS 上的網頁時，因為 CORS 所以會先做 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request" target="_blank" rel="external">Preflight request</a>，跑 OPTIONS 時，居然回 404 。</h4><h4 id="在-web-config-中有允許-OPTIONS-呀-而且在-web-config-中設定的-header-也有-response-出來。-但-status-code-卻是-404-。"><a href="#在-web-config-中有允許-OPTIONS-呀-而且在-web-config-中設定的-header-也有-response-出來。-但-status-code-卻是-404-。" class="headerlink" title="在 web.config 中有允許 OPTIONS 呀 ~ 而且在 web.config 中設定的 header 也有 response 出來。 但 status code 卻是 404 。"></a>在 web.config 中有允許 OPTIONS 呀 ~ 而且在 web.config 中設定的 header 也有 response 出來。 但 status code 卻是 404 。</h4><h4 id="後來到-IIS-一看才知道，在-IIS-的「要求篩選」那裡，-OPTIONS-被設定成了-不允許，如下圖，"><a href="#後來到-IIS-一看才知道，在-IIS-的「要求篩選」那裡，-OPTIONS-被設定成了-不允許，如下圖，" class="headerlink" title="後來到 IIS 一看才知道，在 IIS 的「要求篩選」那裡， OPTIONS 被設定成了 不允許，如下圖，"></a>後來到 IIS 一看才知道，在 IIS 的「要求篩選」那裡， OPTIONS 被設定成了 不允許，如下圖，</h4><p><br><br><img src="/2017/12/07/2017015/REQFILTER.png" alt="slug 要求篩選" title="slug 要求篩選"><br><br></p><h4 id="後來將它移除後，就可以了哦"><a href="#後來將它移除後，就可以了哦" class="headerlink" title="後來將它移除後，就可以了哦 ~"></a>後來將它移除後，就可以了哦 ~</h4><h4 id="大家如果有類似的問題，可以檢查一下-IIS-的「要求篩選」設定哦"><a href="#大家如果有類似的問題，可以檢查一下-IIS-的「要求篩選」設定哦" class="headerlink" title="大家如果有類似的問題，可以檢查一下 IIS 的「要求篩選」設定哦 !"></a>大家如果有類似的問題，可以檢查一下 IIS 的「要求篩選」設定哦 !</h4>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h4 id=&quot;同事在-CALL-IIS-上的網頁時，因為-CORS-所以會先做-Preflight-request，跑-OPTIONS-時，居然回-404-。&quot;&gt;&lt;a href=&quot;#同事在-CALL-IIS-上的網頁時，因為-CORS-所以會先做-Preflight-reque
-      
-    
-    </summary>
-    
-    
-      <category term="OPTIONS" scheme="https://rainmakerho.github.io/tags/OPTIONS/"/>
-    
-      <category term="IIS" scheme="https://rainmakerho.github.io/tags/IIS/"/>
-    
-      <category term="404" scheme="https://rainmakerho.github.io/tags/404/"/>
-    
-      <category term="要求篩選" scheme="https://rainmakerho.github.io/tags/%E8%A6%81%E6%B1%82%E7%AF%A9%E9%81%B8/"/>
     
   </entry>
   
