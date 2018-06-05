@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/06/05/2018019/</loc>
+    <lastmod>2018-06-05T01:58:33.415Z</lastmod>
+    <data>
+        <display>
+        <title>Implement global message handlers and resets the dialog stack</title>
+        <pubTime>2018-06-05T01:45:23.000Z</pubTime>
+        
+        <tag>botframework</tag>
+         
+        <tag>IDialogTask</tag>
+         
+        <tag>ScorableBase</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/06/04/2018018/</loc>
     <lastmod>2018-06-04T08:31:12.303Z</lastmod>
     <data>
@@ -209,11 +230,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -238,11 +259,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
@@ -330,11 +351,11 @@
         <title>The bot's MSA appId or password is incorrect.</title>
         <pubTime>2018-02-01T03:52:05.000Z</pubTime>
         
+        <tag>botframework</tag>
+         
         <tag>MSA appId or password is incorrect</tag>
          
         <tag>c#</tag>
-         
-        <tag>botframework</tag>
          
         <tag>botframework-emulator</tag>
          
@@ -378,9 +399,9 @@
         <title>客製 BotDataStore ，將 Bot State 資料存到 SQL Server之中</title>
         <pubTime>2018-01-26T05:11:04.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>chatbot</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotDataStore</tag>
          

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-06-04T08:31:12.303Z</updated>
+  <updated>2018-06-05T01:58:33.415Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Implement global message handlers and resets the dialog stack</title>
+    <link href="https://rainmakerho.github.io/2018/06/05/2018019/"/>
+    <id>https://rainmakerho.github.io/2018/06/05/2018019/</id>
+    <published>2018-06-05T01:45:23.000Z</published>
+    <updated>2018-06-05T01:58:33.415Z</updated>
+    
+    <content type="html"><![CDATA[<p>在 <a href="https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-global-handlers?view=azure-bot-service-3.0" target="_blank" rel="external">Implement global message handlers</a> 有說明如何透過 global message handlers 來處理一些 help, cancel 等等的全域處理。例如在一個對話當中，使用者輸入了取得待批示的指令，這時需要將處理待批示清單的 Dialog 叫出來，並且將目前處理中的對話堆疉清除(this.task.Reset())。</p><p>這裡要注意的是 this.task.Reset() 一定要放在最後面，不然會噴錯哦! 例如，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">PostAsync</span>(<span class="params">IActivity item, <span class="keyword">string</span> state, CancellationToken token</span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">var</span> message = item <span class="keyword">as</span> IMessageActivity;</div><div class="line">    <span class="keyword">if</span> (message != <span class="literal">null</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> settingsDialog = <span class="keyword">new</span> SettingsDialog();</div><div class="line">        <span class="keyword">var</span> interruption = settingsDialog.Void&lt;<span class="keyword">object</span>, IMessageActivity&gt;();</div><div class="line">        <span class="keyword">this</span>.task.Call(interruption, <span class="literal">null</span>);</div><div class="line">        <span class="keyword">await</span> <span class="keyword">this</span>.task.PollAsync(token);</div><div class="line">        <span class="comment">// 要清除 DialogStack 的話，請加上 this.task.Reset()</span></div><div class="line">        <span class="keyword">this</span>.task.Reset();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在 &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-global-handlers?view=azure-bot-service-3.0&quot; targe
+      
+    
+    </summary>
+    
+    
+      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="IDialogTask" scheme="https://rainmakerho.github.io/tags/IDialogTask/"/>
+    
+      <category term="ScorableBase" scheme="https://rainmakerho.github.io/tags/ScorableBase/"/>
+    
+  </entry>
   
   <entry>
     <title>Access BotState when use custom BotDataStore</title>
@@ -219,11 +246,11 @@
     </summary>
     
     
+      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
+    
       <category term="SmtpClient" scheme="https://rainmakerho.github.io/tags/SmtpClient/"/>
     
       <category term="SmtpConnection.GetConnection" scheme="https://rainmakerho.github.io/tags/SmtpConnection-GetConnection/"/>
-    
-      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
     
       <category term=".net" scheme="https://rainmakerho.github.io/tags/net/"/>
     
@@ -254,11 +281,11 @@
     </summary>
     
     
-      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
-    
       <category term="Aspose" scheme="https://rainmakerho.github.io/tags/Aspose/"/>
     
       <category term="SetLicense" scheme="https://rainmakerho.github.io/tags/SetLicense/"/>
+    
+      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
     
   </entry>
   
@@ -377,11 +404,11 @@
     </summary>
     
     
+      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
       <category term="MSA appId or password is incorrect" scheme="https://rainmakerho.github.io/tags/MSA-appId-or-password-is-incorrect/"/>
     
       <category term="c#" scheme="https://rainmakerho.github.io/tags/c/"/>
-    
-      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
     
       <category term="botframework-emulator" scheme="https://rainmakerho.github.io/tags/botframework-emulator/"/>
     
@@ -462,9 +489,9 @@
     </summary>
     
     
-      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
-    
       <category term="chatbot" scheme="https://rainmakerho.github.io/tags/chatbot/"/>
+    
+      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
     
       <category term="BotDataStore" scheme="https://rainmakerho.github.io/tags/BotDataStore/"/>
     
@@ -587,39 +614,6 @@
       <category term="Angular" scheme="https://rainmakerho.github.io/tags/Angular/"/>
     
       <category term="Service Worker" scheme="https://rainmakerho.github.io/tags/Service-Worker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows 10 IoT Core 如何透過 UWP 程式來 重開機 或是 關機 (C00CE014)</title>
-    <link href="https://rainmakerho.github.io/2017/12/11/2017016/"/>
-    <id>https://rainmakerho.github.io/2017/12/11/2017016/</id>
-    <published>2017-12-11T06:35:08.000Z</published>
-    <updated>2017-12-11T07:11:54.327Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近在 RPi2 上面的 Windows IoT Core UWP 程式，網路跑一跑就 GG 了，它就完全沒辦法對外連網，外面也連不到它。一定要重新開機後，網路才會好。<br>於是參考 <a href="https://marcominerva.wordpress.com/2016/12/13/how-to-shutdown-a-windows-10-iot-core-device-from-a-uwp-app/" target="_blank" rel="external">How to shutdown a Windows 10 IoT Core device from a UWP app</a>這篇文章的方式，使用 <em>ShutdownManager.BeginShutdown(ShutdownKind.Restart, TimeSpan.FromSeconds(5));</em>，並在 <em>Package.appxmanifest</em> 檔案中加入 xmlns:iot namespace, IgnorableNamespaces 以及在 Capabilities 節點中加入 <em>iot:Capability Name=”systemManagement”</em> (請檢視原始碼編輯哦! UI 無法設定!)。<br>結果程式一建置下去就 GG 了，出現「驗證錯誤。error C00CE014: App manifest validation error: The app manifest must be valid as per schema:」的錯誤。</p><p>我的 Package.appxmanifest 檔案如下，</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">Package</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/foundation/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:mp</span>=<span class="string">"http://schemas.microsoft.com/appx/2014/phone/manifest"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:uap</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/uap/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:iot</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/iot/windows10"</span> <span class="attr">IgnorableNamespaces</span>=<span class="string">"uap mp iot"</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">"internetClient"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">DeviceCapability</span> <span class="attr">Name</span>=<span class="string">"bluetooth"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iot:Capability</span> <span class="attr">Name</span>=<span class="string">"systemManagement"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Package</span>&gt;</span></div></pre></td></tr></table></figure><p>會有 <em>error C00CE014</em> 的錯誤，因為在 Capabilities 中的順序不對，Capability 要在第一順位，而且要在一起，再來才是 DeviceCapability ，如下面的順序就可以順利建置成功，</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">Package</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/foundation/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:mp</span>=<span class="string">"http://schemas.microsoft.com/appx/2014/phone/manifest"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:uap</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/uap/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:iot</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/iot/windows10"</span> <span class="attr">IgnorableNamespaces</span>=<span class="string">"uap mp iot"</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">"internetClient"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iot:Capability</span> <span class="attr">Name</span>=<span class="string">"systemManagement"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">DeviceCapability</span> <span class="attr">Name</span>=<span class="string">"bluetooth"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Package</span>&gt;</span></div></pre></td></tr></table></figure><p>Capability -&gt; iot:Capability -&gt; DeviceCapability …</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近在 RPi2 上面的 Windows IoT Core UWP 程式，網路跑一跑就 GG 了，它就完全沒辦法對外連網，外面也連不到它。一定要重新開機後，網路才會好。&lt;br&gt;於是參考 &lt;a href=&quot;https://marcominerva.wordpress.com/
-      
-    
-    </summary>
-    
-    
-      <category term="Windows 10 IoT Core" scheme="https://rainmakerho.github.io/tags/Windows-10-IoT-Core/"/>
-    
-      <category term="Shutdown" scheme="https://rainmakerho.github.io/tags/Shutdown/"/>
-    
-      <category term="Restart" scheme="https://rainmakerho.github.io/tags/Restart/"/>
-    
-      <category term="iot:Capability" scheme="https://rainmakerho.github.io/tags/iot-Capability/"/>
-    
-      <category term="systemManagement" scheme="https://rainmakerho.github.io/tags/systemManagement/"/>
-    
-      <category term="C00CE014" scheme="https://rainmakerho.github.io/tags/C00CE014/"/>
     
   </entry>
   
