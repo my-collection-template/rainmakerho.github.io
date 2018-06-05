@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/06/05/2018019/</loc>
-    <lastmod>2018-06-05T01:58:33.415Z</lastmod>
+    <lastmod>2018-06-05T06:42:55.874Z</lastmod>
     <data>
         <display>
         <title>Implement global message handlers and resets the dialog stack</title>
