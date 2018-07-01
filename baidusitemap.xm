@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/07/01/2018020/</loc>
+    <lastmod>2018-07-01T04:06:36.657Z</lastmod>
+    <data>
+        <display>
+        <title>IBotDataStore.FlushAsync Exception: The data is changed</title>
+        <pubTime>2018-07-01T03:29:38.000Z</pubTime>
+        
+        <tag>botframework</tag>
+         
+        <tag>IBotDataStore</tag>
+         
+        <tag>FlushAsync</tag>
+         
+        <tag>The data is changed</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/06/05/2018019/</loc>
     <lastmod>2018-06-05T06:42:55.874Z</lastmod>
     <data>
