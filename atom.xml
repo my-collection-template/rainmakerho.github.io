@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-07-01T04:06:36.657Z</updated>
+  <updated>2018-07-02T02:59:48.200Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Open Html Excel File from Aspose.Cells 透過 Aspose.Cells 開啟 Html 格式的 Excel 檔案</title>
+    <link href="https://rainmakerho.github.io/2018/07/02/2018021/"/>
+    <id>https://rainmakerho.github.io/2018/07/02/2018021/</id>
+    <published>2018-07-02T02:41:25.000Z</published>
+    <updated>2018-07-02T02:59:48.200Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我們之前透過程式產生 Excel 檔時，是先將一份 Excel 另存成 Html 格式的檔案，然後在裡面設定一些 Tag 。<br>程式就透過去 Replace 這些 Tag 後，再將程式另存，並將檔名改成 xls 。<br>這樣使用者就可以透過 Excel 去開啟它了。<br>只是最近的 Excel 開啟這樣的檔案，都會先 alert 使用者 (可以透過調整 機碼 讓它不要 alert)。<br>那有辦法讓它變成真正的 Excel 檔，或是轉成 PDF 嗎?</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>我們可以透過 Aspose 的元件來處理哦! 它有提供一個 HTMLLoadOptions 可以讓我們達到這樣子的目的哦! 程式如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> filePath = <span class="string">"hr840401.xls"</span>;</div><div class="line"><span class="keyword">var</span> opts = <span class="keyword">new</span> HTMLLoadOptions(LoadFormat.Html);</div><div class="line"><span class="keyword">var</span> workbook = <span class="keyword">new</span> Workbook(filePath, opts);</div><div class="line">workbook.Save(<span class="string">"hr840401_out.xls"</span>);</div></pre></td></tr></table></figure><p>它還可以載其他的格式哦，詳細可以參考<a href="https://apireference.aspose.com/net/pdf/aspose.pdf/loadformat" target="_blank" rel="external">Aspose LoadFormat Enumeration</a></p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://forum.aspose.com/t/open-excel-html-file/44690/3" target="_blank" rel="external">Open Excel/html file</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;我們之前透過程式產生 Excel 檔時，是先將一份 Excel 另存成 Html 格式的檔案，然後在裡面設定一些 Tag 。&lt;br&gt;程式就透
+      
+    
+    </summary>
+    
+    
+      <category term="aspose" scheme="https://rainmakerho.github.io/tags/aspose/"/>
+    
+      <category term="aspose.cells" scheme="https://rainmakerho.github.io/tags/aspose-cells/"/>
+    
+      <category term="Html" scheme="https://rainmakerho.github.io/tags/Html/"/>
+    
+      <category term="Excell" scheme="https://rainmakerho.github.io/tags/Excell/"/>
+    
+  </entry>
   
   <entry>
     <title>IBotDataStore.FlushAsync Exception: The data is changed</title>
@@ -275,11 +304,11 @@
     </summary>
     
     
-      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
-    
       <category term="SmtpClient" scheme="https://rainmakerho.github.io/tags/SmtpClient/"/>
     
       <category term="SmtpConnection.GetConnection" scheme="https://rainmakerho.github.io/tags/SmtpConnection-GetConnection/"/>
+    
+      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
     
       <category term=".net" scheme="https://rainmakerho.github.io/tags/net/"/>
     
@@ -310,11 +339,11 @@
     </summary>
     
     
+      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
+    
       <category term="Aspose" scheme="https://rainmakerho.github.io/tags/Aspose/"/>
     
       <category term="SetLicense" scheme="https://rainmakerho.github.io/tags/SetLicense/"/>
-    
-      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
     
   </entry>
   
@@ -462,9 +491,9 @@
     </summary>
     
     
-      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
-    
       <category term="C#" scheme="https://rainmakerho.github.io/tags/C/"/>
+    
+      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
     
       <category term="BotBuilder" scheme="https://rainmakerho.github.io/tags/BotBuilder/"/>
     
@@ -587,37 +616,6 @@
       <category term="2146827284" scheme="https://rainmakerho.github.io/tags/2146827284/"/>
     
       <category term="Workbook" scheme="https://rainmakerho.github.io/tags/Workbook/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows 10 IoT Core UWP Beacon 程式 Crash 事件</title>
-    <link href="https://rainmakerho.github.io/2018/01/09/2018001/"/>
-    <id>https://rainmakerho.github.io/2018/01/09/2018001/</id>
-    <published>2018-01-09T07:03:42.000Z</published>
-    <updated>2018-01-11T07:30:28.006Z</updated>
-    
-    <content type="html"><![CDATA[<p>我們在2016年有透過 Windows 10 IoT Core 來開發 UWP beacon 的程式，並透過 Azure IoT Hub 來處理訊息。<br>但是這支 UWP 程式執行一段時間後，那台 Raspberry 就無法由外部到它。<br>後來更新到 Build 15063 後，過一段時間後，整個作業系統直接就 Crash 掉了。<br>同事 Kent 查看 event 發現，因為 IoT Core 如果自動更新後，自動重新開機後， OS 就 Crash 掉了。<br>所以將自動更新透過 Power Shell 將它關掉(要更新的話，就手動更新測試沒問題再上)，可參考<a href="https://brosteins.com/2016/09/06/disable-windows-update-windows-10-iot-core-powershell/" target="_blank" rel="external">Disable Windows Update in Windows 10 IoT Core with PowerShell</a>。</p><p>過了一陣子後，無法連網的狀況又發生了，但系統是有取到 ip 的，但就是無法連網。<br>再將系統重新啟動後，就又可以正常連網。<br>所以就在程式中檢查，如果無法連到 Azure IoT Hub N 次之後，就讓系統重新啟動，可參考<a href="https://rainmakerho.github.io/2017/12/11/2017016/">Windows 10 IoT Core 如何透過 UWP 程式來 重開機 或是 關機 (C00CE014)</a>。</p><ul><li>而觀察到目前為止，採取這樣子的方式(停止自動更新、無法連網 N 次就重開機)，程式目前運作的都還蠻順利的哦! </li><li>另外比較麻煩的就是 Android 的手機如果有連到 藍牙裝置(耳機、手環 …)，就無法掃到 Beacon ，手機重開機後才掃得到。</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;我們在2016年有透過 Windows 10 IoT Core 來開發 UWP beacon 的程式，並透過 Azure IoT Hub 來處理訊息。&lt;br&gt;但是這支 UWP 程式執行一段時間後，那台 Raspberry 就無法由外部到它。&lt;br&gt;後來更新到 Build 1
-      
-    
-    </summary>
-    
-    
-      <category term="Windows 10 IoT Core" scheme="https://rainmakerho.github.io/tags/Windows-10-IoT-Core/"/>
-    
-      <category term="UWP" scheme="https://rainmakerho.github.io/tags/UWP/"/>
-    
-      <category term="restart" scheme="https://rainmakerho.github.io/tags/restart/"/>
-    
-      <category term="disable update" scheme="https://rainmakerho.github.io/tags/disable-update/"/>
-    
-      <category term="beacon" scheme="https://rainmakerho.github.io/tags/beacon/"/>
     
   </entry>
   
