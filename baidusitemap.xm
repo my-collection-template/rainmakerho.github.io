@@ -4,6 +4,39 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/07/03/2018022/</loc>
+    <lastmod>2018-07-03T09:34:36.843Z</lastmod>
+    <data>
+        <display>
+        <title>透過 Aspose 將 datatable 的資料轉出成有浮水印的 PDF 檔</title>
+        <pubTime>2018-07-03T07:55:15.000Z</pubTime>
+        
+        <tag>Aspose</tag>
+         
+        <tag>Aspose.Cells</tag>
+         
+        <tag>datatable</tag>
+         
+        <tag>Aspose.Pdf</tag>
+         
+        <tag>pdf</tag>
+         
+        <tag>watermark</tag>
+         
+        <tag>浮水印</tag>
+         
+        <tag>asp.net</tag>
+         
+        <tag>Aspose.Pdf.Facades.Stamp</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/07/02/2018021/</loc>
     <lastmod>2018-07-02T02:59:48.200Z</lastmod>
     <data>
@@ -347,9 +380,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          
