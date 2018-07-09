@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/03/2018022/</loc>
-    <lastmod>2018-07-03T09:34:36.843Z</lastmod>
+    <lastmod>2018-07-09T09:12:59.978Z</lastmod>
     <data>
         <display>
         <title>透過 Aspose 將 datatable 的資料轉出成有浮水印的 PDF 檔</title>
@@ -28,6 +28,31 @@
         <tag>asp.net</tag>
          
         <tag>Aspose.Pdf.Facades.Stamp</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2018/07/05/2018023/</loc>
+    <lastmod>2018-07-05T07:07:54.804Z</lastmod>
+    <data>
+        <display>
+        <title>從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊</title>
+        <pubTime>2018-07-05T02:45:19.000Z</pubTime>
+        
+        <tag>botframework</tag>
+         
+        <tag>BotToUser</tag>
+         
+        <tag>ConnectorClient</tag>
+         
+        <tag>TryAddWithoutValidation</tag>
+         
+        <tag>Header</tag>
          
          
            
@@ -309,11 +334,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -338,11 +363,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
@@ -453,13 +478,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
+        <tag>chatbot</tag>
+         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
-         
-        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
