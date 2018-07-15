@@ -4,6 +4,39 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/07/13/2018024/</loc>
+    <lastmod>2018-07-15T03:18:05.726Z</lastmod>
+    <data>
+        <display>
+        <title>透過 Aspose 將 datatable 的資料轉出成有浮水印的 PDF 檔 (2)</title>
+        <pubTime>2018-07-13T05:44:05.000Z</pubTime>
+        
+        <tag>Aspose</tag>
+         
+        <tag>Aspose.Cells</tag>
+         
+        <tag>datatable</tag>
+         
+        <tag>Aspose.Pdf</tag>
+         
+        <tag>pdf</tag>
+         
+        <tag>watermark</tag>
+         
+        <tag>浮水印</tag>
+         
+        <tag>asp.net</tag>
+         
+        <tag>Aspose.Pdf.Facades.Stamp</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/07/03/2018022/</loc>
     <lastmod>2018-07-09T09:12:59.978Z</lastmod>
     <data>
