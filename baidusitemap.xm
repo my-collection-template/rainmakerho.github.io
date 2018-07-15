@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/13/2018024/</loc>
-    <lastmod>2018-07-15T03:18:05.726Z</lastmod>
+    <lastmod>2018-07-15T03:36:17.389Z</lastmod>
     <data>
         <display>
         <title>透過 Aspose 將 datatable 的資料轉出成有浮水印的 PDF 檔 (2)</title>
@@ -511,13 +511,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
