@@ -4,6 +4,52 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/07/20/2018026/</loc>
+    <lastmod>2018-07-22T09:18:56.114Z</lastmod>
+    <data>
+        <display>
+        <title>為什麼設定了 DataColumn.DefaultValue 會無效?</title>
+        <pubTime>2018-07-20T05:04:16.000Z</pubTime>
+        
+        <tag>DataColumn</tag>
+         
+        <tag>DefaultValue</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2018/07/20/2018025/</loc>
+    <lastmod>2018-07-20T05:07:03.444Z</lastmod>
+    <data>
+        <display>
+        <title>In-House certificate 要過期了怎麼辦?</title>
+        <pubTime>2018-07-20T01:17:13.000Z</pubTime>
+        
+        <tag>In-House certificate</tag>
+         
+        <tag>expired</tag>
+         
+        <tag>Provisioning Profiles</tag>
+         
+        <tag>Revoke</tag>
+         
+        <tag>keychain</tag>
+         
+        <tag>No installed provisioning profiles</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/07/13/2018024/</loc>
     <lastmod>2018-07-17T05:55:29.704Z</lastmod>
     <data>
