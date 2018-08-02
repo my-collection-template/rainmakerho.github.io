@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-08-02T02:08:52.304Z</updated>
+  <updated>2018-08-02T09:19:35.912Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>IIS 403 - 禁止: 拒絕存取 跟 403.4 - Forbidden 問題</title>
+    <link href="https://rainmakerho.github.io/2018/08/02/2018029/"/>
+    <id>https://rainmakerho.github.io/2018/08/02/2018029/</id>
+    <published>2018-08-02T08:41:33.000Z</published>
+    <updated>2018-08-02T09:19:35.912Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事在裝機時，從 Client 端 Browser 去開系統時，發現圖檔都沒有顯示出來。<br>將圖檔的 url 貼到 browser 網址列上來看，結果出現「403 - 禁止: 拒絕存取」。如下圖所示，<br><img src="/2018/08/02/2018029/001.png" alt="[403 - 禁止: 拒絕存取]" title="[403 - 禁止: 拒絕存取]"></p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>看起來似乎是權限不足，於是開啟檔案總管，將 IUser , Network Service 等帳號都加進去。 再看，還是 403 。天呀 ~~~ 怎麼回事呢?</p><p>今天另一位同事在 Server 上開 Browser 去試，結果出現的錯誤一樣是 403 ，但多了一個 .4 。<br>下面還寫著一行「<strong>您嘗試存取的網頁受到安全通訊端層(SSL)的保護</strong>」。 如下，<br><img src="/2018/08/02/2018029/002.png" alt="[403.4 - Forbidden]" title="[403.4 - Forbidden]"><br>查看 IIS 的設定，果然勾選了 「需要 SSL」 ，如下，<br><img src="/2018/08/02/2018029/003.png" alt="[SSL 設定]" title="[SSL 設定]"><br>結果改走 https 就好了。<br>所以如果出 403 的話，除了權限外，也請 Check 一下 SSL 的部份。<br>或是在 Server 上測試，這樣如果有錯誤的話，訊息會比較多一些。才不會浪費許多時間。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近同事在裝機時，從 Client 端 Browser 去開系統時，發現圖檔都沒有顯示出來。&lt;br&gt;將圖檔的 url 貼到 browser 
+      
+    
+    </summary>
+    
+    
+      <category term="iis" scheme="https://rainmakerho.github.io/tags/iis/"/>
+    
+      <category term="403" scheme="https://rainmakerho.github.io/tags/403/"/>
+    
+      <category term="403.4" scheme="https://rainmakerho.github.io/tags/403-4/"/>
+    
+      <category term="403 - 禁止: 拒絕存取" scheme="https://rainmakerho.github.io/tags/403-%E7%A6%81%E6%AD%A2-%E6%8B%92%E7%B5%95%E5%AD%98%E5%8F%96/"/>
+    
+      <category term="403.4 - Forbidden" scheme="https://rainmakerho.github.io/tags/403-4-Forbidden/"/>
+    
+  </entry>
   
   <entry>
     <title>RxJS 學習之旅 ~ Html DOM 操作</title>
@@ -613,36 +644,6 @@
       <category term="ASP.NE" scheme="https://rainmakerho.github.io/tags/ASP-NE/"/>
     
       <category term="w3wp.exe" scheme="https://rainmakerho.github.io/tags/w3wp-exe/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>無法載入檔案或組件 &#39;log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304&#39; 或其相依性的其中之一。</title>
-    <link href="https://rainmakerho.github.io/2018/02/14/2018009/"/>
-    <id>https://rainmakerho.github.io/2018/02/14/2018009/</id>
-    <published>2018-02-14T14:12:46.000Z</published>
-    <updated>2018-03-14T03:08:54.691Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近同事詢問他們使用 Crytal Report Viewer 時，會發生 log4net 版本衝突的問題。如下圖所示， </p><img src="/2018/02/14/2018009/2018009001.png" alt="CrystalReportViewer Runtime Error" title="CrystalReportViewer Runtime Error"> <p>如果是不同版本衝突的話，可以參考 <a href="https://dotblogs.com.tw/rainmaker/2015/11/25/153805" target="_blank" rel="external">如何讓不同 PublicKeyToken 的 DLL assemblyBinding 到可以用版本?</a> 透過 assemblyBinding 的方式就可以解決。 但剛好我們的 AP 自已用的 log4net 版本也是 1.2.10.0，所以是 <strong>相同版本，不同的 PublickToken</strong> 的衝突。 詳細訊息如下， </p><p><em>沒有辦法解決 “log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821” 和 “log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304” 之間的衝突。<br>任意選擇 “log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821”。</em>  </p><p>有查到 <a href="https://stackoverflow.com/questions/11673383/error-could-not-load-log4net-assembly" target="_blank" rel="external">Error: Could not load log4net assembly</a> 似乎是因為不同的平台(x86/x64) 所用的 log4net 會不同。<br>x86(32位元)用的 PublicToken 是 692fbea5521e1304，x64(64位元)或是 AnyCPU 用的 PublicToken 則是 1b44e1d426115821。<br>而我們 ap 平台是 x64 的，但 Crystal Report Viewer 卻使用了 x86(32位元) 的 log4net 。</p><p>… 我想應該是那裡設定出了錯吧 … </p><p>同事說只有在某台機器上才會出現那個錯誤，如果是透過 Browser 直接使用系統就正常，透過 VS.NET 啟動程式去 Debug 時，就會出現那個錯誤。<br>我想是因為如果透過 Browser 去使用系統的話，是連到 IIS ，而 IIS 設定的是 x64(64位元);如果透過 VS.NET 則是連到 IIS Express，預設它是使用 x86(32位元)。<br>於是筆者將 IIS 上的應用程式集區設定成 啟用 32 位元，再執行程式，則一樣會出現 log4net 的衝突狀況(ya. 重現問題了 …)。<br>所以就請同事在 VS.NET 中設定讓 IIS Express 使用 64 位元就沒問題了哦!<br>工具 -&gt; 選項 -&gt; (search textbox 中輸入 iis) , 並勾選 將 64 位元版本的 IIS Express 用於網站和專案(U) 選項勾起來就可以了哦! 如下，<br><img src="/2018/02/14/2018009/2018009002.png" alt="將 64 位元版本的 IIS Express 用於網站和專案(U)" title="將 64 位元版本的 IIS Express 用於網站和專案(U)"> </p><p>如果您是系統出了錯，請 Check 應用程式集區是否設定成了 「啟用32位元應用程式」哦!</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近同事詢問他們使用 Crytal Report Viewer 時，會發生 log4net 版本衝突的問題。如下圖所示， &lt;/p&gt;
-&lt;img src=&quot;/2018/02/14/2018009/2018009001.png&quot; alt=&quot;CrystalReportViewer 
-      
-    
-    </summary>
-    
-    
-      <category term="log4net" scheme="https://rainmakerho.github.io/tags/log4net/"/>
-    
-      <category term="1.2.10.0" scheme="https://rainmakerho.github.io/tags/1-2-10-0/"/>
-    
-      <category term="692fbea5521e1304" scheme="https://rainmakerho.github.io/tags/692fbea5521e1304/"/>
-    
-      <category term="1b44e1d426115821" scheme="https://rainmakerho.github.io/tags/1b44e1d426115821/"/>
     
   </entry>
   
