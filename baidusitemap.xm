@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/08/02/2018030/</loc>
+    <lastmod>2018-08-06T05:32:45.584Z</lastmod>
+    <data>
+        <display>
+        <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot</title>
+        <pubTime>2018-08-02T09:55:13.000Z</pubTime>
+        
+        <tag>chatbot</tag>
+         
+        <tag>botframework</tag>
+         
+        <tag>Adaptive Cards</tag>
+         
+        <tag>Microsoft Botframework</tag>
+         
+        <tag>Customize Web Chat for your websites</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/08/02/2018029/</loc>
     <lastmod>2018-08-02T09:19:35.912Z</lastmod>
     <data>
