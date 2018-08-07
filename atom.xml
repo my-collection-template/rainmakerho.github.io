@@ -602,11 +602,11 @@
     </summary>
     
     
+      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
+    
       <category term="SmtpClient" scheme="https://rainmakerho.github.io/tags/SmtpClient/"/>
     
       <category term="SmtpConnection.GetConnection" scheme="https://rainmakerho.github.io/tags/SmtpConnection-GetConnection/"/>
-    
-      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
     
       <category term=".net" scheme="https://rainmakerho.github.io/tags/net/"/>
     
@@ -637,11 +637,11 @@
     </summary>
     
     
-      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
-    
       <category term="Aspose" scheme="https://rainmakerho.github.io/tags/Aspose/"/>
     
       <category term="SetLicense" scheme="https://rainmakerho.github.io/tags/SetLicense/"/>
+    
+      <category term="NullReferenceException" scheme="https://rainmakerho.github.io/tags/NullReferenceException/"/>
     
   </entry>
   
