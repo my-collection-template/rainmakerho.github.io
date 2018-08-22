@@ -4,8 +4,52 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/08/21/2018032/</loc>
+    <lastmod>2018-08-22T05:05:16.311Z</lastmod>
+    <data>
+        <display>
+        <title>.NET Exception Handling</title>
+        <pubTime>2018-08-21T08:31:47.000Z</pubTime>
+        
+        <tag>c#</tag>
+         
+        <tag>.net</tag>
+         
+        <tag>exception</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2018/08/21/2018033/</loc>
+    <lastmod>2018-08-21T10:36:17.177Z</lastmod>
+    <data>
+        <display>
+        <title>NHibernate.Exceptions.GenericADOException System.Text.EncoderFallbackException</title>
+        <pubTime>2018-08-21T10:22:37.000Z</pubTime>
+        
+        <tag>NHibernate</tag>
+         
+        <tag>GenericADOException</tag>
+         
+        <tag>EncoderFallbackException</tag>
+         
+        <tag>Unicode</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/08/02/2018030/</loc>
-    <lastmod>2018-08-07T01:14:49.423Z</lastmod>
+    <lastmod>2018-08-21T10:30:51.941Z</lastmod>
     <data>
         <display>
         <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot</title>
@@ -20,6 +64,27 @@
         <tag>Microsoft Botframework</tag>
          
         <tag>Customize Web Chat for your websites</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2018/08/19/2018031/</loc>
+    <lastmod>2018-08-19T15:18:04.237Z</lastmod>
+    <data>
+        <display>
+        <title>HTTP 500 內部伺服器錯誤</title>
+        <pubTime>2018-08-19T15:04:40.000Z</pubTime>
+        
+        <tag>http</tag>
+         
+        <tag>500</tag>
+         
+        <tag>內部伺服器錯誤</tag>
          
          
            
@@ -519,11 +584,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -548,11 +613,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
-         
-        <tag>NullReferenceException</tag>
          
          
            
@@ -640,11 +705,11 @@
         <title>The bot's MSA appId or password is incorrect.</title>
         <pubTime>2018-02-01T03:52:05.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>MSA appId or password is incorrect</tag>
          
         <tag>c#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>botframework-emulator</tag>
          

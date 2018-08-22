@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://rainmakerho.github.io/2018/08/02/2018030/007.png">
 <meta property="og:image" content="https://rainmakerho.github.io/2018/08/02/2018030/005.png">
 <meta property="og:image" content="https://rainmakerho.github.io/2018/08/02/2018030/008.png">
-<meta property="og:updated_time" content="2018-08-07T01:14:49.423Z">
+<meta property="og:updated_time" content="2018-08-21T10:30:51.941Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Microsoft Botframework + Adaptive Cards 快速打造 Chatbot">
 <meta name="twitter:description" content="前言今年的 Chatbot 很火紅，不知大家都用什麼來開發 Chatbot 呢?筆者使用的是 Microsoft Botframework 來開發，它提供了很多語言的 SDK，讓我們可以快速的開發出 Chatbot。最近開發 Vitals ESP (KM) Chatbot，一開始規劃好畫面及流程後，很快就開發完成了。接下來就跟大家分享開發的過程 :) 需求Vitals ESP 是 KM 系統，希望">
@@ -204,7 +204,7 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div></pre></td><td class="code"><pre><div class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></div><div class="line"><span class="comment"><span class="doctag">///</span> 專門處理 KM Keyword Search</span></div><div class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SearchKeywordActionStrategy</span> : <span class="title">IActionStrategy</span></div><div class="line">&#123;</div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> 處理Search Keyword動作</span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="context"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="userName"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="messageAction"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">DoAction</span>(<span class="params">IDialogContext context, KMUser kmUser, KMAction messageAction</span>)</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">var</span> action = messageAction <span class="keyword">as</span> KMSearchAction;</div><div class="line"></div><div class="line">		<span class="comment">//先做 Action 前的驗證</span></div><div class="line">		<span class="comment">//1.必需要2個字(以上)</span></div><div class="line">		<span class="keyword">const</span> <span class="keyword">int</span> lowestLength = <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrWhiteSpace(action.Keyword) || action.Keyword.Length &lt; lowestLength)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BotException(<span class="string">$"查詢文字請至少<span class="subst">&#123;lowestLength&#125;</span>個字元，謝謝您!"</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">var</span> attachment = <span class="keyword">await</span> BuildSearchResultCard(kmUser.LoginId, action);</div><div class="line">		<span class="keyword">if</span> (attachment == <span class="literal">null</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">//查不到</span></div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BotException(<span class="string">$"查不到任到資料，請重新查詢..."</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">var</span> replyMessage = context.MakeMessage();</div><div class="line">		replyMessage.Attachments.Add(attachment);</div><div class="line">		<span class="keyword">await</span> context.PostAsync(replyMessage);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> 依使用者及Action 建立 Search結果的卡片</span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="userId"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="action"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;Attachment&gt; <span class="title">BuildSearchResultCard</span>(<span class="params"><span class="keyword">string</span> userId, KMSearchAction action</span>)</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">var</span> pageIndex = action.PageIndex;</div><div class="line">		<span class="keyword">var</span> searchKeyword = action.Keyword;</div><div class="line">		<span class="comment">//同時取回 文章及總筆數</span></div><div class="line">		<span class="keyword">var</span> searchResult = SearchKM(searchKeyword, pageIndex);</div><div class="line">		<span class="keyword">var</span> searchCount = searchResult.Item2;</div><div class="line">		<span class="comment">//沒任何資料</span></div><div class="line">		<span class="keyword">if</span> (searchCount == <span class="number">0</span>)</div><div class="line">			<span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line"></div><div class="line">		<span class="keyword">var</span> card = <span class="keyword">new</span> AdaptiveCard();</div><div class="line">		card.Body.Add(<span class="keyword">new</span> AdaptiveTextBlock()</div><div class="line">		&#123;</div><div class="line">			Text = <span class="string">$"查詢「<span class="subst">&#123;searchKeyword&#125;</span>」共 <span class="subst">&#123;searchCount&#125;</span> 筆，"</span>,</div><div class="line">			Weight = AdaptiveTextWeight.Bolder</div><div class="line">		&#125;);</div><div class="line">		card.Body.Add(<span class="keyword">new</span> AdaptiveTextBlock()</div><div class="line">		&#123;</div><div class="line">			Text = VitalsESPHelper.GetRangeString(pageIndex, searchCount),</div><div class="line">			Weight = AdaptiveTextWeight.Bolder</div><div class="line">		&#125;);</div><div class="line"></div><div class="line">		<span class="comment">//內容</span></div><div class="line">		<span class="keyword">foreach</span> (<span class="keyword">var</span> doc <span class="keyword">in</span> searchResult.Item1)</div><div class="line">		&#123;</div><div class="line">			card.Body.Add(<span class="keyword">new</span> AdaptiveTextBlock()</div><div class="line">			&#123;</div><div class="line">				<span class="comment">//markdown link</span></div><div class="line">				Text = <span class="string">$"[<span class="subst">&#123;doc.Title&#125;</span>](<span class="subst">&#123;doc.Url&#125;</span>)"</span>,</div><div class="line">				Weight = AdaptiveTextWeight.Bolder</div><div class="line">			&#125;);</div><div class="line">			card.Body.Add(<span class="keyword">new</span> AdaptiveTextBlock()</div><div class="line">			&#123;</div><div class="line">				Text = <span class="string">$"...子資訊..."</span>,</div><div class="line">				IsSubtle = <span class="literal">true</span></div><div class="line">			&#125;);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">//產生上、下一頁</span></div><div class="line">		<span class="keyword">var</span> pageSize = <span class="number">5</span>;</div><div class="line">		<span class="keyword">var</span> totalPage = (searchCount + pageSize - <span class="number">1</span>) / pageSize;</div><div class="line">		<span class="keyword">if</span> (pageIndex &gt; <span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">//上一頁</span></div><div class="line">			<span class="keyword">var</span> actionPageIndex = pageIndex - <span class="number">1</span>;</div><div class="line">			<span class="keyword">var</span> preAction = <span class="keyword">new</span> KMSearchAction</div><div class="line">			&#123;</div><div class="line">				Action = KMActionType.SearchKeyword,</div><div class="line">				Keyword = searchKeyword,</div><div class="line">				PageIndex = actionPageIndex</div><div class="line">			&#125;;</div><div class="line">			card.Actions.Add(<span class="keyword">new</span> AdaptiveSubmitAction()</div><div class="line">			&#123;</div><div class="line">				Title = <span class="string">"上一頁"</span>,</div><div class="line">				Data = <span class="string">$""</span>,</div><div class="line">				DataJson = JsonConvert.SerializeObject(preAction)</div><div class="line">			&#125;);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> ((pageIndex + <span class="number">1</span>) &lt; totalPage)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">//下一頁</span></div><div class="line">			<span class="keyword">var</span> actionPageIndex = pageIndex + <span class="number">1</span>;</div><div class="line">			<span class="keyword">var</span> nextAction = <span class="keyword">new</span> KMSearchAction</div><div class="line">			&#123;</div><div class="line">				Action = KMActionType.SearchKeyword,</div><div class="line">				Keyword = searchKeyword,</div><div class="line">				PageIndex = actionPageIndex</div><div class="line">			&#125;;</div><div class="line">			card.Actions.Add(<span class="keyword">new</span> AdaptiveSubmitAction()</div><div class="line">			&#123;</div><div class="line">				Title = <span class="string">"下一頁"</span>,</div><div class="line">				Data = <span class="string">$""</span>,</div><div class="line">				DataJson = JsonConvert.SerializeObject(nextAction)</div><div class="line">			&#125;);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">var</span> attachment = <span class="keyword">new</span> Attachment()</div><div class="line">		&#123;</div><div class="line">			ContentType = AdaptiveCard.ContentType,</div><div class="line">			Content = card</div><div class="line">		&#125;;</div><div class="line">		<span class="keyword">return</span> attachment;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//依 keyword 去Search，取回查詢結果</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;Tuple&lt;List&lt;KMDocument&gt;, <span class="keyword">int</span>&gt;&gt; SearchKM(<span class="keyword">string</span> keyword, <span class="keyword">int</span> pageIndex)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">var</span> searchCount = search 總筆數;</div><div class="line">		<span class="keyword">var</span> kmDocs = search 總文件;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Tuple&lt;List&lt;KMDocument&gt;, <span class="keyword">int</span>&gt;(kmDocs, searchCount);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>上面建立 <a href="https://adaptivecards.io/" target="_blank" rel="external">Adaptive Cards</a> ，我是透過 Card Elements 一個一個來加入 。<br>您也可以到 <a href="https://acdesignerbeta.azurewebsites.net/" target="_blank" rel="external">Adaptive Cards Designer</a> 設計好之後，將 json 存檔後，透過 <a href="https://docs.microsoft.com/en-us/adaptive-cards/sdk/authoring-cards/net#example-parse-an-adaptivecard-from-json" target="_blank" rel="external">AdaptiveCard.FromJson</a>將它們匯進來哦!</p>
 <p>建立 Mention 回覆的 Adaptive Cards ，是在另一個 Controller 在收到通知後，就建立它。<br>主要部份是建立 KMReplyMentionAction Class 一樣給 AdaptiveSubmitAction 的 DataJson 屬性，而 AdaptiveTextInput 的 Id 值要跟 KMReplyMentionAction Class 中的屬性值相同，只是 KMReplyMentionAction 是 PascalCase ，AdaptiveTextInput 的 Id 值是 CamelCase ，如下,</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;Attachment&gt; <span class="title">BuildMentionCard</span>(<span class="params"></span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="comment">//顯示 mention reply card</span></div><div class="line">	<span class="keyword">var</span> card = <span class="keyword">new</span> AdaptiveCard();</div><div class="line">	<span class="comment">// Body content  </span></div><div class="line">	card.Body.Add(<span class="keyword">new</span> AdaptiveTextBlock()</div><div class="line">	&#123;</div><div class="line">		Text = <span class="string">$"誰誰誰在一篇文件(那篇文章)中提到你"</span>,</div><div class="line">		Weight = AdaptiveTextWeight.Bolder,</div><div class="line">		Wrap = <span class="literal">true</span></div><div class="line">	&#125;);</div><div class="line"></div><div class="line">	<span class="comment">//mention 內容</span></div><div class="line">	card.Body.Add(<span class="keyword">new</span> AdaptiveTextBlock()</div><div class="line">	&#123;</div><div class="line">		Text = <span class="string">$"...文章內容..."</span>,</div><div class="line">		IsSubtle = <span class="literal">true</span>,</div><div class="line">		Wrap = <span class="literal">true</span>,</div><div class="line">		Separator = <span class="literal">true</span></div><div class="line">	&#125;);</div><div class="line"></div><div class="line">	<span class="comment">//reply</span></div><div class="line">	card.Body.Add(<span class="keyword">new</span> AdaptiveTextInput()</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//id要跟 KMReplyMentionAction 中的 ReplyContent 屬性一樣</span></div><div class="line">		Id = <span class="string">"replyContent"</span>,</div><div class="line">		IsMultiline = <span class="literal">true</span>,</div><div class="line">		Placeholder = <span class="string">$"訊息請回覆於此"</span>,</div><div class="line">		<span class="comment">// IsRequired = true (未來才會實作)</span></div><div class="line">	&#125;);</div><div class="line"></div><div class="line"></div><div class="line">	<span class="keyword">var</span> post = 從km取得要回覆的相關資訊;</div><div class="line"></div><div class="line">	<span class="keyword">var</span> replyAction = <span class="keyword">new</span> KMReplyMentionAction</div><div class="line">	&#123;</div><div class="line">		Action = KMActionType.ReplyDoc,</div><div class="line">		PostInfo = post</div><div class="line">	&#125;;</div><div class="line">	card.Actions.Add(<span class="keyword">new</span> AdaptiveSubmitAction()</div><div class="line">	&#123;</div><div class="line">		Title = <span class="string">"送出"</span>,</div><div class="line">		DataJson = JsonConvert.SerializeObject(replyAction)</div><div class="line">	&#125;);</div><div class="line"></div><div class="line">	<span class="keyword">var</span> attachment = <span class="keyword">new</span> Attachment()</div><div class="line">	&#123;</div><div class="line">		ContentType = AdaptiveCard.ContentType,</div><div class="line">		Content = card</div><div class="line">	&#125;;</div><div class="line">	<span class="keyword">return</span> attachment;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;Attachment&gt; <span class="title">BuildMentionCard</span>(<span class="params"></span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="comment">//顯示 mention reply card</span></div><div class="line">	<span class="keyword">var</span> card = <span class="keyword">new</span> AdaptiveCard();</div><div class="line">	<span class="comment">// Body content</span></div><div class="line">	card.Body.Add(<span class="keyword">new</span> AdaptiveTextBlock()</div><div class="line">	&#123;</div><div class="line">		Text = <span class="string">$"誰誰誰在一篇文件(那篇文章)中提到你"</span>,</div><div class="line">		Weight = AdaptiveTextWeight.Bolder,</div><div class="line">		Wrap = <span class="literal">true</span></div><div class="line">	&#125;);</div><div class="line"></div><div class="line">	<span class="comment">//mention 內容</span></div><div class="line">	card.Body.Add(<span class="keyword">new</span> AdaptiveTextBlock()</div><div class="line">	&#123;</div><div class="line">		Text = <span class="string">$"...文章內容..."</span>,</div><div class="line">		IsSubtle = <span class="literal">true</span>,</div><div class="line">		Wrap = <span class="literal">true</span>,</div><div class="line">		Separator = <span class="literal">true</span></div><div class="line">	&#125;);</div><div class="line"></div><div class="line">	<span class="comment">//reply</span></div><div class="line">	card.Body.Add(<span class="keyword">new</span> AdaptiveTextInput()</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//id要跟 KMReplyMentionAction 中的 ReplyContent 屬性一樣</span></div><div class="line">		Id = <span class="string">"replyContent"</span>,</div><div class="line">		IsMultiline = <span class="literal">true</span>,</div><div class="line">		Placeholder = <span class="string">$"訊息請回覆於此"</span>,</div><div class="line">		<span class="comment">// IsRequired = true (未來才會實作)</span></div><div class="line">	&#125;);</div><div class="line"></div><div class="line"></div><div class="line">	<span class="keyword">var</span> post = 從km取得要回覆的相關資訊;</div><div class="line"></div><div class="line">	<span class="keyword">var</span> replyAction = <span class="keyword">new</span> KMReplyMentionAction</div><div class="line">	&#123;</div><div class="line">		Action = KMActionType.ReplyDoc,</div><div class="line">		PostInfo = post</div><div class="line">	&#125;;</div><div class="line">	card.Actions.Add(<span class="keyword">new</span> AdaptiveSubmitAction()</div><div class="line">	&#123;</div><div class="line">		Title = <span class="string">"送出"</span>,</div><div class="line">		DataJson = JsonConvert.SerializeObject(replyAction)</div><div class="line">	&#125;);</div><div class="line"></div><div class="line">	<span class="keyword">var</span> attachment = <span class="keyword">new</span> Attachment()</div><div class="line">	&#123;</div><div class="line">		ContentType = AdaptiveCard.ContentType,</div><div class="line">		Content = card</div><div class="line">	&#125;;</div><div class="line">	<span class="keyword">return</span> attachment;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>處理使用者回覆的 ReplyMentionActionStrategy Class ，只要呼叫 KM API 檢查狀態 OK ，就可以了，如下，</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ReplyMentionActionStrategy</span> : <span class="title">IActionStrategy</span></div><div class="line">&#123;</div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> 處理快速回覆的Action</span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="context"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="kmUser"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="messageAction"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></div><div class="line">	<span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">DoAction</span>(<span class="params">IDialogContext context, KMUser kmUser, KMAction messageAction</span>)</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">var</span> action = messageAction <span class="keyword">as</span> KMReplyMentionAction;</div><div class="line">		<span class="keyword">var</span> replyMessage = context.MakeMessage();</div><div class="line">		<span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrWhiteSpace(action.ReplyContent))</div><div class="line">		&#123;</div><div class="line">			<span class="comment">//將內容reply進去</span></div><div class="line">			<span class="keyword">var</span> postResult = <span class="keyword">await</span> 呼叫KMAPI;</div><div class="line">			replyMessage.Text = <span class="string">$"回覆完成!"</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BotException(<span class="string">$"您回覆的內容為「空白」，無法回覆!"</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">await</span> context.PostAsync(replyMessage);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>而在上面有些檢查筆者是 throw BotException，然後透過 <a href="https://rainmakerho.github.io/2018/02/13/2018008/">Bot Framework Custom Error Messages and Exception Handling</a> 來將訊息顯示給使用者，如下，</p>
@@ -325,6 +325,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/08/19/2018031/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          HTTP 500 內部伺服器錯誤
+        
+      </div>
+    </a>
   
   
     <a href="/2018/08/02/2018029/" id="article-nav-older" class="article-nav-link-wrap">
@@ -472,6 +481,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">scrollbar</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">log4net</a>
               </li>
              
@@ -493,22 +510,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">InitializeFromOneFile</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">deadlock</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">交換事件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">exchangeEvent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,11 +537,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mac</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">scrollbar</a>
+                <a href="javascript:void(0)" class="js-tag color4">deadlock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">交換事件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">exchangeEvent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,22 +566,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Concurrent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">404</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -600,38 +593,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xamarin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ios11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">MinimumOSVersion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MtouchArch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Deployment Target</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ibtoolerror</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">exec in t-sql</a>
               </li>
              
@@ -649,6 +610,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">How to get value to variable using 'execute' in t-sql?</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -673,6 +642,54 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">IIS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">404</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">要求篩選</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xamarin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ios11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">MinimumOSVersion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MtouchArch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Deployment Target</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ibtoolerror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -712,35 +729,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color4">UWP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">xcodebuild</a>
+                <a href="javascript:void(0)" class="js-tag color3">restart</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">exportArchive</a>
+                <a href="javascript:void(0)" class="js-tag color5">disable update</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">exportOptionsPlist</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Export Options property list</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">provisioningProfiles</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Xcode 9</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">beacon</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -772,19 +773,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UWP</a>
+                <a href="javascript:void(0)" class="js-tag color1">xcodebuild</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">restart</a>
+                <a href="javascript:void(0)" class="js-tag color4">exportArchive</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disable update</a>
+                <a href="javascript:void(0)" class="js-tag color4">exportOptionsPlist</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">beacon</a>
+                <a href="javascript:void(0)" class="js-tag color4">Export Options property list</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">provisioningProfiles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Xcode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -828,18 +837,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">botframework</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">BotDataStore</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ConnectorStore</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">luis.ai</a>
               </li>
              
@@ -852,23 +849,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">C#</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">BotBuilder</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">debug</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MSA appId or password is incorrect</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c#</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">botframework</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -893,6 +882,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DialogModule</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">C#</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">BotBuilder</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">debug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">BotDataStore</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ConnectorStore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -928,23 +937,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Aspose</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SetLicense</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NullReferenceException</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SmtpClient</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SmtpConnection.GetConnection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NullReferenceException</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -964,23 +965,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DataGrid</a>
+                <a href="javascript:void(0)" class="js-tag color5">JSON</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">.net 4</a>
+                <a href="javascript:void(0)" class="js-tag color3">Replace</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Paging</a>
+                <a href="javascript:void(0)" class="js-tag color3">special character</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">colspan</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">first column</a>
+                <a href="javascript:void(0)" class="js-tag color3">JavaScriptStringEncode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1016,19 +1013,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JSON</a>
+                <a href="javascript:void(0)" class="js-tag color2">Aspose</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Replace</a>
+                <a href="javascript:void(0)" class="js-tag color1">SetLicense</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">special character</a>
+                <a href="javascript:void(0)" class="js-tag color4">DataGrid</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScriptStringEncode</a>
+                <a href="javascript:void(0)" class="js-tag color2">.net 4</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Paging</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">colspan</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">first column</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1052,6 +1061,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">autofac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">DialogModule.BeginLifetimeScope</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MSDTC</a>
               </li>
              
@@ -1061,34 +1078,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">協力電腦異動管理員已經停用了對遠端/網路異動的支援</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">autofac</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">DialogModule.BeginLifetimeScope</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">IDialogTask</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ScorableBase</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">IBotDataStore</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">FlushAsync</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">The data is changed</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1105,6 +1094,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Excell</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">IBotDataStore</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">FlushAsync</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">The data is changed</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">IDialogTask</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ScorableBase</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1140,6 +1149,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">DataColumn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DefaultValue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">BotToUser</a>
               </li>
              
@@ -1156,38 +1173,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">In-House certificate</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">expired</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Provisioning Profiles</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Revoke</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">keychain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">No installed provisioning profiles</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">DataColumn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DefaultValue</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">RxJS</a>
               </li>
              
@@ -1197,6 +1182,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Adaptive Cards</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Microsoft Botframework</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Customize Web Chat for your websites</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1236,15 +1233,67 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Adaptive Cards</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Microsoft Botframework</a>
+                <a href="javascript:void(0)" class="js-tag color4">500</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Customize Web Chat for your websites</a>
+                <a href="javascript:void(0)" class="js-tag color3">內部伺服器錯誤</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">exception</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">NHibernate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">GenericADOException</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">EncoderFallbackException</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SQL License</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">In-House certificate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">expired</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Provisioning Profiles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Revoke</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">keychain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">No installed provisioning profiles</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1265,14 +1314,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">403.4 - Forbidden</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SQL License</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
               </li>
             
             <div class="clearfix"></div>
