@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/09/17/2018034/</loc>
-    <lastmod>2018-09-17T05:53:43.357Z</lastmod>
+    <lastmod>2018-09-17T06:29:44.398Z</lastmod>
     <data>
         <display>
         <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 之 2</title>

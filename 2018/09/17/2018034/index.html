@@ -16,10 +16,12 @@
 <meta property="og:site_name" content="亂馬客 - back to basics">
 <meta property="og:description" content="前言在 Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 一篇中，我們說明如何透過 Adaptive Cards 將所有的動作透過 Action 再依它的 Action Type 來轉換成對應的 Action 物件及處理該 Action 物件的 Strategy 物件。 但是當我們的 Action 逾來逾多時，原本使用 switch 勢必會">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-17T05:53:43.357Z">
+<meta property="og:image" content="https://rainmakerho.github.io/2018/09/17/2018034/001.png">
+<meta property="og:updated_time" content="2018-09-17T06:29:44.398Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 之 2">
 <meta name="twitter:description" content="前言在 Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 一篇中，我們說明如何透過 Adaptive Cards 將所有的動作透過 Action 再依它的 Action Type 來轉換成對應的 Action 物件及處理該 Action 物件的 Strategy 物件。 但是當我們的 Action 逾來逾多時，原本使用 switch 勢必會">
+<meta name="twitter:image" content="https://rainmakerho.github.io/2018/09/17/2018034/001.png">
   
     <link rel="alternative" href="/atom.xml" title="亂馬客 - back to basics" type="application/atom+xml">
   
@@ -176,7 +178,7 @@
 <p>但是當我們的 Action 逾來逾多時，原本使用 switch 勢必會造成相對應的複雜度，依 Strategy 的方式是建立對應表，以下將介紹使用 Dictionary&lt;string, Func&lt;T>> 及 Autofac 這2種方式。</p>
 <p>另外，如果 Strategy 物件 中有使用到 Prompt dialogs 時，原本在執行完 Strategy 物件的 Method 後，如果直接呼叫 context.Done(“”); 將會造成 botframework Dialog Stack 運行上的錯誤，我們也將修正 Strategy 物件的 interface 。</p>
 <h3 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h3><h4 id="調整-Strategy-物件的建立方式"><a href="#調整-Strategy-物件的建立方式" class="headerlink" title="調整 Strategy 物件的建立方式"></a>調整 Strategy 物件的建立方式</h4><p>因為對應的 Strategy 物件變成了4個，如果用 switch 判斷的話，程式如下，<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 依不同的 Type 決定要用那個 Class</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="type"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">[<span class="meta">Obsolete</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IActionStrategy <span class="title">ResolveActionStrategy</span>(<span class="params">BotAction botAction</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IActionStrategy result = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">switch</span> (botAction.ActionType)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">case</span> ActionTypes.ShowAcountAction:</span><br><span class="line">            result = <span class="keyword">new</span> ShowAccountActionStrategy();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ActionTypes.AccountAction:</span><br><span class="line">            result = <span class="keyword">new</span> AccountActionStrategy();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ActionTypes.ShowMenuAction:</span><br><span class="line">            result = <span class="keyword">new</span> ShowMenuActionStrategy();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ActionTypes.OrderAction:</span><br><span class="line">            result = <span class="keyword">new</span> OrderActionStrategy();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            result = <span class="keyword">new</span> NoneActionStrategy();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
+<img src="/2018/09/17/2018034/001.png" title="[用 switch 判斷 Strategy 物件]">
 <p>因為 botframework 已使用 Autofac ，所以我們可以透過 <a href="https://autofaccn.readthedocs.io/en/latest/advanced/keyed-services.html" target="_blank" rel="noopener">Autofac Named Services</a> 方式來建立對應表，所以在 ActionStrategyResolver 物件中建立 ResolveByActionTypes Method 然後在 Global.asax.cs Application_Start Method 中去呼叫 ResolveByActionTypes Method。如下，<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 設定 ACTION_TYPE 對應要建立的物件</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="builder"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">ResolveByActionTypes</span>(<span class="params">ContainerBuilder builder</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    builder</span><br><span class="line">        .RegisterType&lt;ShowAccountActionStrategy&gt;()</span><br><span class="line">        .Named&lt;IActionStrategy&gt;(ActionTypes.ShowAcountAction.ToString())</span><br><span class="line">        .InstancePerLifetimeScope();</span><br><span class="line"></span><br><span class="line">    builder</span><br><span class="line">        .RegisterType&lt;AccountActionStrategy&gt;()</span><br><span class="line">        .Named&lt;IActionStrategy&gt;(ActionTypes.AccountAction.ToString())</span><br><span class="line">        .InstancePerLifetimeScope();</span><br><span class="line"></span><br><span class="line">    builder</span><br><span class="line">        .RegisterType&lt;ShowMenuActionStrategy&gt;()</span><br><span class="line">        .Named&lt;IActionStrategy&gt;(ActionTypes.ShowMenuAction.ToString())</span><br><span class="line">        .InstancePerLifetimeScope();</span><br><span class="line"></span><br><span class="line">    builder</span><br><span class="line">        .RegisterType&lt;OrderActionStrategy&gt;()</span><br><span class="line">        .Named&lt;IActionStrategy&gt;(ActionTypes.OrderAction.ToString())</span><br><span class="line">        .InstancePerLifetimeScope();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>而在取得對應的 Strategy 物件時，只要給 Action Type 值 ( var actionStrategy =scope.ResolveNamed<iactionstrategy>(botAction.ActionType.ToString()) )，就可以了哦! 如下，<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 透過 ACTION_TYPE 來建立對應的物件</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="botAction"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="context"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> <span class="keyword">static</span> Task <span class="title">DoActionAsync</span>(<span class="params">BotAction botAction, IDialogContext context</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, context.Activity.AsMessageActivity()))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> actionStrategy = scope.ResolveNamed&lt;IActionStrategy&gt;(botAction.ActionType.ToString());</span><br><span class="line">        <span class="keyword">await</span> actionStrategy.DoActionAsync(botAction, context);</span><br><span class="line">        <span class="comment">//註:如果您的 strategy 有用到 PromptDialog Or Other ResumeAfter 你就不能在這裡 CALL context.Done()</span></span><br><span class="line">        <span class="keyword">if</span> (actionStrategy.IsContextDone)</span><br><span class="line">        &#123;</span><br><span class="line">            context.Done(<span class="string">""</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></iactionstrategy></p>
 <h4 id="調整-Action-物件的建立方式"><a href="#調整-Action-物件的建立方式" class="headerlink" title="調整 Action 物件的建立方式"></a>調整 Action 物件的建立方式</h4><p>之前在 JsonConverter 中依 ActionType 透過 switch 來建立物件，我們可以建立一個 Dictionary 來對應生成的Function，因為會需要 jtoken 所以建立的 Dictionary為，Dictionary&lt;string, Func&lt;JToken, BotAction>> ，然後在 static construct 時建立它 (ActionConverter是我們的 class name)，如下，</p>
@@ -188,7 +190,7 @@
 <p>所以 Strategy 物件的 interface 多加入一個設定是否呼叫 contex.Done(“”) 的屬性，或是改成不呼叫，全都交由 Strategy 物件自行決定。如下，</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 定義 Action 共通的 interface </span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IActionStrategy</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function">Task <span class="title">DoActionAsync</span>(<span class="params">BotAction botAction, IDialogContext context</span>)</span>;</span><br><span class="line">    <span class="keyword">bool</span> IsContextDone &#123; <span class="keyword">get</span>;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>所以在上面的 DoActionAsync 有依 IsContextDone 屬性來判斷是否執行 contex.Done(“”) 。</p>
-<p>經過將 switch 改以 Dictionary or  Autofac DI 方式來建立物件，改善了複雜度，也提升了可讀性。<br>希望對大家以 Microsoft Botframework 來開發 Chatbot 有所幫助。</p>
+<p>經過將 switch 改以 Dictionary or  Autofac DI 方式來建立物件，改善了複雜度，也提升了可讀性。<br>另外在使用 contex.Done 的時機點，大家也要注意一下哦 :)<br>希望對大家以 Microsoft Botframework 來開發 Chatbot 有所幫助。</p>
 <h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://rainmakerho.github.io/2018/08/02/2018030/">Microsoft Botframework + Adaptive Cards 快速打造 Chatbot</a><br><a href="https://www.dofactory.com/net/strategy-design-pattern" target="_blank" rel="noopener">Strategy</a><br><a href="https://autofaccn.readthedocs.io/en/latest/advanced/keyed-services.html" target="_blank" rel="noopener">Autofac Named Services</a><br></p>
 
                           
@@ -452,14 +454,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mac</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">scrollbar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Session</a>
               </li>
              
@@ -473,6 +467,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Concurrent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">scrollbar</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1100,6 +1102,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1133,14 +1143,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
