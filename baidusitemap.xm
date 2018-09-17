@@ -4,6 +4,21 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/09/17/2018034/</loc>
+    <lastmod>2018-09-17T01:29:38.996Z</lastmod>
+    <data>
+        <display>
+        <title>2018034</title>
+        <pubTime>2018-09-17T01:29:38.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/08/21/2018032/</loc>
     <lastmod>2018-08-22T05:05:16.311Z</lastmod>
     <data>
@@ -584,11 +599,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -613,11 +628,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
@@ -705,11 +720,11 @@
         <title>The bot's MSA appId or password is incorrect.</title>
         <pubTime>2018-02-01T03:52:05.000Z</pubTime>
         
+        <tag>botframework</tag>
+         
         <tag>MSA appId or password is incorrect</tag>
          
         <tag>c#</tag>
-         
-        <tag>botframework</tag>
          
         <tag>botframework-emulator</tag>
          
