@@ -174,8 +174,8 @@
           
                     
                       
-                        <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近同事將原本是 ASP.NET 1.1 的程式升級到 .NET 4，但是在 DataGrid 的分頁 postback 後，它的 colspan 就不見了。<br>會讓原本第一行的欄寬變的跟 footer 的分頁一樣寬，如下圖，<br><img src="/2018/04/03/2018013/2018013001.png" alt="DataGrid Paging colspan 問題" title="DataGrid Paging colspan 問題"> </p>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>想說會不會有人跟我們有一樣的狀況，公司中有很多人都不可置信，ASP.NET 1.1 可以升到 .NET 4.0 。<br>不過，還真的找到了「<a href="https://jwcooney.com/2012/01/11/asp-net-gridview-paging-problem-paging-increases-the-first-column-width/" target="_blank" rel="external">ASP.NET GridView Paging Problem – Paging Increases the First Column Width</a>」這篇。<br>它是在 .NET 2.0 遇到的問題，原來只要在 PreRender 時，設定 Footer 的 colspan 就好了，所以程式如下，</p>
+                        <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近同事將原本是 ASP.NET 1.1 的程式升級到 .NET 4，但是在 DataGrid 的分頁 postback 後，它的 colspan 就不見了。<br>會讓原本第一行的欄寬變的跟 footer 的分頁一樣寬，如下圖，<br><img src="/2018/04/03/2018013/2018013001.png" title="DataGrid Paging colspan 問題"> </p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>想說會不會有人跟我們有一樣的狀況，公司中有很多人都不可置信，ASP.NET 1.1 可以升到 .NET 4.0 。<br>不過，還真的找到了「<a href="https://jwcooney.com/2012/01/11/asp-net-gridview-paging-problem-paging-increases-the-first-column-width/" target="_blank" rel="noopener">ASP.NET GridView Paging Problem – Paging Increases the First Column Width</a>」這篇。<br>它是在 .NET 2.0 遇到的問題，原來只要在 PreRender 時，設定 Footer 的 colspan 就好了，所以程式如下，</p>
 <pre><code class="vb"><span class="comment">'請在 PreRender 加這一段，解決 DataGrid Footer 分頁在 .NET 4.x 中 ColSpan 問題 ...  </span>
 <span class="keyword">If</span> <span class="keyword">Me</span>.AllowPaging <span class="keyword">AndAlso</span> <span class="keyword">Me</span>.Controls.Count &gt; <span class="number">0</span> <span class="keyword">Then</span>
     <span class="keyword">Dim</span> tbl <span class="keyword">As</span> Table = <span class="built_in">CType</span>(<span class="keyword">Me</span>.Controls(<span class="number">0</span>), Table)
@@ -572,18 +572,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -596,11 +584,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -637,6 +629,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1104,14 +1104,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1145,6 +1137,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1197,6 +1197,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

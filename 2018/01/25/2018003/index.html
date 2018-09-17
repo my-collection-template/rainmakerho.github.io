@@ -184,19 +184,19 @@
                     
                       
                         <p>相信很多產品都會有線上客服系統及線上 FAQ 系統，提供給使用者線上詢問或查詢來排除操作系統所發生的問題。<br>如果加上 FAQ Chatbot 可以服務更多的使用者(當線上客服人員下班時)，也可以讓線上客服人員可以服務復雜的問題。<br>我們要如何加上 FAQ Chatbot 呢? 讓我們繼續看下去 … </p>
-<p>FAQ系統是使用 keyword 來 Search 的，如下，<br><img src="/2018/01/25/2018003/2018003001.png" alt="FAQ關鍵字Search" title="FAQ關鍵字Search">   </p>
-<p>但是當使用者輸入「一句話」，FAQ可能就查不出資料了，如下，<br><img src="/2018/01/25/2018003/2018003002.png" alt="FAQ一句話Search" title="FAQ一句話Search"> </p>
-<p>Microsoft 有一個 <a href="https://qnamaker.ai/" target="_blank" rel="external">QnAMaker</a>，剛好符合我們的需求，只要將 Q and A 匯進去，呼叫它的 api 就可以回傳合適的答案。<br>於是我們就將 FAQ 中的資料匯到了 <a href="https://qnamaker.ai/" target="_blank" rel="external">QnAMaker</a> 之中(大約有230個問題)，如下<br><img src="/2018/01/25/2018003/2018003003.png" alt="已匯入資料的QnAMaker" title="已匯入資料的QnAMaker"><br>用中文來測試，有些 OK，有些又不太 OK。 於是有看到「Alternative Phrasing」，目前用的狀況是「中文真的不OK~」。 所以我們就只好改成，依不同的問法分別建立一個 QnA pair 。<br>另外一個狀況就是，目前它是 Preview ，所以會限速 … <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/faqs" target="_blank" rel="external">Current transaction limits are 10 calls per minute and 10,000 calls per month…</a>，所以在 Call 它的 api 時，常常會出現 429 的錯誤。(Error code 429: Rate limit is exceeded. Try again or upgrade to a higher pricing tier with a higher rate limit (if available).)  </p>
+<p>FAQ系統是使用 keyword 來 Search 的，如下，<br><img src="/2018/01/25/2018003/2018003001.png" title="FAQ關鍵字Search">   </p>
+<p>但是當使用者輸入「一句話」，FAQ可能就查不出資料了，如下，<br><img src="/2018/01/25/2018003/2018003002.png" title="FAQ一句話Search"> </p>
+<p>Microsoft 有一個 <a href="https://qnamaker.ai/" target="_blank" rel="noopener">QnAMaker</a>，剛好符合我們的需求，只要將 Q and A 匯進去，呼叫它的 api 就可以回傳合適的答案。<br>於是我們就將 FAQ 中的資料匯到了 <a href="https://qnamaker.ai/" target="_blank" rel="noopener">QnAMaker</a> 之中(大約有230個問題)，如下<br><img src="/2018/01/25/2018003/2018003003.png" title="已匯入資料的QnAMaker"><br>用中文來測試，有些 OK，有些又不太 OK。 於是有看到「Alternative Phrasing」，目前用的狀況是「中文真的不OK~」。 所以我們就只好改成，依不同的問法分別建立一個 QnA pair 。<br>另外一個狀況就是，目前它是 Preview ，所以會限速 … <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/faqs" target="_blank" rel="noopener">Current transaction limits are 10 calls per minute and 10,000 calls per month…</a>，所以在 Call 它的 api 時，常常會出現 429 的錯誤。(Error code 429: Rate limit is exceeded. Try again or upgrade to a higher pricing tier with a higher rate limit (if available).)  </p>
 <p>接下來我們就使用 1645 個問題來試看看 QnA Maker ，結果它有回答 336 筆，約 20% 。 </p>
 <ul>
 <li>註: 因為 QnA Maker 目前還是 Preview, 所以持續 Call 時，要停個 500 ms, 如果發生錯誤時，就再等個 10 秒再試一次哦! </li>
 </ul>
-<p>怎麼辦呢? 這樣子 FAQ Bot 不就沒人要用 !!!<br>詢問 MS Tom 哥後，他給我們的建議是用 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> + <a href="http://www.vitalsesp.com/" target="_blank" rel="external">Vital ESP</a>(FAQ系統)。<br>可以透過 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> 解析使用者的問題，解析出「意圖」及「關鍵字」，然後再把「關鍵字」送到 FAQ 去查詢，這樣正確率就會比較高。<br>一開始我的想法是一個問題建立一個 Intent (LUIS now allows you to create 500 intents and 100 entities)，但是這樣子蠻不準的。<br>Tom 哥說，<a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> 是依句型去解析的，類似的句型不同的 Intent 反而會造成混亂。<br>所以我們就建立一個 FAQ 的 Intent ，然後將 FAQ 系統中 230 個問題都匯進 FAQ Intent 之中，然後我們再進去設定關鍵字(Entity)。<br>不過這樣子設定的人要針對 230 個問題一個一個地去設定 Entity ，也還蠻累的。<br>後來同事 Alex 大大測試，即然 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> 是依句型去解析的，那我們只需要建立一些使用者會詢問的句型，然後 關鍵字(Entity)就設定2種(action, keyword)，再依 action 及 keyword 建立 Phrase lists ，例如 keyword Phrase lists 裡面就有 App, 行事曆, 客戶, 會員, 網址, 權限 等等的詞，這樣子解析出來的狀況還蠻不錯的。如下，<br><img src="/2018/01/25/2018003/2018003004.png" alt="少量 Utterance + 2 個 Entities" title="少量 Utterance + 2 個 Entities"><br><img src="/2018/01/25/2018003/2018003005.png" alt="相同 Phrase List 建立很多" title="相同 Phrase List 建立很多"><br>註:目前 Phrase List 可以建立 5,000 個<a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-resources-faq" target="_blank" rel="external">Language Understanding FAQ</a>。  </p>
-<p>所以當使用者輸入「請問如何快速新增行事曆」，透過 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> 就可以找到關鍵字為 新增 及 行事曆 ，如下，<br><img src="/2018/01/25/2018003/2018003006.png" alt="LUIS Parse Entities" title="LUIS Parse Entities"> </p>
-<p>所以我們再到 <a href="http://www.vitalsesp.com/" target="_blank" rel="external">Vital ESP</a>(FAQ系統)，輸入「新增 行事曆」，就可以正確查到資料了，如下，<br><img src="/2018/01/25/2018003/2018003007.png" alt="LUIS Parse Entities" title="LUIS Parse Entities">  </p>
-<p>所以我們一樣使用 1645 個問題來試看看 <a href="https://www.luis.ai/" target="_blank" rel="external">LUIS</a> + <a href="http://www.vitalsesp.com/" target="_blank" rel="external">Vital ESP</a>(FAQ系統) ，有找出結果的約有 968 個，約 50 %。<br>註:我們會產生一個 Excel 的結果檔如下，<br><img src="/2018/01/25/2018003/2018003008.png" alt="測試結果的Excel內容" title="測試結果的Excel內容"> </p>
-<p>架構類似如下，<br><img src="/2018/01/25/2018003/2018003010.png" alt="架構圖" title="架構圖"></p>
-<p>而透過 Chatbot 去封裝的話，畫面如下，<br><img src="/2018/01/25/2018003/2018003009.png" alt="FAQ chatbot" title="FAQ chatbot"> </p>
+<p>怎麼辦呢? 這樣子 FAQ Bot 不就沒人要用 !!!<br>詢問 MS Tom 哥後，他給我們的建議是用 <a href="https://www.luis.ai/" target="_blank" rel="noopener">LUIS</a> + <a href="http://www.vitalsesp.com/" target="_blank" rel="noopener">Vital ESP</a>(FAQ系統)。<br>可以透過 <a href="https://www.luis.ai/" target="_blank" rel="noopener">LUIS</a> 解析使用者的問題，解析出「意圖」及「關鍵字」，然後再把「關鍵字」送到 FAQ 去查詢，這樣正確率就會比較高。<br>一開始我的想法是一個問題建立一個 Intent (LUIS now allows you to create 500 intents and 100 entities)，但是這樣子蠻不準的。<br>Tom 哥說，<a href="https://www.luis.ai/" target="_blank" rel="noopener">LUIS</a> 是依句型去解析的，類似的句型不同的 Intent 反而會造成混亂。<br>所以我們就建立一個 FAQ 的 Intent ，然後將 FAQ 系統中 230 個問題都匯進 FAQ Intent 之中，然後我們再進去設定關鍵字(Entity)。<br>不過這樣子設定的人要針對 230 個問題一個一個地去設定 Entity ，也還蠻累的。<br>後來同事 Alex 大大測試，即然 <a href="https://www.luis.ai/" target="_blank" rel="noopener">LUIS</a> 是依句型去解析的，那我們只需要建立一些使用者會詢問的句型，然後 關鍵字(Entity)就設定2種(action, keyword)，再依 action 及 keyword 建立 Phrase lists ，例如 keyword Phrase lists 裡面就有 App, 行事曆, 客戶, 會員, 網址, 權限 等等的詞，這樣子解析出來的狀況還蠻不錯的。如下，<br><img src="/2018/01/25/2018003/2018003004.png" title="少量 Utterance + 2 個 Entities"><br><img src="/2018/01/25/2018003/2018003005.png" title="相同 Phrase List 建立很多"><br>註:目前 Phrase List 可以建立 5,000 個<a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-resources-faq" target="_blank" rel="noopener">Language Understanding FAQ</a>。  </p>
+<p>所以當使用者輸入「請問如何快速新增行事曆」，透過 <a href="https://www.luis.ai/" target="_blank" rel="noopener">LUIS</a> 就可以找到關鍵字為 新增 及 行事曆 ，如下，<br><img src="/2018/01/25/2018003/2018003006.png" title="LUIS Parse Entities"> </p>
+<p>所以我們再到 <a href="http://www.vitalsesp.com/" target="_blank" rel="noopener">Vital ESP</a>(FAQ系統)，輸入「新增 行事曆」，就可以正確查到資料了，如下，<br><img src="/2018/01/25/2018003/2018003007.png" title="LUIS Parse Entities">  </p>
+<p>所以我們一樣使用 1645 個問題來試看看 <a href="https://www.luis.ai/" target="_blank" rel="noopener">LUIS</a> + <a href="http://www.vitalsesp.com/" target="_blank" rel="noopener">Vital ESP</a>(FAQ系統) ，有找出結果的約有 968 個，約 50 %。<br>註:我們會產生一個 Excel 的結果檔如下，<br><img src="/2018/01/25/2018003/2018003008.png" title="測試結果的Excel內容"> </p>
+<p>架構類似如下，<br><img src="/2018/01/25/2018003/2018003010.png" title="架構圖"></p>
+<p>而透過 Chatbot 去封裝的話，畫面如下，<br><img src="/2018/01/25/2018003/2018003009.png" title="FAQ chatbot"> </p>
 <p>之後在 Chatbot 中就可以再去記錄一些使用者的行為，讓 Chatbot 更智能。 </p>
 
                           
@@ -585,18 +585,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -609,11 +597,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -650,6 +642,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1117,14 +1117,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1158,6 +1150,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1210,6 +1210,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

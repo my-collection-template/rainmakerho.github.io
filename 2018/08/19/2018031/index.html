@@ -174,8 +174,8 @@
           
                     
                       
-                        <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>前陣子遇到了 http 403 的問題，今天又遇到了 http 500 的問題。<br>同事說，同一個資料，User A 連就 Ok, User B 連就出現 HTTP 500 內部伺服器錯誤 ，如下圖<br><img src="/2018/08/19/2018031/001.png" alt="[HTTP 500]" title="[HTTP 500]"></p>
-<h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>透過，IE 開發者工具的網路來查看發現的確是回 500，但回應本文中，卻有內容。<br>想說是不是「顯示易懂的 HTTP 錯誤訊息」被勾起來了，詳細可參考<a href="https://dotblogs.com.tw/rainmaker/2012/11/22/84984" target="_blank" rel="external">讓 IE 跟你說實話，http 500(網站無法顯示該網頁)再見!</a> ,結果是沒勾的。</p>
+                        <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>前陣子遇到了 http 403 的問題，今天又遇到了 http 500 的問題。<br>同事說，同一個資料，User A 連就 Ok, User B 連就出現 HTTP 500 內部伺服器錯誤 ，如下圖<br><img src="/2018/08/19/2018031/001.png" title="[HTTP 500]"></p>
+<h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>透過，IE 開發者工具的網路來查看發現的確是回 500，但回應本文中，卻有內容。<br>想說是不是「顯示易懂的 HTTP 錯誤訊息」被勾起來了，詳細可參考<a href="https://dotblogs.com.tw/rainmaker/2012/11/22/84984" target="_blank" rel="noopener">讓 IE 跟你說實話，http 500(網站無法顯示該網頁)再見!</a> ,結果是沒勾的。</p>
 <p>後來請同事拿一下 IIS Log 看一下，結果發現的確是 500，但後面有其他的訊息，如下，</p>
 <p>2018-08-17 01:50:14 172.16.33.71 GET /RMAP/LMP/rm001.ASP MPagKey=abc&amp;GSSMPagFUNC<em>RW=R&amp;GSStxtFunDeep=0&amp;GSStxtActFlag=UPT|140|800a000d|類型不符:</em>‘mobjSCUser.FunChk’ 80 - 172.16.33.72 Mozilla/4.0+(compatible;+MSIE+7.0;+Windows+NT+6.1;+WOW64;+Trident/7.0;+SLCC2;+.NET+CLR+2.0.50727;+.NET+CLR+3.5.30729;+.NET+CLR+3.0.30729;+.NET4.0C;+.NET4.0E;+Media+Center+PC+6.0) - 500 0 0 250</p>
 <p><strong>類型不符:_‘mobjSCUser.FunChk’</strong><br>似乎是在檢查使用者使用權限時，發生錯誤。<br>同事檢查後發現，不能使用的使用者，的確使用權限沒有設定好。</p>
@@ -559,18 +559,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -583,11 +571,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -624,6 +616,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1091,14 +1091,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1132,6 +1124,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1184,6 +1184,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

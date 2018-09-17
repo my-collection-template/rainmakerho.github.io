@@ -176,7 +176,7 @@
           
                     
                       
-                        <p>我們透過 VS.NET 建立出 Bot 後，預設 Nuget 中安裝 BotBuilder 相關的套件，如果我們從 GitHub 將 <a href="https://github.com/Microsoft/BotBuilder" target="_blank" rel="external">Microsoft/BotBuilder</a> 到方案之中，我們要如何 Debug 進到 BotBuilder 的 Source Code 之中呢? </p>
+                        <p>我們透過 VS.NET 建立出 Bot 後，預設 Nuget 中安裝 BotBuilder 相關的套件，如果我們從 GitHub 將 <a href="https://github.com/Microsoft/BotBuilder" target="_blank" rel="noopener">Microsoft/BotBuilder</a> 到方案之中，我們要如何 Debug 進到 BotBuilder 的 Source Code 之中呢? </p>
 <ul>
 <li>移除 Nuget 中的 Microsoft.Bot.Builder 套件 </li>
 <li><p>在方案中加入以下的專案(在 BotBuilder\CSharp\Library 目錄中)</p>
@@ -185,20 +185,20 @@
 <li>Microsoft.Bot.Builder.Autofac (Microsoft.Bot.Builder.Autofac.csproj)</li>
 <li>Microsoft.Bot.Connector.NetFramework (Microsoft.Bot.Connector.NetFramework.csproj)</li>
 <li>Microsoft.Bot.Connector.Shared (Microsoft.Bot.Connector.Shared.shproj) </li>
-<li><img src="/2018/02/01/2018006/2018006001.png" alt="加入Microsoft.Bot.Builder相關專案" title="加入Microsoft.Bot.Builder相關專案">
+<li><img src="/2018/02/01/2018006/2018006001.png" title="加入Microsoft.Bot.Builder相關專案">
 </li>
 </ul>
 </li>
 <li><p>先建置 Microsoft.Bot.Connector.NetFramework 專案，沒問題後再建置 Microsoft.Bot.Builder 及 Microsoft.Bot.Builder.Autofac </p>
 </li>
-<li>我們的 Bot 專案加入 Microsoft.Bot.Builder、Microsoft.Bot.Builder 及 Microsoft.Bot.Builder.Autofac 參考，如下，<img src="/2018/02/01/2018006/2018006003.png" alt="加入參考" title="加入參考"> 
+<li>我們的 Bot 專案加入 Microsoft.Bot.Builder、Microsoft.Bot.Builder 及 Microsoft.Bot.Builder.Autofac 參考，如下，<img src="/2018/02/01/2018006/2018006003.png" title="加入參考"> 
 </li>
 </ul>
-<p>如果重建成功就可以順利的 Debug 進去了哦! 如下圖所示，<br><img src="/2018/02/01/2018006/2018006002.png" alt="Debug到DialogModule" title="Debug到DialogModule"> </p>
+<p>如果重建成功就可以順利的 Debug 進去了哦! 如下圖所示，<br><img src="/2018/02/01/2018006/2018006002.png" title="Debug到DialogModule"> </p>
 <ul>
 <li>註: 因為新版 Microsoft.Bot.Builder 使用的 Newtonsoft.Json 版本為 9，所以 Bot 專案也要更新到 9 以上哦! </li>
 </ul>
-<h4 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h4><p><a href="https://stackoverflow.com/questions/43971422/how-to-debug-into-microsoft-bot-builder-c-sharp-project-source-code" target="_blank" rel="external">how to debug into Microsoft.Bot.Builder C# project source code?</a></p>
+<h4 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h4><p><a href="https://stackoverflow.com/questions/43971422/how-to-debug-into-microsoft-bot-builder-c-sharp-project-source-code" target="_blank" rel="noopener">how to debug into Microsoft.Bot.Builder C# project source code?</a></p>
 
                           
                                     
@@ -582,18 +582,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -606,11 +594,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,6 +639,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1114,14 +1114,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1155,6 +1147,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1207,6 +1207,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

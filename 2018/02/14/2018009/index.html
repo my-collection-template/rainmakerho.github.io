@@ -176,12 +176,12 @@
                     
                       
                         <p>最近同事詢問他們使用 Crytal Report Viewer 時，會發生 log4net 版本衝突的問題。如下圖所示， </p>
-<img src="/2018/02/14/2018009/2018009001.png" alt="CrystalReportViewer Runtime Error" title="CrystalReportViewer Runtime Error"> 
-<p>如果是不同版本衝突的話，可以參考 <a href="https://dotblogs.com.tw/rainmaker/2015/11/25/153805" target="_blank" rel="external">如何讓不同 PublicKeyToken 的 DLL assemblyBinding 到可以用版本?</a> 透過 assemblyBinding 的方式就可以解決。 但剛好我們的 AP 自已用的 log4net 版本也是 1.2.10.0，所以是 <strong>相同版本，不同的 PublickToken</strong> 的衝突。 詳細訊息如下， </p>
+<img src="/2018/02/14/2018009/2018009001.png" title="CrystalReportViewer Runtime Error"> 
+<p>如果是不同版本衝突的話，可以參考 <a href="https://dotblogs.com.tw/rainmaker/2015/11/25/153805" target="_blank" rel="noopener">如何讓不同 PublicKeyToken 的 DLL assemblyBinding 到可以用版本?</a> 透過 assemblyBinding 的方式就可以解決。 但剛好我們的 AP 自已用的 log4net 版本也是 1.2.10.0，所以是 <strong>相同版本，不同的 PublickToken</strong> 的衝突。 詳細訊息如下， </p>
 <p><em>沒有辦法解決 “log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821” 和 “log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304” 之間的衝突。<br>任意選擇 “log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821”。</em>  </p>
-<p>有查到 <a href="https://stackoverflow.com/questions/11673383/error-could-not-load-log4net-assembly" target="_blank" rel="external">Error: Could not load log4net assembly</a> 似乎是因為不同的平台(x86/x64) 所用的 log4net 會不同。<br>x86(32位元)用的 PublicToken 是 692fbea5521e1304，x64(64位元)或是 AnyCPU 用的 PublicToken 則是 1b44e1d426115821。<br>而我們 ap 平台是 x64 的，但 Crystal Report Viewer 卻使用了 x86(32位元) 的 log4net 。</p>
+<p>有查到 <a href="https://stackoverflow.com/questions/11673383/error-could-not-load-log4net-assembly" target="_blank" rel="noopener">Error: Could not load log4net assembly</a> 似乎是因為不同的平台(x86/x64) 所用的 log4net 會不同。<br>x86(32位元)用的 PublicToken 是 692fbea5521e1304，x64(64位元)或是 AnyCPU 用的 PublicToken 則是 1b44e1d426115821。<br>而我們 ap 平台是 x64 的，但 Crystal Report Viewer 卻使用了 x86(32位元) 的 log4net 。</p>
 <p>… 我想應該是那裡設定出了錯吧 … </p>
-<p>同事說只有在某台機器上才會出現那個錯誤，如果是透過 Browser 直接使用系統就正常，透過 VS.NET 啟動程式去 Debug 時，就會出現那個錯誤。<br>我想是因為如果透過 Browser 去使用系統的話，是連到 IIS ，而 IIS 設定的是 x64(64位元);如果透過 VS.NET 則是連到 IIS Express，預設它是使用 x86(32位元)。<br>於是筆者將 IIS 上的應用程式集區設定成 啟用 32 位元，再執行程式，則一樣會出現 log4net 的衝突狀況(ya. 重現問題了 …)。<br>所以就請同事在 VS.NET 中設定讓 IIS Express 使用 64 位元就沒問題了哦!<br>工具 -&gt; 選項 -&gt; (search textbox 中輸入 iis) , 並勾選 將 64 位元版本的 IIS Express 用於網站和專案(U) 選項勾起來就可以了哦! 如下，<br><img src="/2018/02/14/2018009/2018009002.png" alt="將 64 位元版本的 IIS Express 用於網站和專案(U)" title="將 64 位元版本的 IIS Express 用於網站和專案(U)"> </p>
+<p>同事說只有在某台機器上才會出現那個錯誤，如果是透過 Browser 直接使用系統就正常，透過 VS.NET 啟動程式去 Debug 時，就會出現那個錯誤。<br>我想是因為如果透過 Browser 去使用系統的話，是連到 IIS ，而 IIS 設定的是 x64(64位元);如果透過 VS.NET 則是連到 IIS Express，預設它是使用 x86(32位元)。<br>於是筆者將 IIS 上的應用程式集區設定成 啟用 32 位元，再執行程式，則一樣會出現 log4net 的衝突狀況(ya. 重現問題了 …)。<br>所以就請同事在 VS.NET 中設定讓 IIS Express 使用 64 位元就沒問題了哦!<br>工具 -&gt; 選項 -&gt; (search textbox 中輸入 iis) , 並勾選 將 64 位元版本的 IIS Express 用於網站和專案(U) 選項勾起來就可以了哦! 如下，<br><img src="/2018/02/14/2018009/2018009002.png" title="將 64 位元版本的 IIS Express 用於網站和專案(U)"> </p>
 <p>如果您是系統出了錯，請 Check 應用程式集區是否設定成了 「啟用32位元應用程式」哦!</p>
 
                           
@@ -566,18 +566,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -590,11 +578,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -631,6 +623,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1098,14 +1098,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1139,6 +1131,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1191,6 +1191,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

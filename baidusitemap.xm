@@ -5,12 +5,22 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/09/17/2018034/</loc>
-    <lastmod>2018-09-17T01:29:38.996Z</lastmod>
+    <lastmod>2018-09-17T05:53:43.357Z</lastmod>
     <data>
         <display>
-        <title>2018034</title>
+        <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 之 2</title>
         <pubTime>2018-09-17T01:29:38.000Z</pubTime>
         
+        <tag>chatbot</tag>
+         
+        <tag>botframework</tag>
+         
+        <tag>adaptivecard</tag>
+         
+        <tag>adaptive</tag>
+         
+        <tag>Autofac</tag>
+         
          
            
         </display>

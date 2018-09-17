@@ -173,7 +173,7 @@
                     
                       
                         <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>MSDTC 不通，無法啟用 MSDTC，協力電腦異動管理員已經停用了對遠端/網路異動的支援，現在看見 MSDTC 真是頭大呀 ~~~</p>
-<h3 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h3><p>昨天客戶的系統有一個請假功能忽然就無法沒有作用，但其他功能是好的。詢問客戶之前有做了些什麼嗎? 客戶說只有一台 switch 壞掉，換新的 siwtch 而已。當下真覺那會不會是網路動了什麼，所以一到客戶那就試看看到底是什麼問題。最後從 log 中發現「MSDTC」的問題。立馬試了 ap &lt;-&gt; db ，用 name 是否可以 ping 得到，結果是可以的。詢問客戶網管，ap &lt;-&gt; db 是否有什麼 rule 擋了那些 port 呢?<br>記得 MSDTC 需要 port 135, ping icmp, 如果有 firewall 的話，要設定某 Port Range 給它，例如 port 5001-6000(可以參考<a href="https://blogs.technet.microsoft.com/askcore/2014/04/29/how-to-configure-msdtc-to-use-a-specific-port-in-windows-server-20122012r2/" target="_blank" rel="external">How to Configure MSDTC to Use a Specific Port in Windows Server 2012/2012R2</a> )。可是網管說沒有擋那些 Port 呀!!!<br>正當一籌莫展之時，客戶的 DBA 詢問說，那 ap 跟 db 本身的 firewall 有沒有開呀!?<br>疑 !!! 檢查了一下，真是有開呢? 先將它關閉試看看，MSDTC 果然就通了。真的非常感謝客戶 IT 的幫忙。</p>
+<h3 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h3><p>昨天客戶的系統有一個請假功能忽然就無法沒有作用，但其他功能是好的。詢問客戶之前有做了些什麼嗎? 客戶說只有一台 switch 壞掉，換新的 siwtch 而已。當下真覺那會不會是網路動了什麼，所以一到客戶那就試看看到底是什麼問題。最後從 log 中發現「MSDTC」的問題。立馬試了 ap <-> db ，用 name 是否可以 ping 得到，結果是可以的。詢問客戶網管，ap <-> db 是否有什麼 rule 擋了那些 port 呢?<br>記得 MSDTC 需要 port 135, ping icmp, 如果有 firewall 的話，要設定某 Port Range 給它，例如 port 5001-6000(可以參考<a href="https://blogs.technet.microsoft.com/askcore/2014/04/29/how-to-configure-msdtc-to-use-a-specific-port-in-windows-server-20122012r2/" target="_blank" rel="noopener">How to Configure MSDTC to Use a Specific Port in Windows Server 2012/2012R2</a> )。可是網管說沒有擋那些 Port 呀!!!<br>正當一籌莫展之時，客戶的 DBA 詢問說，那 ap 跟 db 本身的 firewall 有沒有開呀!?<br>疑 !!! 檢查了一下，真是有開呢? 先將它關閉試看看，MSDTC 果然就通了。真的非常感謝客戶 IT 的幫忙。</-></-></p>
 <p>回到這問題，下次 MSDTC 問題呢? 還是要先從 ap，db 的環境來看 firewall，都沒問題後，再往外去查。附上我們公司整理 MSDTC 排除的相關文件，希望對大家在排除 MSDTC 上有所益助。</p>
 <a href="/2018/05/16/2018017/故障排除指南.doc" title="[MSSQLDTC 故障排除指南.doc]">[MSSQLDTC 故障排除指南.doc]</a>
 <a href="/2018/05/16/2018017/MSDTC.doc" title="[MSDTC.doc]">[MSDTC.doc]</a>
@@ -557,18 +557,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -581,11 +569,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -622,6 +614,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1089,14 +1089,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1130,6 +1122,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1182,6 +1182,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

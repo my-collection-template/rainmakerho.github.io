@@ -175,14 +175,14 @@
           
                     
                       
-                        <p>botframework 預設會將 State 存到 state.botframework.com 上去(使用 emulator 則會存在 emulator 上面)。<br><img src="/2018/06/04/2018018/defaultBotStore.png" alt="[defaultBotStore.png]" title="[defaultBotStore.png]"></p>
+                        <p>botframework 預設會將 State 存到 state.botframework.com 上去(使用 emulator 則會存在 emulator 上面)。<br><img src="/2018/06/04/2018018/defaultBotStore.png" title="[defaultBotStore.png]"></p>
 <p>目前的 .NET Samples 也都改成使用 InMemoryDataStore 的方式，使用方式如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_Start</span>(<span class="params"></span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="comment">//加以下這一段Codes</span></div><div class="line">	Conversation.UpdateContainer(</div><div class="line">	   builder =&gt;</div><div class="line">	   &#123;</div><div class="line">		   <span class="comment">//in Memory store</span></div><div class="line">		   <span class="keyword">var</span> store = <span class="keyword">new</span> InMemoryDataStore();</div><div class="line">		   builder.Register(c =&gt; <span class="keyword">new</span> CachingBotDataStore(store,</div><div class="line">					  CachingBotDataStoreConsistencyPolicy.LastWriteWins))</div><div class="line">					  .As&lt;IBotDataStore&lt;BotData&gt;&gt;()</div><div class="line">					  .AsSelf()</div><div class="line">					  .SingleInstance();</div><div class="line">	   &#125;);</div><div class="line">	<span class="comment">//加以上這一段Codes</span></div><div class="line"></div><div class="line">	GlobalConfiguration.Configure(WebApiConfig.Register);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>您也可以將 State 存到 SQL 之中，可以參考 <a href="https://blog.botframework.com/2017/07/26/saving-state-sql-dotnet/" target="_blank" rel="external">Saving State data in SQL with .NET</a>.<br>所以從 Emulator 來看就會看不到 getUserData 及 setUserData 的 event，如下圖，<br><img src="/2018/06/04/2018018/inMemoryBotStore.png" alt="[BotDataStore 讀自 inMemoryBotStore]" title="[BotDataStore 讀自 inMemoryBotStore]"></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//加以下這一段Codes</span></span><br><span class="line">	Conversation.UpdateContainer(</span><br><span class="line">	   builder =&gt;</span><br><span class="line">	   &#123;</span><br><span class="line">		   <span class="comment">//in Memory store</span></span><br><span class="line">		   <span class="keyword">var</span> store = <span class="keyword">new</span> InMemoryDataStore();</span><br><span class="line">		   builder.Register(c =&gt; <span class="keyword">new</span> CachingBotDataStore(store,</span><br><span class="line">					  CachingBotDataStoreConsistencyPolicy.LastWriteWins))</span><br><span class="line">					  .As&lt;IBotDataStore&lt;BotData&gt;&gt;()</span><br><span class="line">					  .AsSelf()</span><br><span class="line">					  .SingleInstance();</span><br><span class="line">	   &#125;);</span><br><span class="line">	<span class="comment">//加以上這一段Codes</span></span><br><span class="line"></span><br><span class="line">	GlobalConfiguration.Configure(WebApiConfig.Register);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>您也可以將 State 存到 SQL 之中，可以參考 <a href="https://blog.botframework.com/2017/07/26/saving-state-sql-dotnet/" target="_blank" rel="noopener">Saving State data in SQL with .NET</a>.<br>所以從 Emulator 來看就會看不到 getUserData 及 setUserData 的 event，如下圖，<br><img src="/2018/06/04/2018018/inMemoryBotStore.png" title="[BotDataStore 讀自 inMemoryBotStore]"></p>
 <p>當您使用客製的 DataStore 後，Access BotDataStore 就不能直接用 var stateClient = activity.GetStateClient() 。而是要透過 DialogModule.BeginLifetimeScope 來取得，如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, activity))</div><div class="line">&#123;</div><div class="line">	<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</div><div class="line">	<span class="keyword">var</span> key = Address.FromActivity(activity);</div><div class="line">	<span class="keyword">var</span> chatbotData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, CancellationToken.None);</div><div class="line">	<span class="keyword">int</span> ties = chatbotData.GetProperty&lt;<span class="keyword">int</span>&gt;(<span class="string">"ties"</span>);</div><div class="line">	<span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, activity))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</span><br><span class="line">	<span class="keyword">var</span> key = Address.FromActivity(activity);</span><br><span class="line">	<span class="keyword">var</span> chatbotData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, CancellationToken.None);</span><br><span class="line">	<span class="keyword">int</span> ties = chatbotData.GetProperty&lt;<span class="keyword">int</span>&gt;(<span class="string">"ties"</span>);</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>刪除資料就透過 RemoveProperty 來刪除，如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, activity))</div><div class="line">&#123;</div><div class="line">	<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</div><div class="line">	<span class="keyword">var</span> key = Address.FromActivity(activity);</div><div class="line">	<span class="keyword">var</span> chatbotData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData , CancellationToken.None);</div><div class="line">	chatbotData.RemoveProperty(<span class="string">"ties"</span>);</div><div class="line">	<span class="keyword">await</span> botDataStore.SaveAsync(key, BotStoreType.BotUserData, chatbotData, CancellationToken.None);</div><div class="line">	<span class="keyword">await</span> botDataStore.FlushAsync(key, CancellationToken.None);</div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, activity))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</span><br><span class="line">	<span class="keyword">var</span> key = Address.FromActivity(activity);</span><br><span class="line">	<span class="keyword">var</span> chatbotData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData , CancellationToken.None);</span><br><span class="line">	chatbotData.RemoveProperty(<span class="string">"ties"</span>);</span><br><span class="line">	<span class="keyword">await</span> botDataStore.SaveAsync(key, BotStoreType.BotUserData, chatbotData, CancellationToken.None);</span><br><span class="line">	<span class="keyword">await</span> botDataStore.FlushAsync(key, CancellationToken.None);</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
                           
                                     
@@ -566,18 +566,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -590,11 +578,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -631,6 +623,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1098,14 +1098,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1139,6 +1131,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1191,6 +1191,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

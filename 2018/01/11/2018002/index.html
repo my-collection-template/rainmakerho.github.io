@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://rainmakerho.github.io">
   <title>Excel.WorkbookClass.SaveAs 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ] | 亂馬客 - back to basics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天同事詢問一個錯誤訊息如下，Excel.WorkbookClass.SaveAs   發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]於 Excel.WorkbookClass.SaveAs(Object Filename, Object FileFormat, Object Password, Object">
+  <meta name="description" content="今天同事詢問一個錯誤訊息如下，Excel.WorkbookClass.SaveAs  &amp;lt;System.Runtime.InteropServices.COMException&amp;gt; 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]於 Excel.WorkbookClass.SaveAs(Object F">
 <meta name="keywords" content="Excel,SaveAs,2148140012,2146827284,Workbook">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Excel.WorkbookClass.SaveAs 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]">
 <meta property="og:url" content="https://rainmakerho.github.io/2018/01/11/2018002/index.html">
 <meta property="og:site_name" content="亂馬客 - back to basics">
-<meta property="og:description" content="今天同事詢問一個錯誤訊息如下，Excel.WorkbookClass.SaveAs   發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]於 Excel.WorkbookClass.SaveAs(Object Filename, Object FileFormat, Object Password, Object">
+<meta property="og:description" content="今天同事詢問一個錯誤訊息如下，Excel.WorkbookClass.SaveAs  &amp;lt;System.Runtime.InteropServices.COMException&amp;gt; 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]於 Excel.WorkbookClass.SaveAs(Object F">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2018-01-11T08:13:59.964Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Excel.WorkbookClass.SaveAs 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]">
-<meta name="twitter:description" content="今天同事詢問一個錯誤訊息如下，Excel.WorkbookClass.SaveAs   發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]於 Excel.WorkbookClass.SaveAs(Object Filename, Object FileFormat, Object Password, Object">
+<meta name="twitter:description" content="今天同事詢問一個錯誤訊息如下，Excel.WorkbookClass.SaveAs  &amp;lt;System.Runtime.InteropServices.COMException&amp;gt; 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]於 Excel.WorkbookClass.SaveAs(Object F">
   
     <link rel="alternative" href="/atom.xml" title="亂馬客 - back to basics" type="application/atom+xml">
   
@@ -172,11 +172,11 @@
           
                     
                       
-                        <p>今天同事詢問一個錯誤訊息如下，<br>Excel.WorkbookClass.SaveAs  <system.runtime.interopservices.comexception> 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]<br>於 Excel.WorkbookClass.SaveAs(Object Filename, Object FileFormat, Object Password, Object WriteResPassword, Object ReadOnlyRecommended, Object CreateBackup, XlSaveAsAccessMode AccessMode, Object ConflictResolution, Object AddToMru, Object TextCodepage, Object TextVisualLayout)</system.runtime.interopservices.comexception></p>
-<p>程式中的寫法類似如下，<br><figure class="highlight vb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dim</span> xlsApp <span class="keyword">As</span> <span class="keyword">New</span> Excel.Application</div><div class="line"><span class="keyword">Dim</span> wb <span class="keyword">As</span> Excel.Workbook</div><div class="line">xlsApp.Visible = <span class="literal">False</span></div><div class="line">xlsApp.DisplayAlerts = <span class="literal">False</span></div><div class="line">xlsApp.Workbooks.OpenText(<span class="keyword">Me</span>.UpFile_Path)</div><div class="line">wb = xlsApp.Workbooks(<span class="number">1</span>)</div><div class="line"><span class="keyword">Const</span> xlNormal = <span class="number">-4143</span></div><div class="line">wb.SaveAs(Filename:=sfileName, FileFormat:=xlNormal, Password:=<span class="string">""</span>, WriteResPassword:=<span class="string">""</span>, ReadOnlyRecommended:=<span class="literal">False</span>, CreateBackup:=<span class="literal">False</span>)</div></pre></td></tr></table></figure></p>
+                        <p>今天同事詢問一個錯誤訊息如下，<br>Excel.WorkbookClass.SaveAs  &lt;System.Runtime.InteropServices.COMException&gt; 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]<br>於 Excel.WorkbookClass.SaveAs(Object Filename, Object FileFormat, Object Password, Object WriteResPassword, Object ReadOnlyRecommended, Object CreateBackup, XlSaveAsAccessMode AccessMode, Object ConflictResolution, Object AddToMru, Object TextCodepage, Object TextVisualLayout)</p>
+<p>程式中的寫法類似如下，<br><figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dim</span> xlsApp <span class="keyword">As</span> <span class="keyword">New</span> Excel.Application</span><br><span class="line"><span class="keyword">Dim</span> wb <span class="keyword">As</span> Excel.Workbook</span><br><span class="line">xlsApp.Visible = <span class="literal">False</span></span><br><span class="line">xlsApp.DisplayAlerts = <span class="literal">False</span></span><br><span class="line">xlsApp.Workbooks.OpenText(<span class="keyword">Me</span>.UpFile_Path)</span><br><span class="line">wb = xlsApp.Workbooks(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">Const</span> xlNormal = <span class="number">-4143</span></span><br><span class="line">wb.SaveAs(Filename:=sfileName, FileFormat:=xlNormal, Password:=<span class="string">""</span>, WriteResPassword:=<span class="string">""</span>, ReadOnlyRecommended:=<span class="literal">False</span>, CreateBackup:=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure></p>
 <p>程式是掛在 wb.SaveAs 那行，而且客戶端是裝 Excel 2016 才噴錯，同事是 Excel 2010 則沒問題。<br>程式中，有加入 interop.excel.dll 參考，使用 earlay binding 的方式，所以似乎是因為版本不同，SaveAs Method 的參數不同所造成的錯誤。</p>
 <p>所以開啟 Excel 2016 ，按下 Alt + F11 後，再按下 F2 瀏覽物件，查看 Workbook 的 SaveAs Method 如下，</p>
-<figure class="highlight vb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Sub</span> SaveAs([Filename], [FileFormat], [Password], [WriteResPassword], [ReadOnlyRecommended], [CreateBackup], [AccessMode <span class="keyword">As</span> XlSaveAsAccessMode = xlNoChange]</div><div class="line">, [ConflictResolution], [AddToMru], [TextCodepage], [TextVisualLayout], [Local], [WorkIdentity])</div></pre></td></tr></table></figure>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> SaveAs([Filename], [FileFormat], [Password], [WriteResPassword], [ReadOnlyRecommended], [CreateBackup], [AccessMode <span class="keyword">As</span> XlSaveAsAccessMode = xlNoChange]</span><br><span class="line">, [ConflictResolution], [AddToMru], [TextCodepage], [TextVisualLayout], [Local], [WorkIdentity])</span><br></pre></td></tr></table></figure>
 <p>跟錯誤訊息比較一下，可以發現 Excel 2016 從參數 TextVisualLayout 後面，又多了 2 個參考 (Local 及 WorkIdentity)。所以程式自然就 GG 了。</p>
 <p>那怎麼辦呢? 改用 Later Binding 的方式，將 interOP.Excel 移除參考，並將原本 Excel.Application 、Excel.Workbook 改成 Object ，重新建置專案，就可以了哦!</p>
 
@@ -566,18 +566,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -590,11 +578,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -631,6 +623,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1098,14 +1098,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1139,6 +1131,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1191,6 +1191,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

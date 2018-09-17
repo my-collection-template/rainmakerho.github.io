@@ -174,18 +174,18 @@
                       
                         <h3 id="有同事詢問他要如何取得-Exec-t-sql-裡面的值，因為-Exec-與外面是不同的-Scope-所以要取得裡面值有以下幾種情況。"><a href="#有同事詢問他要如何取得-Exec-t-sql-裡面的值，因為-Exec-與外面是不同的-Scope-所以要取得裡面值有以下幾種情況。" class="headerlink" title="有同事詢問他要如何取得 Exec(t-sql) 裡面的值，因為 Exec 與外面是不同的 Scope 所以要取得裡面值有以下幾種情況。"></a>有同事詢問他要如何取得 Exec(t-sql) 裡面的值，因為 Exec 與外面是不同的 Scope 所以要取得裡面值有以下幾種情況。</h3><ul>
 <li><p>Store Procedue ，透過 sp_executesql + 它的 output 參數來取得資料，例如，</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DECLARE</span> @<span class="keyword">sql</span> <span class="keyword">NVARCHAR</span>(<span class="keyword">max</span>), @outputcode <span class="keyword">NVARCHAR</span>(<span class="number">4000</span>);</div><div class="line"><span class="keyword">SET</span> @<span class="keyword">sql</span> = </div><div class="line"><span class="string">'</span></div><div class="line"><span class="string">EXEC SP_GETSERNO @RETURNS=@outputcode output</span></div><div class="line"><span class="string">'</span>;</div><div class="line">exec sp_executesql @sql, N'@outputcode NVARCHAR(4000) out', @outputcode out</div><div class="line"><span class="keyword">SELECT</span> @outputcode;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span> @<span class="keyword">sql</span> <span class="keyword">NVARCHAR</span>(<span class="keyword">max</span>), @outputcode <span class="keyword">NVARCHAR</span>(<span class="number">4000</span>);</span><br><span class="line"><span class="keyword">SET</span> @<span class="keyword">sql</span> = </span><br><span class="line"><span class="string">'</span></span><br><span class="line"><span class="string">EXEC SP_GETSERNO @RETURNS=@outputcode output</span></span><br><span class="line"><span class="string">'</span>;</span><br><span class="line">exec sp_executesql @sql, N'@outputcode NVARCHAR(4000) out', @outputcode out</span><br><span class="line"><span class="keyword">SELECT</span> @outputcode;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>取得 t-sql 裡面的內容，需要先建立 temp table ，或是 TABLE 變數，然後在 Exec 的 t-sql 裡面使用，例如，</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DECLARE</span> @ATT_IDENT <span class="keyword">TABLE</span> (ATT_IDENT <span class="built_in">int</span>);</div><div class="line"><span class="keyword">INSERT</span> @ATT_IDENT</div><div class="line">exec (<span class="string">'SELECT top 1 ATT_IDENT FROM [dbo].[myTable]'</span>);</div><div class="line"><span class="keyword">select</span> * <span class="keyword">FROM</span> @ATT_IDENT;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span> @ATT_IDENT <span class="keyword">TABLE</span> (ATT_IDENT <span class="built_in">int</span>);</span><br><span class="line"><span class="keyword">INSERT</span> @ATT_IDENT</span><br><span class="line">exec (<span class="string">'SELECT top 1 ATT_IDENT FROM [dbo].[myTable]'</span>);</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">FROM</span> @ATT_IDENT;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>t-sql，透過 sp_executesql + 它的 output 參數來取得資料，例如，</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DECLARE</span> @IDT <span class="built_in">NUMERIC</span></div><div class="line">exec sp_executesql N<span class="string">'SELECT TOP 1 @IDT = ATT_IDENT FROM [dbo].[myTable]'</span>, N<span class="string">'@IDT NUMERIC out'</span>, @IDT <span class="keyword">OUT</span></div><div class="line"><span class="keyword">SELECT</span> @IDT;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span> @IDT <span class="built_in">NUMERIC</span></span><br><span class="line">exec sp_executesql N<span class="string">'SELECT TOP 1 @IDT = ATT_IDENT FROM [dbo].[myTable]'</span>, N<span class="string">'@IDT NUMERIC out'</span>, @IDT <span class="keyword">OUT</span></span><br><span class="line"><span class="keyword">SELECT</span> @IDT;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>透過 OPENQUERY 的方式，詳細可以參考「<a href="https://dotblogs.com.tw/rainmaker/2015/02/02/148355" target="_blank" rel="external">讓 Execute 可以搭配 Select Into，而不再只有 Insert into</a>」</p>
+<li><p>透過 OPENQUERY 的方式，詳細可以參考「<a href="https://dotblogs.com.tw/rainmaker/2015/02/02/148355" target="_blank" rel="noopener">讓 Execute 可以搭配 Select Into，而不再只有 Insert into</a>」</p>
 </li>
 </ul>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><h3 id="How-to-set-value-to-variable-using-‘execute’-in-t-sql"><a href="#How-to-set-value-to-variable-using-‘execute’-in-t-sql" class="headerlink" title="How to set value to variable using ‘execute’ in t-sql?"></a><a href="https://stackoverflow.com/questions/7229070/how-to-set-value-to-variable-using-execute-in-t-sql" target="_blank" rel="external">How to set value to variable using ‘execute’ in t-sql?</a></h3><h3 id="讓-Execute-可以搭配-Select-Into，而不再只有-Insert-into"><a href="#讓-Execute-可以搭配-Select-Into，而不再只有-Insert-into" class="headerlink" title="讓 Execute 可以搭配 Select Into，而不再只有 Insert into"></a><a href="https://dotblogs.com.tw/rainmaker/2015/02/02/148355" target="_blank" rel="external">讓 Execute 可以搭配 Select Into，而不再只有 Insert into</a></h3>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><h3 id="How-to-set-value-to-variable-using-‘execute’-in-t-sql"><a href="#How-to-set-value-to-variable-using-‘execute’-in-t-sql" class="headerlink" title="How to set value to variable using ‘execute’ in t-sql?"></a><a href="https://stackoverflow.com/questions/7229070/how-to-set-value-to-variable-using-execute-in-t-sql" target="_blank" rel="noopener">How to set value to variable using ‘execute’ in t-sql?</a></h3><h3 id="讓-Execute-可以搭配-Select-Into，而不再只有-Insert-into"><a href="#讓-Execute-可以搭配-Select-Into，而不再只有-Insert-into" class="headerlink" title="讓 Execute 可以搭配 Select Into，而不再只有 Insert into"></a><a href="https://dotblogs.com.tw/rainmaker/2015/02/02/148355" target="_blank" rel="noopener">讓 Execute 可以搭配 Select Into，而不再只有 Insert into</a></h3>
                           
                                     
 
@@ -572,18 +572,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -596,11 +584,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -637,6 +629,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1104,14 +1104,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1145,6 +1137,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1197,6 +1197,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

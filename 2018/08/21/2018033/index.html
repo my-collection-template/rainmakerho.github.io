@@ -172,9 +172,9 @@
           
                     
                       
-                        <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近系統上有時會出現「NHibernate.Exceptions.GenericADOException System.Text.EncoderFallbackException」的錯誤，IIS Reset 後，又正常。<br>過一陣子，又會出現。到底怎麼回事呢?<br>錯誤訊息如下，<br>NHibernate.Exceptions.GenericADOException: could not execute query<br>[ select scuserm0_.USR_ID as col_0<em>0</em>, scuserm0_.USR_NAME as col_1<em>0</em> from SCUSERM scuserm0<em> where scuserm0</em>.USR<em>ID in (?) ]<br>Name:Scuserm - Value:RM4303<br>[SQL: select scuserm0</em>.USR_ID as col_0<em>0</em>, scuserm0_.USR_NAME as col_1<em>0</em> from SCUSERM scuserm0<em> where scuserm0</em>.USR_ID in (?)] —&gt; System.Text.EncoderFallbackException: 無法將索引 105 中的 Unicode 字元 \uD83C 轉譯為指定的字碼頁。<br>於 System.Text.EncoderExceptionFallbackBuffer.Fallback(Char charUnknown, Int32 index)<br>於 System.Text.EncoderFallbackBuffer.InternalFallback(Char ch, Char<em>&amp; chars)<br>於 System.Text.UTF8Encoding.GetBytes(Char</em> chars, Int32 charCount, Byte* bytes, Int32 byteCount, EncoderNLS baseEncoder)<br>於 System.Text.EncoderNLS.GetBytes(Char[] chars, Int32 charIndex, Int32 charCount, Byte[] bytes, Int32 byteIndex, Boolean flush)<br>於 System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)<br>於 System.IO.StreamWriter.Write(Char[] buffer, Int32 index, Int32 count)<br>於 System.IO.TextWriter.SyncTextWriter.WriteLine(String value)<br>於 NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)<br>於 NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)<br>於 NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>— 內部例外狀況堆疊追蹤的結尾 —<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.Loader.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)<br>於 NHibernate.Impl.SessionImpl.List(String query, QueryParameters queryParameters, IList results)<br>於 NHibernate.Impl.SessionImpl.List<a href="String query, QueryParameters parameters">T</a><br>於 NHibernate.Impl.QueryImpl.List<a href="">T</a></p>
-<h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>奇怪，查詢資料，為什麼會有 System.IO.TextWriter.SyncTextWriter.WriteLine 呢?<br>於是設定不要寫 log4net 的 log ，還是會出現。<br>後來參考 <a href="https://stackoverflow.com/questions/18504196/periodically-unable-to-translate-unicode-character-x-at-index-y-to-specified-c" target="_blank" rel="external">Periodically - Unable to translate Unicode character X at index Y to specified code page</a> 這篇的方式，將設定 show_sql 設為 false 。最近觀察，就沒有再發生那個錯誤了。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">add</span> <span class="attr">key</span>=<span class="string">"hibernate.show_sql"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></div></pre></td></tr></table></figure>
+                        <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近系統上有時會出現「NHibernate.Exceptions.GenericADOException System.Text.EncoderFallbackException」的錯誤，IIS Reset 後，又正常。<br>過一陣子，又會出現。到底怎麼回事呢?<br>錯誤訊息如下，<br>NHibernate.Exceptions.GenericADOException: could not execute query<br>[ select scuserm0_.USR_ID as col_0_0_, scuserm0_.USR_NAME as col_1_0_ from SCUSERM scuserm0_ where scuserm0_.USR_ID in (?) ]<br>Name:Scuserm - Value:RM4303<br>[SQL: select scuserm0_.USR_ID as col_0_0_, scuserm0_.USR_NAME as col_1_0_ from SCUSERM scuserm0_ where scuserm0_.USR_ID in (?)] —&gt; System.Text.EncoderFallbackException: 無法將索引 105 中的 Unicode 字元 \uD83C 轉譯為指定的字碼頁。<br>於 System.Text.EncoderExceptionFallbackBuffer.Fallback(Char charUnknown, Int32 index)<br>於 System.Text.EncoderFallbackBuffer.InternalFallback(Char ch, Char<em>&amp; chars)<br>於 System.Text.UTF8Encoding.GetBytes(Char</em> chars, Int32 charCount, Byte* bytes, Int32 byteCount, EncoderNLS baseEncoder)<br>於 System.Text.EncoderNLS.GetBytes(Char[] chars, Int32 charIndex, Int32 charCount, Byte[] bytes, Int32 byteIndex, Boolean flush)<br>於 System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)<br>於 System.IO.StreamWriter.Write(Char[] buffer, Int32 index, Int32 count)<br>於 System.IO.TextWriter.SyncTextWriter.WriteLine(String value)<br>於 NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)<br>於 NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)<br>於 NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>— 內部例外狀況堆疊追蹤的結尾 —<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.Loader.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)<br>於 NHibernate.Impl.SessionImpl.List(String query, QueryParameters queryParameters, IList results)<br>於 NHibernate.Impl.SessionImpl.List<a href="String query, QueryParameters parameters">T</a><br>於 NHibernate.Impl.QueryImpl.List<a href="">T</a></p>
+<h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>奇怪，查詢資料，為什麼會有 System.IO.TextWriter.SyncTextWriter.WriteLine 呢?<br>於是設定不要寫 log4net 的 log ，還是會出現。<br>後來參考 <a href="https://stackoverflow.com/questions/18504196/periodically-unable-to-translate-unicode-character-x-at-index-y-to-specified-c" target="_blank" rel="noopener">Periodically - Unable to translate Unicode character X at index Y to specified code page</a> 這篇的方式，將設定 show_sql 設為 false 。最近觀察，就沒有再發生那個錯誤了。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">add</span> <span class="attr">key</span>=<span class="string">"hibernate.show_sql"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 
                           
                                     
@@ -275,7 +275,7 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          2018034
+          Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 之 2
         
       </div>
     </a>
@@ -558,18 +558,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -582,11 +570,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -623,6 +615,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1090,14 +1090,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1131,6 +1123,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1183,6 +1183,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

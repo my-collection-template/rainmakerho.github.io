@@ -177,11 +177,11 @@
           
                     
                       
-                        <p>今天使用 botframework-emulator 在 local 測試 bot 時， botframework-emulator 居然出現 The bot’s MSA appId or password is incorrect. 的錯誤，如下圖，<br><img src="/2018/02/01/2018007/2018007001.png" alt="MSA_appId/password is incorrect" title="MSA_appId/password is incorrect"><br>我輸入的 App Id 跟 Password 明明就是從 web.config 中 Copy 出來的呀~ 之前都 Run 的好好的，現在居然噴錯。  </p>
-<p>於是使用 Fiddler 來錄一下看看是什麼狀況，如下圖，<br><img src="/2018/02/01/2018007/2018007002.png" alt="Fiddler" title="Fiddler"> </p>
-<p>從上圖可以發現， botframework-emulator 會依 bot 的 MSA appId 及 password 到 <a href="https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token" target="_blank" rel="external">https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token</a> 去取回 token ，然後再放在 Request 的 Header 之中，做為 Authorization token。但卻 bot 卻判斷它是無效的，所以就回 401 。 </p>
-<p>查看 botframework-emulator 在 GitHub 上的異動記錄 <a href="https://github.com/Microsoft/BotFramework-Emulator/commit/714b6d4597653c13cb30941416e512e4ecf96972#diff-43482499e76e08e445f4ba0e0b580401" target="_blank" rel="external">Support Bot Framework authentication v3.1 (#256)</a> 有將取 token 的 endpoint 從 common/oauth2/v2.0/token 改到了 botframework.com/oauth2/v2.0/token 。<br><img src="/2018/02/01/2018007/2018007003.png" alt="src/server/settings.ts" title="src/server/settings.ts"> </p>
-<p>似乎是 token 的問題，而目前我們 bot 使用的 BotBuilder 是 3.8 版，而它的 System.IdentityModel.Tokens.Jwt 使用的是 v4.0403061554 ，如下，<br><img src="/2018/02/01/2018007/2018007004.png" alt="System.IdentityModel.Tokens.Jwt" title="System.IdentityModel.Tokens.Jwt"> </p>
+                        <p>今天使用 botframework-emulator 在 local 測試 bot 時， botframework-emulator 居然出現 The bot’s MSA appId or password is incorrect. 的錯誤，如下圖，<br><img src="/2018/02/01/2018007/2018007001.png" title="MSA_appId/password is incorrect"><br>我輸入的 App Id 跟 Password 明明就是從 web.config 中 Copy 出來的呀~ 之前都 Run 的好好的，現在居然噴錯。  </p>
+<p>於是使用 Fiddler 來錄一下看看是什麼狀況，如下圖，<br><img src="/2018/02/01/2018007/2018007002.png" title="Fiddler"> </p>
+<p>從上圖可以發現， botframework-emulator 會依 bot 的 MSA appId 及 password 到 <a href="https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token" target="_blank" rel="noopener">https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token</a> 去取回 token ，然後再放在 Request 的 Header 之中，做為 Authorization token。但卻 bot 卻判斷它是無效的，所以就回 401 。 </p>
+<p>查看 botframework-emulator 在 GitHub 上的異動記錄 <a href="https://github.com/Microsoft/BotFramework-Emulator/commit/714b6d4597653c13cb30941416e512e4ecf96972#diff-43482499e76e08e445f4ba0e0b580401" target="_blank" rel="noopener">Support Bot Framework authentication v3.1 (#256)</a> 有將取 token 的 endpoint 從 common/oauth2/v2.0/token 改到了 botframework.com/oauth2/v2.0/token 。<br><img src="/2018/02/01/2018007/2018007003.png" title="src/server/settings.ts"> </p>
+<p>似乎是 token 的問題，而目前我們 bot 使用的 BotBuilder 是 3.8 版，而它的 System.IdentityModel.Tokens.Jwt 使用的是 v4.0403061554 ，如下，<br><img src="/2018/02/01/2018007/2018007004.png" title="System.IdentityModel.Tokens.Jwt"> </p>
 <p>所以筆者試著將 System.IdentityModel.Tokens.Jwt 更新到 v5.1.4 ，重建置專案，再測試一次就沒問題了哦! 或者是您連同 BotBuilder 升級到最新的版本也是可以的哦! </p>
 
                           
@@ -566,18 +566,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -590,11 +578,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -631,6 +623,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1098,14 +1098,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1139,6 +1131,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1191,6 +1191,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -175,8 +175,8 @@
           
                     
                       
-                        <p>不知大家在使用 botframework-emulator 測試 chatbot 時，有沒有發現，對話一開始時，會先將 Bot State 取出來(BotConversationData, BotPrivateConversationData 及 BotUserData)，而在對話後，則將這些資料存回去，如下圖所示，<br><img src="/2018/01/26/2018004/2018004001.png" alt="對話中BotState的處理順序" title="對話中BotState的處理順序"><br>那大家會好奇那些 Bot State 都存到那裡去了呢?<br>預設的 BotDataStore 是使用 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Builder/ConnectorEx/BotData.cs#L197" target="_blank" rel="external">ConnectorStore</a> ，它依 StateClient.BotState 去儲存，而 url 就是 {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId} ， {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId}/users/{userId} 及 {serverUrl}/v3/botstate/{channelId}/users/{userId} ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/BotState.cs" target="_blank" rel="external">BotState.cs</a> ，serverUrl 是 activity.ServiceUrl ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/StateClient.cs" target="_blank" rel="external">StateClient.cs</a>。 </p>
-<p>在 <a href="https://blog.botframework.com/2017/07/26/saving-state-sql-dotnet/" target="_blank" rel="external">Saving State data in SQL with .NET</a> 這篇之中，說明如何實作 IBotDataStore<botdata> 然後將 Bot State 存到 SQL Server 之中。<br>客製的 BotDataStore 寫好了之後，記得要在 global.asax 中去設定讓 autofac 使用我們的 SqlBotDataStore，如下， </botdata></p>
+                        <p>不知大家在使用 botframework-emulator 測試 chatbot 時，有沒有發現，對話一開始時，會先將 Bot State 取出來(BotConversationData, BotPrivateConversationData 及 BotUserData)，而在對話後，則將這些資料存回去，如下圖所示，<br><img src="/2018/01/26/2018004/2018004001.png" title="對話中BotState的處理順序"><br>那大家會好奇那些 Bot State 都存到那裡去了呢?<br>預設的 BotDataStore 是使用 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Builder/ConnectorEx/BotData.cs#L197" target="_blank" rel="noopener">ConnectorStore</a> ，它依 StateClient.BotState 去儲存，而 url 就是 {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId} ， {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId}/users/{userId} 及 {serverUrl}/v3/botstate/{channelId}/users/{userId} ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/BotState.cs" target="_blank" rel="noopener">BotState.cs</a> ，serverUrl 是 activity.ServiceUrl ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/StateClient.cs" target="_blank" rel="noopener">StateClient.cs</a>。 </p>
+<p>在 <a href="https://blog.botframework.com/2017/07/26/saving-state-sql-dotnet/" target="_blank" rel="noopener">Saving State data in SQL with .NET</a> 這篇之中，說明如何實作 IBotDataStore<botdata> 然後將 Bot State 存到 SQL Server 之中。<br>客製的 BotDataStore 寫好了之後，記得要在 global.asax 中去設定讓 autofac 使用我們的 SqlBotDataStore，如下， </botdata></p>
 <pre><code class="csharp"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_Start</span>(<span class="params"></span>)</span>
 <span class="function"></span>{
     Conversation.UpdateContainer(builder =&gt;
@@ -192,8 +192,8 @@
     GlobalConfiguration.Configure(WebApiConfig.Register);
 }
 </code></pre>
-<p>這樣在SQL中就可以看到 Bot State 存到了 SQL DB 之中，如下，<br><img src="/2018/01/26/2018004/2018004002.png" alt="StateInSQLDB" title="StateInSQLDB"> </p>
-<p>另外，像我們之前寫的 Local Direct Line Server <a href="https://rainmakerhoblog.wordpress.com/2017/08/30/20170830/" target="_blank" rel="external">使用 Microsoft Bot Framework 地端的 WebChat 機器人(企業內)</a>，我們會將 Channel 的資料放在 ChannelData 之中，而在存 State 時， ChannelId 要取自 activity 的 channelData ，則可以改自 ConnectorStore ，加入讀取 activity ，如下，</p>
+<p>這樣在SQL中就可以看到 Bot State 存到了 SQL DB 之中，如下，<br><img src="/2018/01/26/2018004/2018004002.png" title="StateInSQLDB"> </p>
+<p>另外，像我們之前寫的 Local Direct Line Server <a href="https://rainmakerhoblog.wordpress.com/2017/08/30/20170830/" target="_blank" rel="noopener">使用 Microsoft Bot Framework 地端的 WebChat 機器人(企業內)</a>，我們會將 Channel 的資料放在 ChannelData 之中，而在存 State 時， ChannelId 要取自 activity 的 channelData ，則可以改自 ConnectorStore ，加入讀取 activity ，如下，</p>
 <pre><code class="csharp"><span class="comment">//modify from ConnectorStore</span>
 public class LDLDataStore : IBotDataStore&lt;BotData&gt;
 {
@@ -278,7 +278,7 @@ public class LDLDataStore : IBotDataStore&lt;BotData&gt;
 }
 </code></pre>
 <p>知道如何在 global.asax 中置換 BotDataStore ，只要實作 IBotDataStore<botdata> 便可以輕易的更換 BotDataStore 哦! </botdata></p>
-<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://blog.botframework.com/2017/07/26/saving-state-sql-dotnet/" target="_blank" rel="external">Saving State data in SQL with .NET</a><br><a href="https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-state#Botstatemethods" target="_blank" rel="external">Manage state data</a> </p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://blog.botframework.com/2017/07/26/saving-state-sql-dotnet/" target="_blank" rel="noopener">Saving State data in SQL with .NET</a><br><a href="https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-state#Botstatemethods" target="_blank" rel="noopener">Manage state data</a> </p>
 
                           
                                     
@@ -662,18 +662,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -686,11 +674,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -727,6 +719,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1194,14 +1194,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1235,6 +1227,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1287,6 +1287,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

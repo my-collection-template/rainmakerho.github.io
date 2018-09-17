@@ -172,13 +172,13 @@
           
                     
                       
-                        <p>在 <a href="https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-global-handlers?view=azure-bot-service-3.0" target="_blank" rel="external">Implement global message handlers</a> 有說明如何透過 global message handlers 來處理一些 help, cancel 等等的全域處理。例如在一個對話當中，使用者輸入了取得待批示的指令，這時需要將處理待批示清單的 Dialog 叫出來，並且將目前處理中的對話堆疉清除(this.task.Reset())。</p>
+                        <p>在 <a href="https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-global-handlers?view=azure-bot-service-3.0" target="_blank" rel="noopener">Implement global message handlers</a> 有說明如何透過 global message handlers 來處理一些 help, cancel 等等的全域處理。例如在一個對話當中，使用者輸入了取得待批示的指令，這時需要將處理待批示清單的 Dialog 叫出來，並且將目前處理中的對話堆疉清除(this.task.Reset())。</p>
 <p>這裡要注意的是 this.task.Reset() 一定要放在最後面，不然會噴錯哦! 例如，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">PostAsync</span>(<span class="params">IActivity item, <span class="keyword">string</span> state, CancellationToken token</span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">var</span> message = item <span class="keyword">as</span> IMessageActivity;</div><div class="line">    <span class="keyword">if</span> (message != <span class="literal">null</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> settingsDialog = <span class="keyword">new</span> SettingsDialog();</div><div class="line">        <span class="keyword">var</span> interruption = settingsDialog.Void&lt;<span class="keyword">object</span>, IMessageActivity&gt;();</div><div class="line">        <span class="keyword">this</span>.task.Call(interruption, <span class="literal">null</span>);</div><div class="line">        <span class="keyword">await</span> <span class="keyword">this</span>.task.PollAsync(token);</div><div class="line">        <span class="comment">// 要清除 DialogStack 的話，請加上 this.task.Reset()</span></div><div class="line">        <span class="keyword">this</span>.task.Reset();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">PostAsync</span>(<span class="params">IActivity item, <span class="keyword">string</span> state, CancellationToken token</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> message = item <span class="keyword">as</span> IMessageActivity;</span><br><span class="line">    <span class="keyword">if</span> (message != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> settingsDialog = <span class="keyword">new</span> SettingsDialog();</span><br><span class="line">        <span class="keyword">var</span> interruption = settingsDialog.Void&lt;<span class="keyword">object</span>, IMessageActivity&gt;();</span><br><span class="line">        <span class="keyword">this</span>.task.Call(interruption, <span class="literal">null</span>);</span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">this</span>.task.PollAsync(token);</span><br><span class="line">        <span class="comment">// 要清除 DialogStack 的話，請加上 this.task.Reset()</span></span><br><span class="line">        <span class="keyword">this</span>.task.Reset();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>另外，如果無法在繼承 ScorableBase 的 Class 中去 Reset DialogStack 的話。<br>在 Dialog 中則可以透過 context.EndConversation 去清 DialogStack (非常感謝同事 Marty 的分享)，如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">context.EndConversation(EndOfConversationCodes.CompletedSuccessfully);</div><div class="line">context.Done&lt;<span class="keyword">string</span>&gt;(<span class="literal">null</span>);</div></pre></td></tr></table></figure>
-<p>也可以參考 <a href="https://stackoverflow.com/questions/39113403/terminate-all-dialogs-and-exit-conversation-in-ms-bot-framework-when-the-user-ty/39160430" target="_blank" rel="external">Terminate all dialogs and exit conversation in MS Bot Framework when the user types “exit”, “quit” etc</a> 的方式，如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, (IMessageActivity)context.Activity))</div><div class="line">&#123;</div><div class="line">	<span class="keyword">var</span> botData = scope.Resolve&lt;IBotData&gt;();</div><div class="line">	<span class="keyword">await</span> botData.LoadAsync(<span class="keyword">default</span>(CancellationToken));</div><div class="line">	<span class="keyword">var</span> stack = scope.Resolve&lt;IDialogStack&gt;();</div><div class="line">	stack.Reset();</div><div class="line">	<span class="keyword">await</span> botData.FlushAsync(<span class="keyword">default</span>(CancellationToken));</div><div class="line">&#125;</div><div class="line">context.Done&lt;<span class="keyword">string</span>&gt;(<span class="literal">null</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">context.EndConversation(EndOfConversationCodes.CompletedSuccessfully);</span><br><span class="line">context.Done&lt;<span class="keyword">string</span>&gt;(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+<p>也可以參考 <a href="https://stackoverflow.com/questions/39113403/terminate-all-dialogs-and-exit-conversation-in-ms-bot-framework-when-the-user-ty/39160430" target="_blank" rel="noopener">Terminate all dialogs and exit conversation in MS Bot Framework when the user types “exit”, “quit” etc</a> 的方式，如下，</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, (IMessageActivity)context.Activity))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">var</span> botData = scope.Resolve&lt;IBotData&gt;();</span><br><span class="line">	<span class="keyword">await</span> botData.LoadAsync(<span class="keyword">default</span>(CancellationToken));</span><br><span class="line">	<span class="keyword">var</span> stack = scope.Resolve&lt;IDialogStack&gt;();</span><br><span class="line">	stack.Reset();</span><br><span class="line">	<span class="keyword">await</span> botData.FlushAsync(<span class="keyword">default</span>(CancellationToken));</span><br><span class="line">&#125;</span><br><span class="line">context.Done&lt;<span class="keyword">string</span>&gt;(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
 <p>如果在 Dialog 中直接 call context.Reset(); 可是會噴錯的哦!</p>
 
                           
@@ -559,18 +559,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -583,11 +571,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -624,6 +616,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1091,14 +1091,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1132,6 +1124,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1184,6 +1184,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

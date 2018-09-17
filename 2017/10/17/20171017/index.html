@@ -176,18 +176,18 @@
                     
                       
                         <h3 id="最近透過-xcodebuild-來產生-ipa-檔時，以下的錯誤，"><a href="#最近透過-xcodebuild-來產生-ipa-檔時，以下的錯誤，" class="headerlink" title="最近透過 xcodebuild 來產生 ipa 檔時，以下的錯誤，"></a>最近透過 xcodebuild 來產生 ipa 檔時，以下的錯誤，</h3><p><em>error: exportArchive: …app requires a provisioning profile.</em><br><em>Error Domain=IDEProvisioningErrorDomain Code=9 …requires a provisioning profile. …NSLocalizedRecoverySuggestion=Add a profile to the “provisioningProfiles” dictionary in your Export Options property list.}</em></p>
-<img src="/2017/10/17/20171017/exportArchiveFail.png" alt="slug" title="slug">
-<h3 id="原來是因為-xCode-9-的-export-Options-plist-檔中需要再指定-provisioningProfiles-相關資料，內容如下圖，"><a href="#原來是因為-xCode-9-的-export-Options-plist-檔中需要再指定-provisioningProfiles-相關資料，內容如下圖，" class="headerlink" title="原來是因為 xCode 9 的 export Options plist 檔中需要再指定 provisioningProfiles 相關資料，內容如下圖，"></a>原來是因為 xCode 9 的 export Options plist 檔中需要再指定 <em>provisioningProfiles</em> 相關資料，內容如下圖，</h3><img src="/2017/10/17/20171017/exportOptionsPlist.png" alt="slug" title="slug">
-<h3 id="最簡單的方式可以參考-New-export-options-Plist-in-Xcode-9-的方式，先透過-Xcode-產生-ipa-後，在-ipa-的目錄中會有-ExportOptions-plist-檔案，直接將它拿來用就可以了哦"><a href="#最簡單的方式可以參考-New-export-options-Plist-in-Xcode-9-的方式，先透過-Xcode-產生-ipa-後，在-ipa-的目錄中會有-ExportOptions-plist-檔案，直接將它拿來用就可以了哦" class="headerlink" title="最簡單的方式可以參考 New export options Plist in Xcode 9 的方式，先透過 Xcode 產生 ipa 後，在 ipa 的目錄中會有 ExportOptions.plist 檔案，直接將它拿來用就可以了哦!"></a>最簡單的方式可以參考 <a href="https://blog.bitrise.io/new-export-options-plist-in-xcode-9" target="_blank" rel="external">New export options Plist in Xcode 9</a> 的方式，先透過 Xcode 產生 ipa 後，在 ipa 的目錄中會有 <em>ExportOptions.plist</em> 檔案，直接將它拿來用就可以了哦!</h3><h2 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h2><ul>
-<li><p><a href="http://www.matrixprojects.net/p/xcodebuild-export-options-plist/" target="_blank" rel="external">xcodebuild’s new exportOptionsPlist flag</a></p>
+<img src="/2017/10/17/20171017/exportArchiveFail.png" title="slug">
+<h3 id="原來是因為-xCode-9-的-export-Options-plist-檔中需要再指定-provisioningProfiles-相關資料，內容如下圖，"><a href="#原來是因為-xCode-9-的-export-Options-plist-檔中需要再指定-provisioningProfiles-相關資料，內容如下圖，" class="headerlink" title="原來是因為 xCode 9 的 export Options plist 檔中需要再指定 provisioningProfiles 相關資料，內容如下圖，"></a>原來是因為 xCode 9 的 export Options plist 檔中需要再指定 <em>provisioningProfiles</em> 相關資料，內容如下圖，</h3><img src="/2017/10/17/20171017/exportOptionsPlist.png" title="slug">
+<h3 id="最簡單的方式可以參考-New-export-options-Plist-in-Xcode-9-的方式，先透過-Xcode-產生-ipa-後，在-ipa-的目錄中會有-ExportOptions-plist-檔案，直接將它拿來用就可以了哦"><a href="#最簡單的方式可以參考-New-export-options-Plist-in-Xcode-9-的方式，先透過-Xcode-產生-ipa-後，在-ipa-的目錄中會有-ExportOptions-plist-檔案，直接將它拿來用就可以了哦" class="headerlink" title="最簡單的方式可以參考 New export options Plist in Xcode 9 的方式，先透過 Xcode 產生 ipa 後，在 ipa 的目錄中會有 ExportOptions.plist 檔案，直接將它拿來用就可以了哦!"></a>最簡單的方式可以參考 <a href="https://blog.bitrise.io/new-export-options-plist-in-xcode-9" target="_blank" rel="noopener">New export options Plist in Xcode 9</a> 的方式，先透過 Xcode 產生 ipa 後，在 ipa 的目錄中會有 <em>ExportOptions.plist</em> 檔案，直接將它拿來用就可以了哦!</h3><h2 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h2><ul>
+<li><p><a href="http://www.matrixprojects.net/p/xcodebuild-export-options-plist/" target="_blank" rel="noopener">xcodebuild’s new exportOptionsPlist flag</a></p>
 </li>
-<li><p><a href="https://blog.bitrise.io/new-export-options-plist-in-xcode-9" target="_blank" rel="external">New export options Plist in Xcode 9</a></p>
+<li><p><a href="https://blog.bitrise.io/new-export-options-plist-in-xcode-9" target="_blank" rel="noopener">New export options Plist in Xcode 9</a></p>
 </li>
-<li><p><a href="https://stackoverflow.com/questions/39674237/xcrun-command-to-export-ipa-file-xcode8-for-iphoneos10-0" target="_blank" rel="external">xcrun command to export ipa file xcode8 for iphoneos10.0</a></p>
+<li><p><a href="https://stackoverflow.com/questions/39674237/xcrun-command-to-export-ipa-file-xcode8-for-iphoneos10-0" target="_blank" rel="noopener">xcrun command to export ipa file xcode8 for iphoneos10.0</a></p>
 </li>
-<li><p><a href="https://medium.com/xcblog/xcodebuild-deploy-ios-app-from-command-line-c6defff0d8b8" target="_blank" rel="external">xcodebuild: Deploy iOS app from Command Line</a></p>
+<li><p><a href="https://medium.com/xcblog/xcodebuild-deploy-ios-app-from-command-line-c6defff0d8b8" target="_blank" rel="noopener">xcodebuild: Deploy iOS app from Command Line</a></p>
 </li>
-<li><p><a href="http://www.jianshu.com/p/88d9f2e57004" target="_blank" rel="external">xcodebuild 命令简单使用</a></p>
+<li><p><a href="http://www.jianshu.com/p/88d9f2e57004" target="_blank" rel="noopener">xcodebuild 命令简单使用</a></p>
 </li>
 </ul>
 
@@ -585,18 +585,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -609,11 +597,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -650,6 +642,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1117,14 +1117,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1158,6 +1150,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1210,6 +1210,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

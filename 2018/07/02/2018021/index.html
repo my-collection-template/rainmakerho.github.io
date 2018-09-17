@@ -174,9 +174,9 @@
                       
                         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我們之前透過程式產生 Excel 檔時，是先將一份 Excel 另存成 Html 格式的檔案，然後在裡面設定一些 Tag 。<br>程式就透過去 Replace 這些 Tag 後，再將程式另存，並將檔名改成 xls 。<br>這樣使用者就可以透過 Excel 去開啟它了。<br>只是最近的 Excel 開啟這樣的檔案，都會先 alert 使用者 (可以透過調整 機碼 讓它不要 alert)。<br>那有辦法讓它變成真正的 Excel 檔，或是轉成 PDF 嗎?</p>
 <h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>我們可以透過 Aspose 的元件來處理哦! 它有提供一個 HTMLLoadOptions 可以讓我們達到這樣子的目的哦! 程式如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> filePath = <span class="string">"hr840401.xls"</span>;</div><div class="line"><span class="keyword">var</span> opts = <span class="keyword">new</span> HTMLLoadOptions(LoadFormat.Html);</div><div class="line"><span class="keyword">var</span> workbook = <span class="keyword">new</span> Workbook(filePath, opts);</div><div class="line">workbook.Save(<span class="string">"hr840401_out.xls"</span>);</div></pre></td></tr></table></figure>
-<p>它還可以載其他的格式哦，詳細可以參考<a href="https://apireference.aspose.com/net/pdf/aspose.pdf/loadformat" target="_blank" rel="external">Aspose LoadFormat Enumeration</a></p>
-<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://forum.aspose.com/t/open-excel-html-file/44690/3" target="_blank" rel="external">Open Excel/html file</a></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> filePath = <span class="string">"hr840401.xls"</span>;</span><br><span class="line"><span class="keyword">var</span> opts = <span class="keyword">new</span> HTMLLoadOptions(LoadFormat.Html);</span><br><span class="line"><span class="keyword">var</span> workbook = <span class="keyword">new</span> Workbook(filePath, opts);</span><br><span class="line">workbook.Save(<span class="string">"hr840401_out.xls"</span>);</span><br></pre></td></tr></table></figure>
+<p>它還可以載其他的格式哦，詳細可以參考<a href="https://apireference.aspose.com/net/pdf/aspose.pdf/loadformat" target="_blank" rel="noopener">Aspose LoadFormat Enumeration</a></p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://forum.aspose.com/t/open-excel-html-file/44690/3" target="_blank" rel="noopener">Open Excel/html file</a></p>
 
                           
                                     
@@ -560,18 +560,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -584,11 +572,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -625,6 +617,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1092,14 +1092,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1133,6 +1125,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1185,6 +1185,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

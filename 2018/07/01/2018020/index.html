@@ -176,18 +176,18 @@
                       
                         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最新有個需求就是要判斷目前 User 是不是在進行某項作業, 如果不是就推送包含 Button 的訊息給 User, 不然就推文字通知訊息等目前的作業完成後，再顯示待辦的 Button 訊息給 User .</p>
 <h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>最簡單的就是將這個 flag 寫在 BotState 之中，所以我們可以在使用者加入時，將它的 Conversation 記錄下來，如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (message.Type == ActivityTypes.ConversationUpdate)</div><div class="line">&#123;</div><div class="line">	Func&lt;ChannelAccount, <span class="keyword">bool</span>&gt; isChatbot =</div><div class="line">		channelAcct =&gt; channelAcct.Id == message.Recipient.Id;</div><div class="line">	<span class="keyword">if</span> (message.MembersAdded.Any(isChatbot))</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">var</span> memberAdded = message.MembersAdded.FirstOrDefault();</div><div class="line">		<span class="comment">//這裡請自行處理將該 user 的 Conversation 儲存起來，為了方便，這裡將它存在一個變數之中</span></div><div class="line">		WebApiApplication._ConversationReference = message.ToConversationReference();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (message.Type == ActivityTypes.ConversationUpdate)</span><br><span class="line">&#123;</span><br><span class="line">	Func&lt;ChannelAccount, <span class="keyword">bool</span>&gt; isChatbot =</span><br><span class="line">		channelAcct =&gt; channelAcct.Id == message.Recipient.Id;</span><br><span class="line">	<span class="keyword">if</span> (message.MembersAdded.Any(isChatbot))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">var</span> memberAdded = message.MembersAdded.FirstOrDefault();</span><br><span class="line">		<span class="comment">//這裡請自行處理將該 user 的 Conversation 儲存起來，為了方便，這裡將它存在一個變數之中</span></span><br><span class="line">		WebApiApplication._ConversationReference = message.ToConversationReference();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然後在申請作業記錄這個 Flag ，當然，結束時請記得將這個 Flag 清除哦!</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, context.Activity.AsMessageActivity()))</div><div class="line">&#123;</div><div class="line">	<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</div><div class="line">	<span class="keyword">var</span> key = Address.FromActivity(context.Activity);</div><div class="line">	<span class="keyword">var</span> botUserData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, <span class="keyword">default</span>(CancellationToken));</div><div class="line">	botUserData.SetProperty&lt;<span class="keyword">string</span>&gt;(<span class="string">"dialog"</span>, <span class="string">"RootDialog:MessageReceivedAsync"</span>);</div><div class="line">	<span class="keyword">await</span> botDataStore.SaveAsync(key, BotStoreType.BotUserData, botUserData, <span class="keyword">default</span>(CancellationToken));</div><div class="line">	<span class="keyword">await</span> botDataStore.FlushAsync(key, <span class="keyword">default</span>(CancellationToken));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可是執行時，卻發生了「Exception: The data is changed」的錯誤，如下圖，<br><img src="/2018/07/01/2018020/eDataChanged.png" alt="[Exception: The data is changed]" title="[Exception: The data is changed]"></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, context.Activity.AsMessageActivity()))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</span><br><span class="line">	<span class="keyword">var</span> key = Address.FromActivity(context.Activity);</span><br><span class="line">	<span class="keyword">var</span> botUserData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">	botUserData.SetProperty&lt;<span class="keyword">string</span>&gt;(<span class="string">"dialog"</span>, <span class="string">"RootDialog:MessageReceivedAsync"</span>);</span><br><span class="line">	<span class="keyword">await</span> botDataStore.SaveAsync(key, BotStoreType.BotUserData, botUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">	<span class="keyword">await</span> botDataStore.FlushAsync(key, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可是執行時，卻發生了「Exception: The data is changed」的錯誤，如下圖，<br><img src="/2018/07/01/2018020/eDataChanged.png" title="[Exception: The data is changed]"></p>
 <p>因為 botframework 會自動去幫我們將 State 存檔，所以當它存檔時，發現狀態被改掉了，所以就出現「Exception: The data is changed」的錯誤 .</p>
 <p>嗯, 那怎麼辦呢? 那就調整程式, 不要去呼叫 FlushAsync, 讓 botframework 去存就可以了, 所以程式調整如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, context.Activity.AsMessageActivity()))</div><div class="line">&#123;</div><div class="line">	<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</div><div class="line">	<span class="keyword">var</span> key = Address.FromActivity(context.Activity);</div><div class="line">	<span class="keyword">var</span> botUserData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, <span class="keyword">default</span>(CancellationToken));</div><div class="line">	botUserData.SetProperty&lt;<span class="keyword">string</span>&gt;(<span class="string">"dialog"</span>, <span class="string">"RootDialog:MessageReceivedAsync"</span>);</div><div class="line">	<span class="keyword">await</span> botDataStore.SaveAsync(key, BotStoreType.BotUserData, botUserData, <span class="keyword">default</span>(CancellationToken));</div><div class="line">    <span class="comment">//await botDataStore.FlushAsync(key, default(CancellationToken));</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, context.Activity.AsMessageActivity()))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</span><br><span class="line">	<span class="keyword">var</span> key = Address.FromActivity(context.Activity);</span><br><span class="line">	<span class="keyword">var</span> botUserData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">	botUserData.SetProperty&lt;<span class="keyword">string</span>&gt;(<span class="string">"dialog"</span>, <span class="string">"RootDialog:MessageReceivedAsync"</span>);</span><br><span class="line">	<span class="keyword">await</span> botDataStore.SaveAsync(key, BotStoreType.BotUserData, botUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">    <span class="comment">//await botDataStore.FlushAsync(key, default(CancellationToken));</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>所以我們的通知程式就可以透過 ConversationReference 轉回 Activity, 取回 BotState, 例如，我新增一個 api method 來顯示 BotState , 如下,</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[<span class="meta">Route(<span class="meta-string">"api/Messages/GetDialogData"</span>)</span>]</div><div class="line">[<span class="meta">HttpGet</span>]</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;HttpResponseMessage&gt; <span class="title">GetDialogData</span>(<span class="params"></span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="keyword">var</span> resp = <span class="keyword">new</span> HttpResponseMessage(HttpStatusCode.OK);</div><div class="line">	<span class="keyword">if</span> (WebApiApplication._ConversationReference != <span class="literal">null</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">var</span> message = WebApiApplication._ConversationReference.GetPostToBotMessage();</div><div class="line">		<span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, message.AsMessageActivity()))</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</div><div class="line">			<span class="keyword">var</span> key = Address.FromActivity(message);</div><div class="line">			<span class="keyword">var</span> botUserData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, <span class="keyword">default</span>(CancellationToken));</div><div class="line">			<span class="keyword">var</span> dialogData = botUserData.GetProperty&lt;<span class="keyword">string</span>&gt;(<span class="string">"dialog"</span>);</div><div class="line">			resp.Content = <span class="keyword">new</span> StringContent(<span class="string">$"&lt;html&gt;&lt;body&gt;Dialogs:<span class="subst">&#123;dialogData&#125;</span>&lt;/body&gt;&lt;/html&gt;"</span>, System.Text.Encoding.UTF8, <span class="string">@"text/html"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> resp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Route(<span class="meta-string">"api/Messages/GetDialogData"</span>)</span>]</span><br><span class="line">[<span class="meta">HttpGet</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;HttpResponseMessage&gt; <span class="title">GetDialogData</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">var</span> resp = <span class="keyword">new</span> HttpResponseMessage(HttpStatusCode.OK);</span><br><span class="line">	<span class="keyword">if</span> (WebApiApplication._ConversationReference != <span class="literal">null</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">var</span> message = WebApiApplication._ConversationReference.GetPostToBotMessage();</span><br><span class="line">		<span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, message.AsMessageActivity()))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</span><br><span class="line">			<span class="keyword">var</span> key = Address.FromActivity(message);</span><br><span class="line">			<span class="keyword">var</span> botUserData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">			<span class="keyword">var</span> dialogData = botUserData.GetProperty&lt;<span class="keyword">string</span>&gt;(<span class="string">"dialog"</span>);</span><br><span class="line">			resp.Content = <span class="keyword">new</span> StringContent(<span class="string">$"&lt;html&gt;&lt;body&gt;Dialogs:<span class="subst">&#123;dialogData&#125;</span>&lt;/body&gt;&lt;/html&gt;"</span>, System.Text.Encoding.UTF8, <span class="string">@"text/html"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> resp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>所以在 Dialog 中儲存 State 時 , 可以注意一下這種狀況哦 ^_^</p>
-<p>Demo 專案可以參考 <a href="https://github.com/rainmakerho/Exception_DataChanged" target="_blank" rel="external">rainmakerho/Exception_DataChanged</a></p>
-<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://stackoverflow.com/questions/42860020/microsoft-bot-framework-exception-the-data-is-changed" target="_blank" rel="external">Microsoft Bot Framework: Exception: The data is changed</a></p>
+<p>Demo 專案可以參考 <a href="https://github.com/rainmakerho/Exception_DataChanged" target="_blank" rel="noopener">rainmakerho/Exception_DataChanged</a></p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://stackoverflow.com/questions/42860020/microsoft-bot-framework-exception-the-data-is-changed" target="_blank" rel="noopener">Microsoft Bot Framework: Exception: The data is changed</a></p>
 
                           
                                     
@@ -571,18 +571,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -595,11 +583,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -636,6 +628,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1103,14 +1103,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1144,6 +1136,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1196,6 +1196,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

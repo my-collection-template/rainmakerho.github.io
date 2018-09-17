@@ -174,11 +174,11 @@
           
                     
                       
-                        <p>使用 Bot Framework 開發 Bot 時，當發生 Exception 時，會出現 <strong>“Sorry, my bot code is having an issue.”</strong> ，那如果我們要自行處理錯誤呢? 可以參考<a href="https://desflanagan.wordpress.com/2017/09/01/bot-framework-custom-error-messages-and-exception-handling/" target="_blank" rel="external">Bot Framework Custom Error Messages and Exception Handling, Autofac</a>，一個是建立一個 ExceptionHandleDialog 去包，另一個是俢改 PostUnhandledExceptionToUser 這個 Class ，然後再透過 Autofac 來置換成我們的 Class。 </p>
-<p>所以作者建立一個「PostUnhandledExceptionToUserOverrideTask」如下，<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PostUnhandledExceptionToUserOverrideTask</span> : <span class="title">IPostToBot</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">readonly</span> ResourceManager resources;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">readonly</span> IPostToBot inner;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">readonly</span> IBotToUser botToUser;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">readonly</span> TraceListener trace;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">PostUnhandledExceptionToUserOverrideTask</span>(<span class="params">IPostToBot inner, IBotToUser botToUser, ResourceManager resources, TraceListener trace</span>)</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.inner, <span class="keyword">nameof</span>(inner), inner);</div><div class="line">		SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.botToUser, <span class="keyword">nameof</span>(botToUser), botToUser);</div><div class="line">		SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.resources, <span class="keyword">nameof</span>(resources), resources);</div><div class="line">		SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.trace, <span class="keyword">nameof</span>(trace), trace);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">PostAsync</span>(<span class="params">IActivity activity, CancellationToken token</span>)</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">try</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">await</span> inner.PostAsync(activity, token);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (Exception)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">try</span></div><div class="line">			&#123;</div><div class="line">				<span class="keyword">await</span> botToUser.PostAsync(<span class="string">"An Error Has Occurred....."</span>, cancellationToken: token);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">catch</span> (Exception inner)</div><div class="line">			&#123;</div><div class="line">				trace.WriteLine(inner);</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">throw</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>而作者是調整 DialogModule 中，將 PostUnhandledExceptionToUser 改成 PostUnhandledExceptionToUserOverrideTask，所以在 Global.asax.cs 中重新呼叫 RegisterAdapterChain 去 Replace，如下<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">builder</div><div class="line">	.RegisterKeyedType&lt;PostUnhandledExceptionToUserOverrideTask, IPostToBot&gt;()</div><div class="line">	.InstancePerLifetimeScope();</div><div class="line"></div><div class="line">builder</div><div class="line">	.RegisterAdapterChain&lt;IPostToBot&gt;</div><div class="line">	(</div><div class="line">		<span class="keyword">typeof</span>(EventLoopDialogTask),</div><div class="line">		<span class="keyword">typeof</span>(SetAmbientThreadCulture),</div><div class="line">		<span class="keyword">typeof</span>(QueueDrainingDialogTask),</div><div class="line">		<span class="keyword">typeof</span>(PersistentDialogTask),</div><div class="line">		<span class="keyword">typeof</span>(ExceptionTranslationDialogTask),</div><div class="line">		<span class="keyword">typeof</span>(SerializeByConversation),</div><div class="line">		<span class="keyword">typeof</span>(PostUnhandledExceptionToUserOverrideTask),</div><div class="line">		<span class="keyword">typeof</span>(LogPostToBot)</div><div class="line">	)</div><div class="line">	.InstancePerLifetimeScope();</div></pre></td></tr></table></figure></p>
-<p>另一個方式則是直接將 PostUnhandledExceptionToUser 置換成 PostUnhandledExceptionToUserOverrideTask，如下，<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">builder</div><div class="line">	.RegisterKeyedType&lt;PostUnhandledExceptionToUserOverrideTask, IPostToBot&gt;()</div><div class="line">	.InstancePerLifetimeScope();</div><div class="line"></div><div class="line"><span class="comment">//在 Autofac 中 Key 為 typeof(PostUnhandledExceptionToUser) 的 Service 從 PostUnhandledExceptionToUser 改成我們寫的 PostUnhandledExceptionToUserOverrideTask</span></div><div class="line">builder</div><div class="line">	.RegisterType&lt;PostUnhandledExceptionToUserOverrideTask&gt;()</div><div class="line">	.Keyed&lt;IPostToBot&gt;(<span class="keyword">typeof</span>(PostUnhandledExceptionToUser))</div><div class="line">	.InstancePerLifetimeScope();</div></pre></td></tr></table></figure></p>
-<p>所以可以看到原本的 PostUnhandledExceptionToUser 已經被我們改成了 PostUnhandledExceptionToUserOverrideTask了，如下圖，<br><img src="/2018/02/13/2018008/2018008001.png" alt="LogPostToBot RegisterAdapterChain" title="LogPostToBot RegisterAdapterChain"> </p>
+                        <p>使用 Bot Framework 開發 Bot 時，當發生 Exception 時，會出現 <strong>“Sorry, my bot code is having an issue.”</strong> ，那如果我們要自行處理錯誤呢? 可以參考<a href="https://desflanagan.wordpress.com/2017/09/01/bot-framework-custom-error-messages-and-exception-handling/" target="_blank" rel="noopener">Bot Framework Custom Error Messages and Exception Handling, Autofac</a>，一個是建立一個 ExceptionHandleDialog 去包，另一個是俢改 PostUnhandledExceptionToUser 這個 Class ，然後再透過 Autofac 來置換成我們的 Class。 </p>
+<p>所以作者建立一個「PostUnhandledExceptionToUserOverrideTask」如下，<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PostUnhandledExceptionToUserOverrideTask</span> : <span class="title">IPostToBot</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">readonly</span> ResourceManager resources;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">readonly</span> IPostToBot inner;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">readonly</span> IBotToUser botToUser;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">readonly</span> TraceListener trace;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">PostUnhandledExceptionToUserOverrideTask</span>(<span class="params">IPostToBot inner, IBotToUser botToUser, ResourceManager resources, TraceListener trace</span>)</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.inner, <span class="keyword">nameof</span>(inner), inner);</span><br><span class="line">		SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.botToUser, <span class="keyword">nameof</span>(botToUser), botToUser);</span><br><span class="line">		SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.resources, <span class="keyword">nameof</span>(resources), resources);</span><br><span class="line">		SetField.NotNull(<span class="keyword">out</span> <span class="keyword">this</span>.trace, <span class="keyword">nameof</span>(trace), trace);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">PostAsync</span>(<span class="params">IActivity activity, CancellationToken token</span>)</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">try</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">await</span> inner.PostAsync(activity, token);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (Exception)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">try</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">await</span> botToUser.PostAsync(<span class="string">"An Error Has Occurred....."</span>, cancellationToken: token);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (Exception inner)</span><br><span class="line">			&#123;</span><br><span class="line">				trace.WriteLine(inner);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">throw</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>而作者是調整 DialogModule 中，將 PostUnhandledExceptionToUser 改成 PostUnhandledExceptionToUserOverrideTask，所以在 Global.asax.cs 中重新呼叫 RegisterAdapterChain 去 Replace，如下<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">builder</span><br><span class="line">	.RegisterKeyedType&lt;PostUnhandledExceptionToUserOverrideTask, IPostToBot&gt;()</span><br><span class="line">	.InstancePerLifetimeScope();</span><br><span class="line"></span><br><span class="line">builder</span><br><span class="line">	.RegisterAdapterChain&lt;IPostToBot&gt;</span><br><span class="line">	(</span><br><span class="line">		<span class="keyword">typeof</span>(EventLoopDialogTask),</span><br><span class="line">		<span class="keyword">typeof</span>(SetAmbientThreadCulture),</span><br><span class="line">		<span class="keyword">typeof</span>(QueueDrainingDialogTask),</span><br><span class="line">		<span class="keyword">typeof</span>(PersistentDialogTask),</span><br><span class="line">		<span class="keyword">typeof</span>(ExceptionTranslationDialogTask),</span><br><span class="line">		<span class="keyword">typeof</span>(SerializeByConversation),</span><br><span class="line">		<span class="keyword">typeof</span>(PostUnhandledExceptionToUserOverrideTask),</span><br><span class="line">		<span class="keyword">typeof</span>(LogPostToBot)</span><br><span class="line">	)</span><br><span class="line">	.InstancePerLifetimeScope();</span><br></pre></td></tr></table></figure></p>
+<p>另一個方式則是直接將 PostUnhandledExceptionToUser 置換成 PostUnhandledExceptionToUserOverrideTask，如下，<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">builder</span><br><span class="line">	.RegisterKeyedType&lt;PostUnhandledExceptionToUserOverrideTask, IPostToBot&gt;()</span><br><span class="line">	.InstancePerLifetimeScope();</span><br><span class="line"></span><br><span class="line"><span class="comment">//在 Autofac 中 Key 為 typeof(PostUnhandledExceptionToUser) 的 Service 從 PostUnhandledExceptionToUser 改成我們寫的 PostUnhandledExceptionToUserOverrideTask</span></span><br><span class="line">builder</span><br><span class="line">	.RegisterType&lt;PostUnhandledExceptionToUserOverrideTask&gt;()</span><br><span class="line">	.Keyed&lt;IPostToBot&gt;(<span class="keyword">typeof</span>(PostUnhandledExceptionToUser))</span><br><span class="line">	.InstancePerLifetimeScope();</span><br></pre></td></tr></table></figure></p>
+<p>所以可以看到原本的 PostUnhandledExceptionToUser 已經被我們改成了 PostUnhandledExceptionToUserOverrideTask了，如下圖，<br><img src="/2018/02/13/2018008/2018008001.png" title="LogPostToBot RegisterAdapterChain"> </p>
 
                           
                                     
@@ -570,18 +570,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -594,11 +582,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -635,6 +627,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1102,14 +1102,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1143,6 +1135,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1195,6 +1195,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

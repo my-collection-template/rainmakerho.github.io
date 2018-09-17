@@ -178,16 +178,16 @@
                       
                         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近需要將原本從資料庫取出的資料再加入額外的欄位，並給預設值。但是預設值卻沒有顯示出來，是什麼原因呢?</p>
 <h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>我們的程式寫法如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//取得原始的資料</span></div><div class="line"><span class="keyword">var</span> dtFromDB = GetDataSource();</div><div class="line"><span class="comment">//要額外加入欄位，並給予預設值</span></div><div class="line"><span class="keyword">var</span> colMemo1 = dtFromDB.Columns.Add(<span class="string">"缺料註記"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</div><div class="line">colMemo1.DefaultValue = <span class="string">"是 否 "</span>;</div><div class="line">GridView1.DataSource = dtFromDB;</div><div class="line">GridView1.DataBind();</div></pre></td></tr></table></figure>
-<p>先加入欄位，並設定 DataColumn.DefaultValue ，結果呈現如下，<br><img src="/2018/07/20/2018026/001.png" alt="[DataColumn.DefaultValue 無效]" title="[DataColumn.DefaultValue 無效]"></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//取得原始的資料</span></span><br><span class="line"><span class="keyword">var</span> dtFromDB = GetDataSource();</span><br><span class="line"><span class="comment">//要額外加入欄位，並給予預設值</span></span><br><span class="line"><span class="keyword">var</span> colMemo1 = dtFromDB.Columns.Add(<span class="string">"缺料註記"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</span><br><span class="line">colMemo1.DefaultValue = <span class="string">"是 否 "</span>;</span><br><span class="line">GridView1.DataSource = dtFromDB;</span><br><span class="line">GridView1.DataBind();</span><br></pre></td></tr></table></figure>
+<p>先加入欄位，並設定 DataColumn.DefaultValue ，結果呈現如下，<br><img src="/2018/07/20/2018026/001.png" title="[DataColumn.DefaultValue 無效]"></p>
 <p>因為我們是先將欄位加入，才設定值，所以它會沒有效。<br>所以如果這時，我們再加入一筆新的資料，它就會有效果，如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//取得原始的資料</span></div><div class="line"><span class="keyword">var</span> dtFromDB = GetDataSource();</div><div class="line"><span class="comment">//要額外加入欄位，並給予預設值</span></div><div class="line"><span class="keyword">var</span> colMemo1 = dtFromDB.Columns.Add(<span class="string">"缺料註記"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</div><div class="line">colMemo1.DefaultValue = <span class="string">"是 否 "</span>;</div><div class="line">dtFromDB.Rows.Add(<span class="number">999</span>, <span class="string">$"產品名稱-999"</span>, <span class="string">$"產品描述 -999 "</span>, <span class="number">999</span>, DateTime.Now.ToString(<span class="string">"yyyy/MM/dd HH:mm:ss"</span>));</div><div class="line">GridView1.DataSource = dtFromDB;</div><div class="line">GridView1.DataBind();</div></pre></td></tr></table></figure>
-<img src="/2018/07/20/2018026/003.png" alt="[新增的 DataRow DataColumn.DefaultValue 有效]" title="[新增的 DataRow DataColumn.DefaultValue 有效]">
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//取得原始的資料</span></span><br><span class="line"><span class="keyword">var</span> dtFromDB = GetDataSource();</span><br><span class="line"><span class="comment">//要額外加入欄位，並給予預設值</span></span><br><span class="line"><span class="keyword">var</span> colMemo1 = dtFromDB.Columns.Add(<span class="string">"缺料註記"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</span><br><span class="line">colMemo1.DefaultValue = <span class="string">"是 否 "</span>;</span><br><span class="line">dtFromDB.Rows.Add(<span class="number">999</span>, <span class="string">$"產品名稱-999"</span>, <span class="string">$"產品描述 -999 "</span>, <span class="number">999</span>, DateTime.Now.ToString(<span class="string">"yyyy/MM/dd HH:mm:ss"</span>));</span><br><span class="line">GridView1.DataSource = dtFromDB;</span><br><span class="line">GridView1.DataBind();</span><br></pre></td></tr></table></figure>
+<img src="/2018/07/20/2018026/003.png" title="[新增的 DataRow DataColumn.DefaultValue 有效]">
 <p>所以，要讓 DataColumn.DefaultValue 一開始就要有效，就需要在建立 DataColumn 時，就指定它的預設值，如下，</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//取得原始的資料</span></div><div class="line"><span class="keyword">var</span> dtFromDB = GetDataSource();</div><div class="line"><span class="comment">//要額外加入欄位，並給予預設值</span></div><div class="line"><span class="comment">//要先設定，再加入</span></div><div class="line"><span class="keyword">var</span> colMemo1 = <span class="keyword">new</span> DataColumn(<span class="string">"缺料註記"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</div><div class="line">colMemo1.DefaultValue = <span class="string">"是 否 "</span>;</div><div class="line">dtFromDB.Columns.Add(colMemo1);</div><div class="line">GridView1.DataSource = dtFromDB;</div><div class="line">GridView1.DataBind();</div></pre></td></tr></table></figure>
-<img src="/2018/07/20/2018026/002.png" alt="[先新增 DataColumn， DataColumn.DefaultValue 有效]" title="[先新增 DataColumn， DataColumn.DefaultValue 有效]">
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//取得原始的資料</span></span><br><span class="line"><span class="keyword">var</span> dtFromDB = GetDataSource();</span><br><span class="line"><span class="comment">//要額外加入欄位，並給予預設值</span></span><br><span class="line"><span class="comment">//要先設定，再加入</span></span><br><span class="line"><span class="keyword">var</span> colMemo1 = <span class="keyword">new</span> DataColumn(<span class="string">"缺料註記"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</span><br><span class="line">colMemo1.DefaultValue = <span class="string">"是 否 "</span>;</span><br><span class="line">dtFromDB.Columns.Add(colMemo1);</span><br><span class="line">GridView1.DataSource = dtFromDB;</span><br><span class="line">GridView1.DataBind();</span><br></pre></td></tr></table></figure>
+<img src="/2018/07/20/2018026/002.png" title="[先新增 DataColumn， DataColumn.DefaultValue 有效]">
 <p>雖然多一行，但是 DataColumn.DefaultValue 有效了哦! :)</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> DataTable <span class="title">GetDataSource</span>(<span class="params"></span>)</span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="comment">// Instantiating a "Products" DataTable object</span></div><div class="line">	<span class="keyword">var</span> dataTable = <span class="keyword">new</span> DataTable(<span class="string">"Products"</span>);</div><div class="line">	<span class="comment">// Adding columns to the DataTable object</span></div><div class="line">	dataTable.Columns.Add(<span class="string">"ProductID"</span>, <span class="keyword">typeof</span>(Int32));</div><div class="line">	dataTable.Columns.Add(<span class="string">"ProductName"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</div><div class="line">	dataTable.Columns.Add(<span class="string">"ProductDesc"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</div><div class="line">	dataTable.Columns.Add(<span class="string">"Units"</span>, <span class="keyword">typeof</span>(Double));</div><div class="line">	dataTable.Columns.Add(<span class="string">"CreDte"</span>, <span class="keyword">typeof</span>(DateTime));</div><div class="line">	<span class="keyword">var</span> rand = <span class="keyword">new</span> Random();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">90</span>; i++)</div><div class="line">	&#123;</div><div class="line">		dataTable.Rows.Add(i, <span class="string">$"產品名稱-<span class="subst">&#123;i&#125;</span> 讓產品名稱自己說話 abc <span class="subst">&#123;i&#125;</span> ...<span class="subst">&#123;i&#125;</span>"</span>, <span class="string">$"產品描述 -<span class="subst">&#123;i&#125;</span>塑造出帶有「情感」的品牌概念 -<span class="subst">&#123;i&#125;</span>產品描述 -產品描述 -產品描述 -"</span>, rand.NextDouble(), DateTime.Now.ToString(<span class="string">"yyyy/MM/dd HH:mm:ss"</span>));</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dataTable;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> DataTable <span class="title">GetDataSource</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// Instantiating a "Products" DataTable object</span></span><br><span class="line">	<span class="keyword">var</span> dataTable = <span class="keyword">new</span> DataTable(<span class="string">"Products"</span>);</span><br><span class="line">	<span class="comment">// Adding columns to the DataTable object</span></span><br><span class="line">	dataTable.Columns.Add(<span class="string">"ProductID"</span>, <span class="keyword">typeof</span>(Int32));</span><br><span class="line">	dataTable.Columns.Add(<span class="string">"ProductName"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</span><br><span class="line">	dataTable.Columns.Add(<span class="string">"ProductDesc"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</span><br><span class="line">	dataTable.Columns.Add(<span class="string">"Units"</span>, <span class="keyword">typeof</span>(Double));</span><br><span class="line">	dataTable.Columns.Add(<span class="string">"CreDte"</span>, <span class="keyword">typeof</span>(DateTime));</span><br><span class="line">	<span class="keyword">var</span> rand = <span class="keyword">new</span> Random();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">90</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		dataTable.Rows.Add(i, <span class="string">$"產品名稱-<span class="subst">&#123;i&#125;</span> 讓產品名稱自己說話 abc <span class="subst">&#123;i&#125;</span> ...<span class="subst">&#123;i&#125;</span>"</span>, <span class="string">$"產品描述 -<span class="subst">&#123;i&#125;</span>塑造出帶有「情感」的品牌概念 -<span class="subst">&#123;i&#125;</span>產品描述 -產品描述 -產品描述 -"</span>, rand.NextDouble(), DateTime.Now.ToString(<span class="string">"yyyy/MM/dd HH:mm:ss"</span>));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dataTable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
                           
                                     
@@ -563,18 +563,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -587,11 +575,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -628,6 +620,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1095,14 +1095,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1136,6 +1128,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1188,6 +1188,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

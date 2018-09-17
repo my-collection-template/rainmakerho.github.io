@@ -365,7 +365,7 @@
           
                     
                       
-                            <p>使用 Bot Framework 開發 Bot 時，當發生 Exception 時，會出現 <strong>“Sorry, my bot code is having an issue.”</strong> ，那如果我們要自行處理錯誤呢? 可以參考<a href="https://desflanagan.wordpress.com/2017/09/01/bot-framework-custom-error-messages-and-exception-handling/" target="_blank" rel="external">Bot Framework Custom Error Messages and Exception Handling, Autofac</a>，一個是建立一個 ExceptionHandleDialog 去包，另一個是俢改 PostUnhandledExceptionToUser 這個 Class ，然後再透過 Autofac 來置換成我們的 Class。 </p>
+                            <p>使用 Bot Framework 開發 Bot 時，當發生 Exception 時，會出現 <strong>“Sorry, my bot code is having an issue.”</strong> ，那如果我們要自行處理錯誤呢? 可以參考<a href="https://desflanagan.wordpress.com/2017/09/01/bot-framework-custom-error-messages-and-exception-handling/" target="_blank" rel="noopener">Bot Framework Custom Error Messages and Exception Handling, Autofac</a>，一個是建立一個 ExceptionHandleDialog 去包，另一個是俢改 PostUnhandledExceptionToUser 這個 Class ，然後再透過 Autofac 來置換成我們的 Class。 </p>
                               
                                 <p class="article-more-link">
                                   <a href="/2018/02/13/2018008/#more">
@@ -465,7 +465,7 @@
           
                     
                       
-                            <p>今天使用 botframework-emulator 在 local 測試 bot 時， botframework-emulator 居然出現 The bot’s MSA appId or password is incorrect. 的錯誤，如下圖，<br><img src="/2018/02/01/2018007/2018007001.png" alt="MSA_appId/password is incorrect" title="MSA_appId/password is incorrect"><br>我輸入的 App Id 跟 Password 明明就是從 web.config 中 Copy 出來的呀~ 之前都 Run 的好好的，現在居然噴錯。  </p>
+                            <p>今天使用 botframework-emulator 在 local 測試 bot 時， botframework-emulator 居然出現 The bot’s MSA appId or password is incorrect. 的錯誤，如下圖，<br><img src="/2018/02/01/2018007/2018007001.png" title="MSA_appId/password is incorrect"><br>我輸入的 App Id 跟 Password 明明就是從 web.config 中 Copy 出來的呀~ 之前都 Run 的好好的，現在居然噴錯。  </p>
                               
                                 <p class="article-more-link">
                                   <a href="/2018/02/01/2018007/#more">
@@ -557,7 +557,7 @@
           
                     
                       
-                            <p>我們透過 VS.NET 建立出 Bot 後，預設 Nuget 中安裝 BotBuilder 相關的套件，如果我們從 GitHub 將 <a href="https://github.com/Microsoft/BotBuilder" target="_blank" rel="external">Microsoft/BotBuilder</a> 到方案之中，我們要如何 Debug 進到 BotBuilder 的 Source Code 之中呢? </p>
+                            <p>我們透過 VS.NET 建立出 Bot 後，預設 Nuget 中安裝 BotBuilder 相關的套件，如果我們從 GitHub 將 <a href="https://github.com/Microsoft/BotBuilder" target="_blank" rel="noopener">Microsoft/BotBuilder</a> 到方案之中，我們要如何 Debug 進到 BotBuilder 的 Source Code 之中呢? </p>
                               
                                 <p class="article-more-link">
                                   <a href="/2018/02/01/2018006/#more">
@@ -737,7 +737,7 @@
           
                     
                       
-                            <p>不知大家在使用 botframework-emulator 測試 chatbot 時，有沒有發現，對話一開始時，會先將 Bot State 取出來(BotConversationData, BotPrivateConversationData 及 BotUserData)，而在對話後，則將這些資料存回去，如下圖所示，<br><img src="/2018/01/26/2018004/2018004001.png" alt="對話中BotState的處理順序" title="對話中BotState的處理順序"><br>那大家會好奇那些 Bot State 都存到那裡去了呢?<br>預設的 BotDataStore 是使用 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Builder/ConnectorEx/BotData.cs#L197" target="_blank" rel="external">ConnectorStore</a> ，它依 StateClient.BotState 去儲存，而 url 就是 {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId} ， {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId}/users/{userId} 及 {serverUrl}/v3/botstate/{channelId}/users/{userId} ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/BotState.cs" target="_blank" rel="external">BotState.cs</a> ，serverUrl 是 activity.ServiceUrl ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/StateClient.cs" target="_blank" rel="external">StateClient.cs</a>。 </p>
+                            <p>不知大家在使用 botframework-emulator 測試 chatbot 時，有沒有發現，對話一開始時，會先將 Bot State 取出來(BotConversationData, BotPrivateConversationData 及 BotUserData)，而在對話後，則將這些資料存回去，如下圖所示，<br><img src="/2018/01/26/2018004/2018004001.png" title="對話中BotState的處理順序"><br>那大家會好奇那些 Bot State 都存到那裡去了呢?<br>預設的 BotDataStore 是使用 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Builder/ConnectorEx/BotData.cs#L197" target="_blank" rel="noopener">ConnectorStore</a> ，它依 StateClient.BotState 去儲存，而 url 就是 {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId} ， {serverUrl}/v3/botstate/{channelId}/conversations/{conversationId}/users/{userId} 及 {serverUrl}/v3/botstate/{channelId}/users/{userId} ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/BotState.cs" target="_blank" rel="noopener">BotState.cs</a> ，serverUrl 是 activity.ServiceUrl ，詳細可以參考 <a href="https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Library/Microsoft.Bot.Connector.Shared/StateAPI/StateClient.cs" target="_blank" rel="noopener">StateClient.cs</a>。 </p>
                               
                                 <p class="article-more-link">
                                   <a href="/2018/01/26/2018004/#more">
@@ -1131,18 +1131,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -1155,11 +1143,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1196,6 +1188,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1663,14 +1663,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1704,6 +1696,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1756,6 +1756,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -172,8 +172,8 @@
           
                     
                       
-                        <h4 id="最近在-div-上加入-overflow-y-scroll-height-250px-讓-div-高度超過-250px-時就呈現-scrollbar-。-在-Windows-的機器上測試顯示都正常。"><a href="#最近在-div-上加入-overflow-y-scroll-height-250px-讓-div-高度超過-250px-時就呈現-scrollbar-。-在-Windows-的機器上測試顯示都正常。" class="headerlink" title="最近在 div 上加入 overflow-y: scroll; height:250px; 讓 div 高度超過 250px 時就呈現 scrollbar 。 在 Windows 的機器上測試顯示都正常。"></a>最近在 div 上加入 <em>overflow-y: scroll; height:250px;</em> 讓 div 高度超過 250px 時就呈現 scrollbar 。 在 Windows 的機器上測試顯示都正常。</h4><h4 id="但是在-mac-上測試，-scrollbar-卻沒有呈現出來。"><a href="#但是在-mac-上測試，-scrollbar-卻沒有呈現出來。" class="headerlink" title="但是在 mac 上測試， scrollbar 卻沒有呈現出來。"></a>但是在 mac 上測試， scrollbar 卻沒有呈現出來。</h4><h4 id="後來有查到-Force-the-scrollbar-back-這些的說明，我們需要針對-webkit-scrollbar-來設定它，所以在-css-中需要再加入以下的設定，來讓-scrollbar-在-mac-的瀏覽器可以正常呈現-scrollbar-哦"><a href="#後來有查到-Force-the-scrollbar-back-這些的說明，我們需要針對-webkit-scrollbar-來設定它，所以在-css-中需要再加入以下的設定，來讓-scrollbar-在-mac-的瀏覽器可以正常呈現-scrollbar-哦" class="headerlink" title="後來有查到 Force the scrollbar back 這些的說明，我們需要針對 -webkit-scrollbar 來設定它，所以在 css 中需要再加入以下的設定，來讓 scrollbar 在 mac 的瀏覽器可以正常呈現 scrollbar 哦!"></a>後來有查到 <a href="http://simurai.com/blog/2011/07/26/webkit-scrollbar" target="_blank" rel="external">Force the scrollbar back</a> 這些的說明，我們需要針對 -webkit-scrollbar 來設定它，所以在 css 中需要再加入以下的設定，來讓 scrollbar 在 mac 的瀏覽器可以正常呈現 scrollbar 哦!</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-pseudo">::-webkit-scrollbar</span> &#123;</div><div class="line">    <span class="attribute">-webkit-appearance</span>: none;</div><div class="line">    <span class="attribute">width</span>: <span class="number">7px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-pseudo">::-webkit-scrollbar-thumb</span> &#123;</div><div class="line">    <span class="attribute">border-radius</span>: <span class="number">4px</span>;</div><div class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(0,0,0,.5);</div><div class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">1px</span> <span class="built_in">rgba</span>(255,255,255,.5);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><a href="http://jsfiddle.net/simurai/UsvLN/" target="_blank" rel="external">測試網頁</a> </p>
+                        <h4 id="最近在-div-上加入-overflow-y-scroll-height-250px-讓-div-高度超過-250px-時就呈現-scrollbar-。-在-Windows-的機器上測試顯示都正常。"><a href="#最近在-div-上加入-overflow-y-scroll-height-250px-讓-div-高度超過-250px-時就呈現-scrollbar-。-在-Windows-的機器上測試顯示都正常。" class="headerlink" title="最近在 div 上加入 overflow-y: scroll; height:250px; 讓 div 高度超過 250px 時就呈現 scrollbar 。 在 Windows 的機器上測試顯示都正常。"></a>最近在 div 上加入 <em>overflow-y: scroll; height:250px;</em> 讓 div 高度超過 250px 時就呈現 scrollbar 。 在 Windows 的機器上測試顯示都正常。</h4><h4 id="但是在-mac-上測試，-scrollbar-卻沒有呈現出來。"><a href="#但是在-mac-上測試，-scrollbar-卻沒有呈現出來。" class="headerlink" title="但是在 mac 上測試， scrollbar 卻沒有呈現出來。"></a>但是在 mac 上測試， scrollbar 卻沒有呈現出來。</h4><h4 id="後來有查到-Force-the-scrollbar-back-這些的說明，我們需要針對-webkit-scrollbar-來設定它，所以在-css-中需要再加入以下的設定，來讓-scrollbar-在-mac-的瀏覽器可以正常呈現-scrollbar-哦"><a href="#後來有查到-Force-the-scrollbar-back-這些的說明，我們需要針對-webkit-scrollbar-來設定它，所以在-css-中需要再加入以下的設定，來讓-scrollbar-在-mac-的瀏覽器可以正常呈現-scrollbar-哦" class="headerlink" title="後來有查到 Force the scrollbar back 這些的說明，我們需要針對 -webkit-scrollbar 來設定它，所以在 css 中需要再加入以下的設定，來讓 scrollbar 在 mac 的瀏覽器可以正常呈現 scrollbar 哦!"></a>後來有查到 <a href="http://simurai.com/blog/2011/07/26/webkit-scrollbar" target="_blank" rel="noopener">Force the scrollbar back</a> 這些的說明，我們需要針對 -webkit-scrollbar 來設定它，所以在 css 中需要再加入以下的設定，來讓 scrollbar 在 mac 的瀏覽器可以正常呈現 scrollbar 哦!</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">::-webkit-scrollbar</span> &#123;</span><br><span class="line">    <span class="attribute">-webkit-appearance</span>: none;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">7px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-pseudo">::-webkit-scrollbar-thumb</span> &#123;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">4px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(0,0,0,.5);</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">1px</span> <span class="built_in">rgba</span>(255,255,255,.5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://jsfiddle.net/simurai/UsvLN/" target="_blank" rel="noopener">測試網頁</a> </p>
 
                           
                                     
@@ -549,18 +549,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -573,11 +561,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,6 +606,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1081,14 +1081,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1122,6 +1114,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1174,6 +1174,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

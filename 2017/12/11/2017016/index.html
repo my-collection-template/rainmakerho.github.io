@@ -172,11 +172,11 @@
           
                     
                       
-                        <p>最近在 RPi2 上面的 Windows IoT Core UWP 程式，網路跑一跑就 GG 了，它就完全沒辦法對外連網，外面也連不到它。一定要重新開機後，網路才會好。<br>於是參考 <a href="https://marcominerva.wordpress.com/2016/12/13/how-to-shutdown-a-windows-10-iot-core-device-from-a-uwp-app/" target="_blank" rel="external">How to shutdown a Windows 10 IoT Core device from a UWP app</a>這篇文章的方式，使用 <em>ShutdownManager.BeginShutdown(ShutdownKind.Restart, TimeSpan.FromSeconds(5));</em>，並在 <em>Package.appxmanifest</em> 檔案中加入 xmlns:iot namespace, IgnorableNamespaces 以及在 Capabilities 節點中加入 <em>iot:Capability Name=”systemManagement”</em> (請檢視原始碼編輯哦! UI 無法設定!)。<br>結果程式一建置下去就 GG 了，出現「驗證錯誤。error C00CE014: App manifest validation error: The app manifest must be valid as per schema:」的錯誤。</p>
+                        <p>最近在 RPi2 上面的 Windows IoT Core UWP 程式，網路跑一跑就 GG 了，它就完全沒辦法對外連網，外面也連不到它。一定要重新開機後，網路才會好。<br>於是參考 <a href="https://marcominerva.wordpress.com/2016/12/13/how-to-shutdown-a-windows-10-iot-core-device-from-a-uwp-app/" target="_blank" rel="noopener">How to shutdown a Windows 10 IoT Core device from a UWP app</a>這篇文章的方式，使用 <em>ShutdownManager.BeginShutdown(ShutdownKind.Restart, TimeSpan.FromSeconds(5));</em>，並在 <em>Package.appxmanifest</em> 檔案中加入 xmlns:iot namespace, IgnorableNamespaces 以及在 Capabilities 節點中加入 <em>iot:Capability Name=”systemManagement”</em> (請檢視原始碼編輯哦! UI 無法設定!)。<br>結果程式一建置下去就 GG 了，出現「驗證錯誤。error C00CE014: App manifest validation error: The app manifest must be valid as per schema:」的錯誤。</p>
 <p>我的 Package.appxmanifest 檔案如下，</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">Package</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/foundation/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:mp</span>=<span class="string">"http://schemas.microsoft.com/appx/2014/phone/manifest"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:uap</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/uap/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:iot</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/iot/windows10"</span> <span class="attr">IgnorableNamespaces</span>=<span class="string">"uap mp iot"</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">"internetClient"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">DeviceCapability</span> <span class="attr">Name</span>=<span class="string">"bluetooth"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iot:Capability</span> <span class="attr">Name</span>=<span class="string">"systemManagement"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Package</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">Package</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/foundation/windows10"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:mp</span>=<span class="string">"http://schemas.microsoft.com/appx/2014/phone/manifest"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:uap</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/uap/windows10"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:iot</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/iot/windows10"</span> <span class="attr">IgnorableNamespaces</span>=<span class="string">"uap mp iot"</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">"internetClient"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DeviceCapability</span> <span class="attr">Name</span>=<span class="string">"bluetooth"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">iot:Capability</span> <span class="attr">Name</span>=<span class="string">"systemManagement"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Package</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>會有 <em>error C00CE014</em> 的錯誤，因為在 Capabilities 中的順序不對，Capability 要在第一順位，而且要在一起，再來才是 DeviceCapability ，如下面的順序就可以順利建置成功，</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">Package</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/foundation/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:mp</span>=<span class="string">"http://schemas.microsoft.com/appx/2014/phone/manifest"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:uap</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/uap/windows10"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:iot</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/iot/windows10"</span> <span class="attr">IgnorableNamespaces</span>=<span class="string">"uap mp iot"</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">"internetClient"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iot:Capability</span> <span class="attr">Name</span>=<span class="string">"systemManagement"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">DeviceCapability</span> <span class="attr">Name</span>=<span class="string">"bluetooth"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Package</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">Package</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/foundation/windows10"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:mp</span>=<span class="string">"http://schemas.microsoft.com/appx/2014/phone/manifest"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:uap</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/uap/windows10"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:iot</span>=<span class="string">"http://schemas.microsoft.com/appx/manifest/iot/windows10"</span> <span class="attr">IgnorableNamespaces</span>=<span class="string">"uap mp iot"</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">"internetClient"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">iot:Capability</span> <span class="attr">Name</span>=<span class="string">"systemManagement"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DeviceCapability</span> <span class="attr">Name</span>=<span class="string">"bluetooth"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Package</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>Capability -&gt; iot:Capability -&gt; DeviceCapability …</p>
 
                           
@@ -569,18 +569,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -593,11 +581,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -634,6 +626,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1101,14 +1101,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1142,6 +1134,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1194,6 +1194,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

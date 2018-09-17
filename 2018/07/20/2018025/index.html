@@ -182,13 +182,13 @@
                     
                       
                         <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>我們公司 Apple Enterprise Store 中的 In-House certificate 快過期了，而所有依據它所建罝出來的 Provisioning Profiles 也跟著快過期了，要怎麼辦呢? Revoke 嗎?</p>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>如下圖，我們公司的 In-House certificate 有效只到 2018/8/2 ，到時我們相對應的 iOS App 不就 GG 了。 我們就只能等著它過期嗎 ? 過期後，會自動 renew 嗎?<br><img src="/2018/07/20/2018025/001.png" alt="[快過期的In-House certificate]" title="[快過期的In-House certificate]"></p>
-<h4 id="Apple-Developer"><a href="#Apple-Developer" class="headerlink" title="Apple Developer"></a><a href="https://developer.apple.com" target="_blank" rel="external">Apple Developer</a></h4><p>嗯… 這時就需要再建立一個 In-House certificate，到 (<a href="https://developer.apple.com/account/ios/certificate/" target="_blank" rel="external">certificate</a>=&gt;Certificates) 按右上方的 + 號，Production 那選取「In-House and Ad Hoc」，如下圖(因為我已建立，最多同時只能有 2 個)，然後按下 Continue<br><img src="/2018/07/20/2018025/002.png" alt="[新增In-House certificate]" title="[新增In-House certificate]"></p>
-<p>下個畫面就從本機上建立一個 Certificate Signing Request (CSR) 後，上傳給它，就可以建立第 2 個 In-House certificate 了哦! 如下圖，<br><img src="/2018/07/20/2018025/003.png" alt="[建立第2個In-House certificate]" title="[建立第2個In-House certificate]"></p>
-<p>新的 In-House certificate 建立好了之後，在 App 那的 Provisioning Profiles 就可以選取新的 In-House certificate 後，按下 Generate 就可以了哦，如下圖，<br><img src="/2018/07/20/2018025/004.png" alt="[選取新的In-House certificate來建立 Provisioning Profile]" title="[選取新的In-House certificate來建立 Provisioning Profile]"></p>
-<h4 id="Mac-開發環境"><a href="#Mac-開發環境" class="headerlink" title="Mac 開發環境"></a>Mac 開發環境</h4><p>在 <a href="https://developer.apple.com" target="_blank" rel="external">Apple Developer</a> 設定好了後，就可以在 Mac 開發環境中，開啟 Xcode 然後將 Provisioning Profiles 下載下來，如下圖，<br><img src="/2018/07/20/2018025/005.png" alt="[Xcode Preferences]" title="[Xcode Preferences]"><br><img src="/2018/07/20/2018025/006.png" alt="[Download Provisioning Profile]" title="[Download Provisioning Profile]"></p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>如下圖，我們公司的 In-House certificate 有效只到 2018/8/2 ，到時我們相對應的 iOS App 不就 GG 了。 我們就只能等著它過期嗎 ? 過期後，會自動 renew 嗎?<br><img src="/2018/07/20/2018025/001.png" title="[快過期的In-House certificate]"></p>
+<h4 id="Apple-Developer"><a href="#Apple-Developer" class="headerlink" title="Apple Developer"></a><a href="https://developer.apple.com" target="_blank" rel="noopener">Apple Developer</a></h4><p>嗯… 這時就需要再建立一個 In-House certificate，到 (<a href="https://developer.apple.com/account/ios/certificate/" target="_blank" rel="noopener">certificate</a>=&gt;Certificates) 按右上方的 + 號，Production 那選取「In-House and Ad Hoc」，如下圖(因為我已建立，最多同時只能有 2 個)，然後按下 Continue<br><img src="/2018/07/20/2018025/002.png" title="[新增In-House certificate]"></p>
+<p>下個畫面就從本機上建立一個 Certificate Signing Request (CSR) 後，上傳給它，就可以建立第 2 個 In-House certificate 了哦! 如下圖，<br><img src="/2018/07/20/2018025/003.png" title="[建立第2個In-House certificate]"></p>
+<p>新的 In-House certificate 建立好了之後，在 App 那的 Provisioning Profiles 就可以選取新的 In-House certificate 後，按下 Generate 就可以了哦，如下圖，<br><img src="/2018/07/20/2018025/004.png" title="[選取新的In-House certificate來建立 Provisioning Profile]"></p>
+<h4 id="Mac-開發環境"><a href="#Mac-開發環境" class="headerlink" title="Mac 開發環境"></a>Mac 開發環境</h4><p>在 <a href="https://developer.apple.com" target="_blank" rel="noopener">Apple Developer</a> 設定好了後，就可以在 Mac 開發環境中，開啟 Xcode 然後將 Provisioning Profiles 下載下來，如下圖，<br><img src="/2018/07/20/2018025/005.png" title="[Xcode Preferences]"><br><img src="/2018/07/20/2018025/006.png" title="[Download Provisioning Profile]"></p>
 <p>然後就可以 Build 了哦!<br>那別的開發人員呢? 這時要將這台 In-House certificate 匯出(含 private key)給他們去安裝。</p>
-<p>所以要開啟 keychain ，然後將 In-House certificate 匯出成 p12 的檔案 (含 private key)，並設定密碼，如下圖，<br><img src="/2018/07/20/2018025/007.png" alt="[Export In-House certificate]" title="[Export In-House certificate]"><br><img src="/2018/07/20/2018025/008.png" alt="[Export In-House certificate include private key]" title="[Export In-House certificate include private key]"></p>
+<p>所以要開啟 keychain ，然後將 In-House certificate 匯出成 p12 的檔案 (含 private key)，並設定密碼，如下圖，<br><img src="/2018/07/20/2018025/007.png" title="[Export In-House certificate]"><br><img src="/2018/07/20/2018025/008.png" title="[Export In-House certificate include private key]"></p>
 <p>別人開發人員再匯入自已的 keychain (輸入該密碼)後，就可以從 Xcode 下載新的 Provisioning Profiles 來，並選取使用新的 In-House certificate 來 Build 哦!</p>
 <p>註:</p>
 <ol>
@@ -587,18 +587,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -611,11 +599,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -652,6 +644,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1119,14 +1119,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1160,6 +1152,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1212,6 +1212,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

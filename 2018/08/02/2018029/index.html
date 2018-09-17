@@ -176,9 +176,9 @@
           
                     
                       
-                        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事在裝機時，從 Client 端 Browser 去開系統時，發現圖檔都沒有顯示出來。<br>將圖檔的 url 貼到 browser 網址列上來看，結果出現「403 - 禁止: 拒絕存取」。如下圖所示，<br><img src="/2018/08/02/2018029/001.png" alt="[403 - 禁止: 拒絕存取]" title="[403 - 禁止: 拒絕存取]"></p>
+                        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事在裝機時，從 Client 端 Browser 去開系統時，發現圖檔都沒有顯示出來。<br>將圖檔的 url 貼到 browser 網址列上來看，結果出現「403 - 禁止: 拒絕存取」。如下圖所示，<br><img src="/2018/08/02/2018029/001.png" title="[403 - 禁止: 拒絕存取]"></p>
 <h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>看起來似乎是權限不足，於是開啟檔案總管，將 IUser , Network Service 等帳號都加進去。 再看，還是 403 。天呀 ~~~ 怎麼回事呢?</p>
-<p>今天另一位同事在 Server 上開 Browser 去試，結果出現的錯誤一樣是 403 ，但多了一個 .4 。<br>下面還寫著一行「<strong>您嘗試存取的網頁受到安全通訊端層(SSL)的保護</strong>」。 如下，<br><img src="/2018/08/02/2018029/002.png" alt="[403.4 - Forbidden]" title="[403.4 - Forbidden]"><br>查看 IIS 的設定，果然勾選了 「需要 SSL」 ，如下，<br><img src="/2018/08/02/2018029/003.png" alt="[SSL 設定]" title="[SSL 設定]"><br>結果改走 https 就好了。<br>所以如果出 403 的話，除了權限外，也請 Check 一下 SSL 的部份。<br>或是在 Server 上測試，這樣如果有錯誤的話，訊息會比較多一些。才不會浪費許多時間。</p>
+<p>今天另一位同事在 Server 上開 Browser 去試，結果出現的錯誤一樣是 403 ，但多了一個 .4 。<br>下面還寫著一行「<strong>您嘗試存取的網頁受到安全通訊端層(SSL)的保護</strong>」。 如下，<br><img src="/2018/08/02/2018029/002.png" title="[403.4 - Forbidden]"><br>查看 IIS 的設定，果然勾選了 「需要 SSL」 ，如下，<br><img src="/2018/08/02/2018029/003.png" title="[SSL 設定]"><br>結果改走 https 就好了。<br>所以如果出 403 的話，除了權限外，也請 Check 一下 SSL 的部份。<br>或是在 Server 上測試，這樣如果有錯誤的話，訊息會比較多一些。才不會浪費許多時間。</p>
 
                           
                                     
@@ -566,18 +566,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -590,11 +578,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -631,6 +623,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1098,14 +1098,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1139,6 +1131,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1191,6 +1191,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

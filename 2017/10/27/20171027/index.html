@@ -178,16 +178,16 @@
           
                     
                       
-                        <h3 id="最近同事詢問透過-SmtpClient-去寄送-Mail-時，在-Zimbra-的-Web-界面看會有-的狀況，如下圖，"><a href="#最近同事詢問透過-SmtpClient-去寄送-Mail-時，在-Zimbra-的-Web-界面看會有-的狀況，如下圖，" class="headerlink" title="最近同事詢問透過 SmtpClient 去寄送 Mail 時，在 Zimbra 的 Web 界面看會有 ? 的狀況，如下圖，"></a>最近同事詢問透過 <a href="https://msdn.microsoft.com/zh-tw/library/system.net.mail.smtpclient" target="_blank" rel="external">SmtpClient</a> 去寄送 Mail 時，在 Zimbra 的 Web 界面看會有 ? 的狀況，如下圖，</h3><img src="/2017/10/27/20171027/001.png" alt="slug" title="slug">
-<h3 id="觀察發現，當主旨太長時才會有這個問題。在-Zimbra-中檢查-Mail-的內容，發現主旨被切分成多段，如下圖，"><a href="#觀察發現，當主旨太長時才會有這個問題。在-Zimbra-中檢查-Mail-的內容，發現主旨被切分成多段，如下圖，" class="headerlink" title="觀察發現，當主旨太長時才會有這個問題。在 Zimbra 中檢查 Mail 的內容，發現主旨被切分成多段，如下圖，"></a>觀察發現，當主旨太長時才會有這個問題。在 Zimbra 中檢查 Mail 的內容，發現主旨被切分成多段，如下圖，</h3><img src="/2017/10/27/20171027/002.png" alt="slug" title="slug">
-<h3 id="而那些再透過-Base64-轉回來，的確會有-的狀況，看起來應該是-MailMessage-在切分時剛好切到一半所造成的，如下圖，"><a href="#而那些再透過-Base64-轉回來，的確會有-的狀況，看起來應該是-MailMessage-在切分時剛好切到一半所造成的，如下圖，" class="headerlink" title="而那些再透過 Base64 轉回來，的確會有 ? 的狀況，看起來應該是 MailMessage 在切分時剛好切到一半所造成的，如下圖，"></a>而那些再透過 Base64 轉回來，的確會有 ? 的狀況，看起來應該是 MailMessage 在切分時剛好切到一半所造成的，如下圖，</h3><img src="/2017/10/27/20171027/004.png" alt="slug" title="slug">
-<h3 id="但是這樣子的狀況，在-outlook-來看卻是沒問的哦-如下圖，"><a href="#但是這樣子的狀況，在-outlook-來看卻是沒問的哦-如下圖，" class="headerlink" title="但是這樣子的狀況，在 outlook 來看卻是沒問的哦~~~ 如下圖，"></a>但是這樣子的狀況，在 outlook 來看卻是沒問的哦~~~ 如下圖，</h3><img src="/2017/10/27/20171027/003.png" alt="slug" title="slug">
-<h3 id="在網路上查到-4-0-SMTPClient-Send-Attachments-mit-Umlauten-im-Dateinamen-，它指出-Base64-會每-30-個字切成一段去串，QuotedPrintable-則是每-76-個字去切。-而我們的狀況似乎是因為它是將字串轉成-Base64-去切，所以會有切到一半的狀況。"><a href="#在網路上查到-4-0-SMTPClient-Send-Attachments-mit-Umlauten-im-Dateinamen-，它指出-Base64-會每-30-個字切成一段去串，QuotedPrintable-則是每-76-個字去切。-而我們的狀況似乎是因為它是將字串轉成-Base64-去切，所以會有切到一半的狀況。" class="headerlink" title="在網路上查到 4.0 SMTPClient.Send Attachments mit Umlauten im Dateinamen ，它指出 Base64 會每 30 個字切成一段去串，QuotedPrintable 則是每 76 個字去切。 而我們的狀況似乎是因為它是將字串轉成 Base64 去切，所以會有切到一半的狀況。"></a>在網路上查到 <a href="https://social.msdn.microsoft.com/Forums/en-US/b6c764f7-4697-4394-b45f-128a24306d55/40-smtpclientsend-attachments-mit-umlauten-im-dateinamen?forum=dotnetframeworkde" target="_blank" rel="external">4.0 SMTPClient.Send Attachments mit Umlauten im Dateinamen</a> ，它指出 Base64 會每 30 個字切成一段去串，QuotedPrintable 則是每 76 個字去切。 而我們的狀況似乎是因為它是將字串轉成 Base64 去切，所以會有切到一半的狀況。</h3><h3 id="所以我們可以調整他的做法，將原始的字串依-7-個字串先切開再串接即可，如下，"><a href="#所以我們可以調整他的做法，將原始的字串依-7-個字串先切開再串接即可，如下，" class="headerlink" title="所以我們可以調整他的做法，將原始的字串依 7 個字串先切開再串接即可，如下，"></a>所以我們可以調整他的做法，將原始的字串依 7 個字串先切開再串接即可，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EmailHeaderHelper</span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">ToBase64</span>(<span class="params"><span class="keyword">string</span> displayName</span>)</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">string</span> tranferEncodingMarker = String.Empty;</div><div class="line">		<span class="keyword">string</span> encodingMarker = String.Empty;</div><div class="line">		<span class="keyword">int</span> maxChunkLength = <span class="number">0</span>;</div><div class="line"></div><div class="line">		tranferEncodingMarker = <span class="string">"B"</span>;</div><div class="line">		encodingMarker = <span class="string">"UTF-8"</span>;</div><div class="line">		maxChunkLength = <span class="number">30</span> / <span class="number">4</span>;</div><div class="line"></div><div class="line">		<span class="keyword">string</span> encodingtoken = String.Format(<span class="string">"=?&#123;0&#125;?&#123;1&#125;?"</span>, encodingMarker, tranferEncodingMarker);</div><div class="line">		<span class="keyword">string</span> softbreak = <span class="string">"?="</span>;</div><div class="line">		<span class="keyword">var</span> encodeDisplayName = <span class="keyword">new</span> StringBuilder();</div><div class="line"></div><div class="line">		<span class="keyword">foreach</span> (<span class="function"><span class="keyword">var</span> splitItem <span class="keyword">in</span> <span class="title">SplitByLength</span>(<span class="params">displayName, maxChunkLength</span>))</span></div><div class="line"><span class="function">		</span>&#123;</div><div class="line">			encodeDisplayName.Append(encodingtoken);</div><div class="line">			encodeDisplayName.Append(Convert.ToBase64String(Encoding.UTF8.GetBytes(splitItem)));</div><div class="line">			encodeDisplayName.Append(softbreak);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> encodeDisplayName.ToString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> IEnumerable&lt;<span class="keyword">string</span>&gt; <span class="title">SplitByLength</span>(<span class="params"><span class="keyword">string</span> stringToSplit, <span class="keyword">int</span> length</span>)</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">while</span> (stringToSplit.Length &gt; length)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">yield</span> <span class="keyword">return</span> stringToSplit.Substring(<span class="number">0</span>, length);</div><div class="line">			stringToSplit = stringToSplit.Substring(length);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (stringToSplit.Length &gt; <span class="number">0</span>) <span class="keyword">yield</span> <span class="keyword">return</span> stringToSplit;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="所以使用如下，"><a href="#所以使用如下，" class="headerlink" title="所以使用如下，"></a>所以使用如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">string</span> subject = <span class="string">"華華華(華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華"</span>;</div><div class="line">message.Subject = EmailHeaderHelper.ToBase64(subject);</div></pre></td></tr></table></figure>
-<h3 id="不過筆者發現，如果您有-2-個-utf-8-B-的話，-NET-的-Mail-元件似乎也不會自動去幫你切斷，所以另個寫法是自已串-Base64-的字串後，再串一個空的-utf-8-B-，如下，"><a href="#不過筆者發現，如果您有-2-個-utf-8-B-的話，-NET-的-Mail-元件似乎也不會自動去幫你切斷，所以另個寫法是自已串-Base64-的字串後，再串一個空的-utf-8-B-，如下，" class="headerlink" title="不過筆者發現，如果您有 2 個 =?utf-8?B? 的話， .NET 的 Mail 元件似乎也不會自動去幫你切斷，所以另個寫法是自已串 Base64 的字串後，再串一個空的 =?utf-8?B? ，如下，"></a>不過筆者發現，如果您有 2 個 <em>=?utf-8?B?</em> 的話， .NET 的 Mail 元件似乎也不會自動去幫你切斷，所以另個寫法是自已串 Base64 的字串後，再串一個空的 <em>=?utf-8?B?</em> ，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">string</span> subject = <span class="string">"華華華(華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華"</span>;</div><div class="line"><span class="keyword">byte</span>[] subjectBytes = Encoding.GetEncoding(<span class="string">"utf-8"</span>).GetBytes(subject);</div><div class="line"><span class="keyword">string</span> subjectBase64 = <span class="string">"=?utf-8?B?"</span> + Convert.ToBase64String(subjectBytes) + <span class="string">"?="</span>;</div><div class="line"><span class="comment">//多加一個空的 =?utf-8?B??= ，就不會再被切開了</span></div><div class="line">subjectBase64 += <span class="string">"=?utf-8?B??="</span>;</div><div class="line">message.Subject = subjectBase64;</div></pre></td></tr></table></figure>
-<img src="/2017/10/27/20171027/005.png" alt="slug" title="slug">
+                        <h3 id="最近同事詢問透過-SmtpClient-去寄送-Mail-時，在-Zimbra-的-Web-界面看會有-的狀況，如下圖，"><a href="#最近同事詢問透過-SmtpClient-去寄送-Mail-時，在-Zimbra-的-Web-界面看會有-的狀況，如下圖，" class="headerlink" title="最近同事詢問透過 SmtpClient 去寄送 Mail 時，在 Zimbra 的 Web 界面看會有 ? 的狀況，如下圖，"></a>最近同事詢問透過 <a href="https://msdn.microsoft.com/zh-tw/library/system.net.mail.smtpclient" target="_blank" rel="noopener">SmtpClient</a> 去寄送 Mail 時，在 Zimbra 的 Web 界面看會有 ? 的狀況，如下圖，</h3><img src="/2017/10/27/20171027/001.png" title="slug">
+<h3 id="觀察發現，當主旨太長時才會有這個問題。在-Zimbra-中檢查-Mail-的內容，發現主旨被切分成多段，如下圖，"><a href="#觀察發現，當主旨太長時才會有這個問題。在-Zimbra-中檢查-Mail-的內容，發現主旨被切分成多段，如下圖，" class="headerlink" title="觀察發現，當主旨太長時才會有這個問題。在 Zimbra 中檢查 Mail 的內容，發現主旨被切分成多段，如下圖，"></a>觀察發現，當主旨太長時才會有這個問題。在 Zimbra 中檢查 Mail 的內容，發現主旨被切分成多段，如下圖，</h3><img src="/2017/10/27/20171027/002.png" title="slug">
+<h3 id="而那些再透過-Base64-轉回來，的確會有-的狀況，看起來應該是-MailMessage-在切分時剛好切到一半所造成的，如下圖，"><a href="#而那些再透過-Base64-轉回來，的確會有-的狀況，看起來應該是-MailMessage-在切分時剛好切到一半所造成的，如下圖，" class="headerlink" title="而那些再透過 Base64 轉回來，的確會有 ? 的狀況，看起來應該是 MailMessage 在切分時剛好切到一半所造成的，如下圖，"></a>而那些再透過 Base64 轉回來，的確會有 ? 的狀況，看起來應該是 MailMessage 在切分時剛好切到一半所造成的，如下圖，</h3><img src="/2017/10/27/20171027/004.png" title="slug">
+<h3 id="但是這樣子的狀況，在-outlook-來看卻是沒問的哦-如下圖，"><a href="#但是這樣子的狀況，在-outlook-來看卻是沒問的哦-如下圖，" class="headerlink" title="但是這樣子的狀況，在 outlook 來看卻是沒問的哦~~~ 如下圖，"></a>但是這樣子的狀況，在 outlook 來看卻是沒問的哦~~~ 如下圖，</h3><img src="/2017/10/27/20171027/003.png" title="slug">
+<h3 id="在網路上查到-4-0-SMTPClient-Send-Attachments-mit-Umlauten-im-Dateinamen-，它指出-Base64-會每-30-個字切成一段去串，QuotedPrintable-則是每-76-個字去切。-而我們的狀況似乎是因為它是將字串轉成-Base64-去切，所以會有切到一半的狀況。"><a href="#在網路上查到-4-0-SMTPClient-Send-Attachments-mit-Umlauten-im-Dateinamen-，它指出-Base64-會每-30-個字切成一段去串，QuotedPrintable-則是每-76-個字去切。-而我們的狀況似乎是因為它是將字串轉成-Base64-去切，所以會有切到一半的狀況。" class="headerlink" title="在網路上查到 4.0 SMTPClient.Send Attachments mit Umlauten im Dateinamen ，它指出 Base64 會每 30 個字切成一段去串，QuotedPrintable 則是每 76 個字去切。 而我們的狀況似乎是因為它是將字串轉成 Base64 去切，所以會有切到一半的狀況。"></a>在網路上查到 <a href="https://social.msdn.microsoft.com/Forums/en-US/b6c764f7-4697-4394-b45f-128a24306d55/40-smtpclientsend-attachments-mit-umlauten-im-dateinamen?forum=dotnetframeworkde" target="_blank" rel="noopener">4.0 SMTPClient.Send Attachments mit Umlauten im Dateinamen</a> ，它指出 Base64 會每 30 個字切成一段去串，QuotedPrintable 則是每 76 個字去切。 而我們的狀況似乎是因為它是將字串轉成 Base64 去切，所以會有切到一半的狀況。</h3><h3 id="所以我們可以調整他的做法，將原始的字串依-7-個字串先切開再串接即可，如下，"><a href="#所以我們可以調整他的做法，將原始的字串依-7-個字串先切開再串接即可，如下，" class="headerlink" title="所以我們可以調整他的做法，將原始的字串依 7 個字串先切開再串接即可，如下，"></a>所以我們可以調整他的做法，將原始的字串依 7 個字串先切開再串接即可，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EmailHeaderHelper</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">ToBase64</span>(<span class="params"><span class="keyword">string</span> displayName</span>)</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">string</span> tranferEncodingMarker = String.Empty;</span><br><span class="line">		<span class="keyword">string</span> encodingMarker = String.Empty;</span><br><span class="line">		<span class="keyword">int</span> maxChunkLength = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		tranferEncodingMarker = <span class="string">"B"</span>;</span><br><span class="line">		encodingMarker = <span class="string">"UTF-8"</span>;</span><br><span class="line">		maxChunkLength = <span class="number">30</span> / <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">string</span> encodingtoken = String.Format(<span class="string">"=?&#123;0&#125;?&#123;1&#125;?"</span>, encodingMarker, tranferEncodingMarker);</span><br><span class="line">		<span class="keyword">string</span> softbreak = <span class="string">"?="</span>;</span><br><span class="line">		<span class="keyword">var</span> encodeDisplayName = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">foreach</span> (<span class="function"><span class="keyword">var</span> splitItem <span class="keyword">in</span> <span class="title">SplitByLength</span>(<span class="params">displayName, maxChunkLength</span>))</span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			encodeDisplayName.Append(encodingtoken);</span><br><span class="line">			encodeDisplayName.Append(Convert.ToBase64String(Encoding.UTF8.GetBytes(splitItem)));</span><br><span class="line">			encodeDisplayName.Append(softbreak);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> encodeDisplayName.ToString();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> IEnumerable&lt;<span class="keyword">string</span>&gt; <span class="title">SplitByLength</span>(<span class="params"><span class="keyword">string</span> stringToSplit, <span class="keyword">int</span> length</span>)</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">while</span> (stringToSplit.Length &gt; length)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">yield</span> <span class="keyword">return</span> stringToSplit.Substring(<span class="number">0</span>, length);</span><br><span class="line">			stringToSplit = stringToSplit.Substring(length);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (stringToSplit.Length &gt; <span class="number">0</span>) <span class="keyword">yield</span> <span class="keyword">return</span> stringToSplit;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="所以使用如下，"><a href="#所以使用如下，" class="headerlink" title="所以使用如下，"></a>所以使用如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> subject = <span class="string">"華華華(華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華"</span>;</span><br><span class="line">message.Subject = EmailHeaderHelper.ToBase64(subject);</span><br></pre></td></tr></table></figure>
+<h3 id="不過筆者發現，如果您有-2-個-utf-8-B-的話，-NET-的-Mail-元件似乎也不會自動去幫你切斷，所以另個寫法是自已串-Base64-的字串後，再串一個空的-utf-8-B-，如下，"><a href="#不過筆者發現，如果您有-2-個-utf-8-B-的話，-NET-的-Mail-元件似乎也不會自動去幫你切斷，所以另個寫法是自已串-Base64-的字串後，再串一個空的-utf-8-B-，如下，" class="headerlink" title="不過筆者發現，如果您有 2 個 =?utf-8?B? 的話， .NET 的 Mail 元件似乎也不會自動去幫你切斷，所以另個寫法是自已串 Base64 的字串後，再串一個空的 =?utf-8?B? ，如下，"></a>不過筆者發現，如果您有 2 個 <em>=?utf-8?B?</em> 的話， .NET 的 Mail 元件似乎也不會自動去幫你切斷，所以另個寫法是自已串 Base64 的字串後，再串一個空的 <em>=?utf-8?B?</em> ，如下，</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> subject = <span class="string">"華華華(華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華華"</span>;</span><br><span class="line"><span class="keyword">byte</span>[] subjectBytes = Encoding.GetEncoding(<span class="string">"utf-8"</span>).GetBytes(subject);</span><br><span class="line"><span class="keyword">string</span> subjectBase64 = <span class="string">"=?utf-8?B?"</span> + Convert.ToBase64String(subjectBytes) + <span class="string">"?="</span>;</span><br><span class="line"><span class="comment">//多加一個空的 =?utf-8?B??= ，就不會再被切開了</span></span><br><span class="line">subjectBase64 += <span class="string">"=?utf-8?B??="</span>;</span><br><span class="line">message.Subject = subjectBase64;</span><br></pre></td></tr></table></figure>
+<img src="/2017/10/27/20171027/005.png" title="slug">
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://social.msdn.microsoft.com/Forums/en-US/b6c764f7-4697-4394-b45f-128a24306d55/40-smtpclientsend-attachments-mit-umlauten-im-dateinamen?forum=dotnetframeworkde" target="_blank" rel="external">4.0 SMTPClient.Send Attachments mit Umlauten im Dateinamen</a></li>
+<li><a href="https://social.msdn.microsoft.com/Forums/en-US/b6c764f7-4697-4394-b45f-128a24306d55/40-smtpclientsend-attachments-mit-umlauten-im-dateinamen?forum=dotnetframeworkde" target="_blank" rel="noopener">4.0 SMTPClient.Send Attachments mit Umlauten im Dateinamen</a></li>
 </ul>
 
                           
@@ -584,18 +584,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -608,11 +596,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -649,6 +641,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1116,14 +1116,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1157,6 +1149,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1209,6 +1209,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

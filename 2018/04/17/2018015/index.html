@@ -174,10 +174,10 @@
           
                     
                       
-                        <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>  同事需要將一個 JSON 字串，裡面屬性值需要透過 Replace 的方式，來置換新的內容。但那些內容之中包含一些 JSON 的保留字，例如 / // 等字串。所以字串 Replace 之後，透過 JObject.Parse 去處理就報錯了。<br>  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> tmpJsonStringBefore = <span class="string">@"&#123;s:""@s""&#125;"</span>;</div><div class="line"><span class="keyword">var</span> o = JObject.Parse(tmpJsonStringBefore);</div><div class="line"><span class="keyword">var</span> s = <span class="string">"A\" string !@#$%^&amp;*()&#123;&#125;:\"?/?/|\"':&gt;;&gt;&lt;&#123;\"d\":\"v\" value"</span>;</div><div class="line"><span class="keyword">var</span> tmpJsonAfter = tmpJsonStringBefore.Replace(<span class="string">"@s"</span>, s);</div><div class="line"><span class="keyword">var</span> tmpJson = JObject.Parse(tmpJsonAfter);</div><div class="line">Console.WriteLine(tmpJson.ToString());</div></pre></td></tr></table></figure></p>
+                        <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>  同事需要將一個 JSON 字串，裡面屬性值需要透過 Replace 的方式，來置換新的內容。但那些內容之中包含一些 JSON 的保留字，例如 / // 等字串。所以字串 Replace 之後，透過 JObject.Parse 去處理就報錯了。<br>  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tmpJsonStringBefore = <span class="string">@"&#123;s:""@s""&#125;"</span>;</span><br><span class="line"><span class="keyword">var</span> o = JObject.Parse(tmpJsonStringBefore);</span><br><span class="line"><span class="keyword">var</span> s = <span class="string">"A\" string !@#$%^&amp;*()&#123;&#125;:\"?/?/|\"':&gt;;&gt;&lt;&#123;\"d\":\"v\" value"</span>;</span><br><span class="line"><span class="keyword">var</span> tmpJsonAfter = tmpJsonStringBefore.Replace(<span class="string">"@s"</span>, s);</span><br><span class="line"><span class="keyword">var</span> tmpJson = JObject.Parse(tmpJsonAfter);</span><br><span class="line">Console.WriteLine(tmpJson.ToString());</span><br></pre></td></tr></table></figure></p>
 <p>  以上的 Code 一執行就會出「<em>Newtonsoft.Json.JsonReaderException: ‘After parsing a value an unexpected character was encountered: s. Path ‘s’, line 1, position 7.’</em>」</p>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>  這時我們需要針對內容來做 Encode ，可以透過 HttpUtility.JavaScriptStringEncode (加入 System.Web 參考)，如下，<br>  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> tmpJsonStringBefore = <span class="string">@"&#123;s:""@s""&#125;"</span>;</div><div class="line"><span class="keyword">var</span> o = JObject.Parse(tmpJsonStringBefore);</div><div class="line"><span class="keyword">var</span> s = <span class="string">"A\" string !@#$%^&amp;*()&#123;&#125;:\"?/?/|\"':&gt;;&gt;&lt;&#123;\"d\":\"v\" value"</span>;</div><div class="line"><span class="keyword">var</span> encodeS = HttpUtility.JavaScriptStringEncode(s);</div><div class="line"><span class="keyword">var</span> tmpJsonAfter = tmpJsonStringBefore.Replace(<span class="string">"@s"</span>, encodeS);</div><div class="line"><span class="keyword">var</span> tmpJson = JObject.Parse(tmpJsonAfter);</div><div class="line">Console.WriteLine(tmpJson.ToString());</div></pre></td></tr></table></figure></p>
-<p>  執行結果如下圖，<br>  <img src="/2018/04/17/2018015/2018015001.png" alt="HttpUtility.JavaScriptStringEncode" title="HttpUtility.JavaScriptStringEncode"> </p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>  這時我們需要針對內容來做 Encode ，可以透過 HttpUtility.JavaScriptStringEncode (加入 System.Web 參考)，如下，<br>  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tmpJsonStringBefore = <span class="string">@"&#123;s:""@s""&#125;"</span>;</span><br><span class="line"><span class="keyword">var</span> o = JObject.Parse(tmpJsonStringBefore);</span><br><span class="line"><span class="keyword">var</span> s = <span class="string">"A\" string !@#$%^&amp;*()&#123;&#125;:\"?/?/|\"':&gt;;&gt;&lt;&#123;\"d\":\"v\" value"</span>;</span><br><span class="line"><span class="keyword">var</span> encodeS = HttpUtility.JavaScriptStringEncode(s);</span><br><span class="line"><span class="keyword">var</span> tmpJsonAfter = tmpJsonStringBefore.Replace(<span class="string">"@s"</span>, encodeS);</span><br><span class="line"><span class="keyword">var</span> tmpJson = JObject.Parse(tmpJsonAfter);</span><br><span class="line">Console.WriteLine(tmpJson.ToString());</span><br></pre></td></tr></table></figure></p>
+<p>  執行結果如下圖，<br>  <img src="/2018/04/17/2018015/2018015001.png" title="HttpUtility.JavaScriptStringEncode"> </p>
 
                           
                                     
@@ -561,18 +561,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -585,11 +573,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,6 +618,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1093,14 +1093,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1134,6 +1126,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1186,6 +1186,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

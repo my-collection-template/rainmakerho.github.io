@@ -158,7 +158,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/17/2018034/">2018034</a>
+      <a class="article-title" href="/2018/09/17/2018034/">Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 之 2</a>
     </h1>
   
 
@@ -173,8 +173,15 @@
           
                     
                       
-                        
-                          
+                            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 <a href="https://rainmakerho.github.io/2018/08/02/2018030/">Microsoft Botframework + Adaptive Cards 快速打造 Chatbot</a> 一篇中，<br>我們說明如何透過 Adaptive Cards 將所有的動作透過 Action 再依它的 Action Type 來轉換成對應的 Action 物件及處理該 Action 物件的 Strategy 物件。</p>
+                              
+                                <p class="article-more-link">
+                                  <a href="/2018/09/17/2018034/#more">
+                                    more &gt;&gt;
+                                  </a>
+                                </p>
+                                
+                                  
                                     
 
                                       
@@ -182,6 +189,33 @@
         <div class="article-info article-info-index">
           
               
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">chatbot</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">botframework</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">adaptivecard</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">adaptive</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Autofac</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
                 
 
                   
@@ -235,7 +269,7 @@
           
                     
                       
-                            <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近系統上有時會出現「NHibernate.Exceptions.GenericADOException System.Text.EncoderFallbackException」的錯誤，IIS Reset 後，又正常。<br>過一陣子，又會出現。到底怎麼回事呢?<br>錯誤訊息如下，<br>NHibernate.Exceptions.GenericADOException: could not execute query<br>[ select scuserm0_.USR_ID as col_0<em>0</em>, scuserm0_.USR_NAME as col_1<em>0</em> from SCUSERM scuserm0<em> where scuserm0</em>.USR<em>ID in (?) ]<br>Name:Scuserm - Value:RM4303<br>[SQL: select scuserm0</em>.USR_ID as col_0<em>0</em>, scuserm0_.USR_NAME as col_1<em>0</em> from SCUSERM scuserm0<em> where scuserm0</em>.USR_ID in (?)] —&gt; System.Text.EncoderFallbackException: 無法將索引 105 中的 Unicode 字元 \uD83C 轉譯為指定的字碼頁。<br>於 System.Text.EncoderExceptionFallbackBuffer.Fallback(Char charUnknown, Int32 index)<br>於 System.Text.EncoderFallbackBuffer.InternalFallback(Char ch, Char<em>&amp; chars)<br>於 System.Text.UTF8Encoding.GetBytes(Char</em> chars, Int32 charCount, Byte* bytes, Int32 byteCount, EncoderNLS baseEncoder)<br>於 System.Text.EncoderNLS.GetBytes(Char[] chars, Int32 charIndex, Int32 charCount, Byte[] bytes, Int32 byteIndex, Boolean flush)<br>於 System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)<br>於 System.IO.StreamWriter.Write(Char[] buffer, Int32 index, Int32 count)<br>於 System.IO.TextWriter.SyncTextWriter.WriteLine(String value)<br>於 NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)<br>於 NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)<br>於 NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>— 內部例外狀況堆疊追蹤的結尾 —<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.Loader.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)<br>於 NHibernate.Impl.SessionImpl.List(String query, QueryParameters queryParameters, IList results)<br>於 NHibernate.Impl.SessionImpl.List<a href="String query, QueryParameters parameters">T</a><br>於 NHibernate.Impl.QueryImpl.List<a href="">T</a></p>
+                            <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近系統上有時會出現「NHibernate.Exceptions.GenericADOException System.Text.EncoderFallbackException」的錯誤，IIS Reset 後，又正常。<br>過一陣子，又會出現。到底怎麼回事呢?<br>錯誤訊息如下，<br>NHibernate.Exceptions.GenericADOException: could not execute query<br>[ select scuserm0_.USR_ID as col_0_0_, scuserm0_.USR_NAME as col_1_0_ from SCUSERM scuserm0_ where scuserm0_.USR_ID in (?) ]<br>Name:Scuserm - Value:RM4303<br>[SQL: select scuserm0_.USR_ID as col_0_0_, scuserm0_.USR_NAME as col_1_0_ from SCUSERM scuserm0_ where scuserm0_.USR_ID in (?)] —&gt; System.Text.EncoderFallbackException: 無法將索引 105 中的 Unicode 字元 \uD83C 轉譯為指定的字碼頁。<br>於 System.Text.EncoderExceptionFallbackBuffer.Fallback(Char charUnknown, Int32 index)<br>於 System.Text.EncoderFallbackBuffer.InternalFallback(Char ch, Char<em>&amp; chars)<br>於 System.Text.UTF8Encoding.GetBytes(Char</em> chars, Int32 charCount, Byte* bytes, Int32 byteCount, EncoderNLS baseEncoder)<br>於 System.Text.EncoderNLS.GetBytes(Char[] chars, Int32 charIndex, Int32 charCount, Byte[] bytes, Int32 byteIndex, Boolean flush)<br>於 System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)<br>於 System.IO.StreamWriter.Write(Char[] buffer, Int32 index, Int32 count)<br>於 System.IO.TextWriter.SyncTextWriter.WriteLine(String value)<br>於 NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)<br>於 NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)<br>於 NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>— 內部例外狀況堆疊追蹤的結尾 —<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.Loader.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)<br>於 NHibernate.Impl.SessionImpl.List(String query, QueryParameters queryParameters, IList results)<br>於 NHibernate.Impl.SessionImpl.List<a href="String query, QueryParameters parameters">T</a><br>於 NHibernate.Impl.QueryImpl.List<a href="">T</a></p>
                               
                                 <p class="article-more-link">
                                   <a href="/2018/08/21/2018033/#more">
@@ -415,7 +449,7 @@
           
                     
                       
-                            <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>前陣子遇到了 http 403 的問題，今天又遇到了 http 500 的問題。<br>同事說，同一個資料，User A 連就 Ok, User B 連就出現 HTTP 500 內部伺服器錯誤 ，如下圖<br><img src="/2018/08/19/2018031/001.png" alt="[HTTP 500]" title="[HTTP 500]"></p>
+                            <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>前陣子遇到了 http 403 的問題，今天又遇到了 http 500 的問題。<br>同事說，同一個資料，User A 連就 Ok, User B 連就出現 HTTP 500 內部伺服器錯誤 ，如下圖<br><img src="/2018/08/19/2018031/001.png" title="[HTTP 500]"></p>
                               
                                 <p class="article-more-link">
                                   <a href="/2018/08/19/2018031/#more">
@@ -599,7 +633,7 @@
           
                     
                       
-                            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事在裝機時，從 Client 端 Browser 去開系統時，發現圖檔都沒有顯示出來。<br>將圖檔的 url 貼到 browser 網址列上來看，結果出現「403 - 禁止: 拒絕存取」。如下圖所示，<br><img src="/2018/08/02/2018029/001.png" alt="[403 - 禁止: 拒絕存取]" title="[403 - 禁止: 拒絕存取]"></p>
+                            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事在裝機時，從 Client 端 Browser 去開系統時，發現圖檔都沒有顯示出來。<br>將圖檔的 url 貼到 browser 網址列上來看，結果出現「403 - 禁止: 拒絕存取」。如下圖所示，<br><img src="/2018/08/02/2018029/001.png" title="[403 - 禁止: 拒絕存取]"></p>
                               
                                 <p class="article-more-link">
                                   <a href="/2018/08/02/2018029/#more">
@@ -811,7 +845,7 @@
           
                     
                       
-                            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在學習 RxJS 之前，我們要做環境設定，讓我們可以順利的完成我們的學習。<br>我是依 <a href="https://codingthesmartway.com/getting-started-with-rxjs-part-1-setting-up-the-development-environment-creating-observables/" target="_blank" rel="external">Getting Started With RxJS – Part 1: Setting Up The Development Environment &amp; Creating Observables</a> 這篇來實作。</p>
+                            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在學習 RxJS 之前，我們要做環境設定，讓我們可以順利的完成我們的學習。<br>我是依 <a href="https://codingthesmartway.com/getting-started-with-rxjs-part-1-setting-up-the-development-environment-creating-observables/" target="_blank" rel="noopener">Getting Started With RxJS – Part 1: Setting Up The Development Environment &amp; Creating Observables</a> 這篇來實作。</p>
                               
                                 <p class="article-more-link">
                                   <a href="/2018/07/26/2018027/#more">
@@ -1105,18 +1139,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -1129,11 +1151,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1170,6 +1196,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1637,14 +1671,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1678,6 +1704,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1730,6 +1764,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

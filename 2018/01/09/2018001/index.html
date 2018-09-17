@@ -172,7 +172,7 @@
           
                     
                       
-                        <p>我們在2016年有透過 Windows 10 IoT Core 來開發 UWP beacon 的程式，並透過 Azure IoT Hub 來處理訊息。<br>但是這支 UWP 程式執行一段時間後，那台 Raspberry 就無法由外部到它。<br>後來更新到 Build 15063 後，過一段時間後，整個作業系統直接就 Crash 掉了。<br>同事 Kent 查看 event 發現，因為 IoT Core 如果自動更新後，自動重新開機後， OS 就 Crash 掉了。<br>所以將自動更新透過 Power Shell 將它關掉(要更新的話，就手動更新測試沒問題再上)，可參考<a href="https://brosteins.com/2016/09/06/disable-windows-update-windows-10-iot-core-powershell/" target="_blank" rel="external">Disable Windows Update in Windows 10 IoT Core with PowerShell</a>。</p>
+                        <p>我們在2016年有透過 Windows 10 IoT Core 來開發 UWP beacon 的程式，並透過 Azure IoT Hub 來處理訊息。<br>但是這支 UWP 程式執行一段時間後，那台 Raspberry 就無法由外部到它。<br>後來更新到 Build 15063 後，過一段時間後，整個作業系統直接就 Crash 掉了。<br>同事 Kent 查看 event 發現，因為 IoT Core 如果自動更新後，自動重新開機後， OS 就 Crash 掉了。<br>所以將自動更新透過 Power Shell 將它關掉(要更新的話，就手動更新測試沒問題再上)，可參考<a href="https://brosteins.com/2016/09/06/disable-windows-update-windows-10-iot-core-powershell/" target="_blank" rel="noopener">Disable Windows Update in Windows 10 IoT Core with PowerShell</a>。</p>
 <p>過了一陣子後，無法連網的狀況又發生了，但系統是有取到 ip 的，但就是無法連網。<br>再將系統重新啟動後，就又可以正常連網。<br>所以就在程式中檢查，如果無法連到 Azure IoT Hub N 次之後，就讓系統重新啟動，可參考<a href="https://rainmakerho.github.io/2017/12/11/2017016/">Windows 10 IoT Core 如何透過 UWP 程式來 重開機 或是 關機 (C00CE014)</a>。</p>
 <ul>
 <li>而觀察到目前為止，採取這樣子的方式(停止自動更新、無法連網 N 次就重開機)，程式目前運作的都還蠻順利的哦! </li>
@@ -565,18 +565,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -589,11 +577,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -630,6 +622,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1097,14 +1097,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1138,6 +1130,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1190,6 +1190,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">

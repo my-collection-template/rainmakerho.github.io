@@ -179,8 +179,8 @@
 <blockquote>
 <p>System.Net.Mail.SmtpConnection.GetConnection  &lt;System.NullReferenceException&gt; 並未將物件參考設定為物件的執行個體<br>  at System.Net.Mail.SmtpClient.Send  &lt;System.Net.Mail.SmtpException&gt; 傳送郵件失敗。<br>  於 System.Net.Mail.SmtpClient.Send(MailMessage message) </p>
 </blockquote>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>於是寫了測試程式來測試，卻是 OK 的，如下<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> smpt = <span class="keyword">new</span> System.Net.Mail.SmtpClient();</div><div class="line">smpt.Host = <span class="string">"mail.rm.com.tw"</span>;</div><div class="line"><span class="keyword">var</span> credentials = <span class="keyword">new</span> NetworkCredential(<span class="string">"rainmaker_ho"</span>, <span class="string">""</span>);</div><div class="line"><span class="keyword">var</span> msg = <span class="keyword">new</span> System.Net.Mail.MailMessage();</div><div class="line">smpt.Credentials = credentials;</div><div class="line">msg.From = <span class="keyword">new</span> MailAddress(<span class="string">"rainmaker_ho@mail.rm.com.tw"</span>);</div><div class="line">msg.Subject = <span class="string">"subject"</span>;</div><div class="line">msg.Body = <span class="string">"body"</span>;</div><div class="line">msg.To.Add(<span class="keyword">new</span> MailAddress(<span class="string">"rainmaker_ho@mail.rm.com.tw"</span>));</div><div class="line"><span class="keyword">try</span></div><div class="line">&#123;</div><div class="line">	smpt.Send(msg);</div><div class="line">&#125;</div><div class="line"><span class="keyword">catch</span> (Exception e)</div><div class="line">&#123;</div><div class="line">	Console.WriteLine(e.ToString());</div><div class="line">	<span class="keyword">throw</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>大家可以發現，NetworkCredential 只 Assign 使用者代號，使用者密碼是給空字串。<br>有些 mail server 是允許發給內部使用者時，不需要驗證的(有點像是撥打內網不用付費)。<br>模擬執行檔去呼叫也沒問題。<br>而錯誤訊息(SmtpConnection.GetConnection NullReferenceException)也叫人不知如何是好 …<br>正當絕望之際，忽然想到，我的測試程式預設是使用 .NET 4.6 ，而我的執行檔是 .NET 3.5 的。<br>於是將測試程式切到 .NET 3.5 一試，一樣的錯誤出現了 …<br><img src="/2018/03/14/2018012/2018012001.png" alt="SmtpConnection.GetConnection NullReferenceException" title="SmtpConnection.GetConnection NullReferenceException"><br>於是再將 NetworkCredential 的使用者代號也給空字串，再測試就沒有問題了。<br>以這個問題的解法有2個，</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>於是寫了測試程式來測試，卻是 OK 的，如下<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> smpt = <span class="keyword">new</span> System.Net.Mail.SmtpClient();</span><br><span class="line">smpt.Host = <span class="string">"mail.rm.com.tw"</span>;</span><br><span class="line"><span class="keyword">var</span> credentials = <span class="keyword">new</span> NetworkCredential(<span class="string">"rainmaker_ho"</span>, <span class="string">""</span>);</span><br><span class="line"><span class="keyword">var</span> msg = <span class="keyword">new</span> System.Net.Mail.MailMessage();</span><br><span class="line">smpt.Credentials = credentials;</span><br><span class="line">msg.From = <span class="keyword">new</span> MailAddress(<span class="string">"rainmaker_ho@mail.rm.com.tw"</span>);</span><br><span class="line">msg.Subject = <span class="string">"subject"</span>;</span><br><span class="line">msg.Body = <span class="string">"body"</span>;</span><br><span class="line">msg.To.Add(<span class="keyword">new</span> MailAddress(<span class="string">"rainmaker_ho@mail.rm.com.tw"</span>));</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">	smpt.Send(msg);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (Exception e)</span><br><span class="line">&#123;</span><br><span class="line">	Console.WriteLine(e.ToString());</span><br><span class="line">	<span class="keyword">throw</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大家可以發現，NetworkCredential 只 Assign 使用者代號，使用者密碼是給空字串。<br>有些 mail server 是允許發給內部使用者時，不需要驗證的(有點像是撥打內網不用付費)。<br>模擬執行檔去呼叫也沒問題。<br>而錯誤訊息(SmtpConnection.GetConnection NullReferenceException)也叫人不知如何是好 …<br>正當絕望之際，忽然想到，我的測試程式預設是使用 .NET 4.6 ，而我的執行檔是 .NET 3.5 的。<br>於是將測試程式切到 .NET 3.5 一試，一樣的錯誤出現了 …<br><img src="/2018/03/14/2018012/2018012001.png" title="SmtpConnection.GetConnection NullReferenceException"><br>於是再將 NetworkCredential 的使用者代號也給空字串，再測試就沒有問題了。<br>以這個問題的解法有2個，</p>
 <ol>
 <li>如果不需要驗證的話，NetworkCredential 的使用者及密碼都給空字串。</li>
 <li>設定執行檔的 config ，讓它走 .NET 4.0 因為這樣子的狀況，在 .NET 4.0 是沒問題的。<blockquote>
@@ -188,7 +188,7 @@
 </blockquote>
 </li>
 </ol>
-<p>嗯… 不過，為什麼舊的 Windows 2008 Server 卻不會有這種問題呢? 筆者在另一台 Windows 2008 R2 Server 上試也是 GG 。<br>以下是 Windows 2008 Server 上關於 .net 3.5 的更新，<br><img src="/2018/03/14/2018012/2018012002.png" alt="Windows 2008 Server .net 3.5 的更新" title="Windows 2008 Server .net 3.5 的更新"> </p>
+<p>嗯… 不過，為什麼舊的 Windows 2008 Server 卻不會有這種問題呢? 筆者在另一台 Windows 2008 R2 Server 上試也是 GG 。<br>以下是 Windows 2008 Server 上關於 .net 3.5 的更新，<br><img src="/2018/03/14/2018012/2018012002.png" title="Windows 2008 Server .net 3.5 的更新"> </p>
 
                           
                                     
@@ -584,18 +584,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -608,11 +596,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -649,6 +641,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unexpected error from external database driver (1). (Microsoft JET Database Engine)</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1116,14 +1116,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DOM</a>
               </li>
              
@@ -1157,6 +1149,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">darw</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Development Environment</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1209,6 +1209,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
               </li>
              
               <li class="article-tag-list-item">
