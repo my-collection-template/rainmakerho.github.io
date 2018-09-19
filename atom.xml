@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-09-17T06:29:44.398Z</updated>
+  <updated>2018-09-19T08:04:37.146Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ASP 0104 不允許的操作 Request.BinaryRead</title>
+    <link href="https://rainmakerho.github.io/2018/09/19/2018035/"/>
+    <id>https://rainmakerho.github.io/2018/09/19/2018035/</id>
+    <published>2018-09-19T04:29:38.000Z</published>
+    <updated>2018-09-19T08:04:37.146Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事將一個 ASP 的系統從 Windows 2003 移機到 Windows 2008 ，在測試上傳檔案時，比較大的檔案時，會發生「-2147467259 007~ASP 0104~不允許的操作」的錯誤。</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>上網查了一下，應該是因為 ASP 預設上傳限制是<strong>200k</strong>，所以要改設定，讓它大一點。</p><h4 id="從管理界面調整"><a href="#從管理界面調整" class="headerlink" title="從管理界面調整"></a>從管理界面調整</h4><ul><li><p>開啟 iis ，dbclick ASP</p><img src="/2018/09/19/2018035/001.png" title="[iis asp]"></li><li><p>展開 限制內容 區段</p><img src="/2018/09/19/2018035/002.png" title="[限制內容]"></li><li><p>調整 要求實體的上限<br>將原本預設值為 200000 的值改成您要放寬的數值。</p><img src="/2018/09/19/2018035/003.png" title="[要求實體的上限]"></li></ul><h4 id="調整-web-config"><a href="#調整-web-config" class="headerlink" title="調整 web.config"></a>調整 web.config</h4><p>在 web.config 中加入 ASP 的設定，調整 maxRequestEntityAllowed 的大小，如下，<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">system.webServer</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">asp</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">cache</span> <span class="attr">diskTemplateCacheDirectory</span>=<span class="string">"%SystemDrive%\inetpub\temp\ASP Compiled Templates"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">limits</span> <span class="attr">scriptTimeout</span>=<span class="string">"00:02:00"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">queueConnectionTestTime</span>=<span class="string">"00:00:05"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">requestQueueMax</span>=<span class="string">"1000"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">maxRequestEntityAllowed</span>=<span class="string">"104857600"</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">asp</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 別的設定值 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">system.webServer</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>後來同事在 iis 調整後，就可以順利上傳較大的檔案了 :)</p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://stackoverflow.com/questions/1989334/how-do-i-enable-upload-of-large-files-in-classic-asp-on-iis-7" target="_blank" rel="noopener">How do I enable upload of large files in classic ASP on IIS 7?</a><br><a href="https://docs.microsoft.com/en-us/iis/configuration/system.webServer/asp/limits" target="_blank" rel="noopener">ASP Limits <limits></limits></a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近同事將一個 ASP 的系統從 Windows 2003 移機到 Windows 2008 ，在測試上傳檔案時，比較大的檔案時，會發生「-
+      
+    
+    </summary>
+    
+    
+      <category term="Request.BinaryRead" scheme="https://rainmakerho.github.io/tags/Request-BinaryRead/"/>
+    
+      <category term="ASP 0104" scheme="https://rainmakerho.github.io/tags/ASP-0104/"/>
+    
+      <category term="2147467259" scheme="https://rainmakerho.github.io/tags/2147467259/"/>
+    
+      <category term="Windows 2008" scheme="https://rainmakerho.github.io/tags/Windows-2008/"/>
+    
+      <category term="200k" scheme="https://rainmakerho.github.io/tags/200k/"/>
+    
+  </entry>
   
   <entry>
     <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 之 2</title>
@@ -597,35 +628,6 @@
       <category term="Web Application" scheme="https://rainmakerho.github.io/tags/Web-Application/"/>
     
       <category term="DirectLine" scheme="https://rainmakerho.github.io/tags/DirectLine/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Replace JSON 字串中的屬性值 (Replace JSON Value String)</title>
-    <link href="https://rainmakerho.github.io/2018/04/17/2018015/"/>
-    <id>https://rainmakerho.github.io/2018/04/17/2018015/</id>
-    <published>2018-04-17T13:12:50.000Z</published>
-    <updated>2018-04-17T13:30:41.556Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>  同事需要將一個 JSON 字串，裡面屬性值需要透過 Replace 的方式，來置換新的內容。但那些內容之中包含一些 JSON 的保留字，例如 / // 等字串。所以字串 Replace 之後，透過 JObject.Parse 去處理就報錯了。<br>  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tmpJsonStringBefore = <span class="string">@"&#123;s:""@s""&#125;"</span>;</span><br><span class="line"><span class="keyword">var</span> o = JObject.Parse(tmpJsonStringBefore);</span><br><span class="line"><span class="keyword">var</span> s = <span class="string">"A\" string !@#$%^&amp;*()&#123;&#125;:\"?/?/|\"':&gt;;&gt;&lt;&#123;\"d\":\"v\" value"</span>;</span><br><span class="line"><span class="keyword">var</span> tmpJsonAfter = tmpJsonStringBefore.Replace(<span class="string">"@s"</span>, s);</span><br><span class="line"><span class="keyword">var</span> tmpJson = JObject.Parse(tmpJsonAfter);</span><br><span class="line">Console.WriteLine(tmpJson.ToString());</span><br></pre></td></tr></table></figure></p><p>  以上的 Code 一執行就會出「<em>Newtonsoft.Json.JsonReaderException: ‘After parsing a value an unexpected character was encountered: s. Path ‘s’, line 1, position 7.’</em>」</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>  這時我們需要針對內容來做 Encode ，可以透過 HttpUtility.JavaScriptStringEncode (加入 System.Web 參考)，如下，<br>  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tmpJsonStringBefore = <span class="string">@"&#123;s:""@s""&#125;"</span>;</span><br><span class="line"><span class="keyword">var</span> o = JObject.Parse(tmpJsonStringBefore);</span><br><span class="line"><span class="keyword">var</span> s = <span class="string">"A\" string !@#$%^&amp;*()&#123;&#125;:\"?/?/|\"':&gt;;&gt;&lt;&#123;\"d\":\"v\" value"</span>;</span><br><span class="line"><span class="keyword">var</span> encodeS = HttpUtility.JavaScriptStringEncode(s);</span><br><span class="line"><span class="keyword">var</span> tmpJsonAfter = tmpJsonStringBefore.Replace(<span class="string">"@s"</span>, encodeS);</span><br><span class="line"><span class="keyword">var</span> tmpJson = JObject.Parse(tmpJsonAfter);</span><br><span class="line">Console.WriteLine(tmpJson.ToString());</span><br></pre></td></tr></table></figure></p><p>  執行結果如下圖，<br>  <img src="/2018/04/17/2018015/2018015001.png" title="HttpUtility.JavaScriptStringEncode"> </p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;問題&quot;&gt;&lt;a href=&quot;#問題&quot; class=&quot;headerlink&quot; title=&quot;問題&quot;&gt;&lt;/a&gt;問題&lt;/h3&gt;&lt;p&gt;  同事需要將一個 JSON 字串，裡面屬性值需要透過 Replace 的方式，來置換新的內容。但那些內容之中包含一些 JSON 的保留字，
-      
-    
-    </summary>
-    
-    
-      <category term="JSON" scheme="https://rainmakerho.github.io/tags/JSON/"/>
-    
-      <category term="Replace" scheme="https://rainmakerho.github.io/tags/Replace/"/>
-    
-      <category term="special character" scheme="https://rainmakerho.github.io/tags/special-character/"/>
-    
-      <category term="JavaScriptStringEncode" scheme="https://rainmakerho.github.io/tags/JavaScriptStringEncode/"/>
     
   </entry>
   

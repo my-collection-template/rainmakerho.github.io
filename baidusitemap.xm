@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/09/19/2018035/</loc>
+    <lastmod>2018-09-19T08:04:37.146Z</lastmod>
+    <data>
+        <display>
+        <title>ASP 0104 不允許的操作 Request.BinaryRead</title>
+        <pubTime>2018-09-19T04:29:38.000Z</pubTime>
+        
+        <tag>Request.BinaryRead</tag>
+         
+        <tag>ASP 0104</tag>
+         
+        <tag>2147467259</tag>
+         
+        <tag>Windows 2008</tag>
+         
+        <tag>200k</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/09/17/2018034/</loc>
     <lastmod>2018-09-17T06:29:44.398Z</lastmod>
     <data>
