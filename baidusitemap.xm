@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/10/09/2018036/</loc>
+    <lastmod>2018-10-10T04:57:23.097Z</lastmod>
+    <data>
+        <display>
+        <title>請使用 ClientScriptManager.RegisterForEventValidation 方法註冊回傳或回呼資料，以進行驗證</title>
+        <pubTime>2018-10-09T09:19:48.000Z</pubTime>
+        
+        <tag>RegisterForEventValidation</tag>
+         
+        <tag>EnableEventValidation</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/09/19/2018035/</loc>
     <lastmod>2018-09-19T08:04:37.146Z</lastmod>
     <data>
