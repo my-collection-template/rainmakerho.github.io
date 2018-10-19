@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-10-10T04:57:23.097Z</updated>
+  <updated>2018-10-19T08:54:01.417Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>System.Net.WebException: 要求已經中止: 無法建立 SSL/TLS 的安全通道 錯誤的另一種可能性</title>
+    <link href="https://rainmakerho.github.io/2018/10/19/2018037/"/>
+    <id>https://rainmakerho.github.io/2018/10/19/2018037/</id>
+    <published>2018-10-19T08:06:52.000Z</published>
+    <updated>2018-10-19T08:54:01.417Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近因為 Server 設定停用 SSL ， 改走 TLS 1.2。<br>所以使用 IIS Crypto2.0 來設定，設定之後，程式卻發生 「System.Net.WebException: 要求已經中止: 無法建立 SSL/TLS 的安全通道 錯誤的另一種可能性」的錯誤。</p><p>參考網路上的修改後，還是程式還是一樣會噴錯。 到底是怎麼一回事呢?</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>如果透過 Chrome 去連目標的 WebService ，則可以正常顯示。<br>但如果是透過 IE 去連的話，則會出現「無法顯示此網頁 開啟[進階]設定中的 TLS 1.0、TLS 1.1與TLS 1.2，然後再嘗試…」的錯誤，如下，<br><img src="/2018/10/19/2018037/001.png" title="[IE ERROR]"></p><p>而在 Event Log 中，也會有 Schannel 的錯誤訊息(TLS通訊協定定義的嚴重警示代碼為40。)，如下，<br><img src="/2018/10/19/2018037/002.png" title="[Event Log Schannel Error]"></p><p>看起來似乎 ie 不通的話，我們的程式就不通。<br>跟大伙討論後，覺得有可能是設定的 Ciphers 目標電腦不 Support 。</p><h3 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h3><p>其中某台電腦是可以正常連到那台 HTTPS 的 Web Services 。<br>所以就開啟 IIS Crypto 2.0 工具來比較，看是那裡設定不一致。<br>比較後發現，可以的那台電腦有勾選 AES 及 SHA 256 ，而我們的電腦沒有勾。<br>將它勾起來重開機後，再試就可以正常連到它了。</p><h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>如果參考網路上「無法建立 SSL/TLS 的安全通道」的解法還是無法解決您的問題。<br>您可以試著使用 ie 連看看，或是看某台電腦是否 ok，去比較一下它們的 IIS Crypto 中的設定是否相同哦!</p><p>非常感謝 JN, Hardy, Bobby, Pally 的分享。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近因為 Server 設定停用 SSL ， 改走 TLS 1.2。&lt;br&gt;所以使用 IIS Crypto2.0 來設定，設定之後，程式卻發
+      
+    
+    </summary>
+    
+    
+      <category term="SSL/TLS" scheme="https://rainmakerho.github.io/tags/SSL-TLS/"/>
+    
+      <category term="ServerCertificateValidationCallback" scheme="https://rainmakerho.github.io/tags/ServerCertificateValidationCallback/"/>
+    
+      <category term="SecurityProtocol" scheme="https://rainmakerho.github.io/tags/SecurityProtocol/"/>
+    
+  </entry>
   
   <entry>
     <title>請使用 ClientScriptManager.RegisterForEventValidation 方法註冊回傳或回呼資料，以進行驗證</title>
@@ -595,33 +622,6 @@
       <category term="autofac" scheme="https://rainmakerho.github.io/tags/autofac/"/>
     
       <category term="DialogModule.BeginLifetimeScope" scheme="https://rainmakerho.github.io/tags/DialogModule-BeginLifetimeScope/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>談談 MSDTC 的問題</title>
-    <link href="https://rainmakerho.github.io/2018/05/16/2018017/"/>
-    <id>https://rainmakerho.github.io/2018/05/16/2018017/</id>
-    <published>2018-05-16T03:01:04.000Z</published>
-    <updated>2018-05-16T03:27:03.392Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>MSDTC 不通，無法啟用 MSDTC，協力電腦異動管理員已經停用了對遠端/網路異動的支援，現在看見 MSDTC 真是頭大呀 ~~~</p><h3 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h3><p>昨天客戶的系統有一個請假功能忽然就無法沒有作用，但其他功能是好的。詢問客戶之前有做了些什麼嗎? 客戶說只有一台 switch 壞掉，換新的 siwtch 而已。當下真覺那會不會是網路動了什麼，所以一到客戶那就試看看到底是什麼問題。最後從 log 中發現「MSDTC」的問題。立馬試了 ap <-> db ，用 name 是否可以 ping 得到，結果是可以的。詢問客戶網管，ap <-> db 是否有什麼 rule 擋了那些 port 呢?<br>記得 MSDTC 需要 port 135, ping icmp, 如果有 firewall 的話，要設定某 Port Range 給它，例如 port 5001-6000(可以參考<a href="https://blogs.technet.microsoft.com/askcore/2014/04/29/how-to-configure-msdtc-to-use-a-specific-port-in-windows-server-20122012r2/" target="_blank" rel="noopener">How to Configure MSDTC to Use a Specific Port in Windows Server 2012/2012R2</a> )。可是網管說沒有擋那些 Port 呀!!!<br>正當一籌莫展之時，客戶的 DBA 詢問說，那 ap 跟 db 本身的 firewall 有沒有開呀!?<br>疑 !!! 檢查了一下，真是有開呢? 先將它關閉試看看，MSDTC 果然就通了。真的非常感謝客戶 IT 的幫忙。</-></-></p><p>回到這問題，下次 MSDTC 問題呢? 還是要先從 ap，db 的環境來看 firewall，都沒問題後，再往外去查。附上我們公司整理 MSDTC 排除的相關文件，希望對大家在排除 MSDTC 上有所益助。</p><a href="/2018/05/16/2018017/故障排除指南.doc" title="[MSSQLDTC 故障排除指南.doc]">[MSSQLDTC 故障排除指南.doc]</a><a href="/2018/05/16/2018017/MSDTC.doc" title="[MSDTC.doc]">[MSDTC.doc]</a><a href="/2018/05/16/2018017/CRDSUPPORT3406.txt" title="[協力電腦異動管理員已經停用了對遠端/網路異動的支援.txt]">[協力電腦異動管理員已經停用了對遠端/網路異動的支援.txt]</a>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;問題&quot;&gt;&lt;a href=&quot;#問題&quot; class=&quot;headerlink&quot; title=&quot;問題&quot;&gt;&lt;/a&gt;問題&lt;/h3&gt;&lt;p&gt;MSDTC 不通，無法啟用 MSDTC，協力電腦異動管理員已經停用了對遠端/網路異動的支援，現在看見 MSDTC 真是頭大呀 ~~~&lt;/p&gt;
-      
-    
-    </summary>
-    
-    
-      <category term="MSDTC" scheme="https://rainmakerho.github.io/tags/MSDTC/"/>
-    
-      <category term="firewall" scheme="https://rainmakerho.github.io/tags/firewall/"/>
-    
-      <category term="協力電腦異動管理員已經停用了對遠端/網路異動的支援" scheme="https://rainmakerho.github.io/tags/%E5%8D%94%E5%8A%9B%E9%9B%BB%E8%85%A6%E7%95%B0%E5%8B%95%E7%AE%A1%E7%90%86%E5%93%A1%E5%B7%B2%E7%B6%93%E5%81%9C%E7%94%A8%E4%BA%86%E5%B0%8D%E9%81%A0%E7%AB%AF-%E7%B6%B2%E8%B7%AF%E7%95%B0%E5%8B%95%E7%9A%84%E6%94%AF%E6%8F%B4/"/>
     
   </entry>
   

@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/10/19/2018037/</loc>
+    <lastmod>2018-10-19T08:54:01.417Z</lastmod>
+    <data>
+        <display>
+        <title>System.Net.WebException: 要求已經中止: 無法建立 SSL/TLS 的安全通道 錯誤的另一種可能性</title>
+        <pubTime>2018-10-19T08:06:52.000Z</pubTime>
+        
+        <tag>SSL/TLS</tag>
+         
+        <tag>ServerCertificateValidationCallback</tag>
+         
+        <tag>SecurityProtocol</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/10/09/2018036/</loc>
     <lastmod>2018-10-10T04:57:23.097Z</lastmod>
     <data>
