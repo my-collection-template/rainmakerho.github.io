@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-10-19T08:54:01.417Z</updated>
+  <updated>2018-10-22T09:54:16.318Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://rainmakerho.github.io/2018/10/19/2018037/"/>
     <id>https://rainmakerho.github.io/2018/10/19/2018037/</id>
     <published>2018-10-19T08:06:52.000Z</published>
-    <updated>2018-10-19T08:54:01.417Z</updated>
+    <updated>2018-10-22T09:54:16.318Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近因為 Server 設定停用 SSL ， 改走 TLS 1.2。<br>所以使用 IIS Crypto2.0 來設定，設定之後，程式卻發生 「System.Net.WebException: 要求已經中止: 無法建立 SSL/TLS 的安全通道 錯誤的另一種可能性」的錯誤。</p><p>參考網路上的修改後，還是程式還是一樣會噴錯。 到底是怎麼一回事呢?</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>如果透過 Chrome 去連目標的 WebService ，則可以正常顯示。<br>但如果是透過 IE 去連的話，則會出現「無法顯示此網頁 開啟[進階]設定中的 TLS 1.0、TLS 1.1與TLS 1.2，然後再嘗試…」的錯誤，如下，<br><img src="/2018/10/19/2018037/001.png" title="[IE ERROR]"></p><p>而在 Event Log 中，也會有 Schannel 的錯誤訊息(TLS通訊協定定義的嚴重警示代碼為40。)，如下，<br><img src="/2018/10/19/2018037/002.png" title="[Event Log Schannel Error]"></p><p>看起來似乎 ie 不通的話，我們的程式就不通。<br>跟大伙討論後，覺得有可能是設定的 Ciphers 目標電腦不 Support 。</p><h3 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h3><p>其中某台電腦是可以正常連到那台 HTTPS 的 Web Services 。<br>所以就開啟 IIS Crypto 2.0 工具來比較，看是那裡設定不一致。<br>比較後發現，可以的那台電腦有勾選 AES 及 SHA 256 ，而我們的電腦沒有勾。<br>將它勾起來重開機後，再試就可以正常連到它了。</p><h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>如果參考網路上「無法建立 SSL/TLS 的安全通道」的解法還是無法解決您的問題。<br>您可以試著使用 ie 連看看，或是看某台電腦是否 ok，去比較一下它們的 IIS Crypto 中的設定是否相同哦!</p><p>非常感謝 JN, Hardy, Bobby, Pally 的分享。</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近因為 Server 設定停用 SSL ， 改走 TLS 1.2。<br>所以使用 IIS Crypto2.0 來設定，設定之後，程式卻發生 「System.Net.WebException: 要求已經中止: 無法建立 SSL/TLS 的安全通道」的錯誤。</p><p>參考網路上的修改後，還是程式還是一樣會噴錯。 到底是怎麼一回事呢?</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>如果透過 Chrome 去連目標的 WebService ，則可以正常顯示。<br>用 Powershell 去走 443 ，也是 ok 的，如下，<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">New-Object</span> System.Net.Sockets.TcpClient(<span class="string">"webservice url"</span>, <span class="number">443</span>)</span><br></pre></td></tr></table></figure></p><img src="/2018/10/19/2018037/003.png" title="[TcpClient 443]"><p>但如果是透過 IE 去連的話，則會出現「無法顯示此網頁 開啟[進階]設定中的 TLS 1.0、TLS 1.1與TLS 1.2，然後再嘗試…」的錯誤，如下，<br><img src="/2018/10/19/2018037/001.png" title="[IE ERROR]"></p><p>而在 Event Log 中，也會有 Schannel 的錯誤訊息(TLS通訊協定定義的嚴重警示代碼為40。)，如下，<br><img src="/2018/10/19/2018037/002.png" title="[Event Log Schannel Error]"></p><p>可是 ie 明明就有勾 TLS 1.0、TLS 1.1與TLS 1.2的選項呀。<br>看起來似乎 ie 不通的話，我們的程式就不通。<br>跟大伙討論後，覺得有可能是設定的 Ciphers 目標電腦不 Support 。</p><h3 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h3><p>其中某台電腦是可以正常連到那台 HTTPS 的 Web Services 。<br>所以就開啟 IIS Crypto 2.0 工具來比較，看是那裡設定不一致。<br>比較後發現，可以的那台電腦有勾選 AES 及 SHA 256 ，而我們的電腦沒有勾。<br>將它勾起來重開機後，再試就可以正常連到它了。</p><h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>如果參考網路上「無法建立 SSL/TLS 的安全通道」的解法還是無法解決您的問題。<br>您可以試著使用 ie 連看看，或是看某台電腦是否 ok，去比較一下它們的 IIS Crypto 中的設定是否相同哦!</p><p>非常感謝 JN, Hardy, Bobby, Pally 的分享。</p>]]></content>
     
     <summary type="html">
     
