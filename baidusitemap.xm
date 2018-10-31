@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/10/31/2018038/</loc>
+    <lastmod>2018-10-31T06:35:01.880Z</lastmod>
+    <data>
+        <display>
+        <title>SQL 某個欄位包含 文字、符號及數值，是否可依 數值、文字來排序?</title>
+        <pubTime>2018-10-31T03:45:03.000Z</pubTime>
+        
+        <tag>sql</tag>
+         
+        <tag>order by</tag>
+         
+        <tag>letters</tag>
+         
+        <tag>numbers</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/10/19/2018037/</loc>
     <lastmod>2018-10-22T09:54:16.318Z</lastmod>
     <data>
@@ -674,11 +697,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -703,11 +726,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
