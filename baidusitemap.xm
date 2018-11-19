@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/11/19/2018039/</loc>
+    <lastmod>2018-11-19T08:42:04.197Z</lastmod>
+    <data>
+        <display>
+        <title>env: node: No such file or directory</title>
+        <pubTime>2018-11-19T08:29:22.000Z</pubTime>
+        
+        <tag>jenkins</tag>
+         
+        <tag>macos</tag>
+         
+        <tag>node</tag>
+         
+        <tag>npm</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/10/31/2018038/</loc>
     <lastmod>2018-10-31T06:43:25.356Z</lastmod>
     <data>
@@ -697,11 +720,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -726,11 +749,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
-         
-        <tag>NullReferenceException</tag>
          
          
            

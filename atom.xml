@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-10-31T06:43:25.356Z</updated>
+  <updated>2018-11-19T08:42:04.197Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>env: node: No such file or directory</title>
+    <link href="https://rainmakerho.github.io/2018/11/19/2018039/"/>
+    <id>https://rainmakerho.github.io/2018/11/19/2018039/</id>
+    <published>2018-11-19T08:29:22.000Z</published>
+    <updated>2018-11-19T08:42:04.197Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近透過 Jenkins 透過 ssh 在 mac 上建置時，從 git 拉 source 上來呼叫 npm install 時，會出現以下的錯誤，<br><strong>bash: line 5: npm: command not found</strong></p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>因為找不到 npm command ，所以就把原本的 script 改成加上 path ，如下，<br><strong>/usr/local/bin/npm install;</strong></p><p>結果又出現了以下的錯誤，<br><strong>env: node: No such file or directory</strong></p><p>怎麼會這樣子呢? 請問同事 david 後，它建議將 /usr/local/bin 加到 path 去會比較好。<br>所以在執行 npm install 之前，就先將 /usr/local/bin 加到 path 之中，如下，</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/bin:&quot;$PATH&quot;</span><br></pre></td></tr></table></figure><p>所以執行 npm install 及 npm run build 就順利建置完成了哦!</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近透過 Jenkins 透過 ssh 在 mac 上建置時，從 git 拉 source 上來呼叫 npm install 時，會出現以下
+      
+    
+    </summary>
+    
+    
+      <category term="jenkins" scheme="https://rainmakerho.github.io/tags/jenkins/"/>
+    
+      <category term="macos" scheme="https://rainmakerho.github.io/tags/macos/"/>
+    
+      <category term="node" scheme="https://rainmakerho.github.io/tags/node/"/>
+    
+      <category term="npm" scheme="https://rainmakerho.github.io/tags/npm/"/>
+    
+  </entry>
   
   <entry>
     <title>SQL 某個欄位包含 文字、符號及數值，是否可依 數值、文字來排序?</title>
@@ -595,33 +624,6 @@
       <category term="FlushAsync" scheme="https://rainmakerho.github.io/tags/FlushAsync/"/>
     
       <category term="The data is changed" scheme="https://rainmakerho.github.io/tags/The-data-is-changed/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Implement global message handlers and resets the dialog stack</title>
-    <link href="https://rainmakerho.github.io/2018/06/05/2018019/"/>
-    <id>https://rainmakerho.github.io/2018/06/05/2018019/</id>
-    <published>2018-06-05T01:45:23.000Z</published>
-    <updated>2018-06-05T06:42:55.874Z</updated>
-    
-    <content type="html"><![CDATA[<p>在 <a href="https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-global-handlers?view=azure-bot-service-3.0" target="_blank" rel="noopener">Implement global message handlers</a> 有說明如何透過 global message handlers 來處理一些 help, cancel 等等的全域處理。例如在一個對話當中，使用者輸入了取得待批示的指令，這時需要將處理待批示清單的 Dialog 叫出來，並且將目前處理中的對話堆疉清除(this.task.Reset())。</p><p>這裡要注意的是 this.task.Reset() 一定要放在最後面，不然會噴錯哦! 例如，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">PostAsync</span>(<span class="params">IActivity item, <span class="keyword">string</span> state, CancellationToken token</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> message = item <span class="keyword">as</span> IMessageActivity;</span><br><span class="line">    <span class="keyword">if</span> (message != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> settingsDialog = <span class="keyword">new</span> SettingsDialog();</span><br><span class="line">        <span class="keyword">var</span> interruption = settingsDialog.Void&lt;<span class="keyword">object</span>, IMessageActivity&gt;();</span><br><span class="line">        <span class="keyword">this</span>.task.Call(interruption, <span class="literal">null</span>);</span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">this</span>.task.PollAsync(token);</span><br><span class="line">        <span class="comment">// 要清除 DialogStack 的話，請加上 this.task.Reset()</span></span><br><span class="line">        <span class="keyword">this</span>.task.Reset();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>另外，如果無法在繼承 ScorableBase 的 Class 中去 Reset DialogStack 的話。<br>在 Dialog 中則可以透過 context.EndConversation 去清 DialogStack (非常感謝同事 Marty 的分享)，如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">context.EndConversation(EndOfConversationCodes.CompletedSuccessfully);</span><br><span class="line">context.Done&lt;<span class="keyword">string</span>&gt;(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure><p>也可以參考 <a href="https://stackoverflow.com/questions/39113403/terminate-all-dialogs-and-exit-conversation-in-ms-bot-framework-when-the-user-ty/39160430" target="_blank" rel="noopener">Terminate all dialogs and exit conversation in MS Bot Framework when the user types “exit”, “quit” etc</a> 的方式，如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, (IMessageActivity)context.Activity))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">var</span> botData = scope.Resolve&lt;IBotData&gt;();</span><br><span class="line"><span class="keyword">await</span> botData.LoadAsync(<span class="keyword">default</span>(CancellationToken));</span><br><span class="line"><span class="keyword">var</span> stack = scope.Resolve&lt;IDialogStack&gt;();</span><br><span class="line">stack.Reset();</span><br><span class="line"><span class="keyword">await</span> botData.FlushAsync(<span class="keyword">default</span>(CancellationToken));</span><br><span class="line">&#125;</span><br><span class="line">context.Done&lt;<span class="keyword">string</span>&gt;(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure><p>如果在 Dialog 中直接 call context.Reset(); 可是會噴錯的哦!</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;在 &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-global-handlers?view=azure-bot-service-3.0&quot; targe
-      
-    
-    </summary>
-    
-    
-      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
-    
-      <category term="IDialogTask" scheme="https://rainmakerho.github.io/tags/IDialogTask/"/>
-    
-      <category term="ScorableBase" scheme="https://rainmakerho.github.io/tags/ScorableBase/"/>
     
   </entry>
   
