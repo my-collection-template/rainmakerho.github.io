@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/11/23/2018040/</loc>
+    <lastmod>2018-11-23T05:18:07.127Z</lastmod>
+    <data>
+        <display>
+        <title>Could not find a part of the path 'C:\Users\...\bin\roslyn\csc.exe'.</title>
+        <pubTime>2018-11-23T05:05:36.000Z</pubTime>
+        
+        <tag>Could not find a part of the path</tag>
+         
+        <tag>roslyn\csc.exe</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/11/19/2018039/</loc>
     <lastmod>2018-11-19T08:42:04.197Z</lastmod>
     <data>
@@ -720,11 +739,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -749,11 +768,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
@@ -791,9 +810,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>C#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotBuilder</tag>
          

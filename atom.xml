@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-11-19T08:42:04.197Z</updated>
+  <updated>2018-11-23T05:18:07.127Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Could not find a part of the path &#39;C:\Users\...\bin\roslyn\csc.exe&#39;.</title>
+    <link href="https://rainmakerho.github.io/2018/11/23/2018040/"/>
+    <id>https://rainmakerho.github.io/2018/11/23/2018040/</id>
+    <published>2018-11-23T05:05:36.000Z</published>
+    <updated>2018-11-23T05:18:07.127Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近直接透過 Visual Studio 2017 新增專案後，建置都成功。<br>但直接執行時，卻出現以下的錯誤訊息，</p><p>Server Error in ‘/‘ Application.<br>Could not find a part of the path ‘C:\Users...\bin\roslyn\csc.exe’.<br>Description: An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.</p><p>Exception Details: System.IO.DirectoryNotFoundException: Could not find a part of the path ‘C:\Users...\bin\roslyn\csc.exe’.</p><img src="/2018/11/23/2018040/001.png" title="[Server Error]"><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><h4 id="1-更新-Microsoft-CodeDom-Providers-DotNetCompilerPlatform-package"><a href="#1-更新-Microsoft-CodeDom-Providers-DotNetCompilerPlatform-package" class="headerlink" title="1.更新 Microsoft.CodeDom.Providers.DotNetCompilerPlatform package"></a>1.更新 Microsoft.CodeDom.Providers.DotNetCompilerPlatform package</h4><p>依<a href="https://blogs.msdn.microsoft.com/jpsanders/2018/02/22/error-could-not-find-a-part-of-the-path-esitesroot0binroslyncsc-exe/" target="_blank" rel="noopener">Error: Could not find a part of the path ‘E:\sitesroot\0\bin\roslyn\csc.exe’.</a>是 Microsoft.CodeDom.Providers.DotNetCompilerPlatform package 的 Bug，所以更新到最新版本就可以了，如下，</p><img src="/2018/11/23/2018040/002.png" title="[Microsoft.CodeDom.Providers.DotNetCompilerPlatform]"><h4 id="2-以系統管理者身份啟動-Visual-Studio"><a href="#2-以系統管理者身份啟動-Visual-Studio" class="headerlink" title="2.以系統管理者身份啟動 Visual Studio"></a>2.以系統管理者身份啟動 Visual Studio</h4>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近直接透過 Visual Studio 2017 新增專案後，建置都成功。&lt;br&gt;但直接執行時，卻出現以下的錯誤訊息，&lt;/p&gt;
+&lt;p&gt;Se
+      
+    
+    </summary>
+    
+    
+      <category term="Could not find a part of the path" scheme="https://rainmakerho.github.io/tags/Could-not-find-a-part-of-the-path/"/>
+    
+      <category term="roslyn\csc.exe" scheme="https://rainmakerho.github.io/tags/roslyn-csc-exe/"/>
+    
+  </entry>
   
   <entry>
     <title>env: node: No such file or directory</title>
@@ -595,35 +621,6 @@
       <category term="Html" scheme="https://rainmakerho.github.io/tags/Html/"/>
     
       <category term="Excell" scheme="https://rainmakerho.github.io/tags/Excell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IBotDataStore.FlushAsync Exception: The data is changed</title>
-    <link href="https://rainmakerho.github.io/2018/07/01/2018020/"/>
-    <id>https://rainmakerho.github.io/2018/07/01/2018020/</id>
-    <published>2018-07-01T03:29:38.000Z</published>
-    <updated>2018-07-01T04:06:36.657Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最新有個需求就是要判斷目前 User 是不是在進行某項作業, 如果不是就推送包含 Button 的訊息給 User, 不然就推文字通知訊息等目前的作業完成後，再顯示待辦的 Button 訊息給 User .</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>最簡單的就是將這個 flag 寫在 BotState 之中，所以我們可以在使用者加入時，將它的 Conversation 記錄下來，如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (message.Type == ActivityTypes.ConversationUpdate)</span><br><span class="line">&#123;</span><br><span class="line">Func&lt;ChannelAccount, <span class="keyword">bool</span>&gt; isChatbot =</span><br><span class="line">channelAcct =&gt; channelAcct.Id == message.Recipient.Id;</span><br><span class="line"><span class="keyword">if</span> (message.MembersAdded.Any(isChatbot))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">var</span> memberAdded = message.MembersAdded.FirstOrDefault();</span><br><span class="line"><span class="comment">//這裡請自行處理將該 user 的 Conversation 儲存起來，為了方便，這裡將它存在一個變數之中</span></span><br><span class="line">WebApiApplication._ConversationReference = message.ToConversationReference();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然後在申請作業記錄這個 Flag ，當然，結束時請記得將這個 Flag 清除哦!</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, context.Activity.AsMessageActivity()))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</span><br><span class="line"><span class="keyword">var</span> key = Address.FromActivity(context.Activity);</span><br><span class="line"><span class="keyword">var</span> botUserData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">botUserData.SetProperty&lt;<span class="keyword">string</span>&gt;(<span class="string">"dialog"</span>, <span class="string">"RootDialog:MessageReceivedAsync"</span>);</span><br><span class="line"><span class="keyword">await</span> botDataStore.SaveAsync(key, BotStoreType.BotUserData, botUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line"><span class="keyword">await</span> botDataStore.FlushAsync(key, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>可是執行時，卻發生了「Exception: The data is changed」的錯誤，如下圖，<br><img src="/2018/07/01/2018020/eDataChanged.png" title="[Exception: The data is changed]"></p><p>因為 botframework 會自動去幫我們將 State 存檔，所以當它存檔時，發現狀態被改掉了，所以就出現「Exception: The data is changed」的錯誤 .</p><p>嗯, 那怎麼辦呢? 那就調整程式, 不要去呼叫 FlushAsync, 讓 botframework 去存就可以了, 所以程式調整如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, context.Activity.AsMessageActivity()))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</span><br><span class="line"><span class="keyword">var</span> key = Address.FromActivity(context.Activity);</span><br><span class="line"><span class="keyword">var</span> botUserData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">botUserData.SetProperty&lt;<span class="keyword">string</span>&gt;(<span class="string">"dialog"</span>, <span class="string">"RootDialog:MessageReceivedAsync"</span>);</span><br><span class="line"><span class="keyword">await</span> botDataStore.SaveAsync(key, BotStoreType.BotUserData, botUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line">    <span class="comment">//await botDataStore.FlushAsync(key, default(CancellationToken));</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>所以我們的通知程式就可以透過 ConversationReference 轉回 Activity, 取回 BotState, 例如，我新增一個 api method 來顯示 BotState , 如下,</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Route(<span class="meta-string">"api/Messages/GetDialogData"</span>)</span>]</span><br><span class="line">[<span class="meta">HttpGet</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;HttpResponseMessage&gt; <span class="title">GetDialogData</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">var</span> resp = <span class="keyword">new</span> HttpResponseMessage(HttpStatusCode.OK);</span><br><span class="line"><span class="keyword">if</span> (WebApiApplication._ConversationReference != <span class="literal">null</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">var</span> message = WebApiApplication._ConversationReference.GetPostToBotMessage();</span><br><span class="line"><span class="keyword">using</span> (<span class="keyword">var</span> scope = DialogModule.BeginLifetimeScope(Conversation.Container, message.AsMessageActivity()))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">var</span> botDataStore = scope.Resolve&lt;IBotDataStore&lt;BotData&gt;&gt;();</span><br><span class="line"><span class="keyword">var</span> key = Address.FromActivity(message);</span><br><span class="line"><span class="keyword">var</span> botUserData = <span class="keyword">await</span> botDataStore.LoadAsync(key, BotStoreType.BotUserData, <span class="keyword">default</span>(CancellationToken));</span><br><span class="line"><span class="keyword">var</span> dialogData = botUserData.GetProperty&lt;<span class="keyword">string</span>&gt;(<span class="string">"dialog"</span>);</span><br><span class="line">resp.Content = <span class="keyword">new</span> StringContent(<span class="string">$"&lt;html&gt;&lt;body&gt;Dialogs:<span class="subst">&#123;dialogData&#125;</span>&lt;/body&gt;&lt;/html&gt;"</span>, System.Text.Encoding.UTF8, <span class="string">@"text/html"</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> resp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>所以在 Dialog 中儲存 State 時 , 可以注意一下這種狀況哦 ^_^</p><p>Demo 專案可以參考 <a href="https://github.com/rainmakerho/Exception_DataChanged" target="_blank" rel="noopener">rainmakerho/Exception_DataChanged</a></p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://stackoverflow.com/questions/42860020/microsoft-bot-framework-exception-the-data-is-changed" target="_blank" rel="noopener">Microsoft Bot Framework: Exception: The data is changed</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最新有個需求就是要判斷目前 User 是不是在進行某項作業, 如果不是就推送包含 Button 的訊息給 User, 不然就推文字通知訊息等
-      
-    
-    </summary>
-    
-    
-      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
-    
-      <category term="IBotDataStore" scheme="https://rainmakerho.github.io/tags/IBotDataStore/"/>
-    
-      <category term="FlushAsync" scheme="https://rainmakerho.github.io/tags/FlushAsync/"/>
-    
-      <category term="The data is changed" scheme="https://rainmakerho.github.io/tags/The-data-is-changed/"/>
     
   </entry>
   
