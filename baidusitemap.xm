@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/11/27/2018041/</loc>
+    <lastmod>2018-11-28T02:48:37.776Z</lastmod>
+    <data>
+        <display>
+        <title>未更新階段作業 ID</title>
+        <pubTime>2018-11-27T09:13:49.000Z</pubTime>
+        
+        <tag>AppScan</tag>
+         
+        <tag>未更新階段作業 ID</tag>
+         
+        <tag>登入後變更階段作業 ID 值</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/11/23/2018040/</loc>
     <lastmod>2018-11-23T05:18:07.127Z</lastmod>
     <data>
@@ -810,9 +831,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          

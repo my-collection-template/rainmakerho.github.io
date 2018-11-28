@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2018-11-23T05:18:07.127Z</updated>
+  <updated>2018-11-28T02:48:37.776Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>未更新階段作業 ID</title>
+    <link href="https://rainmakerho.github.io/2018/11/27/2018041/"/>
+    <id>https://rainmakerho.github.io/2018/11/27/2018041/</id>
+    <published>2018-11-27T09:13:49.000Z</published>
+    <updated>2018-11-28T02:48:37.776Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近系統讓 AppScan 掃時，會出一個「未更新階段作業 ID」的問題，如下，<br><img src="/2018/11/27/2018041/001.png" title="[未更新階段作業 ID]"></p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>從 report 中來看，「登入後變更階段作業 ID 值」， Cookie ASP.NET_SessionId 登入後就會變了呀!<br>怎麼會要我再變更 Session Id 呢? 而且 Report 的結果， ASP.NET_SessionId 也會變呀!<br>詢問同事 Joe 後才知道，原來它是看系統 <strong>所有的 Cookie</strong> ，在登入後需要變更才行。</p><p>因為它會在 Login 前先將那些 Cookie 給值，然後在 Login 後去檢查原先的那些 Cookie 是否相同，如果相同的話，就會有「未更新階段作業 ID」的問題。</p><p>例如，系統會用到 cookie-a, cookie-b, cookie-c ，在登入前 AppScan 先給它值分別為 1, 2, 3。<br>在登入後， AppScan 再去看 cookie-a, cookie-b, cookie-c 是否有相同的值，如果有的話，就算是有那個問題。</p><p>知道它如何檢查的之後，就可以在 Login 後，將不用的 Cookie 清除，或是去重設那些 Cookie 的值!</p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="http://blog.securityps.com/2013/06/session-fixation-forms-authentication.html" target="_blank" rel="noopener">Session Fixation &amp; Forms Authentication Token Termination in ASP.NET</a><br><a href="http://www-01.ibm.com/support/docview.wss?uid=swg21674468" target="_blank" rel="noopener">Common causes for a “Session Identifier not Updated” false positive in AppScan Enterprise</a><br><a href="http://www-01.ibm.com/support/docview.wss?uid=swg1PM12982" target="_blank" rel="noopener">PM12982: Session Identifier Not Updated information display issue</a><br><a href="http://www-01.ibm.com/support/docview.wss?uid=swg21375833" target="_blank" rel="noopener">Information for Session tests and ASP.NET in AppScan Standard</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近系統讓 AppScan 掃時，會出一個「未更新階段作業 ID」的問題，如下，&lt;br&gt;&lt;img src=&quot;/2018/11/27/2018
+      
+    
+    </summary>
+    
+    
+      <category term="AppScan" scheme="https://rainmakerho.github.io/tags/AppScan/"/>
+    
+      <category term="未更新階段作業 ID" scheme="https://rainmakerho.github.io/tags/%E6%9C%AA%E6%9B%B4%E6%96%B0%E9%9A%8E%E6%AE%B5%E4%BD%9C%E6%A5%AD-ID/"/>
+    
+      <category term="登入後變更階段作業 ID 值" scheme="https://rainmakerho.github.io/tags/%E7%99%BB%E5%85%A5%E5%BE%8C%E8%AE%8A%E6%9B%B4%E9%9A%8E%E6%AE%B5%E4%BD%9C%E6%A5%AD-ID-%E5%80%BC/"/>
+    
+  </entry>
   
   <entry>
     <title>Could not find a part of the path &#39;C:\Users\...\bin\roslyn\csc.exe&#39;.</title>
@@ -592,35 +619,6 @@
       <category term="asp.net" scheme="https://rainmakerho.github.io/tags/asp-net/"/>
     
       <category term="Aspose.Pdf.Facades.Stamp" scheme="https://rainmakerho.github.io/tags/Aspose-Pdf-Facades-Stamp/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Open Html Excel File from Aspose.Cells 透過 Aspose.Cells 開啟 Html 格式的 Excel 檔案</title>
-    <link href="https://rainmakerho.github.io/2018/07/02/2018021/"/>
-    <id>https://rainmakerho.github.io/2018/07/02/2018021/</id>
-    <published>2018-07-02T02:41:25.000Z</published>
-    <updated>2018-07-02T02:59:48.200Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我們之前透過程式產生 Excel 檔時，是先將一份 Excel 另存成 Html 格式的檔案，然後在裡面設定一些 Tag 。<br>程式就透過去 Replace 這些 Tag 後，再將程式另存，並將檔名改成 xls 。<br>這樣使用者就可以透過 Excel 去開啟它了。<br>只是最近的 Excel 開啟這樣的檔案，都會先 alert 使用者 (可以透過調整 機碼 讓它不要 alert)。<br>那有辦法讓它變成真正的 Excel 檔，或是轉成 PDF 嗎?</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>我們可以透過 Aspose 的元件來處理哦! 它有提供一個 HTMLLoadOptions 可以讓我們達到這樣子的目的哦! 程式如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> filePath = <span class="string">"hr840401.xls"</span>;</span><br><span class="line"><span class="keyword">var</span> opts = <span class="keyword">new</span> HTMLLoadOptions(LoadFormat.Html);</span><br><span class="line"><span class="keyword">var</span> workbook = <span class="keyword">new</span> Workbook(filePath, opts);</span><br><span class="line">workbook.Save(<span class="string">"hr840401_out.xls"</span>);</span><br></pre></td></tr></table></figure><p>它還可以載其他的格式哦，詳細可以參考<a href="https://apireference.aspose.com/net/pdf/aspose.pdf/loadformat" target="_blank" rel="noopener">Aspose LoadFormat Enumeration</a></p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://forum.aspose.com/t/open-excel-html-file/44690/3" target="_blank" rel="noopener">Open Excel/html file</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;我們之前透過程式產生 Excel 檔時，是先將一份 Excel 另存成 Html 格式的檔案，然後在裡面設定一些 Tag 。&lt;br&gt;程式就透
-      
-    
-    </summary>
-    
-    
-      <category term="aspose" scheme="https://rainmakerho.github.io/tags/aspose/"/>
-    
-      <category term="aspose.cells" scheme="https://rainmakerho.github.io/tags/aspose-cells/"/>
-    
-      <category term="Html" scheme="https://rainmakerho.github.io/tags/Html/"/>
-    
-      <category term="Excell" scheme="https://rainmakerho.github.io/tags/Excell/"/>
     
   </entry>
   
