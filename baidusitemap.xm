@@ -4,6 +4,37 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/11/29/2018042/</loc>
+    <lastmod>2018-12-02T03:42:08.341Z</lastmod>
+    <data>
+        <display>
+        <title>PDF 最後一頁才顯示頁尾</title>
+        <pubTime>2018-11-29T06:46:17.000Z</pubTime>
+        
+        <tag>pdf</tag>
+         
+        <tag>aspose</tag>
+         
+        <tag>cells</tag>
+         
+        <tag>excel</tag>
+         
+        <tag>footer</tag>
+         
+        <tag>頁尾</tag>
+         
+        <tag>TextState</tag>
+         
+        <tag>fontlink\systemlink</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/11/27/2018041/</loc>
     <lastmod>2018-11-28T02:48:37.776Z</lastmod>
     <data>
@@ -831,9 +862,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>C#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotBuilder</tag>
          
