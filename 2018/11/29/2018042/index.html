@@ -9,7 +9,7 @@
   <title>PDF 最後一頁才顯示頁尾 | 亂馬客 - back to basics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言在 將 datatable 的資料轉出成有浮水印的 PDF 檔 (2) 中，我們已可以將 datatable 的資料轉出有浮水印的 pdf 檔。 但客戶有個需求是， footer 可以在最後一頁才顯示嗎? 因為我們是透過 Excel 去轉成 PDF ，於是就研究看看 Excel 是否可在最後一頁才顯示，參考 Excel 有多頁列時，只希望列印最後一頁的頁尾，其他分頁都不會印出 似乎不容易 (啓">
-<meta name="keywords" content="pdf,aspose,cells,excel,footer,頁尾,TextState,fontlink\systemlink">
+<meta name="keywords" content="aspose,pdf,cells,excel,footer,頁尾,TextState,fontlink\systemlink">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PDF 最後一頁才顯示頁尾">
 <meta property="og:url" content="https://rainmakerho.github.io/2018/11/29/2018042/index.html">
@@ -17,7 +17,8 @@
 <meta property="og:description" content="前言在 將 datatable 的資料轉出成有浮水印的 PDF 檔 (2) 中，我們已可以將 datatable 的資料轉出有浮水印的 pdf 檔。 但客戶有個需求是， footer 可以在最後一頁才顯示嗎? 因為我們是透過 Excel 去轉成 PDF ，於是就研究看看 Excel 是否可在最後一頁才顯示，參考 Excel 有多頁列時，只希望列印最後一頁的頁尾，其他分頁都不會印出 似乎不容易 (啓">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://rainmakerho.github.io/2018/11/29/2018042/001.png">
-<meta property="og:updated_time" content="2018-12-02T03:42:08.341Z">
+<meta property="og:image" content="https://rainmakerho.github.io/2018/11/29/2018042/002.png">
+<meta property="og:updated_time" content="2018-12-03T02:52:25.316Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PDF 最後一頁才顯示頁尾">
 <meta name="twitter:description" content="前言在 將 datatable 的資料轉出成有浮水印的 PDF 檔 (2) 中，我們已可以將 datatable 的資料轉出有浮水印的 pdf 檔。 但客戶有個需求是， footer 可以在最後一頁才顯示嗎? 因為我們是透過 Excel 去轉成 PDF ，於是就研究看看 Excel 是否可在最後一頁才顯示，參考 Excel 有多頁列時，只希望列印最後一頁的頁尾，其他分頁都不會印出 似乎不容易 (啓">
@@ -182,10 +183,11 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">btnFooter_Click</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">var</span> excelArg = <span class="keyword">new</span> ExportDataTable2ExcelArg</span><br><span class="line">	&#123;</span><br><span class="line">		dataSource = GetDataSource(),</span><br><span class="line">		HeaderCenter = <span class="string">"&amp;24 This is Report Header ..."</span>,</span><br><span class="line">		HeaderRight = <span class="string">$"&amp;12 使用者:Rainmaker\r日期:<span class="subst">&#123;DateTime.Now.ToString(<span class="string">"yyyy/MM/dd HH:mm:ss"</span>)&#125;</span>"</span>,</span><br><span class="line">		FooterRight = <span class="string">"&amp;10 &amp;P/&amp;N"</span>,</span><br><span class="line">		ColumnInfos = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, Tuple&lt;<span class="keyword">string</span>, <span class="keyword">double</span>, Aspose.Cells.Style&gt;&gt;</span><br><span class="line">		&#123;</span><br><span class="line">			&#123;<span class="string">"ProductID"</span>, <span class="keyword">new</span> Tuple&lt;<span class="keyword">string</span>, <span class="keyword">double</span>, Aspose.Cells.Style&gt;(<span class="string">$"產品代號"</span>, <span class="number">-1</span>, <span class="literal">null</span>) &#125;,</span><br><span class="line">			&#123;<span class="string">"ProductName"</span>, <span class="keyword">new</span> Tuple&lt;<span class="keyword">string</span>, <span class="keyword">double</span>, Aspose.Cells.Style&gt;(<span class="string">"產品名稱"</span> , <span class="number">-1</span>, <span class="literal">null</span>) &#125;,</span><br><span class="line">			&#123;<span class="string">"ProductDesc"</span>, <span class="keyword">new</span> Tuple&lt;<span class="keyword">string</span>, <span class="keyword">double</span>, Aspose.Cells.Style&gt;(<span class="string">"產品描述"</span> , <span class="number">-1</span>, <span class="literal">null</span>) &#125;,</span><br><span class="line">			&#123;<span class="string">"Units"</span>, <span class="keyword">new</span> Tuple&lt;<span class="keyword">string</span>, <span class="keyword">double</span>, Aspose.Cells.Style&gt;(<span class="string">"產品 庫存"</span> , <span class="number">-1</span>, <span class="literal">null</span>) &#125;,</span><br><span class="line">			&#123;<span class="string">"CreDte"</span>, <span class="keyword">new</span> Tuple&lt;<span class="keyword">string</span>, <span class="keyword">double</span>, Aspose.Cells.Style&gt;(<span class="string">"日期"</span> , <span class="number">10</span>, <span class="keyword">new</span> Aspose.Cells.Style&#123; Number = <span class="number">14</span> &#125;) &#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		PageOrientation = PageOrientationType.Landscape,</span><br><span class="line">		IsTextWrapped = <span class="literal">false</span>,</span><br><span class="line">		PageScale = <span class="number">80</span>,</span><br><span class="line">		FontName = <span class="string">"標楷體"</span>,</span><br><span class="line">		HeaderHorizontalAlignment = TextAlignmentType.Center</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">var</span> pdfStream = GenPDFFromDataTable(excelArg);</span><br><span class="line">	<span class="keyword">var</span> fileNameWithoutExt = <span class="string">$"<span class="subst">&#123;Guid.NewGuid().ToString(<span class="string">"N"</span>)&#125;</span>"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> watermarkArg = <span class="keyword">new</span> WatermarkArg</span><br><span class="line">	&#123;</span><br><span class="line">		Watermark = <span class="string">$"* 使用者:亂馬客  *<span class="subst">&#123;Environment.NewLine&#125;</span><span class="subst">&#123;DateTime.Now.ToString(<span class="string">"yyyy/MM/dd HH:mm:ss"</span>)&#125;</span>"</span>,</span><br><span class="line">		WMStyle = WatermarkStyle.RepeatHorizontal,</span><br><span class="line">		WatermarkHeight = <span class="number">100</span>,</span><br><span class="line">		WatermarkWidth = <span class="number">130</span>,</span><br><span class="line">		WatermarkHorizontalSpace = <span class="number">50</span>,</span><br><span class="line">		WatermarkVerticalSpace = <span class="number">30</span>,</span><br><span class="line">		RotateAngle = <span class="number">30</span>,</span><br><span class="line">		Opacity = <span class="number">.1</span></span><br><span class="line"></span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">var</span> waterStream = AddFooterAndWatermark(pdfStream, watermarkArg);</span><br><span class="line">	Response.ContentType = <span class="string">"application/pdf"</span>;</span><br><span class="line">	Response.AddHeader(<span class="string">"content-disposition"</span>, <span class="string">"attachment; filename="</span> + <span class="string">$"<span class="subst">&#123;fileNameWithoutExt&#125;</span>.pdf"</span>);</span><br><span class="line">	<span class="keyword">var</span> fileSize = waterStream.Length;</span><br><span class="line">	<span class="keyword">byte</span>[] pdfBuffer = <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>)fileSize];</span><br><span class="line">	waterStream.Read(pdfBuffer, <span class="number">0</span>, (<span class="keyword">int</span>)fileSize);</span><br><span class="line">	waterStream.Close();</span><br><span class="line">	Response.BinaryWrite(pdfBuffer);</span><br><span class="line">	Response.End();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>產出的結果如下，<br><img src="/2018/11/29/2018042/001.png" title="[footer only on lastpage]"></p>
 <ul>
-<li><p>註:使用 TextState 時 (<strong>var defaultTextState = new TextState(“MingLiU”, 8);</strong>)，不能直接輸入中文的字型名稱，要到機碼「HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\fontlink\systemlink」去找出對應的名稱哦! 例如: MingLiU。不然會出現 FontNotFoundException，如下，</p>
-<p><strong>‘Aspose.Pdf.Text.FontRepository.FindFont(“新細明體”)’ 擲回 ‘Aspose.Pdf.FontNotFoundException’ 類型的例外狀況</strong></p>
-</li>
+<li>註:使用 TextState 時 (<strong>var defaultTextState = new TextState(“MingLiU”, 8);</strong>)，不能直接輸入中文的字型名稱，要到機碼「HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\fonts」去找出對應的名稱哦!<br>例如: MingLiU。不然會出現 FontNotFoundException，如下，<br><strong>‘Aspose.Pdf.Text.FontRepository.FindFont(“新細明體”)’ 擲回 ‘Aspose.Pdf.FontNotFoundException’ 類型的例外狀況</strong></li>
 </ul>
+<p>而且機碼的名稱，目前是<strong>區分大小寫</strong>的哦!</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 中文字型名稱 ，或是機碼中的名稱大小寫不對，都會錯誤</span></span><br><span class="line"><span class="keyword">var</span> textStateFromFontCName = <span class="keyword">new</span> TextState(<span class="string">"標楷體"</span>, <span class="number">8</span>);</span><br><span class="line"><span class="keyword">var</span> textStateFromFontEName= <span class="keyword">new</span> TextState(<span class="string">"DFKai-sb"</span>, <span class="number">8</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 機碼中是 DFKai-SB</span></span><br><span class="line"><span class="keyword">var</span> textStateFromFontEName= <span class="keyword">new</span> TextState(<span class="string">"DFKai-SB"</span>, <span class="number">8</span>);</span><br></pre></td></tr></table></figure>
+<img src="/2018/11/29/2018042/002.png" title="[標楷體DFKai-SB]">
 
                           
                                     
@@ -200,11 +202,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pdf</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">aspose</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">aspose</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pdf</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -460,19 +462,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Session</a>
+                <a href="javascript:void(0)" class="js-tag color4">mac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">EnableSessionState</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SessionStateStoreProvider</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Concurrent</a>
+                <a href="javascript:void(0)" class="js-tag color5">scrollbar</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -500,30 +494,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xamarin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ios11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">MinimumOSVersion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MtouchArch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Deployment Target</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ibtoolerror</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Windows 10 IoT Core</a>
               </li>
              
@@ -548,11 +518,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mac</a>
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">scrollbar</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Session</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">EnableSessionState</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SessionStateStoreProvider</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Concurrent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -576,15 +566,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+                <a href="javascript:void(0)" class="js-tag color3">xamarin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+                <a href="javascript:void(0)" class="js-tag color1">ios11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+                <a href="javascript:void(0)" class="js-tag color2">MinimumOSVersion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MtouchArch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Deployment Target</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ibtoolerror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -644,22 +646,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UWP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">restart</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disable update</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">beacon</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">xcodebuild</a>
               </li>
              
@@ -681,6 +667,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Xcode 9</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UWP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">restart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disable update</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">beacon</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -712,26 +714,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">QnA Maker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">LUIS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Vital ESP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">chatbot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FAQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Excel</a>
               </li>
              
@@ -749,6 +731,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Workbook</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">QnA Maker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LUIS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Vital ESP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">chatbot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FAQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -788,19 +790,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">log4net</a>
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1.2.10.0</a>
+                <a href="javascript:void(0)" class="js-tag color5">100%</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">692fbea5521e1304</a>
+                <a href="javascript:void(0)" class="js-tag color2">WinDbg</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">1b44e1d426115821</a>
+                <a href="javascript:void(0)" class="js-tag color2">ASP.NE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">w3wp.exe</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -824,26 +830,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">100%</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">WinDbg</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ASP.NE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">w3wp.exe</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Aspose</a>
               </li>
              
@@ -856,19 +842,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JSON</a>
+                <a href="javascript:void(0)" class="js-tag color3">log4net</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Replace</a>
+                <a href="javascript:void(0)" class="js-tag color4">1.2.10.0</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">special character</a>
+                <a href="javascript:void(0)" class="js-tag color2">692fbea5521e1304</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScriptStringEncode</a>
+                <a href="javascript:void(0)" class="js-tag color2">1b44e1d426115821</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DataGrid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">.net 4</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Paging</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">colspan</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">first column</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -896,43 +902,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DataGrid</a>
+                <a href="javascript:void(0)" class="js-tag color1">MSDTC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">.net 4</a>
+                <a href="javascript:void(0)" class="js-tag color4">firewall</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Paging</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">colspan</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">first column</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">BotFramework-WebChat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">botchat.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Botframework</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Web Application</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">DirectLine</a>
+                <a href="javascript:void(0)" class="js-tag color1">協力電腦異動管理員已經停用了對遠端/網路異動的支援</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -968,23 +946,63 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">autofac</a>
+                <a href="javascript:void(0)" class="js-tag color1">BotFramework-WebChat</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">DialogModule.BeginLifetimeScope</a>
+                <a href="javascript:void(0)" class="js-tag color1">botchat.js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MSDTC</a>
+                <a href="javascript:void(0)" class="js-tag color3">Botframework</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">firewall</a>
+                <a href="javascript:void(0)" class="js-tag color1">Web Application</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">協力電腦異動管理員已經停用了對遠端/網路異動的支援</a>
+                <a href="javascript:void(0)" class="js-tag color1">DirectLine</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JSON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Replace</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">special character</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JavaScriptStringEncode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">IDialogTask</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ScorableBase</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">aspose</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">aspose.cells</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Excell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -997,14 +1015,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">The data is changed</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">IDialogTask</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ScorableBase</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1040,19 +1050,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aspose</a>
+                <a href="javascript:void(0)" class="js-tag color3">autofac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">aspose.cells</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Html</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Excell</a>
+                <a href="javascript:void(0)" class="js-tag color2">DialogModule.BeginLifetimeScope</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1093,6 +1095,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">No installed provisioning profiles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">DataColumn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DefaultValue</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1144,14 +1154,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">DataColumn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DefaultValue</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iis</a>
               </li>
              
@@ -1188,6 +1190,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">NHibernate</a>
               </li>
              
@@ -1204,15 +1218,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">adaptivecard</a>
+                <a href="javascript:void(0)" class="js-tag color2">RegisterForEventValidation</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">adaptive</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Autofac</a>
+                <a href="javascript:void(0)" class="js-tag color2">EnableEventValidation</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1248,18 +1258,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">order by</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">letters</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">numbers</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
               </li>
              
@@ -1276,11 +1274,43 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">RegisterForEventValidation</a>
+                <a href="javascript:void(0)" class="js-tag color4">order by</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">EnableEventValidation</a>
+                <a href="javascript:void(0)" class="js-tag color3">letters</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">numbers</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">AppScan</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">未更新階段作業 ID</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">登入後變更階段作業 ID 值</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Could not find a part of the path</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">roslyn\csc.exe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SQL License</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1300,31 +1330,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">AppScan</a>
+                <a href="javascript:void(0)" class="js-tag color5">TextState</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">未更新階段作業 ID</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">登入後變更階段作業 ID 值</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SQL License</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Could not find a part of the path</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">roslyn\csc.exe</a>
+                <a href="javascript:void(0)" class="js-tag color5">fontlink\systemlink</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1393,14 +1403,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Customize Web Chat for your websites</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">TextState</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">fontlink\systemlink</a>
               </li>
             
             <div class="clearfix"></div>
