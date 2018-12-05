@@ -4,6 +4,35 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/12/05/2018043/</loc>
+    <lastmod>2018-12-05T09:23:01.310Z</lastmod>
+    <data>
+        <display>
+        <title>.NET SmtpClient Send Port 465 會發生 The operations timed out.</title>
+        <pubTime>2018-12-05T08:51:01.000Z</pubTime>
+        
+        <tag>SmtpClient</tag>
+         
+        <tag>Port</tag>
+         
+        <tag>465</tag>
+         
+        <tag>587</tag>
+         
+        <tag>timeout</tag>
+         
+        <tag>The operations timed out</tag>
+         
+        <tag>hang</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/11/29/2018042/</loc>
     <lastmod>2018-12-03T02:52:25.316Z</lastmod>
     <data>
@@ -862,9 +891,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          
@@ -935,13 +964,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
+        <tag>chatbot</tag>
+         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
-         
-        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
