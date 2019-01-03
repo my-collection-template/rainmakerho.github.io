@@ -4,6 +4,52 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/01/02/2019001/</loc>
+    <lastmod>2019-01-03T04:10:10.920Z</lastmod>
+    <data>
+        <display>
+        <title>Microsoft Botframework V4，從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊</title>
+        <pubTime>2019-01-02T05:05:53.000Z</pubTime>
+        
+        <tag>botframework</tag>
+         
+        <tag>BFv4</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2018/12/27/2018044/</loc>
+    <lastmod>2018-12-28T05:17:22.008Z</lastmod>
+    <data>
+        <display>
+        <title>WeChat微信 Bot 開發 - 接口配置信息</title>
+        <pubTime>2018-12-27T08:37:04.000Z</pubTime>
+        
+        <tag>botframework</tag>
+         
+        <tag>WeChat</tag>
+         
+        <tag>微信</tag>
+         
+        <tag>weixin</tag>
+         
+        <tag>公众平台</tag>
+         
+        <tag>checkSignature</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/12/05/2018043/</loc>
     <lastmod>2018-12-05T09:23:01.310Z</lastmod>
     <data>
@@ -40,9 +86,9 @@
         <title>PDF 最後一頁才顯示頁尾</title>
         <pubTime>2018-11-29T06:46:17.000Z</pubTime>
         
-        <tag>aspose</tag>
-         
         <tag>pdf</tag>
+         
+        <tag>aspose</tag>
          
         <tag>cells</tag>
          
@@ -964,13 +1010,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
