@@ -9,7 +9,7 @@
   <title>使用 OpenTracing 追踪系統 | 亂馬客 - back to basics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言隨著系統逾來逾大、逾複雜，為了維運方便，可能會將這些拆分成不同的 Service 。但從使用者一個 Request 進來後，從前端、後端各 Service 再到 Database，如果有效能問題時，大家要如何查找問題呢? SQL Profiler, Fiddler, 寫 Log ? 或是使用一些工具來查看效能問題，例如 Dynatrace ?現在大家有另外一個好選擇，就是使用 OpenTrac">
-<meta name="keywords" content="OpenTracing,Distributed Tracing,Jaeger,APM">
+<meta name="keywords" content="OpenTracing,Distributed Tracing,Jaeger,APM,Dynatrace">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 OpenTracing 追踪系統">
 <meta property="og:url" content="https://rainmakerho.github.io/2019/01/04/2019002/index.html">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://rainmakerho.github.io/2019/01/04/2019002/013.png">
 <meta property="og:image" content="https://rainmakerho.github.io/2019/01/04/2019002/014.png">
 <meta property="og:image" content="https://rainmakerho.github.io/2019/01/04/2019002/015.png">
-<meta property="og:updated_time" content="2019-01-08T03:11:19.002Z">
+<meta property="og:updated_time" content="2019-01-08T07:18:47.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 OpenTracing 追踪系統">
 <meta name="twitter:description" content="前言隨著系統逾來逾大、逾複雜，為了維運方便，可能會將這些拆分成不同的 Service 。但從使用者一個 Request 進來後，從前端、後端各 Service 再到 Database，如果有效能問題時，大家要如何查找問題呢? SQL Profiler, Fiddler, 寫 Log ? 或是使用一些工具來查看效能問題，例如 Dynatrace ?現在大家有另外一個好選擇，就是使用 OpenTrac">
@@ -212,7 +212,7 @@
 <p>那要如何使用呢? 我們可以在 OnTurnAsync 時，從 GlobalTracer 取出 ITracer 來用。<br>請注意，這裡用的都是 OpenTracing 的 Interface ，所以將來如何要換別的 Tracer 就在 Startup.cs 中給別的 tracer 就可以了。<br>以下的 Code ，如果輸入 rainmaker 的話，就等個 10 秒再回，<br>如果輸入 rm 就會產生 Exception ，可以用 Tags.Error.Set(scope.Span, true) 來設定 error。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Bot</span> : <span class="title">IBot</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">OnTurnAsync</span>(<span class="params">ITurnContext turnContext, CancellationToken cancellationToken = <span class="keyword">default</span>(CancellationToken</span>))</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//從 GlobalTracer.Instance 取出 Tracer</span></span><br><span class="line">        <span class="keyword">var</span> tracer = GlobalTracer.Instance;</span><br><span class="line">        <span class="keyword">using</span> (IScope scope = tracer.BuildSpan(<span class="string">$"OnTurnAsync:<span class="subst">&#123;ActivityTypes.Message&#125;</span>"</span>).StartActive(finishSpanOnDispose: <span class="literal">true</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (turnContext.Activity.Type == ActivityTypes.Message)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">var</span> userInput = turnContext.Activity.Text;</span><br><span class="line">                <span class="keyword">try</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">using</span> (<span class="keyword">var</span> scopeMessage = tracer.BuildSpan(ActivityTypes.Message).StartActive(finishSpanOnDispose: <span class="literal">true</span>))</span><br><span class="line">                    &#123;</span><br><span class="line">                        ProcessUserInput(userInput);</span><br><span class="line">                        <span class="keyword">await</span> turnContext.SendActivityAsync(<span class="string">$"You said '<span class="subst">&#123;turnContext.Activity.Text&#125;</span>'"</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">                &#123;</span><br><span class="line">                    Tags.Error.Set(scope.Span, <span class="literal">true</span>);</span><br><span class="line">                    tracer.ActiveSpan.Log(<span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">object</span>&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        [<span class="meta">LogFields.Event</span>] = <span class="string">"error"</span>,</span><br><span class="line">                        [<span class="meta"><span class="meta-string">"value"</span></span>] = userInput,</span><br><span class="line">                        [<span class="meta"><span class="meta-string">"error"</span></span>] = ex.ToString()</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ProcessUserInput</span>(<span class="params"><span class="keyword">string</span> userInput</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> tracer = GlobalTracer.Instance;</span><br><span class="line">        <span class="keyword">var</span> eventName = <span class="string">"ProcessUserInput"</span>;</span><br><span class="line">        <span class="keyword">using</span> (<span class="keyword">var</span> scope = tracer.BuildSpan(eventName).StartActive(finishSpanOnDispose: <span class="literal">true</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            tracer.ActiveSpan.Log(<span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">object</span>&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                [<span class="meta">LogFields.Event</span>] = eventName,</span><br><span class="line">                [<span class="meta"><span class="meta-string">"value"</span></span>] = userInput</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">if</span> (userInput == <span class="string">"rainmaker"</span>) Thread.Sleep(<span class="number">10000</span>);</span><br><span class="line">            <span class="keyword">if</span> (userInput == <span class="string">"rm"</span>) <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"rm throw errrors!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這時我們開啟 Emulator 來測試，分別輸入 hello, rainmaker, rm ，如下，<br><img src="/2019/01/04/2019002/007.png" title="[Emulator 測試]"></p>
-<p>執行過後，我們可以透過 Jaeger UI (<a href="http://localhost:16686)，可以發現" target="_blank" rel="noopener">http://localhost:16686)，可以發現</a> Service 可以選到 亂馬客 BOT 了(在 Startup.cs 中設定的)，<br><img src="/2019/01/04/2019002/005.png" title="[成功寫資訊到 Jaeger]"></p>
+<p>執行過後，我們可以透過 <a href="http://localhost:16686" target="_blank" rel="noopener">Jaeger UI http://localhost:16686</a>，可以發現 Service 可以選到 亂馬客 BOT 了(在 Startup.cs 中設定的)，<br><img src="/2019/01/04/2019002/005.png" title="[成功寫資訊到 Jaeger]"></p>
 <p>按下 Find Traces Button 後，可以發現我們寫入的 Trace 資料，<br><img src="/2019/01/04/2019002/006.png" title="[Find Traces]"></p>
 <p>這時我們可以點進花費時間 10 秒的 Trace ，可以發現在 ProcessUserInput 這個 Span 花了 10 秒的時間，如下，<br><img src="/2019/01/04/2019002/008.png" title="[查看那裡花費較多的時間]"></p>
 <p>點進 Error 的內容，可以查到錯誤的相關資訊，如下，<br><img src="/2019/01/04/2019002/009.png" title="[log error]"></p>
@@ -238,7 +238,7 @@
 <p>其他 Method 使用上也是一樣，都是從 GlobalTracer.Instance 取出 tracer，如下，</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> <span class="keyword">static</span> Task <span class="title">DoActionAsync</span>(<span class="params">BotAction botAction, IDialogContext context</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> tracer = GlobalTracer.Instance;</span><br><span class="line">    <span class="keyword">var</span> eventName = <span class="string">"DoActionAsync"</span>;</span><br><span class="line">    <span class="keyword">using</span> (<span class="keyword">var</span> childScope = tracer.BuildSpan(eventName).StartActive(finishSpanOnDispose: <span class="literal">true</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// bot 原本的 code ...</span></span><br><span class="line">        <span class="comment">// Log 一些資訊</span></span><br><span class="line">        tracer.ActiveSpan.Log(<span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">object</span>&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            [<span class="meta">LogFields.Event</span>] = eventName,</span><br><span class="line">            [<span class="meta"><span class="meta-string">"actionType"</span></span>] = botAction.ActionType.ToString()</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// bot 原本的 code ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在 Emulator 執行畫面為，<br><img src="/2019/01/04/2019002/013.png" title="[訂便當 Bot]"></p>
-<p>執行過後，我們可以透過 <a href="http://localhost:16686" target="_blank" rel="noopener">Jaeger UI</a> localhost:16686，可以發現 Service 可以選到 亂馬客 BOTBFv3 了(在 Application_Start 中設定的)，<br><img src="/2019/01/04/2019002/013.png" title="[成功寫資訊到 Jaeger BFv3]"></p>
+<p>執行過後，我們可以透過 <a href="http://localhost:16686" target="_blank" rel="noopener">Jaeger UI http://localhost:16686</a>，可以發現 Service 可以選到 亂馬客 BOTBFv3 了(在 Application_Start 中設定的)，<br><img src="/2019/01/04/2019002/013.png" title="[成功寫資訊到 Jaeger BFv3]"></p>
 <p>點進去可以發現各 Span 寫的 Log 及執行所花費的時間，如下，<br><img src="/2019/01/04/2019002/014.png" title="[MessageReceivedAsync Span BFv3]"> <br><br><img src="/2019/01/04/2019002/015.png" title="[DoActionAsync Span BFv3]"></p>
 <h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>只要加入 <a href="https://opentracing.io/" target="_blank" rel="noopener">OPENTRACING</a>，再加入要使用的 Tracer Client 套件，就可以快速來記錄資訊，真的很簡單也很方便。當系統很多時，您就不需要苦苦地查找許多的 Log 檔。</p>
 <h3 id="參考資源"><a href="#參考資源" class="headerlink" title="參考資源"></a>參考資源</h3><p><a href="https://opentracing.io/" target="_blank" rel="noopener">OPENTRACING</a><br><a href="https://www.jaegertracing.io/" target="_blank" rel="noopener">JAEGER</a><br><a href="https://github.com/yurishkuro/opentracing-tutorial" target="_blank" rel="noopener">opentracing-tutorial</a><br><a href="https://github.com/jaegertracing/jaeger-client-csharp/tree/master/examples" target="_blank" rel="noopener">jaeger-client-csharp/examples/(含.net core 和 .net framework)</a><br><a href="https://opentracing.io/guides/csharp/" target="_blank" rel="noopener">OpenTracing C#</a><br><a href="https://github.com/dotnet/standard/blob/master/docs/versions.md" target="_blank" rel="noopener">dotnet/standard</a></p>
@@ -269,6 +269,10 @@
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">APM</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Dynatrace</a>
         		</li>
       		
 		</ul>
@@ -508,6 +512,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Session</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">EnableSessionState</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SessionStateStoreProvider</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Concurrent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">OPTIONS</a>
               </li>
              
@@ -524,19 +544,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Session</a>
+                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">EnableSessionState</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SessionStateStoreProvider</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Concurrent</a>
+                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -588,26 +600,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Angular</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Service Worker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">exec in t-sql</a>
               </li>
              
@@ -628,6 +620,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cordova</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ios 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">com.apple.CoreSimulator.SimDeviceType.undefined</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">aspose.words</a>
               </li>
              
@@ -637,10 +649,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">TradChinNum3</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -668,27 +676,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Excel</a>
+                <a href="javascript:void(0)" class="js-tag color1">SMTPClient</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SaveAs</a>
+                <a href="javascript:void(0)" class="js-tag color2">MailMessage</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">2148140012</a>
+                <a href="javascript:void(0)" class="js-tag color3">Subject</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">2146827284</a>
+                <a href="javascript:void(0)" class="js-tag color3">?號</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Workbook</a>
+                <a href="javascript:void(0)" class="js-tag color4">Multiple</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">xCode 9</a>
+                <a href="javascript:void(0)" class="js-tag color1">=?utf-8?B?</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Attachments</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -728,50 +740,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SMTPClient</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">MailMessage</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Subject</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">?號</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Multiple</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">=?utf-8?B?</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Attachments</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">chatbot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">botframework</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">BotDataStore</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ConnectorStore</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UWP</a>
               </li>
              
@@ -788,15 +756,55 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MSA appId or password is incorrect</a>
+                <a href="javascript:void(0)" class="js-tag color5">QnA Maker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">c#</a>
+                <a href="javascript:void(0)" class="js-tag color5">LUIS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">botframework-emulator</a>
+                <a href="javascript:void(0)" class="js-tag color5">Vital ESP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">chatbot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FAQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Excel</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SaveAs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">2148140012</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">2146827284</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Workbook</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">botframework</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">BotDataStore</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ConnectorStore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -812,23 +820,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+                <a href="javascript:void(0)" class="js-tag color5">MSA appId or password is incorrect</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">100%</a>
+                <a href="javascript:void(0)" class="js-tag color3">c#</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">WinDbg</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ASP.NE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">w3wp.exe</a>
+                <a href="javascript:void(0)" class="js-tag color2">botframework-emulator</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -852,6 +852,38 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">100%</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">WinDbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ASP.NE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">w3wp.exe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Aspose</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SetLicense</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NullReferenceException</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">log4net</a>
               </li>
              
@@ -868,15 +900,35 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Aspose</a>
+                <a href="javascript:void(0)" class="js-tag color4">ZAP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SetLicense</a>
+                <a href="javascript:void(0)" class="js-tag color2">Certificate</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NullReferenceException</a>
+                <a href="javascript:void(0)" class="js-tag color2">Chrome</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Firefox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Foxproxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ERR_CERT_AUTHORITY_INVALID</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Your connection is not private</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">你的連線並不安全</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -924,35 +976,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ZAP</a>
+                <a href="javascript:void(0)" class="js-tag color5">JSON</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Certificate</a>
+                <a href="javascript:void(0)" class="js-tag color3">Replace</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Chrome</a>
+                <a href="javascript:void(0)" class="js-tag color3">special character</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Firefox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Foxproxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ERR_CERT_AUTHORITY_INVALID</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Your connection is not private</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">你的連線並不安全</a>
+                <a href="javascript:void(0)" class="js-tag color3">JavaScriptStringEncode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -965,14 +1001,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">協力電腦異動管理員已經停用了對遠端/網路異動的支援</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">autofac</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">DialogModule.BeginLifetimeScope</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1004,95 +1032,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">QnA Maker</a>
+                <a href="javascript:void(0)" class="js-tag color3">autofac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">LUIS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Vital ESP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FAQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">IBotDataStore</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">FlushAsync</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">The data is changed</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aspose</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">aspose.cells</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Html</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Excell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">DataColumn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DefaultValue</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">BotToUser</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ConnectorClient</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TryAddWithoutValidation</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Header</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">In-House certificate</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">expired</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Provisioning Profiles</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Revoke</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">keychain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">No installed provisioning profiles</a>
+                <a href="javascript:void(0)" class="js-tag color2">DialogModule.BeginLifetimeScope</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1128,6 +1072,86 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">IBotDataStore</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">FlushAsync</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">The data is changed</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">aspose</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">aspose.cells</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Excell</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">In-House certificate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">expired</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Provisioning Profiles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Revoke</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">keychain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">No installed provisioning profiles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">DataColumn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DefaultValue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">403</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">403.4</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">403 - 禁止: 拒絕存取</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">403.4 - Forbidden</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">RxJS</a>
               </li>
              
@@ -1137,6 +1161,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">環境設定</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">BotToUser</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ConnectorClient</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TryAddWithoutValidation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Header</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1176,27 +1216,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iis</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">403</a>
+                <a href="javascript:void(0)" class="js-tag color4">500</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">403.4</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">403 - 禁止: 拒絕存取</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">403.4 - Forbidden</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">exception</a>
+                <a href="javascript:void(0)" class="js-tag color3">內部伺服器錯誤</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1216,15 +1244,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">500</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">內部伺服器錯誤</a>
+                <a href="javascript:void(0)" class="js-tag color5">exception</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1240,11 +1260,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">RegisterForEventValidation</a>
+                <a href="javascript:void(0)" class="js-tag color3">SSL/TLS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">EnableEventValidation</a>
+                <a href="javascript:void(0)" class="js-tag color1">ServerCertificateValidationCallback</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SecurityProtocol</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1268,27 +1292,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SSL/TLS</a>
+                <a href="javascript:void(0)" class="js-tag color2">RegisterForEventValidation</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ServerCertificateValidationCallback</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SecurityProtocol</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">AppScan</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">未更新階段作業 ID</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">登入後變更階段作業 ID 值</a>
+                <a href="javascript:void(0)" class="js-tag color2">EnableEventValidation</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1320,6 +1328,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">AppScan</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">未更新階段作業 ID</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">登入後變更階段作業 ID 值</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Could not find a part of the path</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">roslyn\csc.exe</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cells</a>
               </li>
              
@@ -1341,14 +1369,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fontlink\systemlink</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Could not find a part of the path</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">roslyn\csc.exe</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1376,10 +1396,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">BFv4</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">WeChat</a>
               </li>
              
@@ -1400,39 +1416,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">BFv4</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">SQL License</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SQL援權</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JSON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Replace</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">special character</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScriptStringEncode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">OpenTracing</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Distributed Tracing</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Jaeger</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1492,6 +1484,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">OpenTracing</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Distributed Tracing</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Jaeger</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">APM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Dynatrace</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Adaptive Cards</a>
               </li>
              
@@ -1501,10 +1513,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Customize Web Chat for your websites</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">APM</a>
               </li>
             
             <div class="clearfix"></div>
