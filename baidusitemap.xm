@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/01/15/2019004/</loc>
-    <lastmod>2019-01-16T05:24:03.847Z</lastmod>
+    <lastmod>2019-01-16T05:38:41.510Z</lastmod>
     <data>
         <display>
         <title>使用 OpenTracing - Jaeger (AP整合)</title>
@@ -1074,11 +1074,11 @@
         <title>The bot's MSA appId or password is incorrect.</title>
         <pubTime>2018-02-01T03:52:05.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>MSA appId or password is incorrect</tag>
          
         <tag>c#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>botframework-emulator</tag>
          
@@ -1097,13 +1097,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
