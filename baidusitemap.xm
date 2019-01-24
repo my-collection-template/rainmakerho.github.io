@@ -4,6 +4,45 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/01/20/2019005/</loc>
+    <lastmod>2019-01-24T07:55:13.403Z</lastmod>
+    <data>
+        <display>
+        <title>使用 OpenTracing - Jaeger (BFv3 使用 Dynamic Proxy)</title>
+        <pubTime>2019-01-20T10:31:40.000Z</pubTime>
+        
+        <tag>Autofac</tag>
+         
+        <tag>OpenTracing</tag>
+         
+        <tag>Distributed Tracing</tag>
+         
+        <tag>Jaeger</tag>
+         
+        <tag>APM</tag>
+         
+        <tag>Dynatrace</tag>
+         
+        <tag>.NET</tag>
+         
+        <tag>BFv3</tag>
+         
+        <tag>Dynamic Proxy</tag>
+         
+        <tag>EnableClassInterceptors</tag>
+         
+        <tag>EnableInterfaceInterceptors</tag>
+         
+        <tag>AsyncInterceptor</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/01/15/2019004/</loc>
     <lastmod>2019-01-16T05:42:36.301Z</lastmod>
     <data>
@@ -953,11 +992,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -982,11 +1021,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
-         
-        <tag>NullReferenceException</tag>
          
          
            
@@ -1097,13 +1136,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
+        <tag>chatbot</tag>
+         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
-         
-        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
