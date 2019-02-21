@@ -4,8 +4,45 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/02/19/2019006/</loc>
+    <lastmod>2019-02-21T09:53:54.438Z</lastmod>
+    <data>
+        <display>
+        <title>使用 OpenTracing - Jaeger (BFv3 使用 Fody)</title>
+        <pubTime>2019-02-19T14:29:00.000Z</pubTime>
+        
+        <tag>OpenTracing</tag>
+         
+        <tag>Distributed Tracing</tag>
+         
+        <tag>Jaeger</tag>
+         
+        <tag>APM</tag>
+         
+        <tag>Dynatrace</tag>
+         
+        <tag>.NET</tag>
+         
+        <tag>BFv3</tag>
+         
+        <tag>Fody</tag>
+         
+        <tag>MethodBoundaryAspect.Fody</tag>
+         
+        <tag>IL Rewriting</tag>
+         
+        <tag>IL weaving</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/01/20/2019005/</loc>
-    <lastmod>2019-01-24T08:38:09.821Z</lastmod>
+    <lastmod>2019-01-24T08:59:20.536Z</lastmod>
     <data>
         <display>
         <title>使用 OpenTracing - Jaeger (BFv3 使用 Dynamic Proxy)</title>
@@ -212,9 +249,9 @@
         <title>PDF 最後一頁才顯示頁尾</title>
         <pubTime>2018-11-29T06:46:17.000Z</pubTime>
         
-        <tag>pdf</tag>
-         
         <tag>aspose</tag>
+         
+        <tag>pdf</tag>
          
         <tag>cells</tag>
          
@@ -992,11 +1029,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1021,11 +1058,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
-         
-        <tag>NullReferenceException</tag>
          
          
            
@@ -1063,9 +1100,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>C#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotBuilder</tag>
          
@@ -1532,9 +1569,9 @@
         <title>為什麼 OPTIONS 時會給 404 呢?</title>
         <pubTime>2017-12-07T09:30:04.000Z</pubTime>
         
-        <tag>IIS</tag>
-         
         <tag>OPTIONS</tag>
+         
+        <tag>IIS</tag>
          
         <tag>404</tag>
          
