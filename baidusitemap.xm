@@ -4,8 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/02/23/2019007/</loc>
+    <lastmod>2019-02-23T02:51:08.748Z</lastmod>
+    <data>
+        <display>
+        <title>Inheritance security rules violated by type: 'System.Net.Http.WebRequestHandler'</title>
+        <pubTime>2019-02-23T02:41:55.000Z</pubTime>
+        
+        <tag>System.Net.Http</tag>
+         
+        <tag>4.1.0.0</tag>
+         
+        <tag>軟體求生</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/02/19/2019006/</loc>
-    <lastmod>2019-02-21T09:53:54.438Z</lastmod>
+    <lastmod>2019-02-23T02:41:34.022Z</lastmod>
     <data>
         <display>
         <title>使用 OpenTracing - Jaeger (BFv3 使用 Fody)</title>
@@ -32,6 +53,8 @@
         <tag>IL Rewriting</tag>
          
         <tag>IL weaving</tag>
+         
+        <tag>PostSharp</tag>
          
          
            
@@ -1029,11 +1052,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1058,11 +1081,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
@@ -1100,9 +1123,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          
