@@ -4,6 +4,45 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/03/11/2019008/</loc>
+    <lastmod>2019-03-11T03:39:59.746Z</lastmod>
+    <data>
+        <display>
+        <title>使用 OpenTracing - Jaeger (BFv3 使用 PostSharp)</title>
+        <pubTime>2019-03-11T02:14:12.000Z</pubTime>
+        
+        <tag>OpenTracing</tag>
+         
+        <tag>Distributed Tracing</tag>
+         
+        <tag>Jaeger</tag>
+         
+        <tag>APM</tag>
+         
+        <tag>Dynatrace</tag>
+         
+        <tag>.NET</tag>
+         
+        <tag>BFv3</tag>
+         
+        <tag>Fody</tag>
+         
+        <tag>MethodBoundaryAspect.Fody</tag>
+         
+        <tag>IL Rewriting</tag>
+         
+        <tag>IL weaving</tag>
+         
+        <tag>PostSharp</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/02/23/2019007/</loc>
     <lastmod>2019-02-23T02:51:08.748Z</lastmod>
     <data>
