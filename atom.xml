@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-03-11T03:39:59.746Z</updated>
+  <updated>2019-03-16T06:09:34.192Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>document.[formName] is undefined</title>
+    <link href="https://rainmakerho.github.io/2019/03/16/2019009/"/>
+    <id>https://rainmakerho.github.io/2019/03/16/2019009/</id>
+    <published>2019-03-16T05:48:31.000Z</published>
+    <updated>2019-03-16T06:09:34.192Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同時詢問一個 asp.net webform 系統從 .net framework 2.x 升到 .net 4.x 時，javascript 原本使用 document.formName 的物件，卻變成 undefined 而造成錯誤。</p><h3 id="研究與解決"><a href="#研究與解決" class="headerlink" title="研究與解決"></a>研究與解決</h3><p>到另一個沒有升級的版本去試，使用 document.formName 可以正常運作沒問題，但到 .net 4 的就是會變成 undefined。<br>於是檢查 Html 原始檔後發現， .net 4 的 Form 原本應該要有 name 屬性，卻不見了，只有 id 屬性。<br>而 .net 2.x 的 name 屬性有正常 Render 出來。</p><p>查看 <a href="https://docs.microsoft.com/en-us/aspnet/whitepapers/aspnet4/breaking-changes" target="_blank" rel="noopener">ASP.NET 4 Breaking Changes</a> ，原來預設 name 屬性是不會被 render 出來的，如果要讓 name 屬性 render 出來，要設定 pages 的 controlRenderingCompatibilityVersion 屬性，如下，</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">pages</span> <span class="attr">controlRenderingCompatibilityVersion</span>=<span class="string">"3.5"</span> /&gt;</span></span><br></pre></td></tr></table></figure><p>也要調整 requestValidationMode 為 2.0，如下，</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">httpRuntime</span> <span class="attr">requestValidationMode</span>=<span class="string">"2.0"</span> /&gt;</span></span><br></pre></td></tr></table></figure><p>當然，從舊版升級到新版的 .net 通常還要設定 xhtmlConformance 的 mode 屬性，有時升版後 js 變的怪怪的，可以 check 一下，設定成 Legacy 試看看哦! 如下，</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">xhtmlConformance</span> <span class="attr">mode</span>=<span class="string">"Legacy"</span> /&gt;</span></span><br></pre></td></tr></table></figure><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://docs.microsoft.com/en-us/aspnet/whitepapers/aspnet4/breaking-changes" target="_blank" rel="noopener">ASP.NET 4 Breaking Changes</a><br><a href="https://blogs.msdn.microsoft.com/rakkimk/2011/04/12/asp-net-form-tag-doesnt-have-name-attribute-xhtmlconformance/" target="_blank" rel="noopener">ASP.NET – Form tag doesn’t have “name” attribute – xhtmlConformance</a></p><blockquote><p>非常感謝同事 herman 的測試與回饋</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近同時詢問一個 asp.net webform 系統從 .net framework 2.x 升到 .net 4.x 時，javascri
+      
+    
+    </summary>
+    
+    
+      <category term="軟體求生" scheme="https://rainmakerho.github.io/tags/%E8%BB%9F%E9%AB%94%E6%B1%82%E7%94%9F/"/>
+    
+      <category term="js" scheme="https://rainmakerho.github.io/tags/js/"/>
+    
+      <category term="document.formName" scheme="https://rainmakerho.github.io/tags/document-formName/"/>
+    
+      <category term="undefined" scheme="https://rainmakerho.github.io/tags/undefined/"/>
+    
+      <category term="asp.net 4" scheme="https://rainmakerho.github.io/tags/asp-net-4/"/>
+    
+      <category term="Legacy" scheme="https://rainmakerho.github.io/tags/Legacy/"/>
+    
+  </entry>
   
   <entry>
     <title>使用 OpenTracing - Jaeger (BFv3 使用 PostSharp)</title>
@@ -627,44 +660,15 @@
     </summary>
     
     
-      <category term="chatbot" scheme="https://rainmakerho.github.io/tags/chatbot/"/>
-    
       <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
+    
+      <category term="chatbot" scheme="https://rainmakerho.github.io/tags/chatbot/"/>
     
       <category term="adaptivecard" scheme="https://rainmakerho.github.io/tags/adaptivecard/"/>
     
       <category term="adaptive" scheme="https://rainmakerho.github.io/tags/adaptive/"/>
     
       <category term="Autofac" scheme="https://rainmakerho.github.io/tags/Autofac/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NHibernate.Exceptions.GenericADOException System.Text.EncoderFallbackException</title>
-    <link href="https://rainmakerho.github.io/2018/08/21/2018033/"/>
-    <id>https://rainmakerho.github.io/2018/08/21/2018033/</id>
-    <published>2018-08-21T10:22:37.000Z</published>
-    <updated>2018-08-21T10:36:17.177Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近系統上有時會出現「NHibernate.Exceptions.GenericADOException System.Text.EncoderFallbackException」的錯誤，IIS Reset 後，又正常。<br>過一陣子，又會出現。到底怎麼回事呢?<br>錯誤訊息如下，<br>NHibernate.Exceptions.GenericADOException: could not execute query<br>[ select scuserm0_.USR_ID as col_0_0_, scuserm0_.USR_NAME as col_1_0_ from SCUSERM scuserm0_ where scuserm0_.USR_ID in (?) ]<br>Name:Scuserm - Value:RM4303<br>[SQL: select scuserm0_.USR_ID as col_0_0_, scuserm0_.USR_NAME as col_1_0_ from SCUSERM scuserm0_ where scuserm0_.USR_ID in (?)] —&gt; System.Text.EncoderFallbackException: 無法將索引 105 中的 Unicode 字元 \uD83C 轉譯為指定的字碼頁。<br>於 System.Text.EncoderExceptionFallbackBuffer.Fallback(Char charUnknown, Int32 index)<br>於 System.Text.EncoderFallbackBuffer.InternalFallback(Char ch, Char<em>&amp; chars)<br>於 System.Text.UTF8Encoding.GetBytes(Char</em> chars, Int32 charCount, Byte* bytes, Int32 byteCount, EncoderNLS baseEncoder)<br>於 System.Text.EncoderNLS.GetBytes(Char[] chars, Int32 charIndex, Int32 charCount, Byte[] bytes, Int32 byteIndex, Boolean flush)<br>於 System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)<br>於 System.IO.StreamWriter.Write(Char[] buffer, Int32 index, Int32 count)<br>於 System.IO.TextWriter.SyncTextWriter.WriteLine(String value)<br>於 NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)<br>於 NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)<br>於 NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>— 內部例外狀況堆疊追蹤的結尾 —<br>於 NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.Loader.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)<br>於 NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)<br>於 NHibernate.Impl.SessionImpl.List(String query, QueryParameters queryParameters, IList results)<br>於 NHibernate.Impl.SessionImpl.List<a href="String query, QueryParameters parameters">T</a><br>於 NHibernate.Impl.QueryImpl.List<a href="">T</a></p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>奇怪，查詢資料，為什麼會有 System.IO.TextWriter.SyncTextWriter.WriteLine 呢?<br>於是設定不要寫 log4net 的 log ，還是會出現。<br>後來參考 <a href="https://stackoverflow.com/questions/18504196/periodically-unable-to-translate-unicode-character-x-at-index-y-to-specified-c" target="_blank" rel="noopener">Periodically - Unable to translate Unicode character X at index Y to specified code page</a> 這篇的方式，將設定 show_sql 設為 false 。最近觀察，就沒有再發生那個錯誤了。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">add</span> <span class="attr">key</span>=<span class="string">"hibernate.show_sql"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;問題&quot;&gt;&lt;a href=&quot;#問題&quot; class=&quot;headerlink&quot; title=&quot;問題&quot;&gt;&lt;/a&gt;問題&lt;/h3&gt;&lt;p&gt;最近系統上有時會出現「NHibernate.Exceptions.GenericADOException System.Text.Encod
-      
-    
-    </summary>
-    
-    
-      <category term="NHibernate" scheme="https://rainmakerho.github.io/tags/NHibernate/"/>
-    
-      <category term="GenericADOException" scheme="https://rainmakerho.github.io/tags/GenericADOException/"/>
-    
-      <category term="EncoderFallbackException" scheme="https://rainmakerho.github.io/tags/EncoderFallbackException/"/>
-    
-      <category term="Unicode" scheme="https://rainmakerho.github.io/tags/Unicode/"/>
     
   </entry>
   
