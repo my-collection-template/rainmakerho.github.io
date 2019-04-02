@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/04/02/2019010/</loc>
+    <lastmod>2019-04-02T10:10:43.659Z</lastmod>
+    <data>
+        <display>
+        <title>OpenTracing - Jaeger 接 Elastic Stack</title>
+        <pubTime>2019-04-02T08:41:01.000Z</pubTime>
+        
+        <tag>OpenTracing</tag>
+         
+        <tag>Jaeger</tag>
+         
+        <tag>Elasticsearch</tag>
+         
+        <tag>Kibana</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/03/16/2019009/</loc>
     <lastmod>2019-03-16T06:09:34.192Z</lastmod>
     <data>
@@ -520,9 +543,9 @@
         <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 之 2</title>
         <pubTime>2018-09-17T01:29:38.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>chatbot</tag>
+         
+        <tag>botframework</tag>
          
         <tag>adaptivecard</tag>
          
@@ -589,9 +612,9 @@
         <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot</title>
         <pubTime>2018-08-02T09:55:13.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>chatbot</tag>
+         
+        <tag>botframework</tag>
          
         <tag>Adaptive Cards</tag>
          
@@ -1118,11 +1141,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1147,11 +1170,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
-         
-        <tag>NullReferenceException</tag>
          
          
            
@@ -1189,9 +1212,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          
@@ -1287,9 +1310,9 @@
         <title>客製 BotDataStore ，將 Bot State 資料存到 SQL Server之中</title>
         <pubTime>2018-01-26T05:11:04.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>chatbot</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotDataStore</tag>
          
