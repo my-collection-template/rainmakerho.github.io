@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-05-14T02:47:43.411Z</updated>
+  <updated>2019-05-24T07:32:16.904Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>在目前的命令上發生嚴重錯誤。如果有任何結果，都必須捨棄。</title>
+    <link href="https://rainmakerho.github.io/2019/05/24/2019012/"/>
+    <id>https://rainmakerho.github.io/2019/05/24/2019012/</id>
+    <published>2019-05-24T06:57:16.000Z</published>
+    <updated>2019-05-24T07:32:16.904Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h3><p>SQL 2017(14.0.3103.1), Windows 2016 STD</p><h3 id="錯誤訊息"><a href="#錯誤訊息" class="headerlink" title="錯誤訊息"></a>錯誤訊息</h3><blockquote><p>訊息 596，層級 21，狀態 1，行 0<br>工作階段為清除狀態，無法繼續執行。</p></blockquote><blockquote><p>訊息 0，層級 20，狀態 0，行 0<br>在目前的命令上發生嚴重錯誤。如果有任何結果，都必須捨棄。</p></blockquote><blockquote><p>訊息 0，層級 11，狀態 0，行 0<br>在目前的命令上發生嚴重錯誤。如果有任何結果，都必須捨棄。</p></blockquote><blockquote><p>Msg 0, Level 20, State 0, Line 0<br>A severe error occurred on the current command.<br>The results, if any, should be discarded</p></blockquote><h3 id="測試的-SQL"><a href="#測試的-SQL" class="headerlink" title="測試的 SQL"></a>測試的 SQL</h3><p>這個狀況主要是有 Table-valued Functions, variable, view 加 if 所造成的問題，如下，</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--空的內容，主要測試使用</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">function</span> [dbo].[ufn_test3]()</span><br><span class="line"><span class="keyword">returns</span> @<span class="keyword">result</span> <span class="keyword">table</span></span><br><span class="line">(</span><br><span class="line">      TenantID <span class="built_in">int</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line">    <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">end</span>;</span><br><span class="line">GO</span><br></pre></td></tr></table></figure><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--定義一個變數</span></span><br><span class="line"><span class="keyword">DECLARE</span> @ORG_TYPE <span class="built_in">VARCHAR</span>(<span class="number">4</span>);</span><br><span class="line"><span class="comment">--執行 Table-valued Functions</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> [ufn_test3]();</span><br><span class="line">IF @ORG_TYPE = 'RMOK'</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">  <span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">as</span> a</span><br><span class="line">  <span class="keyword">FROM</span> [EMP_RMOK]</span><br><span class="line">  <span class="keyword">WHERE</span> PER_SERIL_NO = <span class="string">'7'</span>;</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></table></figure><h3 id="解決方式"><a href="#解決方式" class="headerlink" title="解決方式"></a>解決方式</h3><p>感覺是否為 DB 的問題，做了 DBCC CHECKDB, 也沒有錯誤。<br>將原本那個 View 改建立另一個名稱，也不會有錯誤，但用原本的 View 的名稱就是會噴錯。<br>請同事將 Windows 更新跑一跑再重開機試看看，<br>如果沒有效果的話，以下是暫時的解決方式。</p><p>測試了幾次後，發現如果沒有 if 也不會有錯誤，於是先將變數設定一個初始值。</p><blockquote><p>DECLARE @ORG_TYPE VARCHAR(4);<br>改成<br>DECLARE @ORG_TYPE VARCHAR(4) = ‘’;<br>或是<br>DECLARE @ORG_TYPE VARCHAR(4);<br>SET @ORG_TYPE = ’’;</p></blockquote><p>就不會有那個問題發生了:)</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;環境&quot;&gt;&lt;a href=&quot;#環境&quot; class=&quot;headerlink&quot; title=&quot;環境&quot;&gt;&lt;/a&gt;環境&lt;/h3&gt;&lt;p&gt;SQL 2017(14.0.3103.1), Windows 2016 STD&lt;/p&gt;
+&lt;h3 id=&quot;錯誤訊息&quot;&gt;&lt;a href=&quot;#錯誤
+      
+    
+    </summary>
+    
+    
+      <category term="mssql 2017" scheme="https://rainmakerho.github.io/tags/mssql-2017/"/>
+    
+      <category term="table function" scheme="https://rainmakerho.github.io/tags/table-function/"/>
+    
+      <category term="if" scheme="https://rainmakerho.github.io/tags/if/"/>
+    
+      <category term="variable" scheme="https://rainmakerho.github.io/tags/variable/"/>
+    
+  </entry>
   
   <entry>
     <title>推薦學習前端的好網站-Scrimba</title>
@@ -642,31 +672,6 @@
       <category term="ServerCertificateValidationCallback" scheme="https://rainmakerho.github.io/tags/ServerCertificateValidationCallback/"/>
     
       <category term="SecurityProtocol" scheme="https://rainmakerho.github.io/tags/SecurityProtocol/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>請使用 ClientScriptManager.RegisterForEventValidation 方法註冊回傳或回呼資料，以進行驗證</title>
-    <link href="https://rainmakerho.github.io/2018/10/09/2018036/"/>
-    <id>https://rainmakerho.github.io/2018/10/09/2018036/</id>
-    <published>2018-10-09T09:19:48.000Z</published>
-    <updated>2018-10-10T04:57:23.097Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事將 Page 的 EnableEventValidation 設定為 true 後，Postback 時，就會出現以下的錯誤。<br>Invalid postback or callback argument.  Event validation is enabled using <pages enableeventvalidation="true"> in configuration or &lt;%@ Page EnableEventValidation=”true” %&gt; in a page.  For security purposes, this feature verifies that arguments to postback or callback events originate from the server control that originally rendered them.  If the data is valid and expected, use the ClientScriptManager.RegisterForEventValidation method in order to register the postback or callback data for validation.</pages></p><h3 id="發生原因"><a href="#發生原因" class="headerlink" title="發生原因"></a>發生原因</h3><p>這個是發生在一個 DropDownList 物件上面，因為同事在 JS 中加入一個「請選擇」的選項，而它的值並不在原來的 DropDownList Datasource 之中。<br>所以在 Postback 時，基於安全理由(enableEventValidation=”true”)，就會噴那個錯誤。<br>嗯，有以下幾個方式來解決…</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><h4 id="在-Server-端加入初始值"><a href="#在-Server-端加入初始值" class="headerlink" title="在 Server 端加入初始值"></a>在 Server 端加入初始值</h4><p>將原本在 Client 端加的選項，移到 Server 端去加<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dt = <span class="keyword">new</span> DataTable();</span><br><span class="line">dt.Columns.Add(<span class="string">"id"</span>, <span class="keyword">typeof</span>(<span class="keyword">int</span>));</span><br><span class="line">dt.Columns.Add(<span class="string">"name"</span>, <span class="keyword">typeof</span>(<span class="keyword">string</span>));</span><br><span class="line"><span class="keyword">int</span> max = <span class="keyword">int</span>.Parse(txtCount.Text);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; max; i++)</span><br><span class="line">&#123;</span><br><span class="line">dt.Rows.Add(i, <span class="string">$"drpRM:<span class="subst">&#123;i&#125;</span>"</span>);</span><br><span class="line">&#125;</span><br><span class="line">drpRM.DataSource = dt;</span><br><span class="line">drpRM.DataTextField = <span class="string">"name"</span>;</span><br><span class="line">drpRM.DataValueField = <span class="string">"id"</span>;</span><br><span class="line">drpRM.DataBind();</span><br><span class="line">drpRM.Items.Insert(<span class="number">0</span>, <span class="keyword">new</span> ListItem &#123; Value = <span class="string">"-1"</span>, Text = <span class="string">"請選擇"</span>, Selected = <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure></p><h4 id="使用-RegisterForEventValidation-來補足"><a href="#使用-RegisterForEventValidation-來補足" class="headerlink" title="使用 RegisterForEventValidation 來補足"></a>使用 RegisterForEventValidation 來補足</h4><p>我是在 WebUserControl 之中，所以要透過 this.Page.ClientScript<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Render</span>(<span class="params">System.Web.UI.HtmlTextWriter writer</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">this</span>.Page.ClientScript.RegisterForEventValidation</span><br><span class="line">(<span class="keyword">this</span>.FindControl(<span class="string">"drpRM"</span>).UniqueID, <span class="string">"-1"</span>);</span><br><span class="line"><span class="keyword">base</span>.Render(writer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>當然，也有人說，將 enableEventValidation 設為 false。 基於安全理由，不建議這樣子做哦! </p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://odetocode.com/blogs/scott/archive/2006/03/22/asp-net-event-validation-and-invalid-callback-or-postback-argument-again.aspx" target="_blank" rel="noopener">ASP.NET Event Validation and “Invalid Callback Or Postback Argument” : Part II</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近同事將 Page 的 EnableEventValidation 設定為 true 後，Postback 時，就會出現以下的錯誤。&lt;br
-      
-    
-    </summary>
-    
-    
-      <category term="RegisterForEventValidation" scheme="https://rainmakerho.github.io/tags/RegisterForEventValidation/"/>
-    
-      <category term="EnableEventValidation" scheme="https://rainmakerho.github.io/tags/EnableEventValidation/"/>
     
   </entry>
   
