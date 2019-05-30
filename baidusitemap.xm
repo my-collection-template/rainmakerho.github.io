@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/05/28/2019013/</loc>
+    <lastmod>2019-05-30T07:30:32.346Z</lastmod>
+    <data>
+        <display>
+        <title>NullReferenceException 在 new class 時?</title>
+        <pubTime>2019-05-28T07:35:49.000Z</pubTime>
+        
+        <tag>NullReferenceException</tag>
+         
+        <tag>ASP.NET MVC</tag>
+         
+        <tag>Controller</tag>
+         
+        <tag>lambda_method</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/05/24/2019012/</loc>
     <lastmod>2019-05-24T07:32:16.904Z</lastmod>
     <data>
@@ -1333,13 +1356,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
