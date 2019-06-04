@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-05-30T07:30:32.346Z</updated>
+  <updated>2019-06-04T06:33:50.221Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用 NPOI.HSSF.UserModel.HSSFSheet.CopyRow 造成 IIS 應用程式重啟問題</title>
+    <link href="https://rainmakerho.github.io/2019/06/04/2019014/"/>
+    <id>https://rainmakerho.github.io/2019/06/04/2019014/</id>
+    <published>2019-06-04T02:09:26.000Z</published>
+    <updated>2019-06-04T06:33:50.221Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h3><p>Windows 2012 R2, IIS, NPOI v2.1.1.0</p><h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近同事在一台 Windows 2012 R2 上安裝系統，把 8 個 iis 的應用程式放在同一個應用程式集區之中。<br>其中一個應用程式中，有使用到 NOPI 去產生 Excel 報表。<br>那個報表是依 DataTable 將資料 Loop 放到 Excel 之中，但神奇的是，程式在執行到一半，卻會讓那個應用程式集區直接重啟。<br>而事件檢視器之中就只有「失敗的應用程式名稱: w3wp.exe，版本: 8.5.9600.16384，時間戳記: 0x52157ba0」的錯誤，如下，<br><img src="/2019/06/04/2019014/001.png" title="w3wp.exe錯誤"></p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>因為是 w3wp.exe 直接重啟，所以就透過 <a href="https://www.microsoft.com/en-us/download/details.aspx?id=58210" target="_blank" rel="noopener">Debug Diagnostic Tool</a>來收集 IIS 的 Crash 資料，所以先透過 DebugDiag 2 Collection 來收集發生錯誤時，將 Stack Trace Log 起來，如下，<br><img src="/2019/06/04/2019014/002.png" title="DebugDiag 2 Collection"></p><p>最後發現，應用程式集區重啟後，的確產生 2 個不同 Process 的 Log 檔，如下，<br><img src="/2019/06/04/2019014/003.png" title="DebugDiag Log File"></p><p>查看最後的 Log 是掛在 NPOI 的 NPOI.HSSF.UserModel.HSSFRow.get_Cells ，如下，</p><blockquote><p>0e5fd908 759c89f2 [HelperMethodFrame_PROTECTOBJ: 0e5fd908] System.Delegate.DelegateConstruct(System.Object, IntPtr)<br>0e5fdaf0 67511c77 System.Collections.Generic.SortedDictionary<code>2+ValueCollection[[System.Int32, mscorlib],[System.__Canon, mscorlib]].CopyTo(System.__Canon[], Int32) 0e5fdb18 6f537a25 System.Collections.Generic.List</code>1[[System.__Canon, mscorlib]]..ctor(System.Collections.Generic.IEnumerable`1&lt;System.__Canon&gt;)<br>0e5fdb50 1ce64bbe NPOI.HSSF.UserModel.HSSFRow.get_Cells()<br>0e5fdb60 1ce64a91 NPOI.HSSF.UserModel.HSSFSheet.NotifyRowShifting(NPOI.HSSF.UserModel.HSSFRow)<br>0e5fdba8 1ce64016 NPOI.HSSF.UserModel.HSSFSheet.ShiftRows(Int32, Int32, Int32, Boolean, Boolean, Boolean)<br>0e5fdc38 1ce63f14 NPOI.HSSF.UserModel.HSSFSheet.ShiftRows(Int32, Int32, Int32)<br>0e5fdc44 1ce628e2 NPOI.SS.Util.SheetUtil.CopyRow(NPOI.SS.UserModel.ISheet, Int32, Int32)<br>0e5fdc70 1ce6281a NPOI.HSSF.UserModel.HSSFSheet.CopyRow(Int32, Int32)</p></blockquote><p>如果將錯誤改成 dump 檔的話，然後再透過 DebugDiag Analysis 來分析，主要錯誤如下，</p><blockquote><p>ntdll!NtWaitForSingleObject+c<br>KERNELBASE!WaitForSingleObjectEx+99<br>mscorwks!CLREventWaitHelper+2f<br>mscorwks!CLREvent::WaitEx+117<br>mscorwks!CLREvent::Wait+17<br>mscorwks!ThreadpoolMgr::SafeWait+73<br>mscorwks!ThreadpoolMgr::WorkerThreadStart+11c<br>mscorwks!Thread::intermediateThreadProc+49<br>kernel32!BaseThreadInitThunk+24<br>ntdll!__RtlUserThreadStart+2f<br>ntdll!_RtlUserThreadStart+1b</p></blockquote><p>而它的錯誤點，就指到了上述 NPOI 的錯誤。</p><p>在沒什麼想法時，想說將那個有錯誤的應用程式，放到一個單獨使用的應用程式集區之中，比較好分析。<br>於是將它放過去之後，錯誤也隨之不見了。<br>再將它放在一起，錯誤又出現了。 @_@</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>新增一個新的應用程式集區，然後讓那個會出錯的應用程式使用，再測試一次程式，居然就不會有問題了。<br>或許也可以更新 NPOI 版本到較新的版本試看看。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;環境&quot;&gt;&lt;a href=&quot;#環境&quot; class=&quot;headerlink&quot; title=&quot;環境&quot;&gt;&lt;/a&gt;環境&lt;/h3&gt;&lt;p&gt;Windows 2012 R2, IIS, NPOI v2.1.1.0&lt;/p&gt;
+&lt;h3 id=&quot;問題&quot;&gt;&lt;a href=&quot;#問題&quot; clas
+      
+    
+    </summary>
+    
+    
+      <category term="IIS" scheme="https://rainmakerho.github.io/tags/IIS/"/>
+    
+      <category term="NPOI" scheme="https://rainmakerho.github.io/tags/NPOI/"/>
+    
+      <category term="Windows 2012" scheme="https://rainmakerho.github.io/tags/Windows-2012/"/>
+    
+      <category term="Crash" scheme="https://rainmakerho.github.io/tags/Crash/"/>
+    
+      <category term="Application Pool" scheme="https://rainmakerho.github.io/tags/Application-Pool/"/>
+    
+  </entry>
   
   <entry>
     <title>NullReferenceException 在 new class 時?</title>
@@ -645,35 +677,6 @@
       <category term="node" scheme="https://rainmakerho.github.io/tags/node/"/>
     
       <category term="npm" scheme="https://rainmakerho.github.io/tags/npm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SQL 某個欄位包含 文字、符號及數值，是否可依 數值、文字來排序?</title>
-    <link href="https://rainmakerho.github.io/2018/10/31/2018038/"/>
-    <id>https://rainmakerho.github.io/2018/10/31/2018038/</id>
-    <published>2018-10-31T03:45:03.000Z</published>
-    <updated>2018-10-31T06:43:25.356Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>有同事詢問，SQL DB 中某個欄位，資料型態為 nvarchar，裡面存放著數值、文字、符號等內容。<br>依照預設的排序，結果會是 1, 11, 2, 文字 … </p><p>那有辦法，數值時就依數值排序後，再用文字排嗎?<br>例如 1, 2, 11, 文字 …</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><h4 id="建立測試資料"><a href="#建立測試資料" class="headerlink" title="建立測試資料"></a>建立測試資料</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t1(</span><br><span class="line">    c1 <span class="keyword">nvarchar</span>(<span class="number">32</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t1(c1) <span class="keyword">values</span>(<span class="string">'1'</span>), (<span class="string">'11'</span>), (<span class="string">'2'</span>), (<span class="string">'3'</span>),(<span class="string">'A'</span>), (<span class="string">'AA'</span>), (<span class="string">'ABC'</span>), (N<span class="string">'一'</span>), (N<span class="string">'二'</span>), (<span class="string">';'</span>), (<span class="string">''''</span>), (<span class="string">'B'</span>);</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t1 <span class="keyword">order</span> <span class="keyword">by</span> c1;</span><br></pre></td></tr></table></figure><p>結果如下，<br><img src="/2018/10/31/2018038/001.png" title="[欄位包含數值、文字]"></p><h4 id="研究-1"><a href="#研究-1" class="headerlink" title="研究"></a>研究</h4><p>要讓它依數值大小排序，就要先將它轉成數值。<br>可是那文字怎麼辦呢?<br>分成2部份，再 union all 起來嗎 ?</p><p>嗯…</p><p>再看一下內容，其實我們只要將數值的內容，依數值排序就可以了。<br>所以我們就可以用SQL的 TRY_ 開頭的函數，例如 <a href="https://docs.microsoft.com/en-us/sql/t-sql/functions/try-convert-transact-sql?view=sql-server-2017" target="_blank" rel="noopener">TRY_CONVERT</a>，它會將可以轉成數值字串就會傳回數值，但如果無法轉的就會傳回 null 。<br>所以我們就可以依 TRY_CONVERT(int, c1) 來排序，這樣那些數值的資料就不會依 <strong>字串</strong> 來排，而是用 <strong>數值</strong> 來排。如下，<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *, <span class="keyword">TRY_CONVERT</span>(<span class="built_in">int</span>, c1) <span class="keyword">from</span> t1</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span>  <span class="keyword">TRY_CONVERT</span>(<span class="built_in">int</span>, c1);</span><br></pre></td></tr></table></figure></p><img src="/2018/10/31/2018038/002.png" title="[sort by TRY_CONVERT]"><p>因為文字是 null ，所以文字會先跑出來，後面的數字有依大小來排序。<br>但是文字卻沒有排序了，例如 A .. 中間插了一些符號後，才會輸出 B，<br>為了讓文字也可以有排序，所以要再加入原有的欄位來排序，如下，<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *, <span class="keyword">TRY_CONVERT</span>(<span class="built_in">int</span>, c1) <span class="keyword">from</span> t1</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span>  <span class="keyword">TRY_CONVERT</span>(<span class="built_in">int</span>, c1), c1;</span><br></pre></td></tr></table></figure></p><img src="/2018/10/31/2018038/003.png" title="[sort by TRY_CONVERT and c1]"><p>那如果要數值先輸出然後再文字呢?</p><p>這時只要將 null 改成 int 的最大值，所以再加入 <a href="https://docs.microsoft.com/en-us/sql/t-sql/functions/isnull-transact-sql?view=sql-server-2017" target="_blank" rel="noopener">ISNULL</a>，如下，</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *, <span class="keyword">TRY_CONVERT</span>(<span class="built_in">int</span>, c1) <span class="keyword">from</span> t1</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span>  <span class="keyword">ISNULL</span>(<span class="keyword">TRY_CONVERT</span>(<span class="built_in">int</span>, c1), <span class="number">2147483647</span>) , c1;</span><br></pre></td></tr></table></figure><img src="/2018/10/31/2018038/004.png" title="[sort by TRY_CONVERT and c1, number first]"><p>這樣數值的字串就會先被輸出哦 :)</p><p>可是如果您是 SQL 2008 的話，並沒有 TRY_CONVERT 可以用，這時就需要自已寫一個 function ，可以參考 <a href="https://www.mssqltips.com/sqlservertip/5411/simulating-tryconvert-in-sql-server-2008/" target="_blank" rel="noopener">Simulating TRY_CONVERT() in SQL Server 2008</a>，如下，<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> dbo.TryConvertInt</span><br><span class="line">(</span><br><span class="line">  @<span class="keyword">value</span> <span class="keyword">nvarchar</span>(<span class="number">4000</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span></span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">RETURN</span> (<span class="keyword">SELECT</span> <span class="keyword">CONVERT</span>(<span class="built_in">int</span>, </span><br><span class="line">    <span class="keyword">CASE</span> <span class="keyword">WHEN</span> <span class="keyword">LEN</span>(@<span class="keyword">value</span>) &lt;= <span class="number">11</span> <span class="keyword">THEN</span></span><br><span class="line">      <span class="keyword">CASE</span> <span class="keyword">WHEN</span> @<span class="keyword">value</span> <span class="keyword">NOT</span> <span class="keyword">LIKE</span> N<span class="string">'%[^-0-9]%'</span> <span class="keyword">THEN</span></span><br><span class="line">        <span class="keyword">CASE</span> <span class="keyword">WHEN</span> <span class="keyword">CONVERT</span>(<span class="built_in">bigint</span>, @<span class="keyword">value</span>) <span class="keyword">BETWEEN</span> <span class="number">-2147483648</span> <span class="keyword">AND</span> <span class="number">2147483647</span> </span><br><span class="line">             <span class="keyword">THEN</span> @<span class="keyword">value</span> </span><br><span class="line">        <span class="keyword">END</span> </span><br><span class="line">      <span class="keyword">END</span> </span><br><span class="line">    <span class="keyword">END</span>));</span><br><span class="line"><span class="keyword">END</span></span><br><span class="line"><span class="keyword">GO</span></span><br></pre></td></tr></table></figure></p><p>再來就是將原本使用 TRY_CONVERT 改成使用 dbo.TryConvertInt ，如下，<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *, dbo.TryConvertInt(c1) <span class="keyword">from</span> t1</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span>  <span class="keyword">ISNULL</span>(dbo.TryConvertInt( c1), <span class="number">2147483647</span>) , c1;</span><br></pre></td></tr></table></figure></p><img src="/2018/10/31/2018038/005.png" title="[改用自定函數dbo.TryConvertInt]"><ul><li>註 1: 如果 <strong>效能</strong> 有問題的話，請先將資料縮小，或是使用 <a href="https://docs.microsoft.com/en-us/sql/relational-databases/tables/specify-computed-columns-in-a-table?view=sql-server-2017" target="_blank" rel="noopener">Computed Column</a>  <a href="https://docs.microsoft.com/en-us/sql/relational-databases/indexes/indexes-on-computed-columns?view=sql-server-2017" target="_blank" rel="noopener">Indexes on Computed Columns</a></li><li>註 2: SQL Server 2008/2008 R2 的支援將於 2019 年 7 月 9 日結束 </li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;有同事詢問，SQL DB 中某個欄位，資料型態為 nvarchar，裡面存放著數值、文字、符號等內容。&lt;br&gt;依照預設的排序，結果會是 1,
-      
-    
-    </summary>
-    
-    
-      <category term="sql" scheme="https://rainmakerho.github.io/tags/sql/"/>
-    
-      <category term="order by" scheme="https://rainmakerho.github.io/tags/order-by/"/>
-    
-      <category term="letters" scheme="https://rainmakerho.github.io/tags/letters/"/>
-    
-      <category term="numbers" scheme="https://rainmakerho.github.io/tags/numbers/"/>
     
   </entry>
   
