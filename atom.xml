@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-06-05T01:12:59.255Z</updated>
+  <updated>2019-06-12T07:35:21.790Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SQL Replace 後，怎麼會留空白呢?</title>
+    <link href="https://rainmakerho.github.io/2019/06/12/2019015/"/>
+    <id>https://rainmakerho.github.io/2019/06/12/2019015/</id>
+    <published>2019-06-12T05:49:14.000Z</published>
+    <updated>2019-06-12T07:35:21.790Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近客戶將 SQL Server 從 SQL 2012 升級到 SQL 2016 後，有些 Store Procedure 居然發生了錯誤。<br>結果發現，原本在 SQL 2012 中去 Replace 後，原本後面有空字串的會一併 RTrim 掉，但在 SQL 2016 中，那些空白就會留著。</p><p>怎麼會這樣子呢? 查看官方文件中，這個行為在 SQL 2008 之後就是如此了呀~<br><a href="https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008/ms143359(v=sql.100)#replace-function" target="_blank" rel="noopener">Behavior Changes to Database Engine Features in SQL Server 2008 - REPLACE Function</a></p><blockquote><p>In SQL Server 2005, trailing spaces specified in the first input parameter to the REPLACE function are trimmed when the parameter is of type char. For example, in the statement SELECT ‘&lt;’ + REPLACE(CONVERT(char(6), ‘ABC ‘), ‘ ‘, ‘L’) + ‘&gt;’, the value ‘ABC ‘ is incorrectly evaluated as ‘ABC’.</p></blockquote><blockquote><p>In SQL Server 2008, trailing spaces are always preserved. For applications that rely on the previous behavior of the function, use the RTRIM function when specifying the first input parameter for the function. For example, the following syntax will reproduce the SQL Server 2005 behavior SELECT ‘&lt;’ + REPLACE(RTRIM(CONVERT(char(6), ‘ABC ‘)), ‘ ‘, ‘L’) + ‘&gt;’.</p></blockquote><p>也就是說，SQL 2008 之後，如果要將 Replace 後的空字串 Trim 掉，請自已加一下 RTRIM !!!</p><p>嗯，不過，我們的現況是 SQL 2012 跟 SQL 2016 ，這到底是怎麼回事呢?</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>結果透過 SSMS 來看資料庫，發現 SQL 2012 的那個資料庫，相容性層級設定的是 SQL 2005，而 SQL 2016 最底的相容性層級只到 SQL 2008。所以才在 SQL 2016 上才發生這樣子的錯誤。</p><p>即然知道問題了，就要看怎麼解了。<br>依官網來說，程式就給它改下去吧，可能要盤點一下有那些 Store Procedure 有影響吧。</p><p>另一個解法是設定 <a href="https://docs.microsoft.com/en-us/sql/t-sql/statements/set-ansi-padding-transact-sql?view=sql-server-2017" target="_blank" rel="noopener">ANSI_PADDING</a> 為 OFF (預設為 ON)。<br>如果目前使用 Replace 是因為遇到了 Char 資料型態，可以在運算之前，設定 <a href="https://docs.microsoft.com/en-us/sql/t-sql/statements/set-ansi-padding-transact-sql?view=sql-server-2017" target="_blank" rel="noopener">ANSI_PADDING</a> 為 OFF，這樣子就不會把空字串加上去了。<br>例如，</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> [dbo].[table1] (</span><br><span class="line">    [<span class="keyword">id</span>]        TINYINT       <span class="keyword">IDENTITY</span> (<span class="number">1</span>, <span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    [char1]     <span class="built_in">CHAR</span> (<span class="number">10</span>)     <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    [nchar2]    <span class="keyword">NCHAR</span> (<span class="number">10</span>)    <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    [varchar1]  <span class="built_in">VARCHAR</span> (<span class="number">10</span>)  <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    [<span class="keyword">nvarchar2</span>] <span class="keyword">NVARCHAR</span> (<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> table1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> [dbo].[table1]([char1], [nchar2], [varchar1], [<span class="keyword">nvarchar2</span>])</span><br><span class="line"><span class="keyword">values</span> (<span class="string">'char1'</span>, N<span class="string">'nchar2'</span>, <span class="string">'varchar1'</span>, N<span class="string">'nvarchar2'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 預設是 SET ANSI_PADDING ON</span></span><br><span class="line"><span class="comment">-- 所以 char1 欄位 replace 後，會留有空白哦!</span></span><br><span class="line"><span class="keyword">SET</span> ANSI_PADDING <span class="keyword">ON</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="string">'['</span> + char1 + <span class="string">']'</span> <span class="keyword">as</span> char1,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">replace</span>(char1, <span class="string">'char'</span>, <span class="string">'rm'</span>) + <span class="string">']'</span> <span class="keyword">as</span> char1_replace ,</span><br><span class="line"><span class="string">'['</span> + nchar2 + <span class="string">']'</span> <span class="keyword">as</span> nchar2,</span><br><span class="line">N<span class="string">'['</span> + <span class="keyword">replace</span>(nchar2, N<span class="string">'char'</span>, N<span class="string">'rm'</span>) + N<span class="string">']'</span> <span class="keyword">as</span> nchar2_replace,</span><br><span class="line"><span class="string">'['</span> + varchar1 + <span class="string">']'</span> <span class="keyword">as</span> varchar1,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">replace</span>(varchar1, <span class="string">'char'</span>, <span class="string">'rm'</span>) + <span class="string">']'</span> <span class="keyword">as</span> varchar1_replace,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">nvarchar2</span> + <span class="string">']'</span> <span class="keyword">as</span> <span class="keyword">nvarchar2</span>,</span><br><span class="line">N<span class="string">'['</span> + <span class="keyword">replace</span>(<span class="keyword">nvarchar2</span>, N<span class="string">'char'</span>, N<span class="string">'rm'</span>) + N<span class="string">']'</span> <span class="keyword">as</span> nvarchar2_replace</span><br><span class="line"><span class="keyword">from</span> table1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> ANSI_PADDING <span class="keyword">off</span>;</span><br><span class="line"><span class="comment">-- 所以 char1 欄位 replace 後，會不會有空白了哦~</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">'['</span> + char1 + <span class="string">']'</span> <span class="keyword">as</span> char1,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">replace</span>(char1, <span class="string">'char'</span>, <span class="string">'rm'</span>) + <span class="string">']'</span> <span class="keyword">as</span> char1_replace ,</span><br><span class="line"><span class="string">'['</span> + nchar2 + <span class="string">']'</span> <span class="keyword">as</span> nchar2,</span><br><span class="line">N<span class="string">'['</span> + <span class="keyword">replace</span>(nchar2, N<span class="string">'char'</span>, N<span class="string">'rm'</span>) + N<span class="string">']'</span> <span class="keyword">as</span> nchar2_replace,</span><br><span class="line"><span class="string">'['</span> + varchar1 + <span class="string">']'</span> <span class="keyword">as</span> varchar1,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">replace</span>(varchar1, <span class="string">'char'</span>, <span class="string">'rm'</span>) + <span class="string">']'</span> <span class="keyword">as</span> varchar1_replace,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">nvarchar2</span> + <span class="string">']'</span> <span class="keyword">as</span> <span class="keyword">nvarchar2</span>,</span><br><span class="line">N<span class="string">'['</span> + <span class="keyword">replace</span>(<span class="keyword">nvarchar2</span>, N<span class="string">'char'</span>, N<span class="string">'rm'</span>) + N<span class="string">']'</span> <span class="keyword">as</span> nvarchar2_replace</span><br><span class="line"><span class="keyword">from</span> table1;</span><br></pre></td></tr></table></figure><p>執行結果如下，<br><img src="/2019/06/12/2019015/001.png" title="ANSI_PADDING on/off 比較"><br>可以看到上面 ANSI_PADDING ON 時，Replace 後是有空白的，Off 之後 char1 欄位是沒有空白的。<br>但對於 NCHAR 的資料型態是沒有改變的哦!</p><p>所以，如果您在 Replace 遇到的問題是 CHAR ，那您可以在執行 SQL 之前，先去下</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> ANSI_PADDING <span class="keyword">OFF</span></span><br><span class="line"><span class="comment">-- 你原本的SQL</span></span><br></pre></td></tr></table></figure><p>依據大多數系統大多會將執行 SQL 的部份抽出來，所以目前您可以在那先去設定 ANSI_PADDING OFF。</p><ul><li>請注意 NCHAR ， ANSI_PADDING 固定會是 ON 的哦! 所以設定 SET ANSI_PADDING OFF 只針對 CHAR 有效果哦!</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;問題&quot;&gt;&lt;a href=&quot;#問題&quot; class=&quot;headerlink&quot; title=&quot;問題&quot;&gt;&lt;/a&gt;問題&lt;/h3&gt;&lt;p&gt;最近客戶將 SQL Server 從 SQL 2012 升級到 SQL 2016 後，有些 Store Procedure 居然發生了錯誤。
+      
+    
+    </summary>
+    
+    
+      <category term="sql" scheme="https://rainmakerho.github.io/tags/sql/"/>
+    
+      <category term="sql 2016" scheme="https://rainmakerho.github.io/tags/sql-2016/"/>
+    
+      <category term="sql 2005" scheme="https://rainmakerho.github.io/tags/sql-2005/"/>
+    
+      <category term="sql 2008" scheme="https://rainmakerho.github.io/tags/sql-2008/"/>
+    
+      <category term="replace" scheme="https://rainmakerho.github.io/tags/replace/"/>
+    
+      <category term="rtrim" scheme="https://rainmakerho.github.io/tags/rtrim/"/>
+    
+  </entry>
   
   <entry>
     <title>使用 NPOI.HSSF.UserModel.HSSFSheet.CopyRow 造成 IIS 應用程式重啟問題</title>
@@ -186,13 +219,13 @@
     </summary>
     
     
+      <category term="軟體求生" scheme="https://rainmakerho.github.io/tags/%E8%BB%9F%E9%AB%94%E6%B1%82%E7%94%9F/"/>
+    
       <category term="js" scheme="https://rainmakerho.github.io/tags/js/"/>
     
       <category term="document.formName" scheme="https://rainmakerho.github.io/tags/document-formName/"/>
     
       <category term="undefined" scheme="https://rainmakerho.github.io/tags/undefined/"/>
-    
-      <category term="軟體求生" scheme="https://rainmakerho.github.io/tags/%E8%BB%9F%E9%AB%94%E6%B1%82%E7%94%9F/"/>
     
       <category term="asp.net 4" scheme="https://rainmakerho.github.io/tags/asp-net-4/"/>
     
@@ -265,11 +298,11 @@
     </summary>
     
     
-      <category term="軟體求生" scheme="https://rainmakerho.github.io/tags/%E8%BB%9F%E9%AB%94%E6%B1%82%E7%94%9F/"/>
-    
       <category term="System.Net.Http" scheme="https://rainmakerho.github.io/tags/System-Net-Http/"/>
     
       <category term="4.1.0.0" scheme="https://rainmakerho.github.io/tags/4-1-0-0/"/>
+    
+      <category term="軟體求生" scheme="https://rainmakerho.github.io/tags/%E8%BB%9F%E9%AB%94%E6%B1%82%E7%94%9F/"/>
     
   </entry>
   
@@ -648,35 +681,6 @@
       <category term="Could not find a part of the path" scheme="https://rainmakerho.github.io/tags/Could-not-find-a-part-of-the-path/"/>
     
       <category term="roslyn\csc.exe" scheme="https://rainmakerho.github.io/tags/roslyn-csc-exe/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>env: node: No such file or directory</title>
-    <link href="https://rainmakerho.github.io/2018/11/19/2018039/"/>
-    <id>https://rainmakerho.github.io/2018/11/19/2018039/</id>
-    <published>2018-11-19T08:29:22.000Z</published>
-    <updated>2018-11-19T08:42:04.197Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近透過 Jenkins 透過 ssh 在 mac 上建置時，從 git 拉 source 上來呼叫 npm install 時，會出現以下的錯誤，<br><strong>bash: line 5: npm: command not found</strong></p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>因為找不到 npm command ，所以就把原本的 script 改成加上 path ，如下，<br><strong>/usr/local/bin/npm install;</strong></p><p>結果又出現了以下的錯誤，<br><strong>env: node: No such file or directory</strong></p><p>怎麼會這樣子呢? 請問同事 david 後，它建議將 /usr/local/bin 加到 path 去會比較好。<br>所以在執行 npm install 之前，就先將 /usr/local/bin 加到 path 之中，如下，</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/bin:&quot;$PATH&quot;</span><br></pre></td></tr></table></figure><p>所以執行 npm install 及 npm run build 就順利建置完成了哦!</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近透過 Jenkins 透過 ssh 在 mac 上建置時，從 git 拉 source 上來呼叫 npm install 時，會出現以下
-      
-    
-    </summary>
-    
-    
-      <category term="jenkins" scheme="https://rainmakerho.github.io/tags/jenkins/"/>
-    
-      <category term="macos" scheme="https://rainmakerho.github.io/tags/macos/"/>
-    
-      <category term="node" scheme="https://rainmakerho.github.io/tags/node/"/>
-    
-      <category term="npm" scheme="https://rainmakerho.github.io/tags/npm/"/>
     
   </entry>
   

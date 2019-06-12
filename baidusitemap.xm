@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/06/12/2019015/</loc>
+    <lastmod>2019-06-12T07:35:21.790Z</lastmod>
+    <data>
+        <display>
+        <title>SQL Replace 後，怎麼會留空白呢?</title>
+        <pubTime>2019-06-12T05:49:14.000Z</pubTime>
+        
+        <tag>sql</tag>
+         
+        <tag>sql 2016</tag>
+         
+        <tag>sql 2005</tag>
+         
+        <tag>sql 2008</tag>
+         
+        <tag>replace</tag>
+         
+        <tag>rtrim</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/06/04/2019014/</loc>
     <lastmod>2019-06-05T01:12:59.255Z</lastmod>
     <data>
@@ -130,13 +157,13 @@
         <title>document.[formName] is undefined</title>
         <pubTime>2019-03-16T05:48:31.000Z</pubTime>
         
+        <tag>軟體求生</tag>
+         
         <tag>js</tag>
          
         <tag>document.formName</tag>
          
         <tag>undefined</tag>
-         
-        <tag>軟體求生</tag>
          
         <tag>asp.net 4</tag>
          
@@ -196,11 +223,11 @@
         <title>Inheritance security rules violated by type: 'System.Net.Http.WebRequestHandler'</title>
         <pubTime>2019-02-23T02:41:55.000Z</pubTime>
         
-        <tag>軟體求生</tag>
-         
         <tag>System.Net.Http</tag>
          
         <tag>4.1.0.0</tag>
+         
+        <tag>軟體求生</tag>
          
          
            
@@ -1381,13 +1408,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
