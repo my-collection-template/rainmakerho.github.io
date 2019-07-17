@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/07/04/2019017/</loc>
+    <lastmod>2019-07-17T01:53:16.862Z</lastmod>
+    <data>
+        <display>
+        <title>Bitmap.save(): A generic error occurred in GDI+</title>
+        <pubTime>2019-07-04T00:57:37.000Z</pubTime>
+        
+        <tag>Bitmap.save</tag>
+         
+        <tag>GDI+</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2019/07/17/2019018/</loc>
+    <lastmod>2019-07-17T01:51:42.908Z</lastmod>
+    <data>
+        <display>
+        <title>Checkmarx Cookie_Injection</title>
+        <pubTime>2019-07-17T01:31:40.000Z</pubTime>
+        
+        <tag>checkmarx</tag>
+         
+        <tag>Cookie_Injection</tag>
+         
+        <tag>CSharp</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/07/03/2019016/</loc>
     <lastmod>2019-07-03T05:42:20.333Z</lastmod>
     <data>
@@ -505,9 +545,9 @@
         <title>PDF 最後一頁才顯示頁尾</title>
         <pubTime>2018-11-29T06:46:17.000Z</pubTime>
         
-        <tag>pdf</tag>
-         
         <tag>aspose</tag>
+         
+        <tag>pdf</tag>
          
         <tag>cells</tag>
          
@@ -1285,13 +1325,13 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>SmtpClient</tag>
-         
-        <tag>SmtpConnection.GetConnection</tag>
-         
         <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
+         
+        <tag>SmtpClient</tag>
+         
+        <tag>SmtpConnection.GetConnection</tag>
          
         <tag>NetworkCredential</tag>
          
@@ -1314,11 +1354,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
