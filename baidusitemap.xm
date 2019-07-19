@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/07/19/2019019/</loc>
+    <lastmod>2019-07-19T08:44:28.752Z</lastmod>
+    <data>
+        <display>
+        <title>double.parse cause Input string was not in a correct format Error</title>
+        <pubTime>2019-07-19T08:09:31.000Z</pubTime>
+        
+        <tag>non-printable characters</tag>
+         
+        <tag>不可視字元</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/07/04/2019017/</loc>
     <lastmod>2019-07-17T01:53:16.862Z</lastmod>
     <data>
@@ -1327,11 +1346,11 @@
         
         <tag>NullReferenceException</tag>
          
-        <tag>.net</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>.net</tag>
          
         <tag>NetworkCredential</tag>
          
