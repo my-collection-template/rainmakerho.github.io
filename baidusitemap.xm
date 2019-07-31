@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/07/31/2019020/</loc>
+    <lastmod>2019-07-31T09:57:37.189Z</lastmod>
+    <data>
+        <display>
+        <title>ODataController Cross site scripting (content-sniffing)</title>
+        <pubTime>2019-07-31T09:03:02.000Z</pubTime>
+        
+        <tag>Odata</tag>
+         
+        <tag>Cross site scripting</tag>
+         
+        <tag>content-sniffing</tag>
+         
+        <tag>ODataController</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/07/19/2019019/</loc>
     <lastmod>2019-07-19T08:44:28.752Z</lastmod>
     <data>

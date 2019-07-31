@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-07-19T08:44:28.752Z</updated>
+  <updated>2019-07-31T09:57:37.189Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ODataController Cross site scripting (content-sniffing)</title>
+    <link href="https://rainmakerho.github.io/2019/07/31/2019020/"/>
+    <id>https://rainmakerho.github.io/2019/07/31/2019020/</id>
+    <published>2019-07-31T09:03:02.000Z</published>
+    <updated>2019-07-31T09:57:37.189Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事詢問一個 ODataController 被黑箱打到的一個 XSS 問題。<br>ODataController 允許我們使用 $count, $select 等操作。<br>我們用一個簡單的 webapi 專案來測試，新增 WebApi 專案後，加入「Microsoft.AspNet.OData」。<br>詳細可以參考 <a href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/odata-support-in-aspnet-web-api/odata-v4/create-an-odata-v4-endpoint" target="_blank" rel="noopener">Create an OData v4 Endpoint Using ASP.NET Web API</a>。</p><h3 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h3><p>建立 Product Model ，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Product</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">int</span> Id &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">decimal</span> Price &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>因為只要測試 odata ，所以在 WebApiConfig.cs 只需設定 OData 的部份，如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">WebApiConfig</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Register</span>(<span class="params">HttpConfiguration config</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        config.MapHttpAttributeRoutes();</span><br><span class="line">        <span class="keyword">var</span> builder = <span class="keyword">new</span> ODataConventionModelBuilder();</span><br><span class="line">        config.Count().Filter().OrderBy().Expand().Select().MaxTop(<span class="literal">null</span>); <span class="comment">//new line</span></span><br><span class="line">        builder.EntitySet&lt;Product&gt;(<span class="string">"Products"</span>);</span><br><span class="line">        config.MapODataServiceRoute(</span><br><span class="line">          routeName: <span class="string">"odata"</span>,</span><br><span class="line">          routePrefix: <span class="string">"odata"</span>,</span><br><span class="line">          model: builder.GetEdmModel());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>建立測試的 ODataController</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ProductsController</span> : <span class="title">ODataController</span></span><br><span class="line">&#123;</span><br><span class="line">  [<span class="meta">EnableQuery</span>]</span><br><span class="line">  <span class="function"><span class="keyword">public</span> IHttpActionResult <span class="title">Get</span>(<span class="params">ODataQueryOptions&lt;Product&gt; opts</span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> products = <span class="keyword">new</span> List&lt;Product&gt;() &#123;</span><br><span class="line">      <span class="keyword">new</span> Product&#123;Id=<span class="number">1</span>, Name=<span class="string">"Product 1***"</span>, Price=<span class="number">101</span>&#125;,</span><br><span class="line">      <span class="keyword">new</span> Product&#123;Id=<span class="number">2</span>, Name=<span class="string">"Product 2***"</span>, Price=<span class="number">202</span>&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> Ok(products);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>所以執行出來的結果如下，</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:50758/odata/Products?$count=true</span><br></pre></td></tr></table></figure><img src="/2019/07/31/2019020/001.png" title="正常的輸出"><p>正常的 \$count 的值允許為 true/false。<br>但是黑箱卻給它輸入以下的值，</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$count=&lt;ScRiPt&gt;cXfm(9342)&lt;/ScRiPt&gt;</span><br></pre></td></tr></table></figure><img src="/2019/07/31/2019020/002.png" title="XSS輸出"><p>因為直接把 url 上的內容直接輸出了，所以就被黑箱說有 XSS 問題。</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>從上面可以發現，雖然它有錯誤的訊息出來，但程式卻會正常執行到 OK。<br>只是在 ODataQueryOptions<product> opts 中的 count.value 屬性會有錯誤，如下，<br><img src="/2019/07/31/2019020/003.png" title="ODataQueryOptions.count.value"></product></p><p>即然沒有錯誤，那要在那裡去將錯誤訊息 Encode 呢?<br>我們可以透過 opts.ApplyTo 去驗證它們，如果有錯誤的話，就建立 ODataException ，並將訊息 Encode ，如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">EnableQuery</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> IHttpActionResult <span class="title">Get</span>(<span class="params">ODataQueryOptions&lt;Product&gt; opts</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> products = <span class="keyword">new</span> List&lt;Product&gt;() &#123;</span><br><span class="line">    <span class="keyword">new</span> Product&#123;Id=<span class="number">1</span>, Name=<span class="string">"Product 1***"</span>, Price=<span class="number">101</span>&#125;,</span><br><span class="line">    <span class="keyword">new</span> Product&#123;Id=<span class="number">2</span>, Name=<span class="string">"Product 2***"</span>, Price=<span class="number">202</span>&#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">//only validate ODataQueryOptions</span></span><br><span class="line">    opts.ApplyTo((<span class="keyword">new</span> List&lt;Product&gt;()).AsQueryable());</span><br><span class="line">    <span class="keyword">return</span> Ok(products);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">catch</span>(Exception ex)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> ODataException(HttpUtility.JavaScriptStringEncode(ex.ToString()));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>所以再執行一次，就可以發現錯誤訊息都有被 Encode 了。<br><img src="/2019/07/31/2019020/004.png" title="ODataException"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近同事詢問一個 ODataController 被黑箱打到的一個 XSS 問題。&lt;br&gt;ODataController 允許我們使用 $c
+      
+    
+    </summary>
+    
+    
+      <category term="Odata" scheme="https://rainmakerho.github.io/tags/Odata/"/>
+    
+      <category term="Cross site scripting" scheme="https://rainmakerho.github.io/tags/Cross-site-scripting/"/>
+    
+      <category term="content-sniffing" scheme="https://rainmakerho.github.io/tags/content-sniffing/"/>
+    
+      <category term="ODataController" scheme="https://rainmakerho.github.io/tags/ODataController/"/>
+    
+  </entry>
   
   <entry>
     <title>double.parse cause Input string was not in a correct format Error</title>
@@ -627,39 +656,6 @@
       <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
     
       <category term="BFv4" scheme="https://rainmakerho.github.io/tags/BFv4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>WeChat微信 Bot 開發 - 接口配置信息</title>
-    <link href="https://rainmakerho.github.io/2018/12/27/2018044/"/>
-    <id>https://rainmakerho.github.io/2018/12/27/2018044/</id>
-    <published>2018-12-27T08:37:04.000Z</published>
-    <updated>2018-12-28T05:17:22.008Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在測試 WeChat 的 Bot 時，一開始連到的網址都無法登入。<br>舊的網址為 <a href="http://admin.wechat.com/debug/sandbox" target="_blank" rel="noopener">http://admin.wechat.com/debug/sandbox</a> (2018-09-13 就失效了哦)，<br>要註冊的請到新的網站為 <a href="https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login" target="_blank" rel="noopener">https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login</a></p><p>如果有裝 WeChat 的話，按下「登录」會出現條碼，掃下去就可以了。<br>當登入之後，就可以註冊測試帳號。</p><p>當我設定「接口配置信息」中的 URL 及 Token 之後，按下「提交」，總是出現「配置失敗」的訊息。</p><h3 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h3><p>在測試期間，我是使用 <a href="https://ngrok.com/download" target="_blank" rel="noopener">ngrok</a> 來讓 local 可以讓外面連到。<br>而且，我們還可以看到外面 Call 進來的內容(Web Interface)，如下，<br><img src="/2018/12/27/2018044/002.png" title="[ngrok]"></p><img src="/2018/12/27/2018044/003.png" title="[ngrok web interface]"><p>所以可以看到，在「接口配置信息」區段中按下「提交」，會發一個 GET 請求，裡面有 echostr, nonce, signature 及 timestamp 參數值。<br>要讓它成功的話，需要檢查驗證後，回傳 echostr 的內容回去。</p><p>在 node 可以加入 wechat 套件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install wechat</span><br></pre></td></tr></table></figure><p>然後透過它(checkSignature)去檢查，如果沒問題，又有 echostr 參數，就回傳 echostr 的內容回去。<br>設定 express router 的 middleware 程式碼類似如下，</p><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> WeChat <span class="keyword">from</span> <span class="string">'wechat'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">static</span> checkSignature(req, res, next) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> isSignatured = WeChat.checkSignature(</span><br><span class="line">        req.query,</span><br><span class="line">        <span class="string">'yourtokenhere'</span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">if</span> (isSignatured) &#123;</span><br><span class="line">            <span class="keyword">if</span> (req.query.echostr) &#123;</span><br><span class="line">                res.send(req.query.echostr);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                next();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res.send(<span class="number">401</span>, <span class="string">'checkSignature fail'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>寫好程式後，再重新執行「接口配置信息」，就可以正常配置了哦!</p><h3 id="參考資源"><a href="#參考資源" class="headerlink" title="參考資源"></a>參考資源</h3><p><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1445241432" target="_blank" rel="noopener">WeChat Official Account Platform</a><br><a href="http://doxmate.cool/node-webot/wechat/index.html" target="_blank" rel="noopener">微信公共平台 Node 库</a><br><a href="https://zhuanlan.zhihu.com/p/37149153" target="_blank" rel="noopener">node.js 实现微信公众号</a><br><a href="https://medium.com/@davidyu_44356/build-your-wechat-chatbot-6e439d3c9650" target="_blank" rel="noopener">Build your WeChat chatbot</a><br><a href="http://admin.wechat.com/wiki/index.php?title=Guide_for_Message_API" target="_blank" rel="noopener">Guide for Message API</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近在測試 WeChat 的 Bot 時，一開始連到的網址都無法登入。&lt;br&gt;舊的網址為 &lt;a href=&quot;http://admin.wec
-      
-    
-    </summary>
-    
-    
-      <category term="botframework" scheme="https://rainmakerho.github.io/tags/botframework/"/>
-    
-      <category term="WeChat" scheme="https://rainmakerho.github.io/tags/WeChat/"/>
-    
-      <category term="微信" scheme="https://rainmakerho.github.io/tags/%E5%BE%AE%E4%BF%A1/"/>
-    
-      <category term="weixin" scheme="https://rainmakerho.github.io/tags/weixin/"/>
-    
-      <category term="公众平台" scheme="https://rainmakerho.github.io/tags/%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0/"/>
-    
-      <category term="checkSignature" scheme="https://rainmakerho.github.io/tags/checkSignature/"/>
     
   </entry>
   
