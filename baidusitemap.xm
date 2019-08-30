@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/08/24/2019022/</loc>
+    <lastmod>2019-08-24T10:21:24.331Z</lastmod>
+    <data>
+        <display>
+        <title>ASP.NET WebControl.Attributes 無法 Remove 問題</title>
+        <pubTime>2019-08-24T09:50:18.000Z</pubTime>
+        
+        <tag>ASP.NET</tag>
+         
+        <tag>程式什麼都有可能發生</tag>
+         
+        <tag>DataGridItem</tag>
+         
+        <tag>WebControl.Attributes</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/08/24/2019021/</loc>
     <lastmod>2019-08-24T06:05:35.787Z</lastmod>
     <data>
