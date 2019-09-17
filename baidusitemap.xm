@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/09/17/2019025/</loc>
+    <lastmod>2019-09-17T03:55:25.834Z</lastmod>
+    <data>
+        <display>
+        <title>.NET Core AD 帳密驗證</title>
+        <pubTime>2019-09-17T03:17:17.000Z</pubTime>
+        
+        <tag>.NET Core</tag>
+         
+        <tag>AD</tag>
+         
+        <tag>Authentication</tag>
+         
+        <tag>LDAP</tag>
+         
+        <tag>Novell.Directory.Ldap.NETStandard</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/09/17/2019024/</loc>
     <lastmod>2019-09-17T01:44:02.663Z</lastmod>
     <data>
@@ -1459,11 +1484,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1488,11 +1513,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
@@ -1603,13 +1628,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
+        <tag>chatbot</tag>
+         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
-         
-        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
