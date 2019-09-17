@@ -4,6 +4,69 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/09/17/2019024/</loc>
+    <lastmod>2019-09-17T01:44:02.663Z</lastmod>
+    <data>
+        <display>
+        <title>IE 不支援文化特性。參數名稱：name zh-Hant-TW 是無效的文化特性識別項。</title>
+        <pubTime>2019-09-17T01:32:14.000Z</pubTime>
+        
+        <tag>windows 10</tag>
+         
+        <tag>ie</tag>
+         
+        <tag>不支援文化特性</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2019/09/05/2019023/</loc>
+    <lastmod>2019-09-05T06:40:11.922Z</lastmod>
+    <data>
+        <display>
+        <title>Node JS + IIS Node 效能問題</title>
+        <pubTime>2019-09-05T05:28:57.000Z</pubTime>
+        
+        <tag>iisnode</tag>
+         
+        <tag>nodejs</tag>
+         
+        <tag>windows</tag>
+         
+        <tag>PuppeteerSharp</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2019/07/04/2019017/</loc>
+    <lastmod>2019-09-05T05:28:31.096Z</lastmod>
+    <data>
+        <display>
+        <title>Bitmap.save(): A generic error occurred in GDI+</title>
+        <pubTime>2019-07-04T00:57:37.000Z</pubTime>
+        
+        <tag>Bitmap.save</tag>
+         
+        <tag>GDI+</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/08/24/2019022/</loc>
     <lastmod>2019-08-24T10:21:24.331Z</lastmod>
     <data>
@@ -43,25 +106,6 @@
         <tag>ASPX</tag>
          
         <tag>Postback</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://rainmakerho.github.io/2019/07/04/2019017/</loc>
-    <lastmod>2019-08-24T05:28:23.560Z</lastmod>
-    <data>
-        <display>
-        <title>Bitmap.save(): A generic error occurred in GDI+</title>
-        <pubTime>2019-07-04T00:57:37.000Z</pubTime>
-        
-        <tag>Bitmap.save</tag>
-         
-        <tag>GDI+</tag>
          
          
            
@@ -1415,11 +1459,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1444,11 +1488,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
-         
-        <tag>NullReferenceException</tag>
          
          
            
