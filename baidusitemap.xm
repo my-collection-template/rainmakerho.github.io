@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/09/17/2019026/</loc>
+    <lastmod>2019-09-17T06:13:30.242Z</lastmod>
+    <data>
+        <display>
+        <title>為什麼 aspnet_client 目錄中的檔案都無法下載，Status 為 401</title>
+        <pubTime>2019-09-17T05:52:25.000Z</pubTime>
+        
+        <tag>iis</tag>
+         
+        <tag>aspnet_client</tag>
+         
+        <tag>Unauthorized</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/09/17/2019025/</loc>
     <lastmod>2019-09-17T03:55:25.834Z</lastmod>
     <data>
@@ -1628,13 +1649,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
