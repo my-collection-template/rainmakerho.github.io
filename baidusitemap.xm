@@ -4,8 +4,41 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/09/23/2019027/</loc>
+    <lastmod>2019-09-24T03:03:47.236Z</lastmod>
+    <data>
+        <display>
+        <title>透過 Aspose.Pdf.Document 載入 Html 檔案轉成 Pdf 檔，有些字會變成空白框框</title>
+        <pubTime>2019-09-23T02:07:08.000Z</pubTime>
+        
+        <tag>Html</tag>
+         
+        <tag>Aspose.Pdf.Document</tag>
+         
+        <tag>Pdf</tag>
+         
+        <tag>空白框框</tag>
+         
+        <tag>characters are missing</tag>
+         
+        <tag>charset</tag>
+         
+        <tag>MSGothic</tag>
+         
+        <tag>big5</tag>
+         
+        <tag>FontRepository</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/09/17/2019026/</loc>
-    <lastmod>2019-09-17T06:13:30.242Z</lastmod>
+    <lastmod>2019-09-17T06:14:53.786Z</lastmod>
     <data>
         <display>
         <title>為什麼 aspnet_client 目錄中的檔案都無法下載，Status 為 401</title>
@@ -1576,9 +1609,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>C#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotBuilder</tag>
          
