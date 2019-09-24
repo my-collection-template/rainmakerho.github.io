@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/09/24/2019028/</loc>
+    <lastmod>2019-09-24T09:43:42.447Z</lastmod>
+    <data>
+        <display>
+        <title>Microsoft Botframework V4，從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊 (V2)</title>
+        <pubTime>2019-09-24T07:29:00.000Z</pubTime>
+        
+        <tag>bfv4</tag>
+         
+        <tag>HttpClient</tag>
+         
+        <tag>customHttpClient</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2019/01/02/2019001/</loc>
+    <lastmod>2019-09-24T09:40:16.295Z</lastmod>
+    <data>
+        <display>
+        <title>Microsoft Botframework V4，從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊</title>
+        <pubTime>2019-01-02T05:05:53.000Z</pubTime>
+        
+        <tag>botframework</tag>
+         
+        <tag>BFv4</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/09/23/2019027/</loc>
     <lastmod>2019-09-24T03:12:16.519Z</lastmod>
     <data>
@@ -676,25 +716,6 @@
 
     
   <url>
-    <loc>https://rainmakerho.github.io/2019/01/02/2019001/</loc>
-    <lastmod>2019-01-03T04:10:10.920Z</lastmod>
-    <data>
-        <display>
-        <title>Microsoft Botframework V4，從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊</title>
-        <pubTime>2019-01-02T05:05:53.000Z</pubTime>
-        
-        <tag>botframework</tag>
-         
-        <tag>BFv4</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://rainmakerho.github.io/2018/12/27/2018044/</loc>
     <lastmod>2018-12-28T05:17:22.008Z</lastmod>
     <data>
@@ -758,9 +779,9 @@
         <title>PDF 最後一頁才顯示頁尾</title>
         <pubTime>2018-11-29T06:46:17.000Z</pubTime>
         
-        <tag>aspose</tag>
-         
         <tag>pdf</tag>
+         
+        <tag>aspose</tag>
          
         <tag>cells</tag>
          
@@ -965,9 +986,9 @@
         <title>.NET Exception Handling</title>
         <pubTime>2018-08-21T08:31:47.000Z</pubTime>
         
-        <tag>c#</tag>
-         
         <tag>.net</tag>
+         
+        <tag>c#</tag>
          
         <tag>exception</tag>
          
@@ -1538,11 +1559,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1567,11 +1588,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
-         
-        <tag>NullReferenceException</tag>
          
          
            
