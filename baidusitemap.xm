@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/01/02/2019001/</loc>
+    <lastmod>2019-09-24T10:08:01.292Z</lastmod>
+    <data>
+        <display>
+        <title>Microsoft Botframework V4，從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊</title>
+        <pubTime>2019-01-02T05:05:53.000Z</pubTime>
+        
+        <tag>botframework</tag>
+         
+        <tag>BFv4</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/09/24/2019028/</loc>
     <lastmod>2019-09-24T09:43:42.447Z</lastmod>
     <data>
@@ -16,25 +35,6 @@
         <tag>HttpClient</tag>
          
         <tag>customHttpClient</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://rainmakerho.github.io/2019/01/02/2019001/</loc>
-    <lastmod>2019-09-24T09:40:16.295Z</lastmod>
-    <data>
-        <display>
-        <title>Microsoft Botframework V4，從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊</title>
-        <pubTime>2019-01-02T05:05:53.000Z</pubTime>
-        
-        <tag>botframework</tag>
-         
-        <tag>BFv4</tag>
          
          
            
@@ -636,8 +636,6 @@
         <title>使用 OpenTracing - Jaeger (AP整合)</title>
         <pubTime>2019-01-15T05:13:41.000Z</pubTime>
         
-        <tag>BFv4</tag>
-         
         <tag>OpenTracing</tag>
          
         <tag>Distributed Tracing</tag>
@@ -651,6 +649,8 @@
         <tag>.NET</tag>
          
         <tag>BFv3</tag>
+         
+        <tag>BFv4</tag>
          
         <tag>NodeJS</tag>
          
@@ -669,8 +669,6 @@
         <title>使用 OpenTracing - Jaeger</title>
         <pubTime>2019-01-04T06:02:45.000Z</pubTime>
         
-        <tag>BFv4</tag>
-         
         <tag>OpenTracing</tag>
          
         <tag>Distributed Tracing</tag>
@@ -684,6 +682,8 @@
         <tag>.NET</tag>
          
         <tag>BFv3</tag>
+         
+        <tag>BFv4</tag>
          
          
            
@@ -1630,9 +1630,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          
