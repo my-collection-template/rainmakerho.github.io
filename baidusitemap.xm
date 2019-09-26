@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/09/25/2019029/</loc>
+    <lastmod>2019-09-26T07:39:05.282Z</lastmod>
+    <data>
+        <display>
+        <title>偵測到隱藏目錄 - AppScan</title>
+        <pubTime>2019-09-25T02:48:11.000Z</pubTime>
+        
+        <tag>IIS</tag>
+         
+        <tag>403</tag>
+         
+        <tag>AppScan</tag>
+         
+        <tag>偵測到隱藏目錄</tag>
+         
+        <tag>Forbidden</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/01/02/2019001/</loc>
     <lastmod>2019-09-24T10:08:01.292Z</lastmod>
     <data>
@@ -636,6 +661,8 @@
         <title>使用 OpenTracing - Jaeger (AP整合)</title>
         <pubTime>2019-01-15T05:13:41.000Z</pubTime>
         
+        <tag>BFv4</tag>
+         
         <tag>OpenTracing</tag>
          
         <tag>Distributed Tracing</tag>
@@ -649,8 +676,6 @@
         <tag>.NET</tag>
          
         <tag>BFv3</tag>
-         
-        <tag>BFv4</tag>
          
         <tag>NodeJS</tag>
          
@@ -669,6 +694,8 @@
         <title>使用 OpenTracing - Jaeger</title>
         <pubTime>2019-01-04T06:02:45.000Z</pubTime>
         
+        <tag>BFv4</tag>
+         
         <tag>OpenTracing</tag>
          
         <tag>Distributed Tracing</tag>
@@ -682,8 +709,6 @@
         <tag>.NET</tag>
          
         <tag>BFv3</tag>
-         
-        <tag>BFv4</tag>
          
          
            
