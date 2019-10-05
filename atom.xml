@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-09-26T07:39:05.282Z</updated>
+  <updated>2019-10-05T00:22:56.558Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Chrome Version 77 列印遇到標楷體(DFKai-SB) Print 成 PDF 會破字問題</title>
+    <link href="https://rainmakerho.github.io/2019/10/04/2019030/"/>
+    <id>https://rainmakerho.github.io/2019/10/04/2019030/</id>
+    <published>2019-10-04T08:58:46.000Z</published>
+    <updated>2019-10-05T00:22:56.558Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事發現，原本透過 Chrome V77 (Windows)將網頁直接列印成 PDF 的功能，當字型為 標楷體(DFKai-SB) 時，會有破字的狀況。<br>而將 Chrome 退版後，這個功能就沒問題了。<br>但是在 Mac 上卻是沒問題的。</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p><a href="https://jsbin.com/lodutapuze/1/edit?html,output" target="_blank" rel="noopener">測試網址</a>，<br>可以發現在 Windows 10(有更新到新版本) Chrome 直接按下 Print ， Preview 就會看到字破破的狀況。<br><img src="/2019/10/04/2019030/001.png" title="DFKai-SB_font_broken"></p><p>於是同事填了 Chrome Bug 單，Chrome 也立即有了回應相關的解法方式。<br>This is due to switching from sfntly to HarfBuzz. (bug 931719) You can navigate to chrome://flags/#harfbuzz-pdf-subsetter and turn it off, and restart Chrome to quickly workaround this.</p><p>就是在 Chrome 網址列輸入 chrome://flags/#harfbuzz-pdf-subsetter<br>將原本 預設 改成 停用，再重開 Chrome 來測試就可以了哦!<br><img src="/2019/10/04/2019030/002.png" title="Default_2_Disabled"></p><p>詳細可以參考:<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=1010396&amp;q=&amp;colspec=ID%20Pri%20M%20Stars%20ReleaseBlock%20Component%20Status%20Owner%20Summary%20OS%20Modified" target="_blank" rel="noopener">Issue 1010396: chinese font-family DFKai-SB is broken for print</a></p><p>感謝同事 Garry 的分享 ^_^</p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://bugs.chromium.org/p/chromium/issues/detail?id=1010396&amp;q=&amp;colspec=ID%20Pri%20M%20Stars%20ReleaseBlock%20Component%20Status%20Owner%20Summary%20OS%20Modified" target="_blank" rel="noopener">Issue 1010396: chinese font-family DFKai-SB is broken for print</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近同事發現，原本透過 Chrome V77 (Windows)將網頁直接列印成 PDF 的功能，當字型為 標楷體(DFKai-SB) 時，
+      
+    
+    </summary>
+    
+    
+      <category term="Chrome" scheme="https://rainmakerho.github.io/tags/Chrome/"/>
+    
+      <category term="77" scheme="https://rainmakerho.github.io/tags/77/"/>
+    
+      <category term="font" scheme="https://rainmakerho.github.io/tags/font/"/>
+    
+      <category term="DFKai-SB" scheme="https://rainmakerho.github.io/tags/DFKai-SB/"/>
+    
+      <category term="PDF" scheme="https://rainmakerho.github.io/tags/PDF/"/>
+    
+      <category term="broken" scheme="https://rainmakerho.github.io/tags/broken/"/>
+    
+  </entry>
   
   <entry>
     <title>偵測到隱藏目錄 - AppScan</title>
@@ -572,35 +605,6 @@
       <category term="vue" scheme="https://rainmakerho.github.io/tags/vue/"/>
     
       <category term="css" scheme="https://rainmakerho.github.io/tags/css/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OpenTracing - Jaeger 接 Elastic Stack</title>
-    <link href="https://rainmakerho.github.io/2019/04/02/2019010/"/>
-    <id>https://rainmakerho.github.io/2019/04/02/2019010/</id>
-    <published>2019-04-02T08:41:01.000Z</published>
-    <updated>2019-04-02T10:10:43.659Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>當我們直接跑 jaeger-all-in-one 時，預設將資料放在 memory 之中。<br>如果要長期監控的話，我們可以將資料存起來。<br>所以我們就將資料放到 Elasticsearch 之中。</p><h3 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h3><p>我們可以參考 <a href="http://gigi.nullneuron.net/gigilabs/setting-up-elasticsearch-and-kibana-on-windows/" target="_blank" rel="noopener">SETTING UP ELASTICSEARCH AND KIBANA ON WINDOWS</a>就可以了，如下，</p><h4 id="安裝-Java-Runtime-Environment-JRE"><a href="#安裝-Java-Runtime-Environment-JRE" class="headerlink" title="安裝 Java Runtime Environment (JRE)"></a>安裝 Java Runtime Environment (JRE)</h4><p>請到 <a href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html" target="_blank" rel="noopener">Java SE Runtime Environment 8 Downloads</a> 下載，筆者是下載 Java SE Runtime Environment 8u201 來安裝。<br>安裝完成後，檔案會放在 C:\Program Files\Java\jre1.8.0_201 。</p><h5 id="設定-Java-環境變數"><a href="#設定-Java-環境變數" class="headerlink" title="設定 Java 環境變數"></a>設定 Java 環境變數</h5><p>請設定環境變數 JAVA_HOME 為 C:\Program Files\Java\jre1.8.0_201 (依您安裝的路徑)。<br>並將 C:\Program Files\Java\jre1.8.0_201\bin 加入到 Path 之中 (請注意，在 Path 之中是否有別的 Java 路徑)。<br><img src="/2019/04/02/2019010/001.png" title="[Java Home]"></p><p>在 Command 執行 java -version 看看是否為安裝的版本，<br><img src="/2019/04/02/2019010/002.png" title="[Check Java Version]"></p><h4 id="安裝-Elasticsearch"><a href="#安裝-Elasticsearch" class="headerlink" title="安裝 Elasticsearch"></a>安裝 Elasticsearch</h4><h5 id="下載及安裝-Elasticsearch-6-7-0"><a href="#下載及安裝-Elasticsearch-6-7-0" class="headerlink" title="下載及安裝 Elasticsearch 6.7.0"></a>下載及安裝 Elasticsearch 6.7.0</h5><p>請到 <a href="https://www.elastic.co/cn/downloads/elasticsearch" target="_blank" rel="noopener">Elasticsearch 官網下載網頁</a>，我的環境是 Windows ，所以我下載 MSI 檔來安裝。因為我是在本機上測試，所以安裝過程中，我不以 service 方式啟動。安裝完成後，程式會放在 C:\Program Files\Elastic\Elasticsearch\6.7.0 路徑(因為我裝的是 6.7.0 版本)，而設定及 Log 則放在 C:\ProgramData\Elastic\Elasticsearch 路徑。<br><img src="/2019/04/02/2019010/003.png" title="[Elasticsearch install path]"></p><h5 id="執行-Elasticsearch"><a href="#執行-Elasticsearch" class="headerlink" title="執行 Elasticsearch"></a>執行 Elasticsearch</h5><p>開啟 Command 視窗，cd 到 C:\Program Files\Elastic\Elasticsearch\6.7.0\bin 目錄，執行 elasticsearch ，如下，<br><img src="/2019/04/02/2019010/004.png" title="[Run elasticsearch.exe]"></p><p>再開啟瀏覽器，在網址列輸入 <a href="http://localhost:9200/" target="_blank" rel="noopener">http://localhost:9200/</a> 看看是否有正常的顯示資料。<br><img src="/2019/04/02/2019010/005.png" title="[Check Elasticsearch]"></p><h4 id="安裝-Kibana"><a href="#安裝-Kibana" class="headerlink" title="安裝 Kibana"></a>安裝 Kibana</h4><h5 id="下載及安裝-Kibana"><a href="#下載及安裝-Kibana" class="headerlink" title="下載及安裝 Kibana"></a>下載及安裝 Kibana</h5><p>請到 <a href="https://www.elastic.co/cn/downloads/kibana" target="_blank" rel="noopener">Kibana 官網下載網頁</a>，下載 Windows 平台的 zip 檔案。<br>下載完成後，請解壓縮到 C:\Program Files\Elastic 目錄，如下，<br><img src="/2019/04/02/2019010/006.png" title="[install kibana]"></p><h5 id="執行-Kibana"><a href="#執行-Kibana" class="headerlink" title="執行 Kibana"></a>執行 Kibana</h5><p>開啟 Command 視窗，cd 到 C:\Program Files\Elastic\kibana\kibana-6.7.0-windows-x86_64\bin 目錄，執行 kibana.bat ，如下，<br><img src="/2019/04/02/2019010/007.png" title="[Run kibana.bat]"><br>註:如果 Elasticsearch 在別台的話，請更改 C:\Program Files\Elastic\kibana\kibana-6.7.0-windows-x86_64\config\kibana.yml 中 elasticsearch.hosts 的設定值。</p><p>再開啟瀏覽器，在網址列輸入 <a href="http://localhost:5601/" target="_blank" rel="noopener">http://localhost:5601/</a> 看看是否有正常的顯示資料。<br><img src="/2019/04/02/2019010/008.png" title="[Check Kibana]"></p><h4 id="設定-Jaeger"><a href="#設定-Jaeger" class="headerlink" title="設定 Jaeger"></a>設定 Jaeger</h4><p>Elasticsearch 正常執行後，就可以開啟 Command 視窗，執行 jaeger-all-in-one.exe ，設定 span-storage.type 為 elasticsearch，如下，</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jaeger-all-in-one --collector.zipkin.http-port=9411 --span-storage.type=elasticsearch --es.server-urls=http://localhost:9200/ --es.tags-as-fields.all=true</span><br></pre></td></tr></table></figure><p>當然，如果分別執行 jaeger-collector.exe 及 jaeger-query.exe 也可以哦!</p><p>當服務都起來後，啟動 訂便當 Bot 來測試，然後到 Kibana 建立 Index (Management -&gt; Kibana -&gt; Index Patterns)，我們可以建立 jaeger-span-* ，如下，<br><img src="/2019/04/02/2019010/009.png" title="[create Index]"></p><img src="/2019/04/02/2019010/010.png" title="[create Index with timeFilter]"><p>再點選 Discover ，如果目前沒有資料的話，可以點右上方設定查詢的時間，<br><img src="/2019/04/02/2019010/011.png" title="[Discover]"></p><p>設定時間區間後，就可以看到從 Jaeger 送進來的資料，如下，<br><img src="/2019/04/02/2019010/012.png" title="[Discover jaeger-span-* Data]"></p><p>如果測試沒問題的話，就可以將它們設定為 Service 。</p><p>測試過程中，感謝 George 同事的幫忙。</p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="http://gigi.nullneuron.net/gigilabs/setting-up-elasticsearch-and-kibana-on-windows/" target="_blank" rel="noopener">SETTING UP ELASTICSEARCH AND KIBANA ON WINDOWS</a><br><a href="https://hackmd.io/s/SytK_Y9HE#" target="_blank" rel="noopener">Elastic stack(安裝篇 via Docker)</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;當我們直接跑 jaeger-all-in-one 時，預設將資料放在 memory 之中。&lt;br&gt;如果要長期監控的話，我們可以將資料存起來。
-      
-    
-    </summary>
-    
-    
-      <category term="OpenTracing" scheme="https://rainmakerho.github.io/tags/OpenTracing/"/>
-    
-      <category term="Jaeger" scheme="https://rainmakerho.github.io/tags/Jaeger/"/>
-    
-      <category term="Elasticsearch" scheme="https://rainmakerho.github.io/tags/Elasticsearch/"/>
-    
-      <category term="Kibana" scheme="https://rainmakerho.github.io/tags/Kibana/"/>
     
   </entry>
   

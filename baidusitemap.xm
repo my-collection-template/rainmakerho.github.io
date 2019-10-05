@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/10/04/2019030/</loc>
+    <lastmod>2019-10-05T00:22:56.558Z</lastmod>
+    <data>
+        <display>
+        <title>Chrome Version 77 列印遇到標楷體(DFKai-SB) Print 成 PDF 會破字問題</title>
+        <pubTime>2019-10-04T08:58:46.000Z</pubTime>
+        
+        <tag>Chrome</tag>
+         
+        <tag>77</tag>
+         
+        <tag>font</tag>
+         
+        <tag>DFKai-SB</tag>
+         
+        <tag>PDF</tag>
+         
+        <tag>broken</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/09/25/2019029/</loc>
     <lastmod>2019-09-26T07:39:05.282Z</lastmod>
     <data>
@@ -496,13 +523,13 @@
         <title>document.[formName] is undefined</title>
         <pubTime>2019-03-16T05:48:31.000Z</pubTime>
         
-        <tag>軟體求生</tag>
-         
         <tag>js</tag>
          
         <tag>document.formName</tag>
          
         <tag>undefined</tag>
+         
+        <tag>軟體求生</tag>
          
         <tag>asp.net 4</tag>
          
@@ -562,11 +589,11 @@
         <title>Inheritance security rules violated by type: 'System.Net.Http.WebRequestHandler'</title>
         <pubTime>2019-02-23T02:41:55.000Z</pubTime>
         
+        <tag>軟體求生</tag>
+         
         <tag>System.Net.Http</tag>
          
         <tag>4.1.0.0</tag>
-         
-        <tag>軟體求生</tag>
          
          
            
@@ -804,9 +831,9 @@
         <title>PDF 最後一頁才顯示頁尾</title>
         <pubTime>2018-11-29T06:46:17.000Z</pubTime>
         
-        <tag>aspose</tag>
-         
         <tag>pdf</tag>
+         
+        <tag>aspose</tag>
          
         <tag>cells</tag>
          
@@ -1584,11 +1611,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1613,11 +1640,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
-         
-        <tag>NullReferenceException</tag>
          
          
            
@@ -2051,9 +2078,9 @@
         <title>Aspose.Words DocumentBuilder 加入 htmlTable 轉成 PDF 檔問題</title>
         <pubTime>2017-11-09T05:31:28.000Z</pubTime>
         
-        <tag>Aspose.Words</tag>
-         
         <tag>PDF</tag>
+         
+        <tag>Aspose.Words</tag>
          
         <tag>CompatibilityOptions</tag>
          
