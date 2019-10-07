@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-10-05T00:22:56.558Z</updated>
+  <updated>2019-10-07T09:19:57.302Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ASP.NET Session 值為空或是無法改變的問題</title>
+    <link href="https://rainmakerho.github.io/2019/10/07/2019031/"/>
+    <id>https://rainmakerho.github.io/2019/10/07/2019031/</id>
+    <published>2019-10-07T08:55:59.000Z</published>
+    <updated>2019-10-07T09:19:57.302Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事詢問，有一個系統，分別裝在不同的 VM 上面，程式碼完全一樣，然而狀況卻是一個系統可正常登入，另一個則登入不進去。<br>查看後發現，無法登入的那個系統，Session 值都是空的。</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>請同事用 Fiddler 錄一下各別的登入狀況後，發現在 Set-Cookie 有些許的差異，如下，</p><p>可以正常登入的系統 Set-Cookie 如下，</p><blockquote><p>Set-Cookie: ASP.NET_SessionId=304t3ljikywnupq1d0pox4oe; path=/; HttpOnly</p></blockquote><p>無法正常登入的系統 Set-Cookie 如下，</p><blockquote><p>Set-Cookie: ASP.NET_SessionId=1op3avwog33degwqhk0ywnc0; path=/; secure; HttpOnly</p></blockquote><p>它們的差異就是無法正常登入的系統，Set-Cookie 多了 secure ，<br>再看同事測試的網址是 http ，而設定檔中又設定「requireSSL=”true”」，所以就無法改變 Session 的值，Session 的值就是空值或是之前改過的值。<br>因為是測試機，所以是走 http ，所以將 coonfig 中的 requireSSL 改成 false ，就可以正常 Work 。<br>所以 config 中的 requireSSL 的值，請搭配 http or https 。<br>或都為 true ，如果沒有憑證就建立自簽憑證，然後走 https 會跟正式環境比較一致。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">system.web</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">httpCookies</span> <span class="attr">httpOnlyCookies</span>=<span class="string">"true"</span> <span class="attr">requireSSL</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">authentication</span> <span class="attr">mode</span>=<span class="string">"Forms"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">forms</span> <span class="attr">requireSSL</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">authentication</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">system.web</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://aboutssl.org/how-to-create-a-self-signed-certificate-in-iis/" target="_blank" rel="noopener">Step-by-step Guide to create a Self Signed Certificate in IIS</a><br><a href="https://www.starwindsoftware.com/blog/using-the-microsoft-certificate-authority-to-get-rid-of-those-self-signed-certs" target="_blank" rel="noopener">Using the Microsoft Certificate Authority to get rid of those self-signed certs</a><br><a href="https://techcommunity.microsoft.com/t5/IIS-Support-Blog/SHA-256-Self-Signed-Certificate-for-Windows-Server-2012-R2/ba-p/376391" target="_blank" rel="noopener">SHA-256 Self Signed Certificate for Windows Server 2012 R2</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近同事詢問，有一個系統，分別裝在不同的 VM 上面，程式碼完全一樣，然而狀況卻是一個系統可正常登入，另一個則登入不進去。&lt;br&gt;查看後發現
+      
+    
+    </summary>
+    
+    
+      <category term="empty" scheme="https://rainmakerho.github.io/tags/empty/"/>
+    
+      <category term="asp.net" scheme="https://rainmakerho.github.io/tags/asp-net/"/>
+    
+      <category term="session" scheme="https://rainmakerho.github.io/tags/session/"/>
+    
+  </entry>
   
   <entry>
     <title>Chrome Version 77 列印遇到標楷體(DFKai-SB) Print 成 PDF 會破字問題</title>
@@ -574,37 +601,6 @@
       <category term="if" scheme="https://rainmakerho.github.io/tags/if/"/>
     
       <category term="variable" scheme="https://rainmakerho.github.io/tags/variable/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>推薦學習前端的好網站-Scrimba</title>
-    <link href="https://rainmakerho.github.io/2019/05/14/2019011/"/>
-    <id>https://rainmakerho.github.io/2019/05/14/2019011/</id>
-    <published>2019-05-14T02:11:16.000Z</published>
-    <updated>2019-05-14T02:47:43.411Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近使用 React 來寫一個簡單的頁面，從 <a href="https://facebook.github.io/create-react-app/docs/getting-started" target="_blank" rel="noopener">Facebook Create React App</a>開始，建立一個專案，就開始了 ReactJS 之旅。</p><h3 id="部署問題"><a href="#部署問題" class="headerlink" title="部署問題"></a>部署問題</h3><p>當透過 npm run build 產生部署的檔案後，放到 IIS 的虛擬目錄之中，立馬噴 404 ，找不到 js 。<br>原來 react 預設是在根目錄，如果要使用相對路徑的話，需要在 package.json 中設定 homepage 的值，如下，</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"homepage": "./"</span><br></pre></td></tr></table></figure><p>詳細可以參考 <a href="https://facebook.github.io/create-react-app/docs/deployment" target="_blank" rel="noopener">React Deployment</a>。<br>可別以為每次搬程式都需要重 Build 一次哦 :)</p><h3 id="jsx-state-props-傻傻分不清"><a href="#jsx-state-props-傻傻分不清" class="headerlink" title="jsx, state, props 傻傻分不清"></a>jsx, state, props 傻傻分不清</h3><p>因為預設是使用 jsx ，所以常常在 {} 物件之間搞不清楚，常常噴錯，就上網去相關的問題來解決。</p><h3 id="Scrimba"><a href="#Scrimba" class="headerlink" title="Scrimba"></a>Scrimba</h3><p>雖然 react 蠻好入手的，但有一些基本的功還是需要學習的，在<a href="https://scrimba.com/g/glearnreact" target="_blank" rel="noopener">Scrimba react</a>中，除了它是免費的之外，它的 UI 本身就是可以讓學習者直接寫 Code 的 IDE。<br>而講師也常常說到一段，就停下來要我們去練習看看，然後再對照講師所寫的程式碼，學習上真的很方便。<br>而在 react 課程式，內容是從一個簡單的 ReactDOM.render 開始練習，從 function component 到 class component ，從小到大到拆分到別的 class，也有點到寫 Code 上需要注意的問題。<br>真的非常推薦，快上 <a href="https://scrimba.com/" target="_blank" rel="noopener">Scrimba</a> 好好學習吧 :)</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近使用 React 來寫一個簡單的頁面，從 &lt;a href=&quot;https://facebook.github.io/create-reac
-      
-    
-    </summary>
-    
-    
-      <category term="react" scheme="https://rainmakerho.github.io/tags/react/"/>
-    
-      <category term="scrimba" scheme="https://rainmakerho.github.io/tags/scrimba/"/>
-    
-      <category term="javascript" scheme="https://rainmakerho.github.io/tags/javascript/"/>
-    
-      <category term="vue" scheme="https://rainmakerho.github.io/tags/vue/"/>
-    
-      <category term="css" scheme="https://rainmakerho.github.io/tags/css/"/>
     
   </entry>
   
