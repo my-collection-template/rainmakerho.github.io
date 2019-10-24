@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/10/24/2019032/</loc>
+    <lastmod>2019-10-24T02:50:33.186Z</lastmod>
+    <data>
+        <display>
+        <title>HTTP 錯誤 500.52 - URL Rewrite Module Error.</title>
+        <pubTime>2019-10-24T02:14:24.000Z</pubTime>
+        
+        <tag>RewriteModule</tag>
+         
+        <tag>2147942433</tag>
+         
+        <tag>overrideModeDefault=&quot;Deny&quot;</tag>
+         
+        <tag>allowedServerVariables</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/10/07/2019031/</loc>
     <lastmod>2019-10-07T09:19:57.302Z</lastmod>
     <data>
@@ -1776,13 +1799,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          

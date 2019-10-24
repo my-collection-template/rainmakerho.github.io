@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-10-07T09:19:57.302Z</updated>
+  <updated>2019-10-24T02:50:33.186Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HTTP 錯誤 500.52 - URL Rewrite Module Error.</title>
+    <link href="https://rainmakerho.github.io/2019/10/24/2019032/"/>
+    <id>https://rainmakerho.github.io/2019/10/24/2019032/</id>
+    <published>2019-10-24T02:14:24.000Z</published>
+    <updated>2019-10-24T02:50:33.186Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我們使用 iisnode 時，會用到 IIS URLRewrite ，而且需要啟用一些 Server Variables，所以在 Web.Config 中設定 rewrite/allowedServerVariables，如下，</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">system.webServer</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rewrite</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">allowedServerVariables</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"HTTP_X_ORIGINAL_URL"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"UNENCODED_URL"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"HTTP_CONNECTION"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">allowedServerVariables</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">rules</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">rule</span> <span class="attr">name</span>=<span class="string">"all"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">match</span> <span class="attr">url</span>=<span class="string">"/*"</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">action</span> <span class="attr">type</span>=<span class="string">"Rewrite"</span> <span class="attr">url</span>=<span class="string">"index.js"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">rule</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">rules</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">rewrite</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">system.webServer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure><p>但在執行網頁時，就會出現「HTTP 錯誤 500.52 - URL Rewrite Module Error.」的錯誤，完整如下，</p><blockquote><p>這個設定區段不能在這個路徑中使用。<br>當區段在父層級被鎖定時就會發生這種情況。鎖定可能是預設 (overrideModeDefault=”Deny”)，<br>或是由位置標記使用 overrideMode=”Deny” 或繼承的 allowOverride=”false” 明確設定。</p></blockquote><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><h4 id="手動調整"><a href="#手動調整" class="headerlink" title="手動調整"></a>手動調整</h4><p>從訊息來看，直覺的做法是去修改 “C:\Windows\System32\inetsrv\config\applicationHost.config” 中的 rewrite sessionGroup，將裡面的 allowedServerVariables 的 overrideModeDefault 從 Deny 改成 Allow 。</p><h4 id="PowerShell"><a href="#PowerShell" class="headerlink" title="PowerShell"></a>PowerShell</h4><p>那 PowerShell 要如何修改它呢? 可以參考 <a href="https://blogs.iis.net/jeonghwan/examples-of-iis-powershell-cmdlets" target="_blank" rel="noopener">Examples of IIS Powershell cmdlets</a> ，直接改它的值，如下，</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Set-WebConfigurationProperty -filter /system.webServer/rewrite -name <span class="string">'sections["allowedServerVariables"].OverrideModeDefault'</span> -value Allow -pspath iis:\</span><br></pre></td></tr></table></figure><p>另外 Garry 大大也提供加到 applicationHost.config 的 location 區段之中，也是可以的哦，如下，</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[System.Reflection.Assembly]::LoadWithPartialName(“Microsoft.Web.Administration”)</span><br><span class="line"><span class="variable">$servmgr</span> = <span class="built_in">New-Object</span> Microsoft.Web.Administration.ServerManager</span><br><span class="line"><span class="variable">$config</span> = <span class="variable">$servmgr</span>.GetApplicationHostConfiguration()</span><br><span class="line"><span class="variable">$section</span> = <span class="variable">$config</span>.GetSection(<span class="string">'system.webServer/rewrite/allowedServerVariables'</span>)</span><br><span class="line"><span class="variable">$section</span>.OverrideMode =[Microsoft.Web.Administration.OverrideMode]::Allow</span><br><span class="line"><span class="variable">$servmgr</span>.CommitChanges()</span><br></pre></td></tr></table></figure><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://gist.github.com/ducas/b16dfd1d9ba91da7fd53" target="_blank" rel="noopener">Configure-UrlRewriteRules.ps1</a><br><a href="https://blogs.iis.net/jeonghwan/examples-of-iis-powershell-cmdlets" target="_blank" rel="noopener">Examples of IIS Powershell cmdlets</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;我們使用 iisnode 時，會用到 IIS URLRewrite ，而且需要啟用一些 Server Variables，所以在 Web.
+      
+    
+    </summary>
+    
+    
+      <category term="RewriteModule" scheme="https://rainmakerho.github.io/tags/RewriteModule/"/>
+    
+      <category term="2147942433" scheme="https://rainmakerho.github.io/tags/2147942433/"/>
+    
+      <category term="overrideModeDefault=&quot;Deny&quot;" scheme="https://rainmakerho.github.io/tags/overrideModeDefault-Deny/"/>
+    
+      <category term="allowedServerVariables" scheme="https://rainmakerho.github.io/tags/allowedServerVariables/"/>
+    
+  </entry>
   
   <entry>
     <title>ASP.NET Session 值為空或是無法改變的問題</title>
@@ -571,36 +600,6 @@
       <category term="Controller" scheme="https://rainmakerho.github.io/tags/Controller/"/>
     
       <category term="lambda_method" scheme="https://rainmakerho.github.io/tags/lambda-method/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在目前的命令上發生嚴重錯誤。如果有任何結果，都必須捨棄。</title>
-    <link href="https://rainmakerho.github.io/2019/05/24/2019012/"/>
-    <id>https://rainmakerho.github.io/2019/05/24/2019012/</id>
-    <published>2019-05-24T06:57:16.000Z</published>
-    <updated>2019-05-24T07:32:16.904Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h3><p>SQL 2017(14.0.3103.1), Windows 2016 STD</p><h3 id="錯誤訊息"><a href="#錯誤訊息" class="headerlink" title="錯誤訊息"></a>錯誤訊息</h3><blockquote><p>訊息 596，層級 21，狀態 1，行 0<br>工作階段為清除狀態，無法繼續執行。</p></blockquote><blockquote><p>訊息 0，層級 20，狀態 0，行 0<br>在目前的命令上發生嚴重錯誤。如果有任何結果，都必須捨棄。</p></blockquote><blockquote><p>訊息 0，層級 11，狀態 0，行 0<br>在目前的命令上發生嚴重錯誤。如果有任何結果，都必須捨棄。</p></blockquote><blockquote><p>Msg 0, Level 20, State 0, Line 0<br>A severe error occurred on the current command.<br>The results, if any, should be discarded</p></blockquote><h3 id="測試的-SQL"><a href="#測試的-SQL" class="headerlink" title="測試的 SQL"></a>測試的 SQL</h3><p>這個狀況主要是有 Table-valued Functions, variable, view 加 if 所造成的問題，如下，</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--空的內容，主要測試使用</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">function</span> [dbo].[ufn_test3]()</span><br><span class="line"><span class="keyword">returns</span> @<span class="keyword">result</span> <span class="keyword">table</span></span><br><span class="line">(</span><br><span class="line">      TenantID <span class="built_in">int</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line">    <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">end</span>;</span><br><span class="line">GO</span><br></pre></td></tr></table></figure><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--定義一個變數</span></span><br><span class="line"><span class="keyword">DECLARE</span> @ORG_TYPE <span class="built_in">VARCHAR</span>(<span class="number">4</span>);</span><br><span class="line"><span class="comment">--執行 Table-valued Functions</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> [ufn_test3]();</span><br><span class="line">IF @ORG_TYPE = 'RMOK'</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">  <span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">as</span> a</span><br><span class="line">  <span class="keyword">FROM</span> [EMP_RMOK]</span><br><span class="line">  <span class="keyword">WHERE</span> PER_SERIL_NO = <span class="string">'7'</span>;</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></table></figure><h3 id="解決方式"><a href="#解決方式" class="headerlink" title="解決方式"></a>解決方式</h3><p>感覺是否為 DB 的問題，做了 DBCC CHECKDB, 也沒有錯誤。<br>將原本那個 View 改建立另一個名稱，也不會有錯誤，但用原本的 View 的名稱就是會噴錯。<br>請同事將 Windows 更新跑一跑再重開機試看看，<br>如果沒有效果的話，以下是暫時的解決方式。</p><p>測試了幾次後，發現如果沒有 if 也不會有錯誤，於是先將變數設定一個初始值。</p><blockquote><p>DECLARE @ORG_TYPE VARCHAR(4);<br>改成<br>DECLARE @ORG_TYPE VARCHAR(4) = ‘’;<br>或是<br>DECLARE @ORG_TYPE VARCHAR(4);<br>SET @ORG_TYPE = ’’;</p></blockquote><p>就不會有那個問題發生了:)</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;環境&quot;&gt;&lt;a href=&quot;#環境&quot; class=&quot;headerlink&quot; title=&quot;環境&quot;&gt;&lt;/a&gt;環境&lt;/h3&gt;&lt;p&gt;SQL 2017(14.0.3103.1), Windows 2016 STD&lt;/p&gt;
-&lt;h3 id=&quot;錯誤訊息&quot;&gt;&lt;a href=&quot;#錯誤
-      
-    
-    </summary>
-    
-    
-      <category term="mssql 2017" scheme="https://rainmakerho.github.io/tags/mssql-2017/"/>
-    
-      <category term="table function" scheme="https://rainmakerho.github.io/tags/table-function/"/>
-    
-      <category term="if" scheme="https://rainmakerho.github.io/tags/if/"/>
-    
-      <category term="variable" scheme="https://rainmakerho.github.io/tags/variable/"/>
     
   </entry>
   
