@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/10/24/2019032/</loc>
-    <lastmod>2019-10-24T02:50:33.186Z</lastmod>
+    <lastmod>2019-10-25T02:26:23.211Z</lastmod>
     <data>
         <display>
         <title>HTTP 錯誤 500.52 - URL Rewrite Module Error.</title>
@@ -1057,9 +1057,9 @@
         <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 之 2</title>
         <pubTime>2018-09-17T01:29:38.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>adaptivecard</tag>
          
@@ -1126,9 +1126,9 @@
         <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot</title>
         <pubTime>2018-08-02T09:55:13.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>Adaptive Cards</tag>
          
@@ -1655,11 +1655,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1684,11 +1684,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
@@ -1726,9 +1726,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>C#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotBuilder</tag>
          
@@ -1824,11 +1824,11 @@
         <title>客製 BotDataStore ，將 Bot State 資料存到 SQL Server之中</title>
         <pubTime>2018-01-26T05:11:04.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>botframework</tag>
          
         <tag>BotDataStore</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>ConnectorStore</tag>
          
