@@ -4,6 +4,54 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2018/07/02/2018021/</loc>
+    <lastmod>2019-11-12T02:14:55.004Z</lastmod>
+    <data>
+        <display>
+        <title>Open Html Excel File from Aspose.Cells 透過 Aspose.Cells 開啟 Html 格式的 Excel 檔案</title>
+        <pubTime>2018-07-02T02:41:25.000Z</pubTime>
+        
+        <tag>aspose</tag>
+         
+        <tag>aspose.cells</tag>
+         
+        <tag>Html</tag>
+         
+        <tag>Excell</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2019/11/11/2019033/</loc>
+    <lastmod>2019-11-12T01:50:32.874Z</lastmod>
+    <data>
+        <display>
+        <title>ASP.NET 使用了 Forms 驗證後，請別放了設定 Authorization 哦!</title>
+        <pubTime>2019-11-11T10:00:00.000Z</pubTime>
+        
+        <tag>machineKey</tag>
+         
+        <tag>Authorization</tag>
+         
+        <tag>authentication</tag>
+         
+        <tag>User.Identity</tag>
+         
+        <tag>FormsAuthentication.Decrypt</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/10/24/2019032/</loc>
     <lastmod>2019-10-25T03:55:41.324Z</lastmod>
     <data>
@@ -875,9 +923,9 @@
         <title>PDF 最後一頁才顯示頁尾</title>
         <pubTime>2018-11-29T06:46:17.000Z</pubTime>
         
-        <tag>pdf</tag>
-         
         <tag>aspose</tag>
+         
+        <tag>pdf</tag>
          
         <tag>cells</tag>
          
@@ -1082,9 +1130,9 @@
         <title>.NET Exception Handling</title>
         <pubTime>2018-08-21T08:31:47.000Z</pubTime>
         
-        <tag>c#</tag>
-         
         <tag>.net</tag>
+         
+        <tag>c#</tag>
          
         <tag>exception</tag>
          
@@ -1374,29 +1422,6 @@
         <tag>TryAddWithoutValidation</tag>
          
         <tag>Header</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://rainmakerho.github.io/2018/07/02/2018021/</loc>
-    <lastmod>2018-07-02T02:59:48.200Z</lastmod>
-    <data>
-        <display>
-        <title>Open Html Excel File from Aspose.Cells 透過 Aspose.Cells 開啟 Html 格式的 Excel 檔案</title>
-        <pubTime>2018-07-02T02:41:25.000Z</pubTime>
-        
-        <tag>aspose</tag>
-         
-        <tag>aspose.cells</tag>
-         
-        <tag>Html</tag>
-         
-        <tag>Excell</tag>
          
          
            
@@ -1778,9 +1803,9 @@
         
         <tag>botframework</tag>
          
-        <tag>MSA appId or password is incorrect</tag>
-         
         <tag>c#</tag>
+         
+        <tag>MSA appId or password is incorrect</tag>
          
         <tag>botframework-emulator</tag>
          
