@@ -4,6 +4,37 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/11/20/2019034/</loc>
+    <lastmod>2019-11-20T09:07:44.702Z</lastmod>
+    <data>
+        <display>
+        <title>透過 Aspose.Cells WorkbookDesigner 來做 Excel 資料套表</title>
+        <pubTime>2019-11-20T11:39:06.000Z</pubTime>
+        
+        <tag>Excel</tag>
+         
+        <tag>Aspose.Cells</tag>
+         
+        <tag>WorkbookDesigner</tag>
+         
+        <tag>Smart Markers</tag>
+         
+        <tag>Template</tag>
+         
+        <tag>套表</tag>
+         
+        <tag>DataTable</tag>
+         
+        <tag>DataSet</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2018/07/02/2018021/</loc>
     <lastmod>2019-11-12T02:14:55.004Z</lastmod>
     <data>
@@ -615,13 +646,13 @@
         <title>document.[formName] is undefined</title>
         <pubTime>2019-03-16T05:48:31.000Z</pubTime>
         
-        <tag>軟體求生</tag>
-         
         <tag>js</tag>
          
         <tag>document.formName</tag>
          
         <tag>undefined</tag>
+         
+        <tag>軟體求生</tag>
          
         <tag>asp.net 4</tag>
          
@@ -681,11 +712,11 @@
         <title>Inheritance security rules violated by type: 'System.Net.Http.WebRequestHandler'</title>
         <pubTime>2019-02-23T02:41:55.000Z</pubTime>
         
+        <tag>軟體求生</tag>
+         
         <tag>System.Net.Http</tag>
          
         <tag>4.1.0.0</tag>
-         
-        <tag>軟體求生</tag>
          
          
            
@@ -923,9 +954,9 @@
         <title>PDF 最後一頁才顯示頁尾</title>
         <pubTime>2018-11-29T06:46:17.000Z</pubTime>
         
-        <tag>aspose</tag>
-         
         <tag>pdf</tag>
+         
+        <tag>aspose</tag>
          
         <tag>cells</tag>
          
@@ -1130,9 +1161,9 @@
         <title>.NET Exception Handling</title>
         <pubTime>2018-08-21T08:31:47.000Z</pubTime>
         
-        <tag>.net</tag>
-         
         <tag>c#</tag>
+         
+        <tag>.net</tag>
          
         <tag>exception</tag>
          
@@ -1751,9 +1782,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>botframework</tag>
-         
         <tag>C#</tag>
+         
+        <tag>botframework</tag>
          
         <tag>BotBuilder</tag>
          
@@ -1803,9 +1834,9 @@
         
         <tag>botframework</tag>
          
-        <tag>c#</tag>
-         
         <tag>MSA appId or password is incorrect</tag>
+         
+        <tag>c#</tag>
          
         <tag>botframework-emulator</tag>
          
