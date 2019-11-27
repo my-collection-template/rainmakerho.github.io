@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-11-20T09:07:44.702Z</updated>
+  <updated>2019-11-27T03:56:50.779Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Error code 1 for command [ios]</title>
+    <link href="https://rainmakerho.github.io/2019/11/27/2019035/"/>
+    <id>https://rainmakerho.github.io/2019/11/27/2019035/</id>
+    <published>2019-11-27T00:41:52.000Z</published>
+    <updated>2019-11-27T03:56:50.779Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在下「yarn run cordova build ios」時，有時會出現以下的錯誤訊息，</p><p>IXME: Implement XCBuild support for macros in overriding parameters with condition sets:</p><p>CODE_SIGN_IDENTITY[sdk=iphoneos*] = iPhone Developer<br>Error: Error code 1 for command: xcodebuild with args: -xcconfig,/Users/rmuser/rmprj_client_app/platforms/ios/cordova/build-debug.xcconfig,-workspace,rmprj.xcworkspace,-scheme,rmprj,-configuration,Debug,-destination,generic/platform=iOS,-archivePath,rmprj.xcarchive,archive,CONFIGURATION_BUILD_DIR=/Users/rmuser/rmprj_client_app/platforms/ios/build/device,SHARED_PRECOMPS_DIR=/Users/rmuser/rmprj_client_app/platforms/ios/build/sharedpch<br>error Command failed with exit code 1.</p><p>後來同事把原本接上的手機移掉居然就沒問題了…</p><p>所以有類似的問題，可以這樣子試看看。</p><p>另外，最近因為 xcode 也升級了，所以原本在 Build App 時，會出現錯誤。<br>後來設定 File -&gt; Project Settings<br>把 Build System 從 New Build System (Default) 改成 Legacy Build System 就解決了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近在下「yarn run cordova build ios」時，有時會出現以下的錯誤訊息，&lt;/p&gt;
+&lt;p&gt;IXME: Implement XCBuild support for macros in overriding parameters with condition
+      
+    
+    </summary>
+    
+    
+      <category term="mac" scheme="https://rainmakerho.github.io/tags/mac/"/>
+    
+      <category term="cordova" scheme="https://rainmakerho.github.io/tags/cordova/"/>
+    
+  </entry>
   
   <entry>
     <title>透過 Aspose.Cells WorkbookDesigner 來做 Excel 資料套表</title>
@@ -574,39 +600,6 @@
       <category term="STRIDE" scheme="https://rainmakerho.github.io/tags/STRIDE/"/>
     
       <category term="威脅模型" scheme="https://rainmakerho.github.io/tags/%E5%A8%81%E8%84%85%E6%A8%A1%E5%9E%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SQL Replace 後，怎麼會留空白呢?</title>
-    <link href="https://rainmakerho.github.io/2019/06/12/2019015/"/>
-    <id>https://rainmakerho.github.io/2019/06/12/2019015/</id>
-    <published>2019-06-12T05:49:14.000Z</published>
-    <updated>2019-06-12T07:35:21.790Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><p>最近客戶將 SQL Server 從 SQL 2012 升級到 SQL 2016 後，有些 Store Procedure 居然發生了錯誤。<br>結果發現，原本在 SQL 2012 中去 Replace 後，原本後面有空字串的會一併 RTrim 掉，但在 SQL 2016 中，那些空白就會留著。</p><p>怎麼會這樣子呢? 查看官方文件中，這個行為在 SQL 2008 之後就是如此了呀~<br><a href="https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008/ms143359(v=sql.100)#replace-function" target="_blank" rel="noopener">Behavior Changes to Database Engine Features in SQL Server 2008 - REPLACE Function</a></p><blockquote><p>In SQL Server 2005, trailing spaces specified in the first input parameter to the REPLACE function are trimmed when the parameter is of type char. For example, in the statement SELECT ‘&lt;’ + REPLACE(CONVERT(char(6), ‘ABC ‘), ‘ ‘, ‘L’) + ‘&gt;’, the value ‘ABC ‘ is incorrectly evaluated as ‘ABC’.</p></blockquote><blockquote><p>In SQL Server 2008, trailing spaces are always preserved. For applications that rely on the previous behavior of the function, use the RTRIM function when specifying the first input parameter for the function. For example, the following syntax will reproduce the SQL Server 2005 behavior SELECT ‘&lt;’ + REPLACE(RTRIM(CONVERT(char(6), ‘ABC ‘)), ‘ ‘, ‘L’) + ‘&gt;’.</p></blockquote><p>也就是說，SQL 2008 之後，如果要將 Replace 後的空字串 Trim 掉，請自已加一下 RTRIM !!!</p><p>嗯，不過，我們的現況是 SQL 2012 跟 SQL 2016 ，這到底是怎麼回事呢?</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>結果透過 SSMS 來看資料庫，發現 SQL 2012 的那個資料庫，相容性層級設定的是 SQL 2005，而 SQL 2016 最底的相容性層級只到 SQL 2008。所以才在 SQL 2016 上才發生這樣子的錯誤。</p><p>即然知道問題了，就要看怎麼解了。<br>依官網來說，程式就給它改下去吧，可能要盤點一下有那些 Store Procedure 有影響吧。</p><p>另一個解法是設定 <a href="https://docs.microsoft.com/en-us/sql/t-sql/statements/set-ansi-padding-transact-sql?view=sql-server-2017" target="_blank" rel="noopener">ANSI_PADDING</a> 為 OFF (預設為 ON)。<br>如果目前使用 Replace 是因為遇到了 Char 資料型態，可以在運算之前，設定 <a href="https://docs.microsoft.com/en-us/sql/t-sql/statements/set-ansi-padding-transact-sql?view=sql-server-2017" target="_blank" rel="noopener">ANSI_PADDING</a> 為 OFF，這樣子就不會把空字串加上去了。<br>例如，</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> [dbo].[table1] (</span><br><span class="line">    [<span class="keyword">id</span>]        TINYINT       <span class="keyword">IDENTITY</span> (<span class="number">1</span>, <span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    [char1]     <span class="built_in">CHAR</span> (<span class="number">10</span>)     <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    [nchar2]    <span class="keyword">NCHAR</span> (<span class="number">10</span>)    <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    [varchar1]  <span class="built_in">VARCHAR</span> (<span class="number">10</span>)  <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    [<span class="keyword">nvarchar2</span>] <span class="keyword">NVARCHAR</span> (<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> table1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> [dbo].[table1]([char1], [nchar2], [varchar1], [<span class="keyword">nvarchar2</span>])</span><br><span class="line"><span class="keyword">values</span> (<span class="string">'char1'</span>, N<span class="string">'nchar2'</span>, <span class="string">'varchar1'</span>, N<span class="string">'nvarchar2'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 預設是 SET ANSI_PADDING ON</span></span><br><span class="line"><span class="comment">-- 所以 char1 欄位 replace 後，會留有空白哦!</span></span><br><span class="line"><span class="keyword">SET</span> ANSI_PADDING <span class="keyword">ON</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="string">'['</span> + char1 + <span class="string">']'</span> <span class="keyword">as</span> char1,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">replace</span>(char1, <span class="string">'char'</span>, <span class="string">'rm'</span>) + <span class="string">']'</span> <span class="keyword">as</span> char1_replace ,</span><br><span class="line"><span class="string">'['</span> + nchar2 + <span class="string">']'</span> <span class="keyword">as</span> nchar2,</span><br><span class="line">N<span class="string">'['</span> + <span class="keyword">replace</span>(nchar2, N<span class="string">'char'</span>, N<span class="string">'rm'</span>) + N<span class="string">']'</span> <span class="keyword">as</span> nchar2_replace,</span><br><span class="line"><span class="string">'['</span> + varchar1 + <span class="string">']'</span> <span class="keyword">as</span> varchar1,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">replace</span>(varchar1, <span class="string">'char'</span>, <span class="string">'rm'</span>) + <span class="string">']'</span> <span class="keyword">as</span> varchar1_replace,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">nvarchar2</span> + <span class="string">']'</span> <span class="keyword">as</span> <span class="keyword">nvarchar2</span>,</span><br><span class="line">N<span class="string">'['</span> + <span class="keyword">replace</span>(<span class="keyword">nvarchar2</span>, N<span class="string">'char'</span>, N<span class="string">'rm'</span>) + N<span class="string">']'</span> <span class="keyword">as</span> nvarchar2_replace</span><br><span class="line"><span class="keyword">from</span> table1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> ANSI_PADDING <span class="keyword">off</span>;</span><br><span class="line"><span class="comment">-- 所以 char1 欄位 replace 後，會不會有空白了哦~</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">'['</span> + char1 + <span class="string">']'</span> <span class="keyword">as</span> char1,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">replace</span>(char1, <span class="string">'char'</span>, <span class="string">'rm'</span>) + <span class="string">']'</span> <span class="keyword">as</span> char1_replace ,</span><br><span class="line"><span class="string">'['</span> + nchar2 + <span class="string">']'</span> <span class="keyword">as</span> nchar2,</span><br><span class="line">N<span class="string">'['</span> + <span class="keyword">replace</span>(nchar2, N<span class="string">'char'</span>, N<span class="string">'rm'</span>) + N<span class="string">']'</span> <span class="keyword">as</span> nchar2_replace,</span><br><span class="line"><span class="string">'['</span> + varchar1 + <span class="string">']'</span> <span class="keyword">as</span> varchar1,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">replace</span>(varchar1, <span class="string">'char'</span>, <span class="string">'rm'</span>) + <span class="string">']'</span> <span class="keyword">as</span> varchar1_replace,</span><br><span class="line"><span class="string">'['</span> + <span class="keyword">nvarchar2</span> + <span class="string">']'</span> <span class="keyword">as</span> <span class="keyword">nvarchar2</span>,</span><br><span class="line">N<span class="string">'['</span> + <span class="keyword">replace</span>(<span class="keyword">nvarchar2</span>, N<span class="string">'char'</span>, N<span class="string">'rm'</span>) + N<span class="string">']'</span> <span class="keyword">as</span> nvarchar2_replace</span><br><span class="line"><span class="keyword">from</span> table1;</span><br></pre></td></tr></table></figure><p>執行結果如下，<br><img src="/2019/06/12/2019015/001.png" title="ANSI_PADDING on/off 比較"><br>可以看到上面 ANSI_PADDING ON 時，Replace 後是有空白的，Off 之後 char1 欄位是沒有空白的。<br>但對於 NCHAR 的資料型態是沒有改變的哦!</p><p>所以，如果您在 Replace 遇到的問題是 CHAR ，那您可以在執行 SQL 之前，先去下</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> ANSI_PADDING <span class="keyword">OFF</span></span><br><span class="line"><span class="comment">-- 你原本的SQL</span></span><br></pre></td></tr></table></figure><p>依據大多數系統大多會將執行 SQL 的部份抽出來，所以目前您可以在那先去設定 ANSI_PADDING OFF。</p><ul><li>請注意 NCHAR ， ANSI_PADDING 固定會是 ON 的哦! 所以設定 SET ANSI_PADDING OFF 只針對 CHAR 有效果哦!</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;問題&quot;&gt;&lt;a href=&quot;#問題&quot; class=&quot;headerlink&quot; title=&quot;問題&quot;&gt;&lt;/a&gt;問題&lt;/h3&gt;&lt;p&gt;最近客戶將 SQL Server 從 SQL 2012 升級到 SQL 2016 後，有些 Store Procedure 居然發生了錯誤。
-      
-    
-    </summary>
-    
-    
-      <category term="sql" scheme="https://rainmakerho.github.io/tags/sql/"/>
-    
-      <category term="sql 2016" scheme="https://rainmakerho.github.io/tags/sql-2016/"/>
-    
-      <category term="sql 2005" scheme="https://rainmakerho.github.io/tags/sql-2005/"/>
-    
-      <category term="sql 2008" scheme="https://rainmakerho.github.io/tags/sql-2008/"/>
-    
-      <category term="replace" scheme="https://rainmakerho.github.io/tags/replace/"/>
-    
-      <category term="rtrim" scheme="https://rainmakerho.github.io/tags/rtrim/"/>
     
   </entry>
   
