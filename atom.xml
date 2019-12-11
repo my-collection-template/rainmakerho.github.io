@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-11-27T03:56:50.779Z</updated>
+  <updated>2019-12-11T05:17:12.627Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>無法打開IIS上檔名中包含特殊字符(plus)的文件(file name contains plus)</title>
+    <link href="https://rainmakerho.github.io/2019/12/11/2019036/"/>
+    <id>https://rainmakerho.github.io/2019/12/11/2019036/</id>
+    <published>2019-12-11T05:07:08.000Z</published>
+    <updated>2019-12-11T05:17:12.627Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近公司有一個作業系統升級案，從 Windows 2003 升級到 Windows 2016。<br>其中有個部份是從 IIS 那取得 File 。<br>在測試的過程中，如果檔名中有 + 號，就會回 404 的錯誤。</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>後來找到 <a href="https://helpx.adobe.com/experience-manager/kb/CannotOpenAFileHavingSpecialCharactersInTheFilenameOnIIS.html" target="_blank" rel="noopener">Cannot open a file having special characters in the filename on IIS</a>，原來勾選「允許雙重逸出」這個選項，就可以下載含有 + 號的檔案。</p><p>To resolve this issue, follow below instructions:</p><ol><li>in the IIS webserver section, double click the ‘Request Filtering’ icon</li><li>in the ‘File Name Extension’ right click-&gt;Edit Feature Settings…’ the file ‘web.config’</li><li>check the option ‘Allow double escaping’ (this option is unchecked by defualt)</li><li>repeat all above 3 steps for the ‘defualt website’ (or whatever you have given the name to your site)</li><li>re-start the IIS</li><li>you should now be able to open up the file name having ‘+’ in its name.</li></ol><img src="/2019/12/11/2019036/001.jpg" title="IIS設定"><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://helpx.adobe.com/experience-manager/kb/CannotOpenAFileHavingSpecialCharactersInTheFilenameOnIIS.html" target="_blank" rel="noopener">Cannot open a file having special characters in the filename on IIS</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近公司有一個作業系統升級案，從 Windows 2003 升級到 Windows 2016。&lt;br&gt;其中有個部份是從 IIS 那取得 Fi
+      
+    
+    </summary>
+    
+    
+      <category term="iis" scheme="https://rainmakerho.github.io/tags/iis/"/>
+    
+      <category term="plus" scheme="https://rainmakerho.github.io/tags/plus/"/>
+    
+      <category term="+" scheme="https://rainmakerho.github.io/tags//"/>
+    
+      <category term="filename" scheme="https://rainmakerho.github.io/tags/filename/"/>
+    
+  </entry>
   
   <entry>
     <title>Error code 1 for command [ios]</title>
@@ -573,33 +602,6 @@
       <category term="Bitmap.save" scheme="https://rainmakerho.github.io/tags/Bitmap-save/"/>
     
       <category term="GDI+" scheme="https://rainmakerho.github.io/tags/GDI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Microsoft Threat Modeling Tool</title>
-    <link href="https://rainmakerho.github.io/2019/07/03/2019016/"/>
-    <id>https://rainmakerho.github.io/2019/07/03/2019016/</id>
-    <published>2019-07-03T02:01:57.000Z</published>
-    <updated>2019-07-03T05:42:20.333Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>大家在開發系統時除了畫系統架構圖之外，不知有沒畫 Threat Modeling 呢?<br>有了 Threat Modeling 可以看到整個系統大約有那些的 威脅，然後在開發系統時，一併考量進去。<br>跟 bug 一樣，逾早發現安全性威脅，解決成本逾低。<br>我們可以從 <a href="https://aka.ms/threatmodelingtool" target="_blank" rel="noopener">Microsoft Threat Modeling Tool</a> 來安裝 (windows only)。</p><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="Application-Review"><a href="#Application-Review" class="headerlink" title="Application Review"></a>Application Review</h4><p><strong>Microsoft Threat Modeling Tool</strong> 讓我們透過畫 Data Flow Diagrams(DFDs) 後，自動產生相關的安全性威脅。<br>安裝完成後，開啟程式可以選擇 Azure or SDL 的範本，請依您系統的類別選取範本，這裡筆者是使用 SDL 範本。<br><img src="/2019/07/03/2019016/001.png" title="選取範本"></p><p>然後按下「Create A Model」就會進入空白的 Diagram 。<br><img src="/2019/07/03/2019016/002.png" title="NewModel"></p><p>而我們在畫的過程中，應著重在安全性方面進行系統架構 Review，考量以下幾點，</p><ul><li>這系統會有那些使用者?</li><li>有什麼合規的要求嗎?</li><li>有那些資料需要被保護嗎?</li><li>有跟其他系統互動?</li></ul><h4 id="Data-Flow-Diagrams"><a href="#Data-Flow-Diagrams" class="headerlink" title="Data Flow Diagrams"></a>Data Flow Diagrams</h4><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Data-flow-diagram-notation.svg/440px-Data-flow-diagram-notation.svg.png" alt="Data Flow Diagrams" width="250"></p><h4 id="開始作畫"><a href="#開始作畫" class="headerlink" title="開始作畫"></a>開始作畫</h4><p>1.先拉出 Elements<br>一開始，先將跟安全性相關的項目拉到畫布上<br><img src="/2019/07/03/2019016/003.png" title="Elements"></p><p>2.用 Flow 串起來<br>再將每個項目透過 Flow 串接起來<br><img src="/2019/07/03/2019016/004.png" title="Flow"></p><p>3.標示 Elements<br>再檢視有那些需要做額外的標示，例如 Process 使用的語言(c#, Node, Java…)<br><img src="/2019/07/03/2019016/005.png" title="Flow"></p><p>4.加上備註</p><p>5.找其他人一起來 Review</p><h4 id="Threat-Types"><a href="#Threat-Types" class="headerlink" title="Threat Types"></a>Threat Types</h4><p><strong>Microsoft Threat Modeling Tool</strong> 會套用 STRIDE Threat Types，<br>參考自<a href="https://docs.microsoft.com/en-us/azure/security/azure-security-threat-modeling-tool-threats" target="_blank" rel="noopener">Microsoft Threat Modeling Tool threats</a></p><table><thead><tr><th>類別</th><th>描述</th></tr></thead><tbody><tr><td>詐騙 Spoofing</td><td>涉及非法存取然後使用其他使用者的驗證資訊，例如使用者名稱和密碼</td></tr><tr><td>竄改 Tampering</td><td>涉及惡意修改資料。 範例包括未經授權變更持續性資料 (例如保存在資料庫中的資料)，以及修改在兩部電腦之間透過開放式網路 (例如網際網路) 流動的資料 (中間人攻擊，修改交易金額…)</td></tr><tr><td>否認性 Repudiation</td><td>與拒絕執行動作但沒有其他任何一方有辦法另外證明的使用者有關，比方說，使用者在無法追蹤禁止作業的系統中執行非法作業。 不可否認性是指系統對抗否認性威脅的能力。 例如，購買商品的使用者可能必須在收到商品時簽名。 然後，廠商可以使用簽名收據做為使用者已收到包裹的證據</td></tr><tr><td>資訊洩漏 Information Disclosure</td><td>涉及將資訊暴露給不應該具有其存取權的個人，例如，使用者可以讀取它們未被授權存取的檔案，或入侵者能夠讀取在兩部電腦之間傳輸的資料</td></tr><tr><td>阻斷服務 Denial of Service</td><td>阻斷服務 (DoS) 攻擊可阻斷對有效使用者提供的服務，例如，藉由讓網頁伺服器暫時無法存取或無法使用。 您必須防止特定類型的 DoS 威脅，以便提升系統的可用性和可靠性</td></tr><tr><td>權限提高 Elevation of Privilege</td><td>未授權的使用者取得授權的存取權，因此有足夠存取權危害或摧毀整個系統。 提高權限威脅包含下列情況：攻擊者已有效地滲透所有系統防禦，並成為受信任系統本身的一部分，這確實是危險的情況</td></tr></tbody></table><p><br></p><h4 id="分析-Threats"><a href="#分析-Threats" class="headerlink" title="分析 Threats"></a>分析 Threats</h4><p>畫好之後，切到 Analysis View，就可以看到下面有一堆的 Threats ，大家可依它們的說明來了解為什麼會有那些 Threats 以及如何調整它們，<br><img src="/2019/07/03/2019016/006.png" title="Analysis View"><br>大家可以查看每個 Threat ，設定它們的優先序，及在 Justification 寫入因應作法，設定 Status 。</p><h4 id="產生報表"><a href="#產生報表" class="headerlink" title="產生報表"></a>產生報表</h4><p>我們可以按 Menu 上的 Report 來產生 html 報表。<br><img src="https://docs.microsoft.com/en-us/azure/security/media/azure-security-threat-modeling-tool-feature-overview/report.png" alt="Threats Modeling Report"></p><h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>我們有了 Threat Model ，會對整個系統整體的安全性有一定的了解，也可以儘早針對高風險的 Threat 進行防範。</p><ul><li>註: 自動列出 Threats ?<br>不知大家是否對於該 Tool 為什麼可以自動列出 Threats 而感到好奇呢?<br>只要大家開啟 Template 就可以知道，它其實是有寫 Rule 在裡面，當 Elements 有相關，並且屬性值為某個值時，就會出現那個 Threat ，例如下圖，當 Source 為 Generic External Interactor ， Target 為 Generic Process 就會出現那個 Threat ，但如果 Flow 的屬性有設設定 Source Authenticated 是 Yes ，或是 Generic External Interactor 屬性有設定 Authenticates Itself 為 Yes ，就不會出現那個 Threat<img src="/2019/07/03/2019016/007.png" title="Threat Rule"></li></ul><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://resources.infosecinstitute.com/applications-threat-modeling/#gref" target="_blank" rel="noopener">Applications Threat Modeling</a><br><a href="https://www.geeksforgeeks.org/microsoft-threat-modelling-tool-2016-set-1/" target="_blank" rel="noopener">Microsoft Threat modelling tool 2016 | Set 1</a><br><a href="https://aka.ms/threatmodelingtool" target="_blank" rel="noopener">下載 Microsoft Threat Modeling Tool</a><br><a href="https://docs.microsoft.com/en-us/azure/security/azure-security-threat-modeling-tool-feature-overview" target="_blank" rel="noopener">Threat Modeling Tool feature overview</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;大家在開發系統時除了畫系統架構圖之外，不知有沒畫 Threat Modeling 呢?&lt;br&gt;有了 Threat Modeling 可以看到
-      
-    
-    </summary>
-    
-    
-      <category term="Microsoft Threat Modeling Tool" scheme="https://rainmakerho.github.io/tags/Microsoft-Threat-Modeling-Tool/"/>
-    
-      <category term="STRIDE" scheme="https://rainmakerho.github.io/tags/STRIDE/"/>
-    
-      <category term="威脅模型" scheme="https://rainmakerho.github.io/tags/%E5%A8%81%E8%84%85%E6%A8%A1%E5%9E%8B/"/>
     
   </entry>
   
