@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/12/15/2019037/</loc>
+    <lastmod>2019-12-16T08:24:44.649Z</lastmod>
+    <data>
+        <display>
+        <title>IIS 網站讓 IE 使用者登入時，都出現 Windows 登入驗證視窗，不用調整 Security Zone 的方式</title>
+        <pubTime>2019-12-15T01:25:29.000Z</pubTime>
+        
+        <tag>windows 10</tag>
+         
+        <tag>ie</tag>
+         
+        <tag>AD Login</tag>
+         
+        <tag>摘要式驗證</tag>
+         
+        <tag>Digest Authentication</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/12/11/2019036/</loc>
     <lastmod>2019-12-11T05:17:12.627Z</lastmod>
     <data>
@@ -1824,9 +1849,9 @@
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
         <pubTime>2018-02-01T01:47:18.000Z</pubTime>
         
-        <tag>C#</tag>
-         
         <tag>botframework</tag>
+         
+        <tag>C#</tag>
          
         <tag>BotBuilder</tag>
          
