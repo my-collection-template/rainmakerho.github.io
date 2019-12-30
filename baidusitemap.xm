@@ -4,6 +4,50 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2019/12/30/2019038/</loc>
+    <lastmod>2019-12-30T02:57:54.316Z</lastmod>
+    <data>
+        <display>
+        <title>EF Core, Startup project 'xxx.Data.csproj' targets framework '.NETStandard'. There is no runtime associated with this framework</title>
+        <pubTime>2019-12-30T02:49:22.000Z</pubTime>
+        
+        <tag>ef core</tag>
+         
+        <tag>.NETStandard</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2019/11/11/2019033/</loc>
+    <lastmod>2019-12-30T02:22:37.007Z</lastmod>
+    <data>
+        <display>
+        <title>ASP.NET 使用了 Forms 驗證後，「請別忘了」設定 Authorization 哦!</title>
+        <pubTime>2019-11-11T10:00:00.000Z</pubTime>
+        
+        <tag>machineKey</tag>
+         
+        <tag>Authorization</tag>
+         
+        <tag>authentication</tag>
+         
+        <tag>User.Identity</tag>
+         
+        <tag>FormsAuthentication.Decrypt</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/12/15/2019037/</loc>
     <lastmod>2019-12-16T08:24:44.649Z</lastmod>
     <data>
@@ -125,31 +169,6 @@
 
     
   <url>
-    <loc>https://rainmakerho.github.io/2019/11/11/2019033/</loc>
-    <lastmod>2019-11-12T01:50:32.874Z</lastmod>
-    <data>
-        <display>
-        <title>ASP.NET 使用了 Forms 驗證後，請別放了設定 Authorization 哦!</title>
-        <pubTime>2019-11-11T10:00:00.000Z</pubTime>
-        
-        <tag>machineKey</tag>
-         
-        <tag>Authorization</tag>
-         
-        <tag>authentication</tag>
-         
-        <tag>User.Identity</tag>
-         
-        <tag>FormsAuthentication.Decrypt</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://rainmakerho.github.io/2019/10/24/2019032/</loc>
     <lastmod>2019-10-25T03:55:41.324Z</lastmod>
     <data>
@@ -180,9 +199,9 @@
         <title>ASP.NET Session 值為空或是無法改變的問題</title>
         <pubTime>2019-10-07T08:55:59.000Z</pubTime>
         
-        <tag>empty</tag>
-         
         <tag>asp.net</tag>
+         
+        <tag>empty</tag>
          
         <tag>session</tag>
          
@@ -1021,9 +1040,9 @@
         <title>PDF 最後一頁才顯示頁尾</title>
         <pubTime>2018-11-29T06:46:17.000Z</pubTime>
         
-        <tag>aspose</tag>
-         
         <tag>pdf</tag>
+         
+        <tag>aspose</tag>
          
         <tag>cells</tag>
          

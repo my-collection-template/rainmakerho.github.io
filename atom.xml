@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rainmakerho.github.io/"/>
-  <updated>2019-12-16T08:24:44.649Z</updated>
+  <updated>2019-12-30T02:57:54.316Z</updated>
   <id>https://rainmakerho.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>EF Core, Startup project &#39;xxx.Data.csproj&#39; targets framework &#39;.NETStandard&#39;. There is no runtime associated with this framework</title>
+    <link href="https://rainmakerho.github.io/2019/12/30/2019038/"/>
+    <id>https://rainmakerho.github.io/2019/12/30/2019038/</id>
+    <published>2019-12-30T02:49:22.000Z</published>
+    <updated>2019-12-30T02:57:54.316Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 .net core 專案中，當我們將 Data 專案拆到另一個 .NETStandard 專案時，在他的目錄下，執行 <strong>dotnet ef dbcontext</strong> 相關 Command 時，會噴以下的錯誤</p><blockquote><p>Startup project ‘OdeToFood.Data.csproj’ targets framework ‘.NETStandard’. There is no runtime associated with this framework, and projects targeting it cannot be executed directly. To use the Entity Framework Core .NET Command-line Tools with this project, add an executable project targeting .NET Core or .NET Framework that references this project, and set it as the startup project using –startup-project; or, update this project to cross-target .NET Core or .NET Framework. For more information on using the EF Core Tools with .NET Standard projects, see <a href="https://go.microsoft.com/fwlink/?linkid=2034781" target="_blank" rel="noopener">https://go.microsoft.com/fwlink/?linkid=2034781</a></p></blockquote><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>這是因為它並不知道目前這個專案要使用的是 .NET Core 或是 .NET Framework，所以這時，只要多設定 –startup-project 去指定到參考這個專案的主專案就可以了哦!<br>註: 主專案要加入 Microsoft.EntityFrameworkCore.Design 這個 Nuget 套件哦!<br>例如原本我是下</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dotnet ef dbcontext list</span><br></pre></td></tr></table></figure><p>要多加入 –startup-project 的設定</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dotnet ef dbcontext list --startup-project ../OdeToFood</span><br></pre></td></tr></table></figure><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://stackoverflow.com/questions/48673987/trying-to-set-up-entity-framework-core-in-net-standard-project" target="_blank" rel="noopener">Trying to set-up Entity Framework core in .Net Standard project</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在 .net core 專案中，當我們將 Data 專案拆到另一個 .NETStandard 專案時，在他的目錄下，執行 &lt;strong&gt;d
+      
+    
+    </summary>
+    
+    
+      <category term="ef core" scheme="https://rainmakerho.github.io/tags/ef-core/"/>
+    
+      <category term=".NETStandard" scheme="https://rainmakerho.github.io/tags/NETStandard/"/>
+    
+  </entry>
   
   <entry>
     <title>IIS 網站讓 IE 使用者登入時，都出現 Windows 登入驗證視窗，不用調整 Security Zone 的方式</title>
@@ -140,11 +165,11 @@
   </entry>
   
   <entry>
-    <title>ASP.NET 使用了 Forms 驗證後，請別放了設定 Authorization 哦!</title>
+    <title>ASP.NET 使用了 Forms 驗證後，「請別忘了」設定 Authorization 哦!</title>
     <link href="https://rainmakerho.github.io/2019/11/11/2019033/"/>
     <id>https://rainmakerho.github.io/2019/11/11/2019033/</id>
     <published>2019-11-11T10:00:00.000Z</published>
-    <updated>2019-11-12T01:50:32.874Z</updated>
+    <updated>2019-12-30T02:22:37.007Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近同事詢問將程式裝到 2 台機器上去，透過 Load Balancing 時，Session 取得到，但是 Forms 驗證卻會失敗， context.User.Identity 有值， context.User.Identity.IsAuthenticated 卻是 false。</p><h3 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h3><p>context.User.Identity 有值， context.User.Identity.IsAuthenticated 卻是 false 似乎是驗證授權沒有設定吧!<br>於是詢問是否有設定 Authorization 。<br>請注意，如果您設定了 Forms 驗證後，卻沒有設定 Authorization 的話，那預設是所有人都可以去 Access 的哦。也因為這樣子，所以 context.User.Identity 有值， context.User.Identity.IsAuthenticated 卻是 false。<br>詳細可參考:<a href="https://docs.microsoft.com/en-us/previous-versions/wce3kxhd(v=vs.140" target="_blank" rel="noopener">ASP.NET Authorization</a>?redirectedfrom=MSDN&gt;)</p><blockquote><p>The default configuration for ASP.NET contains an <allow users="*"> element, which authorizes all users.</allow></p></blockquote><p>設定 authorization 後，就進不去了。 這才是合理的。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">authorization</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">deny</span> <span class="attr">users</span>=<span class="string">"?"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">authorization</span>&gt;</span></span><br></pre></td></tr></table></figure><p>話說，雖然合理了，但還是進不去，到底怎麼回事呢?<br>於是請同事參考 <a href="https://dotblogs.azurewebsites.net/rainmaker/2015/06/11/151544" target="_blank" rel="noopener">[ASP.NET]多個 Web Application 使用同一個 Forms Authentication</a> 裡面在 Application_BeginRequest 測試的方式，測試果然在 FormsAuthentication.Decrypt 時會噴錯。 通常會噴錯有幾個問題， machineKey, .NET Framework, .NET 組件不同。<br>但程式是一樣的，環境也是一樣的，web.config 也是相同的呀!</p><p>….</p><p>後來同事說，將 web.config 中的 machineKey 的值，用 Copy 的方式，貼到另一個 web.config 就可以了。<br>那之前為什麼不行呢?<br>因為他不是直接貼到 web.config 之中，而是透過 iis 設定到 web.config 之中。<br>雖然看起來是一樣的，但或許有些肉眼是看不出來的….</p><p>下次還是直接用 Copy 就好了…<br>Anyway 總算是解決了…<br>非常感謝 皇任 及 嘉棋 同事的分享。 ^_^</p><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://docs.microsoft.com/en-us/previous-versions/wce3kxhd(v=vs.140" target="_blank" rel="noopener">ASP.NET Authorization</a>?redirectedfrom=MSDN&gt;)<br><a href="https://weblogs.asp.net/gurusarkar/setting-authorization-rules-for-a-particular-page-or-folder-in-web-config" target="_blank" rel="noopener">Setting authorization rules for a particular page or folder in web.config</a><br><a href="https://dotblogs.azurewebsites.net/rainmaker/2015/06/11/151544" target="_blank" rel="noopener">[ASP.NET]多個 Web Application 使用同一個 Forms Authentication</a></p>]]></content>
     
@@ -218,9 +243,9 @@
     </summary>
     
     
-      <category term="empty" scheme="https://rainmakerho.github.io/tags/empty/"/>
-    
       <category term="asp.net" scheme="https://rainmakerho.github.io/tags/asp-net/"/>
+    
+      <category term="empty" scheme="https://rainmakerho.github.io/tags/empty/"/>
     
       <category term="session" scheme="https://rainmakerho.github.io/tags/session/"/>
     
@@ -581,33 +606,6 @@
       <category term="non-printable characters" scheme="https://rainmakerho.github.io/tags/non-printable-characters/"/>
     
       <category term="不可視字元" scheme="https://rainmakerho.github.io/tags/%E4%B8%8D%E5%8F%AF%E8%A6%96%E5%AD%97%E5%85%83/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Checkmarx Cookie_Injection</title>
-    <link href="https://rainmakerho.github.io/2019/07/17/2019018/"/>
-    <id>https://rainmakerho.github.io/2019/07/17/2019018/</id>
-    <published>2019-07-17T01:31:40.000Z</published>
-    <updated>2019-07-17T01:51:42.908Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近系統被 Checkmarx 掃出有 Cookie_Injection 的問題。<br>似乎是怕在 Server 端取得 Cookie 的值，再給 Client 端時，會發生 XSS 的問題。<br>但它的 Issue 點卻是在 Request.Cookies[cookieName] ，如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cookieNme = <span class="string">"SurveyCookie"</span>;</span><br><span class="line">HttpCookie cookie = Request.Cookies[cookieNme];</span><br><span class="line"><span class="keyword">if</span> (cookie == <span class="literal">null</span>)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// no cookie found, create it</span></span><br><span class="line">  cookie = <span class="keyword">new</span> HttpCookie(cookieNme);</span><br><span class="line">&#125;</span><br><span class="line">cookie.Values[<span class="string">"usrId"</span>] = HttpUtility.UrlEncode(otherValue1);</span><br><span class="line">cookie.Values[<span class="string">"usrName"</span>] = HttpUtility.UrlEncode(otherValue2);</span><br><span class="line"><span class="comment">// update the expiration timestamp</span></span><br><span class="line">cookie.Expires = DateTime.UtcNow.AddDays(<span class="number">30</span>);</span><br><span class="line"><span class="comment">// HttpOnly &amp; Secure 可以在 web.config 中設定</span></span><br><span class="line">cookie.HttpOnly = <span class="literal">true</span>;</span><br><span class="line">cookie.Secure = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// overwrite the cookie</span></span><br><span class="line">Response.Cookies.Add(cookie);</span><br></pre></td></tr></table></figure><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>感覺 Checkmarx 一見到取回 Request 的 Cookie 就開槍。<br>所以只好調整成，取回 Cookie 的 Values ，然後改判斷它的值。<br>如果要產生 cookie 的話，就直接新增一個 cookie 物件，也不是重新利用 Request 的物件，如下，</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cookieValues = Request.Cookies[cookieNme]?.Values;</span><br><span class="line"><span class="keyword">if</span> (cookieValues != <span class="literal">null</span>)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">var</span> usrId = HttpUtility.UrlEncode(cookieValues[<span class="string">"usrId"</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> cookie = <span class="keyword">new</span> HttpCookie(cookieNme);</span><br><span class="line">cookie.Values[<span class="string">"usrId"</span>] = HttpUtility.UrlEncode(otherValue1);</span><br><span class="line">cookie.Values[<span class="string">"usrName"</span>] = HttpUtility.UrlEncode(otherValue2);</span><br><span class="line"><span class="comment">// update the expiration timestamp</span></span><br><span class="line">cookie.Expires = DateTime.UtcNow.AddDays(<span class="number">30</span>);</span><br><span class="line"><span class="comment">// HttpOnly &amp; Secure 可以在 web.config 中設定</span></span><br><span class="line">cookie.HttpOnly = <span class="literal">true</span>;</span><br><span class="line">cookie.Secure = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// overwrite the cookie</span></span><br><span class="line">Response.Cookies.Add(cookie);</span><br></pre></td></tr></table></figure><ul><li>註: ?. 是 C#4 的語法，如果有問題的話，請更新 Microsoft.CodeDom.Providers.DotNetCompilerPlatform 套件。</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近系統被 Checkmarx 掃出有 Cookie_Injection 的問題。&lt;br&gt;似乎是怕在 Server 端取得 Cookie 的
-      
-    
-    </summary>
-    
-    
-      <category term="checkmarx" scheme="https://rainmakerho.github.io/tags/checkmarx/"/>
-    
-      <category term="Cookie_Injection" scheme="https://rainmakerho.github.io/tags/Cookie-Injection/"/>
-    
-      <category term="CSharp" scheme="https://rainmakerho.github.io/tags/CSharp/"/>
     
   </entry>
   
