@@ -4,8 +4,62 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2020/02/03/2020001/</loc>
+    <lastmod>2020-02-07T10:21:31.963Z</lastmod>
+    <data>
+        <display>
+        <title>Dependency Injection in ASP.NET Core</title>
+        <pubTime>2020-02-03T10:55:26.000Z</pubTime>
+        
+        <tag>ASP.NET Core</tag>
+         
+        <tag>Dependency Injection</tag>
+         
+        <tag>DI</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://rainmakerho.github.io/2019/09/23/2019027/</loc>
+    <lastmod>2020-01-19T10:53:12.869Z</lastmod>
+    <data>
+        <display>
+        <title>透過 Aspose.Pdf.Document 載入 Html 檔案轉成 Pdf 檔，有些字會變成空白框框</title>
+        <pubTime>2019-09-23T02:07:08.000Z</pubTime>
+        
+        <tag>Html</tag>
+         
+        <tag>Aspose.Pdf.Document</tag>
+         
+        <tag>Pdf</tag>
+         
+        <tag>空白框框</tag>
+         
+        <tag>characters are missing</tag>
+         
+        <tag>charset</tag>
+         
+        <tag>big5</tag>
+         
+        <tag>FontRepository</tag>
+         
+        <tag>MSGothic</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2019/12/30/2019038/</loc>
-    <lastmod>2019-12-30T02:57:54.316Z</lastmod>
+    <lastmod>2019-12-30T04:01:18.063Z</lastmod>
     <data>
         <display>
         <title>EF Core, Startup project 'xxx.Data.csproj' targets framework '.NETStandard'. There is no runtime associated with this framework</title>
@@ -199,9 +253,9 @@
         <title>ASP.NET Session 值為空或是無法改變的問題</title>
         <pubTime>2019-10-07T08:55:59.000Z</pubTime>
         
-        <tag>asp.net</tag>
-         
         <tag>empty</tag>
+         
+        <tag>asp.net</tag>
          
         <tag>session</tag>
          
@@ -296,39 +350,6 @@
         <tag>HttpClient</tag>
          
         <tag>customHttpClient</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://rainmakerho.github.io/2019/09/23/2019027/</loc>
-    <lastmod>2019-09-24T03:12:16.519Z</lastmod>
-    <data>
-        <display>
-        <title>透過 Aspose.Pdf.Document 載入 Html 檔案轉成 Pdf 檔，有些字會變成空白框框</title>
-        <pubTime>2019-09-23T02:07:08.000Z</pubTime>
-        
-        <tag>Html</tag>
-         
-        <tag>Aspose.Pdf.Document</tag>
-         
-        <tag>Pdf</tag>
-         
-        <tag>空白框框</tag>
-         
-        <tag>characters are missing</tag>
-         
-        <tag>charset</tag>
-         
-        <tag>big5</tag>
-         
-        <tag>FontRepository</tag>
-         
-        <tag>MSGothic</tag>
          
          
            
@@ -1040,9 +1061,9 @@
         <title>PDF 最後一頁才顯示頁尾</title>
         <pubTime>2018-11-29T06:46:17.000Z</pubTime>
         
-        <tag>pdf</tag>
-         
         <tag>aspose</tag>
+         
+        <tag>pdf</tag>
          
         <tag>cells</tag>
          
@@ -1797,11 +1818,11 @@
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
+         
+        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1826,11 +1847,11 @@
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
-         
-        <tag>NullReferenceException</tag>
          
          
            
@@ -1941,13 +1962,13 @@
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
+        <tag>chatbot</tag>
+         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
-         
-        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
