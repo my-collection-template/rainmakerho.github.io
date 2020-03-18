@@ -4,8 +4,27 @@
 
     
   <url>
+    <loc>https://rainmakerho.github.io/2020/03/18/2020002/</loc>
+    <lastmod>2020-03-18T08:07:25.126Z</lastmod>
+    <data>
+        <display>
+        <title>IIS 網站忽然全都出現 BC31007 無法開啟模組檔 的錯誤</title>
+        <pubTime>2020-03-18T07:56:53.000Z</pubTime>
+        
+        <tag>BC31007</tag>
+         
+        <tag>Temporary ASP.NET Fiels</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://rainmakerho.github.io/2020/02/03/2020001/</loc>
-    <lastmod>2020-02-07T10:21:31.963Z</lastmod>
+    <lastmod>2020-02-07T10:21:31.000Z</lastmod>
     <data>
         <display>
         <title>Dependency Injection in ASP.NET Core</title>
@@ -26,7 +45,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/09/23/2019027/</loc>
-    <lastmod>2020-01-19T10:53:12.869Z</lastmod>
+    <lastmod>2020-01-19T10:53:12.000Z</lastmod>
     <data>
         <display>
         <title>透過 Aspose.Pdf.Document 載入 Html 檔案轉成 Pdf 檔，有些字會變成空白框框</title>
@@ -59,7 +78,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/12/30/2019038/</loc>
-    <lastmod>2019-12-30T04:01:18.063Z</lastmod>
+    <lastmod>2019-12-30T04:01:18.000Z</lastmod>
     <data>
         <display>
         <title>EF Core, Startup project 'xxx.Data.csproj' targets framework '.NETStandard'. There is no runtime associated with this framework</title>
@@ -78,7 +97,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/11/11/2019033/</loc>
-    <lastmod>2019-12-30T02:22:37.007Z</lastmod>
+    <lastmod>2019-12-30T02:22:37.000Z</lastmod>
     <data>
         <display>
         <title>ASP.NET 使用了 Forms 驗證後，「請別忘了」設定 Authorization 哦!</title>
@@ -103,7 +122,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/12/15/2019037/</loc>
-    <lastmod>2019-12-16T08:24:44.649Z</lastmod>
+    <lastmod>2019-12-16T08:24:44.000Z</lastmod>
     <data>
         <display>
         <title>IIS 網站讓 IE 使用者登入時，都出現 Windows 登入驗證視窗，不用調整 Security Zone 的方式</title>
@@ -128,7 +147,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/12/11/2019036/</loc>
-    <lastmod>2019-12-11T05:17:12.627Z</lastmod>
+    <lastmod>2019-12-11T05:17:12.000Z</lastmod>
     <data>
         <display>
         <title>無法打開IIS上檔名中包含特殊字符(plus)的文件(file name contains plus)</title>
@@ -151,7 +170,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/11/27/2019035/</loc>
-    <lastmod>2019-11-27T03:56:50.779Z</lastmod>
+    <lastmod>2019-11-27T03:56:50.000Z</lastmod>
     <data>
         <display>
         <title>Error code 1 for command [ios]</title>
@@ -170,7 +189,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/11/20/2019034/</loc>
-    <lastmod>2019-11-20T09:07:44.702Z</lastmod>
+    <lastmod>2019-11-20T09:07:44.000Z</lastmod>
     <data>
         <display>
         <title>透過 Aspose.Cells WorkbookDesigner 來做 Excel 資料套表</title>
@@ -201,7 +220,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/02/2018021/</loc>
-    <lastmod>2019-11-12T02:14:55.004Z</lastmod>
+    <lastmod>2019-11-12T02:14:55.000Z</lastmod>
     <data>
         <display>
         <title>Open Html Excel File from Aspose.Cells 透過 Aspose.Cells 開啟 Html 格式的 Excel 檔案</title>
@@ -224,7 +243,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/10/24/2019032/</loc>
-    <lastmod>2019-10-25T03:55:41.324Z</lastmod>
+    <lastmod>2019-10-25T03:55:41.000Z</lastmod>
     <data>
         <display>
         <title>HTTP 錯誤 500.52 - URL Rewrite Module Error.</title>
@@ -247,7 +266,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/10/07/2019031/</loc>
-    <lastmod>2019-10-07T09:19:57.302Z</lastmod>
+    <lastmod>2019-10-07T09:19:57.000Z</lastmod>
     <data>
         <display>
         <title>ASP.NET Session 值為空或是無法改變的問題</title>
@@ -268,12 +287,14 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/10/04/2019030/</loc>
-    <lastmod>2019-10-05T00:22:56.558Z</lastmod>
+    <lastmod>2019-10-05T00:22:56.000Z</lastmod>
     <data>
         <display>
         <title>Chrome Version 77 列印遇到標楷體(DFKai-SB) Print 成 PDF 會破字問題</title>
         <pubTime>2019-10-04T08:58:46.000Z</pubTime>
         
+        <tag>PDF</tag>
+         
         <tag>Chrome</tag>
          
         <tag>77</tag>
@@ -281,8 +302,6 @@
         <tag>font</tag>
          
         <tag>DFKai-SB</tag>
-         
-        <tag>PDF</tag>
          
         <tag>broken</tag>
          
@@ -295,7 +314,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/09/25/2019029/</loc>
-    <lastmod>2019-09-26T07:39:05.282Z</lastmod>
+    <lastmod>2019-09-26T07:39:05.000Z</lastmod>
     <data>
         <display>
         <title>偵測到隱藏目錄 - AppScan</title>
@@ -320,7 +339,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/01/02/2019001/</loc>
-    <lastmod>2019-09-24T10:08:01.292Z</lastmod>
+    <lastmod>2019-09-24T10:08:01.000Z</lastmod>
     <data>
         <display>
         <title>Microsoft Botframework V4，從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊</title>
@@ -339,7 +358,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/09/24/2019028/</loc>
-    <lastmod>2019-09-24T09:43:42.447Z</lastmod>
+    <lastmod>2019-09-24T09:43:42.000Z</lastmod>
     <data>
         <display>
         <title>Microsoft Botframework V4，從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊 (V2)</title>
@@ -360,7 +379,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/09/17/2019026/</loc>
-    <lastmod>2019-09-17T06:14:53.786Z</lastmod>
+    <lastmod>2019-09-17T06:14:53.000Z</lastmod>
     <data>
         <display>
         <title>為什麼 aspnet_client 目錄中的檔案都無法下載，Status 為 401</title>
@@ -381,7 +400,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/09/17/2019025/</loc>
-    <lastmod>2019-09-17T03:55:25.834Z</lastmod>
+    <lastmod>2019-09-17T03:55:25.000Z</lastmod>
     <data>
         <display>
         <title>.NET Core AD 帳密驗證</title>
@@ -406,7 +425,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/09/17/2019024/</loc>
-    <lastmod>2019-09-17T01:44:02.663Z</lastmod>
+    <lastmod>2019-09-17T01:44:02.000Z</lastmod>
     <data>
         <display>
         <title>IE 不支援文化特性。參數名稱：name zh-Hant-TW 是無效的文化特性識別項。</title>
@@ -427,7 +446,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/09/05/2019023/</loc>
-    <lastmod>2019-09-05T06:40:11.922Z</lastmod>
+    <lastmod>2019-09-05T06:40:11.000Z</lastmod>
     <data>
         <display>
         <title>Node JS + IIS Node 效能問題</title>
@@ -450,7 +469,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/07/04/2019017/</loc>
-    <lastmod>2019-09-05T05:28:31.096Z</lastmod>
+    <lastmod>2019-09-05T05:28:31.000Z</lastmod>
     <data>
         <display>
         <title>Bitmap.save(): A generic error occurred in GDI+</title>
@@ -469,7 +488,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/08/24/2019022/</loc>
-    <lastmod>2019-08-24T10:21:24.331Z</lastmod>
+    <lastmod>2019-08-24T10:21:24.000Z</lastmod>
     <data>
         <display>
         <title>ASP.NET WebControl.Attributes 無法 Remove 問題</title>
@@ -492,7 +511,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/08/24/2019021/</loc>
-    <lastmod>2019-08-24T06:05:35.787Z</lastmod>
+    <lastmod>2019-08-24T06:05:35.000Z</lastmod>
     <data>
         <display>
         <title>Visual Studio 2017 WebTest for aspx postback</title>
@@ -517,7 +536,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/07/31/2019020/</loc>
-    <lastmod>2019-07-31T09:57:37.189Z</lastmod>
+    <lastmod>2019-07-31T09:57:37.000Z</lastmod>
     <data>
         <display>
         <title>ODataController Cross site scripting (content-sniffing)</title>
@@ -540,7 +559,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/07/19/2019019/</loc>
-    <lastmod>2019-07-19T08:44:28.752Z</lastmod>
+    <lastmod>2019-07-19T08:44:28.000Z</lastmod>
     <data>
         <display>
         <title>double.parse cause Input string was not in a correct format Error</title>
@@ -559,7 +578,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/07/17/2019018/</loc>
-    <lastmod>2019-07-17T01:51:42.908Z</lastmod>
+    <lastmod>2019-07-17T01:51:42.000Z</lastmod>
     <data>
         <display>
         <title>Checkmarx Cookie_Injection</title>
@@ -580,7 +599,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/07/03/2019016/</loc>
-    <lastmod>2019-07-03T05:42:20.333Z</lastmod>
+    <lastmod>2019-07-03T05:42:20.000Z</lastmod>
     <data>
         <display>
         <title>Microsoft Threat Modeling Tool</title>
@@ -601,7 +620,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/06/04/2019014/</loc>
-    <lastmod>2019-06-20T02:41:23.407Z</lastmod>
+    <lastmod>2019-06-20T02:41:23.000Z</lastmod>
     <data>
         <display>
         <title>使用 NPOI.HSSF.UserModel.HSSFSheet.CopyRow 造成 IIS 應用程式重啟問題</title>
@@ -626,7 +645,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/06/12/2019015/</loc>
-    <lastmod>2019-06-12T07:35:21.790Z</lastmod>
+    <lastmod>2019-06-12T07:35:21.000Z</lastmod>
     <data>
         <display>
         <title>SQL Replace 後，怎麼會留空白呢?</title>
@@ -653,7 +672,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/05/28/2019013/</loc>
-    <lastmod>2019-05-30T07:30:32.346Z</lastmod>
+    <lastmod>2019-05-30T07:30:32.000Z</lastmod>
     <data>
         <display>
         <title>NullReferenceException 在 new class 時?</title>
@@ -676,7 +695,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/05/24/2019012/</loc>
-    <lastmod>2019-05-24T07:32:16.904Z</lastmod>
+    <lastmod>2019-05-24T07:32:16.000Z</lastmod>
     <data>
         <display>
         <title>在目前的命令上發生嚴重錯誤。如果有任何結果，都必須捨棄。</title>
@@ -699,7 +718,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/05/14/2019011/</loc>
-    <lastmod>2019-05-14T02:47:43.411Z</lastmod>
+    <lastmod>2019-05-14T02:47:43.000Z</lastmod>
     <data>
         <display>
         <title>推薦學習前端的好網站-Scrimba</title>
@@ -724,7 +743,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/04/02/2019010/</loc>
-    <lastmod>2019-04-02T10:10:43.659Z</lastmod>
+    <lastmod>2019-04-02T10:10:43.000Z</lastmod>
     <data>
         <display>
         <title>OpenTracing - Jaeger 接 Elastic Stack</title>
@@ -747,7 +766,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/03/16/2019009/</loc>
-    <lastmod>2019-03-16T06:09:34.192Z</lastmod>
+    <lastmod>2019-03-16T06:09:34.000Z</lastmod>
     <data>
         <display>
         <title>document.[formName] is undefined</title>
@@ -774,7 +793,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/03/11/2019008/</loc>
-    <lastmod>2019-03-11T03:39:59.746Z</lastmod>
+    <lastmod>2019-03-11T03:39:59.000Z</lastmod>
     <data>
         <display>
         <title>使用 OpenTracing - Jaeger (BFv3 使用 PostSharp)</title>
@@ -813,7 +832,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/02/23/2019007/</loc>
-    <lastmod>2019-02-23T02:51:08.748Z</lastmod>
+    <lastmod>2019-02-23T02:51:08.000Z</lastmod>
     <data>
         <display>
         <title>Inheritance security rules violated by type: 'System.Net.Http.WebRequestHandler'</title>
@@ -834,7 +853,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/02/19/2019006/</loc>
-    <lastmod>2019-02-23T02:41:34.022Z</lastmod>
+    <lastmod>2019-02-23T02:41:34.000Z</lastmod>
     <data>
         <display>
         <title>使用 OpenTracing - Jaeger (BFv3 使用 Fody)</title>
@@ -873,7 +892,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/01/20/2019005/</loc>
-    <lastmod>2019-01-24T08:59:20.536Z</lastmod>
+    <lastmod>2019-01-24T08:59:20.000Z</lastmod>
     <data>
         <display>
         <title>使用 OpenTracing - Jaeger (BFv3 使用 Dynamic Proxy)</title>
@@ -912,7 +931,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/01/15/2019004/</loc>
-    <lastmod>2019-01-16T05:42:36.301Z</lastmod>
+    <lastmod>2019-01-16T05:42:36.000Z</lastmod>
     <data>
         <display>
         <title>使用 OpenTracing - Jaeger (AP整合)</title>
@@ -945,7 +964,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/01/04/2019002/</loc>
-    <lastmod>2019-01-16T02:43:16.554Z</lastmod>
+    <lastmod>2019-01-16T02:43:16.000Z</lastmod>
     <data>
         <display>
         <title>使用 OpenTracing - Jaeger</title>
@@ -976,7 +995,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2019/01/15/2019003/</loc>
-    <lastmod>2019-01-15T05:12:02.914Z</lastmod>
+    <lastmod>2019-01-15T05:12:02.000Z</lastmod>
     <data>
         <display>
         <title>Challenge-base and login redirect-based authentication cannot be used simultaneously.</title>
@@ -999,7 +1018,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/12/27/2018044/</loc>
-    <lastmod>2018-12-28T05:17:22.008Z</lastmod>
+    <lastmod>2018-12-28T05:17:22.000Z</lastmod>
     <data>
         <display>
         <title>WeChat微信 Bot 開發 - 接口配置信息</title>
@@ -1026,7 +1045,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/12/05/2018043/</loc>
-    <lastmod>2018-12-05T09:23:01.310Z</lastmod>
+    <lastmod>2018-12-05T09:23:01.000Z</lastmod>
     <data>
         <display>
         <title>.NET SmtpClient Send Port 465 會發生 The operations timed out.</title>
@@ -1055,7 +1074,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/11/29/2018042/</loc>
-    <lastmod>2018-12-03T02:52:25.316Z</lastmod>
+    <lastmod>2018-12-03T02:52:25.000Z</lastmod>
     <data>
         <display>
         <title>PDF 最後一頁才顯示頁尾</title>
@@ -1086,7 +1105,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/11/27/2018041/</loc>
-    <lastmod>2018-11-28T02:48:37.776Z</lastmod>
+    <lastmod>2018-11-28T02:48:37.000Z</lastmod>
     <data>
         <display>
         <title>未更新階段作業 ID</title>
@@ -1107,7 +1126,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/11/23/2018040/</loc>
-    <lastmod>2018-11-23T05:18:07.127Z</lastmod>
+    <lastmod>2018-11-23T05:18:07.000Z</lastmod>
     <data>
         <display>
         <title>Could not find a part of the path 'C:\Users\...\bin\roslyn\csc.exe'.</title>
@@ -1126,7 +1145,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/11/19/2018039/</loc>
-    <lastmod>2018-11-19T08:42:04.197Z</lastmod>
+    <lastmod>2018-11-19T08:42:04.000Z</lastmod>
     <data>
         <display>
         <title>env: node: No such file or directory</title>
@@ -1149,7 +1168,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/10/31/2018038/</loc>
-    <lastmod>2018-10-31T06:43:25.356Z</lastmod>
+    <lastmod>2018-10-31T06:43:25.000Z</lastmod>
     <data>
         <display>
         <title>SQL 某個欄位包含 文字、符號及數值，是否可依 數值、文字來排序?</title>
@@ -1172,7 +1191,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/10/19/2018037/</loc>
-    <lastmod>2018-10-22T09:54:16.318Z</lastmod>
+    <lastmod>2018-10-22T09:54:16.000Z</lastmod>
     <data>
         <display>
         <title>System.Net.WebException: 要求已經中止: 無法建立 SSL/TLS 的安全通道 錯誤的另一種可能性</title>
@@ -1193,7 +1212,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/10/09/2018036/</loc>
-    <lastmod>2018-10-10T04:57:23.097Z</lastmod>
+    <lastmod>2018-10-10T04:57:23.000Z</lastmod>
     <data>
         <display>
         <title>請使用 ClientScriptManager.RegisterForEventValidation 方法註冊回傳或回呼資料，以進行驗證</title>
@@ -1212,7 +1231,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/09/19/2018035/</loc>
-    <lastmod>2018-09-19T08:04:37.146Z</lastmod>
+    <lastmod>2018-09-19T08:04:37.000Z</lastmod>
     <data>
         <display>
         <title>ASP 0104 不允許的操作 Request.BinaryRead</title>
@@ -1237,7 +1256,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/09/17/2018034/</loc>
-    <lastmod>2018-09-17T06:29:44.398Z</lastmod>
+    <lastmod>2018-09-17T06:29:44.000Z</lastmod>
     <data>
         <display>
         <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot 之 2</title>
@@ -1262,7 +1281,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/08/21/2018032/</loc>
-    <lastmod>2018-08-22T05:05:16.311Z</lastmod>
+    <lastmod>2018-08-22T05:05:16.000Z</lastmod>
     <data>
         <display>
         <title>.NET Exception Handling</title>
@@ -1283,7 +1302,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/08/21/2018033/</loc>
-    <lastmod>2018-08-21T10:36:17.177Z</lastmod>
+    <lastmod>2018-08-21T10:36:17.000Z</lastmod>
     <data>
         <display>
         <title>NHibernate.Exceptions.GenericADOException System.Text.EncoderFallbackException</title>
@@ -1306,7 +1325,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/08/02/2018030/</loc>
-    <lastmod>2018-08-21T10:30:51.941Z</lastmod>
+    <lastmod>2018-08-21T10:30:51.000Z</lastmod>
     <data>
         <display>
         <title>Microsoft Botframework + Adaptive Cards 快速打造 Chatbot</title>
@@ -1331,7 +1350,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/08/19/2018031/</loc>
-    <lastmod>2018-08-19T15:18:04.237Z</lastmod>
+    <lastmod>2018-08-19T15:18:04.000Z</lastmod>
     <data>
         <display>
         <title>HTTP 500 內部伺服器錯誤</title>
@@ -1352,7 +1371,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/08/02/2018029/</loc>
-    <lastmod>2018-08-02T09:19:35.912Z</lastmod>
+    <lastmod>2018-08-02T09:19:35.000Z</lastmod>
     <data>
         <display>
         <title>IIS 403 - 禁止: 拒絕存取 跟 403.4 - Forbidden 問題</title>
@@ -1377,7 +1396,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/08/01/2018028/</loc>
-    <lastmod>2018-08-02T02:08:52.304Z</lastmod>
+    <lastmod>2018-08-02T02:08:52.000Z</lastmod>
     <data>
         <display>
         <title>RxJS 學習之旅 ~ Html DOM 操作</title>
@@ -1412,7 +1431,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/26/2018027/</loc>
-    <lastmod>2018-07-26T05:29:11.703Z</lastmod>
+    <lastmod>2018-07-26T05:29:11.000Z</lastmod>
     <data>
         <display>
         <title>RxJS 學習之旅 ~ 環境設定</title>
@@ -1433,7 +1452,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/20/2018025/</loc>
-    <lastmod>2018-07-25T07:10:20.615Z</lastmod>
+    <lastmod>2018-07-25T07:10:20.000Z</lastmod>
     <data>
         <display>
         <title>In-House certificate 要過期了怎麼辦?</title>
@@ -1460,7 +1479,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/20/2018026/</loc>
-    <lastmod>2018-07-22T09:18:56.114Z</lastmod>
+    <lastmod>2018-07-22T09:18:56.000Z</lastmod>
     <data>
         <display>
         <title>為什麼設定了 DataColumn.DefaultValue 會無效?</title>
@@ -1479,7 +1498,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/13/2018024/</loc>
-    <lastmod>2018-07-17T05:55:29.704Z</lastmod>
+    <lastmod>2018-07-17T05:55:29.000Z</lastmod>
     <data>
         <display>
         <title>透過 Aspose 將 datatable 的資料轉出成有浮水印的 PDF 檔 (2)</title>
@@ -1512,7 +1531,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/03/2018022/</loc>
-    <lastmod>2018-07-09T09:12:59.978Z</lastmod>
+    <lastmod>2018-07-09T09:12:59.000Z</lastmod>
     <data>
         <display>
         <title>透過 Aspose 將 datatable 的資料轉出成有浮水印的 PDF 檔</title>
@@ -1545,7 +1564,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/05/2018023/</loc>
-    <lastmod>2018-07-05T07:07:54.804Z</lastmod>
+    <lastmod>2018-07-05T07:07:54.000Z</lastmod>
     <data>
         <display>
         <title>從 Bot 送訊息到 IM Channel 時，加入額外的 Header 資訊</title>
@@ -1570,7 +1589,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/07/01/2018020/</loc>
-    <lastmod>2018-07-01T04:06:36.657Z</lastmod>
+    <lastmod>2018-07-01T04:06:36.000Z</lastmod>
     <data>
         <display>
         <title>IBotDataStore.FlushAsync Exception: The data is changed</title>
@@ -1593,7 +1612,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/06/05/2018019/</loc>
-    <lastmod>2018-06-05T06:42:55.874Z</lastmod>
+    <lastmod>2018-06-05T06:42:55.000Z</lastmod>
     <data>
         <display>
         <title>Implement global message handlers and resets the dialog stack</title>
@@ -1614,7 +1633,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/06/04/2018018/</loc>
-    <lastmod>2018-06-04T08:31:12.303Z</lastmod>
+    <lastmod>2018-06-04T08:31:12.000Z</lastmod>
     <data>
         <display>
         <title>Access BotState when use custom BotDataStore</title>
@@ -1637,7 +1656,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/05/16/2018017/</loc>
-    <lastmod>2018-05-16T03:27:03.392Z</lastmod>
+    <lastmod>2018-05-16T03:27:03.000Z</lastmod>
     <data>
         <display>
         <title>談談 MSDTC 的問題</title>
@@ -1658,7 +1677,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/05/10/2018016/</loc>
-    <lastmod>2018-05-10T09:12:55.987Z</lastmod>
+    <lastmod>2018-05-10T09:12:55.000Z</lastmod>
     <data>
         <display>
         <title>透過 Microsoft BotFramework-WebChat 的 botchat.js 連接 Botframework 做的 Chatbot ，輕鬆整合到 Web Application 之中</title>
@@ -1683,7 +1702,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/04/17/2018015/</loc>
-    <lastmod>2018-04-17T13:30:41.556Z</lastmod>
+    <lastmod>2018-04-17T13:30:41.000Z</lastmod>
     <data>
         <display>
         <title>Replace JSON 字串中的屬性值 (Replace JSON Value String)</title>
@@ -1706,7 +1725,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/04/10/2018014/</loc>
-    <lastmod>2018-04-10T03:10:22.368Z</lastmod>
+    <lastmod>2018-04-10T03:10:22.000Z</lastmod>
     <data>
         <display>
         <title>OWASP ZAP 憑證安裝的方式(OWASP ZAP Certificate)</title>
@@ -1737,7 +1756,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/04/03/2018013/</loc>
-    <lastmod>2018-04-03T10:02:08.644Z</lastmod>
+    <lastmod>2018-04-03T10:02:08.000Z</lastmod>
     <data>
         <display>
         <title>DataGrid 在 ASP.NET 4 的分頁導致第一個欄位會變很寬</title>
@@ -1762,7 +1781,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/03/05/2018010/</loc>
-    <lastmod>2018-03-31T01:09:32.803Z</lastmod>
+    <lastmod>2018-03-31T01:09:32.000Z</lastmod>
     <data>
         <display>
         <title>透過 WinDbg 來找出 ASP.NET CPU 100% ASP.NET 程式的問題</title>
@@ -1789,7 +1808,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/02/14/2018009/</loc>
-    <lastmod>2018-03-14T03:08:54.691Z</lastmod>
+    <lastmod>2018-03-14T03:08:54.000Z</lastmod>
     <data>
         <display>
         <title>無法載入檔案或組件 'log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304' 或其相依性的其中之一。</title>
@@ -1812,17 +1831,17 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/03/14/2018012/</loc>
-    <lastmod>2018-03-14T03:05:46.287Z</lastmod>
+    <lastmod>2018-03-14T03:05:46.000Z</lastmod>
     <data>
         <display>
         <title>SmtpConnection.GetConnection NullReferenceException</title>
         <pubTime>2018-03-14T02:07:16.000Z</pubTime>
         
+        <tag>NullReferenceException</tag>
+         
         <tag>SmtpClient</tag>
          
         <tag>SmtpConnection.GetConnection</tag>
-         
-        <tag>NullReferenceException</tag>
          
         <tag>.net</tag>
          
@@ -1841,17 +1860,17 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/03/13/2018011/</loc>
-    <lastmod>2018-03-14T02:08:58.990Z</lastmod>
+    <lastmod>2018-03-14T02:08:58.000Z</lastmod>
     <data>
         <display>
         <title>System.NullReferenceException when Aspose.Pdf.License.SetLicense(String licenseName)</title>
         <pubTime>2018-03-13T06:54:05.000Z</pubTime>
         
-        <tag>NullReferenceException</tag>
-         
         <tag>Aspose</tag>
          
         <tag>SetLicense</tag>
+         
+        <tag>NullReferenceException</tag>
          
          
            
@@ -1862,7 +1881,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/01/29/2018005/</loc>
-    <lastmod>2018-02-15T02:55:30.785Z</lastmod>
+    <lastmod>2018-02-15T02:55:30.000Z</lastmod>
     <data>
         <display>
         <title>Call luis.ai predictions api 的 3 種方式</title>
@@ -1883,7 +1902,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/02/01/2018006/</loc>
-    <lastmod>2018-02-13T04:00:06.377Z</lastmod>
+    <lastmod>2018-02-13T04:00:06.000Z</lastmod>
     <data>
         <display>
         <title>使用 Botframework 的 Bot 如何 Debug 到 BotBuilder Source ?</title>
@@ -1906,7 +1925,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/02/13/2018008/</loc>
-    <lastmod>2018-02-13T03:50:53.010Z</lastmod>
+    <lastmod>2018-02-13T03:50:53.000Z</lastmod>
     <data>
         <display>
         <title>Bot Framework Custom Error Messages and Exception Handling</title>
@@ -1933,7 +1952,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/02/01/2018007/</loc>
-    <lastmod>2018-02-01T05:48:31.390Z</lastmod>
+    <lastmod>2018-02-01T05:48:31.000Z</lastmod>
     <data>
         <display>
         <title>The bot's MSA appId or password is incorrect.</title>
@@ -1956,19 +1975,19 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/01/25/2018003/</loc>
-    <lastmod>2018-01-26T06:38:51.976Z</lastmod>
+    <lastmod>2018-01-26T06:38:51.000Z</lastmod>
     <data>
         <display>
         <title>線上客服 + BOT 之路</title>
         <pubTime>2018-01-25T08:10:47.000Z</pubTime>
         
-        <tag>chatbot</tag>
-         
         <tag>QnA Maker</tag>
          
         <tag>LUIS</tag>
          
         <tag>Vital ESP</tag>
+         
+        <tag>chatbot</tag>
          
         <tag>FAQ</tag>
          
@@ -1981,7 +2000,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/01/26/2018004/</loc>
-    <lastmod>2018-01-26T06:34:50.534Z</lastmod>
+    <lastmod>2018-01-26T06:34:50.000Z</lastmod>
     <data>
         <display>
         <title>客製 BotDataStore ，將 Bot State 資料存到 SQL Server之中</title>
@@ -2004,7 +2023,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/01/11/2018002/</loc>
-    <lastmod>2018-01-11T08:13:59.964Z</lastmod>
+    <lastmod>2018-01-11T08:13:59.000Z</lastmod>
     <data>
         <display>
         <title>Excel.WorkbookClass.SaveAs 發生例外狀況於 HRESULT: 0x800A03EC [ COMException.ErrorCode : -2146827284 ]</title>
@@ -2029,7 +2048,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2018/01/09/2018001/</loc>
-    <lastmod>2018-01-11T07:30:28.006Z</lastmod>
+    <lastmod>2018-01-11T07:30:28.000Z</lastmod>
     <data>
         <display>
         <title>Windows 10 IoT Core UWP Beacon 程式 Crash 事件</title>
@@ -2054,7 +2073,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/12/18/2017017/</loc>
-    <lastmod>2017-12-18T10:04:25.880Z</lastmod>
+    <lastmod>2017-12-18T10:04:25.000Z</lastmod>
     <data>
         <display>
         <title>Service Worker @ Angular</title>
@@ -2073,7 +2092,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/09/29/20170929/</loc>
-    <lastmod>2017-12-11T10:02:19.548Z</lastmod>
+    <lastmod>2017-12-11T10:02:19.000Z</lastmod>
     <data>
         <display>
         <title>升級到 ios 11 後， app 出現無法在 ios 11 執行及無法下載的錯誤</title>
@@ -2100,7 +2119,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/10/03/20171003/</loc>
-    <lastmod>2017-12-11T10:01:59.524Z</lastmod>
+    <lastmod>2017-12-11T10:01:59.000Z</lastmod>
     <data>
         <display>
         <title>ASPOSE.Words 產生 中文編號 一、 二、 在 doc 及 odt 的問題</title>
@@ -2121,7 +2140,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/10/05/20171005/</loc>
-    <lastmod>2017-12-11T10:01:35.757Z</lastmod>
+    <lastmod>2017-12-11T10:01:35.000Z</lastmod>
     <data>
         <display>
         <title>Cordova iOS No target specifed for emulator. Deploying to undefined simulator</title>
@@ -2142,7 +2161,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/10/13/20171013/</loc>
-    <lastmod>2017-12-11T10:01:15.795Z</lastmod>
+    <lastmod>2017-12-11T10:01:15.000Z</lastmod>
     <data>
         <display>
         <title>從外部資料庫驅動程式產生的非預期的錯誤 (1) @ OleDbConnection.Open</title>
@@ -2175,7 +2194,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/10/17/20171017-2/</loc>
-    <lastmod>2017-12-11T10:00:56.566Z</lastmod>
+    <lastmod>2017-12-11T10:00:56.000Z</lastmod>
     <data>
         <display>
         <title>Compiling IB documents for earlier than iOS 7 is no longer supported.</title>
@@ -2194,7 +2213,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/10/17/20171017/</loc>
-    <lastmod>2017-12-11T10:00:49.186Z</lastmod>
+    <lastmod>2017-12-11T10:00:49.000Z</lastmod>
     <data>
         <display>
         <title>Add a profile to the provisioningProfiles dictionary in your Export Options property list.</title>
@@ -2223,7 +2242,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/10/27/20171027/</loc>
-    <lastmod>2017-12-11T09:59:46.881Z</lastmod>
+    <lastmod>2017-12-11T09:59:46.000Z</lastmod>
     <data>
         <display>
         <title>透過 SmtpClient 寄送 Mail 時，主旨在 Zimbra 會有 ? 的狀況</title>
@@ -2252,7 +2271,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/10/27/2017010/</loc>
-    <lastmod>2017-12-11T09:58:55.969Z</lastmod>
+    <lastmod>2017-12-11T09:58:55.000Z</lastmod>
     <data>
         <display>
         <title>log4net 檔名使用「大寫」字母造成檔案被覆寫問題</title>
@@ -2279,15 +2298,15 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/11/09/2017011/</loc>
-    <lastmod>2017-12-11T09:57:52.242Z</lastmod>
+    <lastmod>2017-12-11T09:57:52.000Z</lastmod>
     <data>
         <display>
         <title>Aspose.Words DocumentBuilder 加入 htmlTable 轉成 PDF 檔問題</title>
         <pubTime>2017-11-09T05:31:28.000Z</pubTime>
         
-        <tag>PDF</tag>
-         
         <tag>Aspose.Words</tag>
+         
+        <tag>PDF</tag>
          
         <tag>CompatibilityOptions</tag>
          
@@ -2306,7 +2325,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/11/16/2017012/</loc>
-    <lastmod>2017-12-11T09:54:30.985Z</lastmod>
+    <lastmod>2017-12-11T09:54:30.000Z</lastmod>
     <data>
         <display>
         <title>解析 SQL Server Deadlocks</title>
@@ -2329,7 +2348,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/11/30/2017014/</loc>
-    <lastmod>2017-12-11T09:53:17.871Z</lastmod>
+    <lastmod>2017-12-11T09:53:17.000Z</lastmod>
     <data>
         <display>
         <title>Writeable Session 造成網頁被卡住的問題</title>
@@ -2352,7 +2371,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/12/07/2017015/</loc>
-    <lastmod>2017-12-11T09:52:54.785Z</lastmod>
+    <lastmod>2017-12-11T09:52:54.000Z</lastmod>
     <data>
         <display>
         <title>為什麼 OPTIONS 時會給 404 呢?</title>
@@ -2375,7 +2394,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/12/11/2017016/</loc>
-    <lastmod>2017-12-11T07:11:54.327Z</lastmod>
+    <lastmod>2017-12-11T07:11:54.000Z</lastmod>
     <data>
         <display>
         <title>Windows 10 IoT Core 如何透過 UWP 程式來 重開機 或是 關機 (C00CE014)</title>
@@ -2402,7 +2421,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/11/29/2017013/</loc>
-    <lastmod>2017-11-29T01:45:44.528Z</lastmod>
+    <lastmod>2017-11-29T01:45:44.000Z</lastmod>
     <data>
         <display>
         <title>為什麼 scrollbar 在 mac os 的 browser 無法顯示出來呢?</title>
@@ -2421,7 +2440,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/10/03/20171003-2/</loc>
-    <lastmod>2017-10-06T02:14:46.875Z</lastmod>
+    <lastmod>2017-10-06T02:14:46.000Z</lastmod>
     <data>
         <display>
         <title>取得 Execute SQL 裡面資料的值</title>
@@ -2446,7 +2465,7 @@
     
   <url>
     <loc>https://rainmakerho.github.io/2017/09/27/sql2016license/</loc>
-    <lastmod>2017-09-30T01:50:05.378Z</lastmod>
+    <lastmod>2017-09-30T01:50:05.000Z</lastmod>
     <data>
         <display>
         <title>SQL Server License 說明</title>
